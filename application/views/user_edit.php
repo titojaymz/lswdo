@@ -2,7 +2,7 @@
 
 if (!$this->session->userdata('user_data')){
     redirect('/users/login','location');
-
+//test0000000
 }
 $user_region = $this->session->userdata('uregion');
 ?><!DOCTYPE html>
