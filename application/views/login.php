@@ -1,0 +1,36 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+if (!$this->session->userdata('user_id')){
+    echo validation_errors();
+    ?><br><br>
+    <div class="login-form">
+        <form class="form-signin" method="post" action="">
+            <div class="top">
+
+                <h1>LSWDO</h1>
+                <h4>Sign-In</h4>
+            </div>
+            <div class="form-area">
+                <div class="group">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="group">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <i class="fa fa-key"></i>
+                </div>
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox101" type="checkbox" checked>
+                    <label for="checkbox101"> Remember Me</label>
+                </div>
+                <button type="submit" type="submit" class="btn btn-default btn-block">LOGIN</button>
+            </div>
+        </form>
+        <div class="footer-links row">
+            <div class="col-xs-6"><a href="<?php echo base_url('users/register') ?>"><i class="fa fa-external-link"></i> Register Now</a></div> <!--edited link! -->
+            <div class="col-xs-6 text-right"><a href="#"><i class="fa fa-lock"></i> Forgot password</a></div>
+        </div>
+    </div>
+<?php } else { ?>
+    <?php redirect('/welcome'); ?>
+<?php } ?>
