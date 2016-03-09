@@ -8,18 +8,54 @@ class Model_user extends CI_Model {
 
     private $username;
     private $password;
+	private $firstname;
+	private $middlename;
+	private $surname;
+	private $extensionname;
+	private $position;
+	private $designation;
 	private $email;
-	private $fullname;
 	private $regionlist;
+	private $contactno;
 
     protected function getUsername()
     {
         return $this->username;
     }
-	
-	protected function getFullname()
+
+    protected function getPassword()
     {
-        return $this->fullname;
+        return $this->password;
+    }
+
+    protected function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    protected function getMiddlename()
+    {
+        return $this->middlename;
+    }
+
+    protected function getSurname()
+    {
+        return $this->surname;
+    }
+
+    protected function getExtensionname()
+    {
+        return $this->extensionname;
+    }
+
+    protected function getPosition()
+    {
+        return $this->position;
+    }
+
+    protected function getDesignation()
+    {
+        return $this->designation;
     }
 	
 	protected function getEmail()
@@ -32,20 +68,25 @@ class Model_user extends CI_Model {
         return $this->regionlist;
     }
 
-    protected function getPassword()
+    protected function getContactno()
     {
-        return $this->password;
+        return $this->contactno;
     }
 
-    public function __construct($username = NULL,$password = NULL, $fullname = NULL, $email = NULL, $regionlist = NULL)
+
+    public function __construct($username = NULL,$password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL, $position = NULL, $designation = NULL, $email = NULL, $regionlist = NULL, $contactno = NULL)
     {
         $this->username = $username;
         $this->password = $password;
-		$this->fullname = $fullname;
+		$this->firstname = $firstname;
+		$this->middlename = $middlename;
+		$this->surname = $surname;
+		$this->extensionname = $extensionname;
+		$this->position = $position;
+		$this->designation = $designation;
 		$this->email = $email;
 		$this->regionlist = $regionlist;
-		
-
+		$this->contactno = $contactno;
     }
 
     public function registerUser()
@@ -53,7 +94,7 @@ class Model_user extends CI_Model {
 		
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO users(full_name,username,email,passwd,region_code,access_level,date_created) VALUES("'.$this->getFullname().'","'.$this->getUsername().'","'.$this->getEmail().'","'.$this->getPassword().'","'.$this->getRegion().'",0,now())');
+        $this->db->query('INSERT INTO tbl_user(username,password,firstname,middlename,surname,extensionname,email,position,designation,region_code,user_level,contact_no) VALUES("'.$this->getUsername().'","'.$this->getPassword().'","'.$this->getFirstname().'","'.$this->getMiddlename().'","'.$this->getSurname().'","'.$this->getExtensionname().'","'.$this->getEmail().'","'.$this->getPosition().'","'.$this->getDesignation().'","'.$this->getRegion().'",0,"'.$this->getContactno().'")');
 
         if ($this->db->trans_status() === FALSE)
         {
@@ -72,7 +113,7 @@ class Model_user extends CI_Model {
     {
         $this->db->trans_begin();
 
-        $this->db->query('UPDATE users SET
+        $this->db->query('UPDATE tbl_user SET
                           passwd="'.$password.'"
                           WHERE
                           uid = "'.$id.'"

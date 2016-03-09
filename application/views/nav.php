@@ -30,7 +30,7 @@
 
     <!-- Start App Logo -->
     <div class="applogo">
-        <a href="<?php echo base_url('users/index'); ?>" class="logo">FRVA</a> <!--edited link! -->
+        <a href="<?php echo base_url('users/index'); ?>" class="logo">LSWDO</a> <!--edited link! -->
     </div>
     <!-- End App Logo -->
 
