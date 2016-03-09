@@ -32,5 +32,5 @@ if (!$this->session->userdata('user_id')){
         </div>
     </div>
 <?php } else { ?>
-    <?php redirect('/dashboardc'); ?>
+    <?php redirect('/dashboardc/dashboard'); ?>
 <?php } ?>
