@@ -32,11 +32,21 @@ class assessmentinfo extends CI_Controller {
             $this->load->view('footer');
         } else {
             $assessmentinfo_model = new assessmentinfo_model();
-            $application_type_id = $this->input->post('application_type_id');
-            // $application_type_id = $this->assessmentinfo_model->get_application_type();
+             $application_type_id = $this->input->post('application_type_id');
+            $lgu_type_id = $this->input->post('lgu_type_id');
+            $region_code = $this->input->post('region_code');
+            $prov_code = $this->input->post('prov_code');
+            $city_code = $this->input->post('city_code');
+            $brgy_code = $this->input->post('brgy_code');
+            $street_address = $this->input->post('street_address');
+            $swdo_name = $this->input->post('swdo_name');
+            $contact_no = $this->input->post('contact_no');
+            $email = $this->input->post('email');
+            $website = $this->input->post('website');
+            $total_ira = $this->input->post('total_ira');
+            $total_budget_lswdo = $this->input->post('total_budget_lswdo');
 
-
-            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id);
+            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
             if ($addResult){
                 $form_message = 'Add Success!';
                 $this->load->view('header');
@@ -72,11 +82,22 @@ class assessmentinfo extends CI_Controller {
             } else {
                 $id = $this->input->post('profile_id');
                 $application_type_id = $this->input->post('application_type_id');
+                $lgu_type_id = $this->input->post('lgu_type_id');
+                $region_code = $this->input->post('region_code');
+                $prov_code = $this->input->post('prov_code');
+                $city_code = $this->input->post('city_code');
+                $brgy_code = $this->input->post('brgy_code');
+                $street_address = $this->input->post('street_address');
+                $swdo_name = $this->input->post('swdo_name');
+                $contact_no = $this->input->post('contact_no');
+                $email = $this->input->post('email');
+                $website = $this->input->post('website');
+                $total_ira = $this->input->post('total_ira');
+                $total_budget_lswdo = $this->input->post('total_budget_lswdo');
 
-
-                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id);
+                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
                 if ($updateResult){
-//                    $this->load->view('student_update_success',array('redirectIndex'=>$this->redirectIndex()));
+                    // $this->load->view('student_update_success',array('redirectIndex'=>$this->redirectIndex()));
                     $form_message = 'Update Success';
                     $this->load->view('header');
                     $this->load->view('nav');
@@ -99,12 +120,24 @@ class assessmentinfo extends CI_Controller {
         public function assessmentinfo_masterview($id = 0,$form_message = '')
         {
             $assessmentinfo_model = new assessmentinfo_model();
-            $AssessmentDetails = $assessmentinfo_model->getAssessmentByID($id);
+            $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
             if ($AssessmentDetails){
                 $form_message = $form_message;
                 $data = array(
                     'profile_id'                 =>      $AssessmentDetails->profile_id,
-                    'application_type_id'      =>      $AssessmentDetails->application_type_id
+                   'application_type_id'      =>      $AssessmentDetails->application_type_id,
+                   'lgu_type_id'      =>      $AssessmentDetails->lgu_type_id,
+                   'region_code'      =>      $AssessmentDetails->region_code,
+                   'prov_code'      =>      $AssessmentDetails->prov_code,
+                   'city_code'      =>      $AssessmentDetails->city_code,
+                   'brgy_code'      =>      $AssessmentDetails->brgy_code,
+                   'street_address'      =>      $AssessmentDetails->street_address,
+                   'swdo_name'      =>      $AssessmentDetails->swdo_name,
+                   'contact_no'      =>      $AssessmentDetails->contact_no,
+                   'email'      =>      $AssessmentDetails->email,
+                   'website'      =>      $AssessmentDetails->website,
+                   'total_ira'      =>      $AssessmentDetails->total_ira,
+                   'total_budget_lswdo'      =>      $AssessmentDetails->total_budget_lswdo
 
                 );
             } else {
@@ -137,131 +170,6 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('footer');
                 }
             }
-        }
-
-        public function addStudentSubjects($student_id = 0,$course = 0,$year = 0,$sem = 0)
-        {
-            $Student_Model = new Student_Model();
-            $Subject = $Student_Model->Lib_getAllSubjects($course,$year,$sem);
-
-            if ($Subject){
-                $this->validateAddSubjects();
-
-                if (!$this->form_validation->run()){
-                    $form_message = '';
-                    $this->load->view('header');
-                    $this->load->view('nav');
-                    $this->load->view('add_student_subject',array(
-                        'Subject'=>$Subject,
-                        'form_message'=>$form_message,
-                        'student_id'=>$student_id
-                    ));
-                    $this->load->view('footer');
-                } else {
-                    $subject_id_post = $this->input->post('subject_id');
-                    $student_id_post = $student_id;
-                    $addResult = $Student_Model->addStudSubjects($student_id_post,$subject_id_post);
-                    if ($addResult){
-                        $form_message = 'Add Success!';
-                        $this->load->view('header');
-                        $this->load->view('nav');
-                        $this->load->view('add_student_subject',array(
-                            'Subject'=>$Subject,
-                            'form_message'=>$form_message,
-                            'student_id'=>$student_id
-                        ));
-                        $this->load->view('footer');
-                        $this->redirectMasterPage($student_id);
-                    }
-                }
-            } else {
-                $Subject = '';
-                $form_message = 'There are discrepancies on the student details, please recheck before adding subjects';
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('add_student_subject',array(
-                    'Subject'=>$Subject,
-                    'form_message'=>$form_message,
-                    'student_id'=>$student_id
-                ));
-                $this->load->view('footer');
-                $this->redirectMasterPage($student_id,2);
-            }
-        }
-
-        public function editstudentsubject($student_subject_id = 0)
-        {
-            $Student_Model = new Student_Model();
-            $SubjDetails = $Student_Model->getOneStudentSubjects($student_subject_id);
-
-            $student_subject_id = $SubjDetails['student_subject_id'];
-            $student_id = $SubjDetails['student_id'];
-            $subject_id = $SubjDetails['subject_id'];
-            $subj_name = $Student_Model->getSubjectName($SubjDetails['subject_id']);
-            $grade = $SubjDetails['grade'];
-            $remarks = $SubjDetails['remarks'];
-
-            $config = array(
-                array(
-                    'field'   => 'grade',
-                    'label'   => 'Grade',
-                    'rules'   => 'required'
-                )
-            );
-
-            $this->form_validation->set_rules($config);
-
-            if (!$this->form_validation->run()){
-                $form_message = '';
-                $data = array(
-                    'form_message' => $form_message,
-                    'student_subject_id' => $student_subject_id,
-                    'student_id' => $student_id,
-                    'subject_id' => $subject_id,
-                    'subj_name' => $subj_name,
-                    'grade' => $grade,
-                    'remarks' => $remarks
-                );
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('edit_student_subject',$data);
-                $this->load->view('footer');
-            } else {
-                $p_grade = $this->input->post('grade');
-                $p_remarks = $this->input->post('remarks');
-                $resultUpdate = $Student_Model->editStudSubjects($student_subject_id,$p_grade,$p_remarks);
-                if ($resultUpdate){
-                    $Update_message = 'Update Success';
-                    $this->student_masterview($student_id,$Update_message);
-                    $this->redirectMasterPage($student_id,0.5);
-                }
-            }
-        }
-
-        public function deletesubject($student_id,$id = 0)
-        {
-            $Student_Model = new Student_Model();
-            $result = $Student_Model->deleteStudentSubject($id);
-
-            if ($result){
-                $message = 'DELETE Success!';
-                $this->student_masterview($student_id,$message);
-                $this->redirectMasterPage($student_id,0.5);
-            }
-        }
-
-        // custom classes / behavior
-        protected function validateAddSubjects()
-        {
-            $config = array(
-                array(
-                    'field'   => 'subject_id',
-                    'label'   => 'Subject',
-                    'rules'   => 'required'
-                )
-            );
-
-            return $this->form_validation->set_rules($config);
         }
 
     protected function validateEditForm()
@@ -301,7 +209,7 @@ class assessmentinfo extends CI_Controller {
         return $query->list_fields();
     }
 
-    public function redirectIndex()
+  public function redirectIndex()
     {
         $page = base_url();
         $sec = "1";

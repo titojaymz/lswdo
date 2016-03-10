@@ -3,7 +3,7 @@
  * Created by JOSEF FRIEDRICH S. BALDO
  * Date Time: 10/18/15 12:33 AM
  */
-if (!$this->session->userdata('user_id')){
+if (!$this->session->userdata('user_data')){
     redirect('/users/login','location');
 }
 ?>
@@ -19,21 +19,28 @@ if (!$this->session->userdata('user_id')){
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>Profile ID</th>
-                <th>Application type</th>
-
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Semester</th>
+                <th>Subjects</th>
+                <th>Options</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach($assessmentinfo_data as $assessmentinfoData): ?>
+            <?php foreach($student_data as $studentData): ?>
                 <tr>
-                    <td><?php echo $assessmentinfoData->profile_id ?></td>
-                    <><?php echo $assessmentinfoData->application_type_id ?></td>
-                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View Details </a></td>
+                    <td><?php echo $studentData->student_id ?></td>
+                    <td><?php echo $studentData->lastname . ', ' . $studentData->firstname . ' ' . $studentData->middlename . ' ' . $studentData->extname ?></td>
+                    <td><?php echo $studentData->course ?></td>
+                    <td><?php echo $studentData->year ?></td>
+                    <td><?php echo $studentData->sem ?></td>
+                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $studentData->student_id . '.html') ?>"><i class="fa fa-list"></i> View Details </a></td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editassessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
-                            <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $studentData->student_id . '.html') ?>"><i class="fa fa-trash"></i> </a>
+                            <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $studentData->student_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
+                            <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('students/delete_student/' . $studentData->student_id . '.html') ?>"><i class="fa fa-trash"></i> </a>
                         </div>
 
                     </td>

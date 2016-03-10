@@ -27,14 +27,26 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function insertAssessmentinfo($application_type_id)
+    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo)
                           VALUES
                           (
-                          "'.$application_type_id.'"
+                          "'.$application_type_id.'",
+                          "'.$lgu_type_id.'",
+                          "'.$region_code.'",
+                          "'.$prov_code.'",
+                          "'.$city_code.'",
+                          "'.$brgy_code.'",
+                          "'.$street_address.'",
+                          "'.$swdo_name.'",
+                          "'.$contact_no.'",
+                          "'.$email.'",
+                          "'.$website.'",
+                          "'.$total_ira.'",
+                          "'.$total_budget_lswdo.'"
                           )');
 
         if ($this->db->trans_status() === FALSE)
@@ -78,12 +90,24 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_application_type)->result();
     }
 */
-    public function updateAssessmentinfo($id,$application_type_id)
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
         $this->db->query('UPDATE tbl_lswdo SET
-                          application_type_id="'.$application_type_id.'"
+                          application_type_id="'.$application_type_id.'",
+                          lgu_type_id="'.$lgu_type_id.'",
+                          region_code="'.$region_code.'",
+                          prov_code="'.$prov_code.'",
+                          city_code="'.$city_code.'",
+                          brgy_code="'.$brgy_code.'",
+                          street_address="'.$street_address.'",
+                          swdo_name="'.$swdo_name.'",
+                          contact_no="'.$contact_no.'",
+                          email="'.$email.'",
+                          website="'.$website.'",
+                          total_ira="'.$total_ira.'",
+                          total_budget_lswdo="'.$total_budget_lswdo.'"
 
                           WHERE
                           profile_id = "'.$id.'"
@@ -257,8 +281,5 @@ class assessmentinfo_model extends CI_Model {
         }
         $this->db->close();
     }*/
-
-
-
 
 }
