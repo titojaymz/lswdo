@@ -3,12 +3,13 @@
  * Created by JOSEF FRIEDRICH S. BALDO
  * Date Time: 10/18/15 12:57 AM
  */
-if (!$this->session->userdata('user_data')){
+if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
 //echo validation_errors();
 ?>
 <body>
+
 <?php if ($form_message <> '') { ?>
     <div class="alert alert-success">
         <strong><?php echo $form_message ?></strong>

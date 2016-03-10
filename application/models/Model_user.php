@@ -12,11 +12,8 @@ class Model_user extends CI_Model {
 	private $middlename;
 	private $surname;
 	private $extensionname;
-	private $position;
-	private $designation;
 	private $email;
 	private $regionlist;
-	private $contactno;
 
     protected function getUsername()
     {
@@ -47,16 +44,6 @@ class Model_user extends CI_Model {
     {
         return $this->extensionname;
     }
-
-    protected function getPosition()
-    {
-        return $this->position;
-    }
-
-    protected function getDesignation()
-    {
-        return $this->designation;
-    }
 	
 	protected function getEmail()
     {
@@ -68,13 +55,9 @@ class Model_user extends CI_Model {
         return $this->regionlist;
     }
 
-    protected function getContactno()
-    {
-        return $this->contactno;
-    }
 
 
-    public function __construct($username = NULL,$password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL, $position = NULL, $designation = NULL, $email = NULL, $regionlist = NULL, $contactno = NULL)
+    public function __construct($username = NULL,$password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL,$email = NULL, $regionlist = NULL)
     {
         $this->username = $username;
         $this->password = $password;
@@ -82,11 +65,8 @@ class Model_user extends CI_Model {
 		$this->middlename = $middlename;
 		$this->surname = $surname;
 		$this->extensionname = $extensionname;
-		$this->position = $position;
-		$this->designation = $designation;
 		$this->email = $email;
 		$this->regionlist = $regionlist;
-		$this->contactno = $contactno;
     }
 
     public function registerUser()
@@ -94,7 +74,16 @@ class Model_user extends CI_Model {
 		
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_user(username,password,firstname,middlename,surname,extensionname,email,position,designation,region_code,user_level,contact_no) VALUES("'.$this->getUsername().'","'.$this->getPassword().'","'.$this->getFirstname().'","'.$this->getMiddlename().'","'.$this->getSurname().'","'.$this->getExtensionname().'","'.$this->getEmail().'","'.$this->getPosition().'","'.$this->getDesignation().'","'.$this->getRegion().'",0,"'.$this->getContactno().'")');
+        $this->db->query('Insert into tbl_user (username,`password`, email, firstname, middlename,surname,extensionname,region_code)
+                          Values
+                          ("'.$this->getUsername().'","'.
+                            $this->getPassword().'","'.
+                            $this->getEmail().'","'.
+                            $this->getFirstname().'","'.
+                            $this->getMiddlename().'","'.
+                            $this->getSurname().'","'.
+                            $this->getExtensionname().'","'.
+                            $this->getRegion().'")');
 
         if ($this->db->trans_status() === FALSE)
         {
@@ -134,15 +123,13 @@ class Model_user extends CI_Model {
 
     public function ifUserExist()
     {
-        $hash = sha1($this->getPassword());
-        $query = $this->db->get_where('tbl_user', array('username' => $this->getUsername(),'password' => $hash, 'activated' => 1));
+        $query = $this->db->get_where('tbl_user', array('username' => $this->getUsername(),'password' => $this->getPassword(), 'activated' => 1));
         return $query->num_rows();
     }
 
     public function retrieveUserData()
     {
-        $hash = sha1($this->getPassword());
-        $query = $this->db->get_where('tbl_user', array('username' => $this->getUsername(),'password' => $hash));
+        $query = $this->db->get_where('tbl_user', array('username' => $this->getUsername(),'password' => $this->getPassword()));
         return $query->row();
     }
 	

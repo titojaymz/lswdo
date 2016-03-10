@@ -27,6 +27,7 @@ class assessmentinfo extends CI_Controller {
             $form_message = '';
             $this->load->view('header');
             $this->load->view('nav');
+            $this->load->view('sidebar');
             $this->load->view('assessmentinfo_add',array('form_message'=>$form_message));
             $this->load->view('footer');
         } else {

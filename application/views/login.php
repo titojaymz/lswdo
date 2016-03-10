@@ -10,6 +10,9 @@ if (!$this->session->userdata('user_id')){
                 <h1>LSWDO</h1>
                 <h4>Sign-In</h4>
             </div>
+
+            <?php echo $form_message; ?>
+
             <div class="form-area">
                 <div class="group">
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>

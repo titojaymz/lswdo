@@ -7,7 +7,7 @@ class Model_form extends CI_Model
           region_code,
           region_name
         FROM
-          lib_region
+          lib_regions
         WHERE
           region_code <> '-1'
         ORDER BY
@@ -23,7 +23,7 @@ class Model_form extends CI_Model
             id_province,
             prov_name
         FROM
-          lib_province
+          lib_provinces
         WHERE
           region_code = ?
         ORDER BY
@@ -39,7 +39,7 @@ class Model_form extends CI_Model
             id_municipality,
             city_name
         FROM
-          lib_municipality
+          lib_cities
         WHERE
           prov_code = ?
         ORDER BY
@@ -55,7 +55,7 @@ class Model_form extends CI_Model
             id_barangay,
             brgy_name
         FROM
-          lib_barangay
+          lib_brgy
         WHERE
           city_code = ?
         ORDER BY
