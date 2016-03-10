@@ -154,15 +154,15 @@ class assessmentinfo extends CI_Controller {
 
         public function delete_student($id = 0)
         {
-            $Student_Model = new Student_Model();
+            $assessmentinfo_model = new assessmentinfo_model();
             if ($id > 0){
-                $deleteResult = $Student_Model->deletestudent($id);
+                $deleteResult = $assessmentinfo_model->deletestudent($id);
                 if ($deleteResult){
                     $form_message = 'Delete Success!';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('student_list',array(
-                        'student_data'=>$Student_Model->getStudents(),
+                        'student_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message,
                         $this->redirectIndex()
@@ -205,7 +205,7 @@ class assessmentinfo extends CI_Controller {
 
     public function listFields()
     {
-        $query = $this->db->query('SELECT profile_id,application_type_id FROM tbl_lswdo');
+        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
 
@@ -222,10 +222,10 @@ class assessmentinfo extends CI_Controller {
         $sec = "1";
         header("Refresh: $sec; url=$page");
     }
-
+/*
     public function redirectMasterPage($id,$sec = 1)
     {
         $page = base_url('assessmentinfo/assessmentinfo_masterview/' . $id . '.html');
         header("Refresh: $sec; url=$page");
-    }
+    }*/
 }

@@ -8,39 +8,67 @@ if (!$this->session->userdata('user_data')){
 }
 ?>
 <body>
-<?php if ($form_message <> ''){ ?>
+
+<?php if ($form_message <> '') { ?>
     <div class="alert alert-success">
-        <?php echo $form_message ?>
+        <strong><?php echo $form_message ?></strong>
     </div>
 <?php } ?>
+<?php if (validation_errors() <> '') { ?>
+    <div class="alert alert-danger">
+        <strong><?php echo validation_errors() ?></strong>
+    </div>
+<?php } ?>
+<div class="modal-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div id="addassessment" class="col-md-6">
+                <form method="post" class="form-horizontal">
 <div class="col-md-12">
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>Student ID</th>
-                <th>Name</th>
-                <th>Course</th>
-                <th>Year</th>
-                <th>Semester</th>
-                <th>Subjects</th>
-                <th>Options</th>
+                <th>Profile ID</th>
+                <th>Status of Application</th>
+                <th>Region</th>
+                <th>Province</th>
+                <th>City</th>
+                <th>Brgy</th>
+                <th>Street Address</th>
+                <th>SWDO Name</th>
+                <th>Contact No</th>
+                <th>Email</th>
+                <th>Website</th>
+                <th>Total IRA</th>
+                <th>Total Budget LSWDO</th>
+
             </tr>
             </thead>
             <tbody>
-            <?php foreach($student_data as $studentData): ?>
+            <?php foreach($assessmentinfo_data as $assessmentinfoData): ?>
                 <tr>
-                    <td><?php echo $studentData->student_id ?></td>
-                    <td><?php echo $studentData->lastname . ', ' . $studentData->firstname . ' ' . $studentData->middlename . ' ' . $studentData->extname ?></td>
-                    <td><?php echo $studentData->course ?></td>
-                    <td><?php echo $studentData->year ?></td>
-                    <td><?php echo $studentData->sem ?></td>
-                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $studentData->student_id . '.html') ?>"><i class="fa fa-list"></i> View Details </a></td>
+                    <td><?php echo $assessmentinfoData->profile_id ?></td>
+                    <td><?php echo $assessmentinfoData->application_type_id ?></td>
+                    <td><?php echo $assessmentinfoData->lgu_type_id ?></td>
+                    <td><?php echo $assessmentinfoData->region_code ?></td>
+                    <td><?php echo $assessmentinfoData->prov_code ?></td>
+                    <td><?php echo $assessmentinfoData->city_code ?></td>
+                    <td><?php echo $assessmentinfoData->brgy_code ?></td>
+                    <td><?php echo $assessmentinfoData->street_address ?></td>
+                    <td><?php echo $assessmentinfoData->swdo_name ?></td>
+                    <td><?php echo $assessmentinfoData->contact_no ?></td>
+                    <td><?php echo $assessmentinfoData->email ?></td>
+                    <td><?php echo $assessmentinfoData->website ?></td>
+                    <td><?php echo $assessmentinfoData->total_ira ?></td>
+                    <td><?php echo $assessmentinfoData->total_budget_lswdo ?></td>
+                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View Details </a></td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $studentData->student_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
-                            <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('students/delete_student/' . $studentData->student_id . '.html') ?>"><i class="fa fa-trash"></i> </a>
+                            <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
+                            <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('assessmentinfo/delete_student/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-trash"></i> </a>
                         </div>
 
                     </td>
@@ -51,4 +79,8 @@ if (!$this->session->userdata('user_data')){
     </div>
     <div class="col-md-1"></div>
 </div>
+
+                </form>
+            </div>
+            <div class="col-md-3"></div>
 </body>
