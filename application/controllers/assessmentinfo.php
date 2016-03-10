@@ -105,7 +105,7 @@ class assessmentinfo extends CI_Controller {
                         'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message,
-                        $this->redirectIndex()
+                        //$this->redirectIndex()
                     ));
                     $this->load->view('footer');
                 }
