@@ -47,9 +47,6 @@ if (!$this->session->userdata('user_id')){
                         <?php endforeach ?>
                     </select>
             </div>
-            <pre>
-                <?php print_r($application); ?>
-            </pre>
             <?php echo form_close() ?>
 
             <div class="form-group">
