@@ -149,9 +149,9 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 //select
-    public function Lib_getAllApplicationtype($id = 0)
+    public function Lib_getAllApplicationtype()
     {
-        $query = $this->db->get_where('lib_application_type',array('application_type_id'=>$id,'DELETED' => 0));
+        $query = $this->db->get_where('lib_application_type',array('DELETED' => 0));
         if ($query->num_rows() > 0){
             return $query->result();
         } else {
