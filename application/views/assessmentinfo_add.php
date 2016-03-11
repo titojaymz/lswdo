@@ -27,7 +27,7 @@ if (!$this->session->userdata('user_id')){
 <div id="addassessment" class="col-md-6">
     <form method="post" class="form-horizontal">
 
-<?php /*---------------------------- lswdo certificate--------------------------------------------------*/?>
+<?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
         <div class="form-group">
             <div class="form-group form-group-sm">
                 <div class="col-lg-4 col-sm-4">
