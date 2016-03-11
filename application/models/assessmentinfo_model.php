@@ -160,6 +160,17 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
+    public function Lib_getLGUtype()
+    {
+        $query = $this->db->get_where('lib_lgu_type',array('DELETED' => 0));
+        if ($query->num_rows() > 0){
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+        $this->db->close();
+    }
+
     public function addAssessmentinfoApplicationtype($application_type_id = NULL)
     {
         $this->db->trans_begin();
@@ -182,17 +193,29 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function getSubjectName($id = 0)
+    public function addAssessmentinfoLGUtype($lgu_type_id = NULL)
     {
-        $query = $this->db->get_where('lib_application_type',array('application_type_id'=>$id,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            $rowDetails = $query->row();
-            return $rowDetails->application_type_name;
-        } else {
+        $this->db->trans_begin();
+
+        $this->db->query('INSERT INTO tbl_lswdo(lgu_type_id)
+                           VALUES
+                           ("'.$lgu_type_id.'")
+                           ');
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
             return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
         }
         $this->db->close();
     }
+
+
 
 
 }

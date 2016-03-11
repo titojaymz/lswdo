@@ -76,14 +76,14 @@ class Model_user extends CI_Model {
 
         $this->db->query('Insert into tbl_user (username,`password`, email, firstname, middlename,surname,extensionname,region_code)
                           Values
-                          ("'.$this->getUsername().'","'.
-                            $this->getPassword().'","'.
-                            $this->getEmail().'","'.
-                            $this->getFirstname().'","'.
-                            $this->getMiddlename().'","'.
-                            $this->getSurname().'","'.
-                            $this->getExtensionname().'","'.
-                            $this->getRegion().'")');
+                          ("'.$this->getUsername().'",
+                          "'.$this->getPassword().'",
+                            "'.$this->getEmail().'",
+                           "'.$this->getFirstname().'",
+                           "'.$this->getMiddlename().'",
+                            "'.$this->getSurname().'",
+                            "'.$this->getExtensionname().'",
+                            "'.$this->getRegion().'")');
 
         if ($this->db->trans_status() === FALSE)
         {

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by JOSEF FRIEDRICH S. BALDO
+ * Created by PhpStorm
  * Date Time: 10/18/15 12:31 AM
  */
 class assessmentinfo extends CI_Controller {
@@ -21,18 +21,31 @@ class assessmentinfo extends CI_Controller {
 
     public function addAssessmentinfo()
     {
+        $assessmentinfo_model = new assessmentinfo_model();
+        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
+        $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+      //  $region_name = $assessmentinfo_model->Lib_getRegion();
+
         $this->validateAddForm();
+
+       // $application_type_name = $this->input->post('application_type_id');
+       // $lgu_type_id = $this->input->post('lgu_type_id');
+
 
         if (!$this->form_validation->run()){
             $form_message = '';
             $this->load->view('header');
             $this->load->view('nav');
             $this->load->view('sidebar');
-            $this->load->view('assessmentinfo_add',array('form_message'=>$form_message));
+            $this->load->view('assessmentinfo_add',array(
+                'application' => $application_type_name,
+                'lgu_type' => $lgu_type_name,
+             //   'region_name' => $region_name,
+                'form_message'=>$form_message));
             $this->load->view('footer');
         } else {
-            $assessmentinfo_model = new assessmentinfo_model();
-             $application_type_id = $this->input->post('application_type_id');
+
+            $application_type_id = $this->input->post('application_type_id');
             $lgu_type_id = $this->input->post('lgu_type_id');
             $region_code = $this->input->post('region_code');
             $prov_code = $this->input->post('prov_code');
@@ -51,7 +64,9 @@ class assessmentinfo extends CI_Controller {
                 $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
-                $this->load->view('assessmentinfo_list',array(
+                $this->load->view('assessmentinfo_add',array(
+                    'application' => $application_type_name,
+                    'lgu_type' => $lgu_type_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
@@ -172,7 +187,43 @@ class assessmentinfo extends CI_Controller {
             }
         }
 
-    protected function validateEditForm()
+    public function listFields()
+    {
+        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
+        return $query->list_fields();
+    }
+/*
+    public function addApplicationtype()
+    {
+        $assessmentinfo_model = new assessmentinfo_model();
+        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
+        $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+
+
+        $this->validateAddApplicationtype();
+
+        // if (!$this->form_validation->run()){
+
+        $application_type_id = $this->input->post('application_type_id');
+        $lgu_type_id = $this->input->post('lgu_type_id');
+
+        //$application_type_id_post = $application_type_id;
+
+        $form_message = 'Add Success!';
+        $this->load->view('header');
+        $this->load->view('nav');
+        $this->load->view('assessmentinfo_add', array(
+            'application' => $application_type_name,
+            'list_fields' => $this->listFields(),
+            'form_message' => $form_message
+        ));
+        $this->load->view('footer');
+
+        // }
+
+    }*/
+
+      protected function validateEditForm()
     {
         $config = array(
             array(
@@ -194,8 +245,13 @@ class assessmentinfo extends CI_Controller {
     {
         $config = array(
             array(
-                'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
+                'field'   => 'application_type_name',
+                'label'   => 'application_type_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'lgu_type_name',
+                'label'   => 'lgu_type_name',
                 'rules'   => 'required'
             )
         );
@@ -203,70 +259,6 @@ class assessmentinfo extends CI_Controller {
         return $this->form_validation->set_rules($config);
     }
 
-    public function listFields()
-    {
-        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
-        return $query->list_fields();
-    }
-
-//select
-
-    public function addApplicationtype()
-    {
-        $assessmentinfo_model = new assessmentinfo_model();
-        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
-
-
-            $this->validateAddApplicationtype();
-
-            if (!$this->form_validation->run()){
-
-                 $application_type_id_post = $this->input->post('application_type_id');
-                //$application_type_id_post = $application_type_id;
-
-                    $form_message = 'Add Success!';
-                    $this->load->view('header');
-                    $this->load->view('nav');
-                    $this->load->view('assessmentinfo_add',array(
-                        'application'=>$application_type_name
-                    ));
-                    $this->load->view('footer');
-
-            }
-
-    }
-/*
-    public function addApplicationtype()
-    {
-        $this->validateAddForm();
-
-        if (!$this->form_validation->run()){
-            $form_message = '';
-            $this->load->view('header');
-            $this->load->view('nav');
-            $this->load->view('assessmentinfo_add',array('form_message'=>$form_message));
-            $this->load->view('footer');
-        } else {
-            $assessmentinfo_model = new assessmentinfo_model();
-            $application_type_id = $this->input->post('application_type_id');
-
-
-            $addResult = $assessmentinfo_model->addAssessmentinfoApplicationtype($application_type_id);
-            if ($addResult){
-                $form_message = 'Add Success!';
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('assessmentinfo_list',array(
-                    'assessmentinfo_data'=>$assessmentinfo_model->Lib_getAllApplicationtype(),
-                    'list_fields'=>$this->listFields(),
-                    'form_message'=>$form_message,
-                    $this->redirectIndex()
-                ));
-                $this->load->view('footer');
-            }
-        }
-    }
-*/
     protected function validateAddApplicationtype()
     {
         $config = array(
