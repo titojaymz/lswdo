@@ -31,13 +31,27 @@ if (!$this->session->userdata('user_id')){
         <div class="form-group">
             <div class="form-group form-group-sm">
                 <div class="col-lg-4 col-sm-4">
-                    <label for="women" class="control-label">Geographic Information</label>
+                    <label for="geo" class="control-label">Geographic Information</label>
                 </div>
             </div>
+            <?php if ($application_type_name) { ?>
+            <?php echo form_open('',array('class'=>'form-horizontal')) ?>
             <div class="form-group">
-                <label for="application_type_id">Status of Application:</label>
-                <input class="form-control" type="text" name="application_type_id" value="<?php echo set_value('application_type_id') ?>" placeholder="application_type_id">
+                <label for="application_type">Status of Application:</label>
+
+                    <select class="form-control" name="application_type_id" id="application_type_id">
+                        <option select value="">Please select</option>
+                        <?php foreach($application_type_name as $Applicationtypes): ?>
+                            <option value="<?php echo $Applicationtypes->application_type_id ?>"><?php echo $Applicationtypes->application_type_name ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                    <?php echo $Applicationtypes->application_type_id ?>
+
             </div>
+            <?php echo form_close() ?>
+
+            <?php } ?>
             <div class="form-group">
                 <label for="certificate_no">Certificate Number:</label>
                 <input class="form-control" type="text" name="certificate_no" value="<?php echo set_value('certificate_no') ?>" placeholder="certificate_no">

@@ -51,7 +51,7 @@ class users extends CI_Controller {
                 $this->load->view('login',array($rpmb,'form_message'=>$form_message));
                 $this->load->view('footer');
             } else {
-                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Fail!<a href="#" class="closed">&times;</a></div>';
+                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Registration Failed!<a href="#" class="closed">&times;</a></div>';
                 $this->load->view('header');
                 $this->load->view('register',array($rpmb,'form_message'=>$form_message));
                 $this->load->view('footer');

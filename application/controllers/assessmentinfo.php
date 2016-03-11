@@ -209,6 +209,93 @@ class assessmentinfo extends CI_Controller {
         return $query->list_fields();
     }
 
+//select
+
+    public function addApplicationtype($application_type_id = 0, $application_type_name = 0)
+    {
+        $assessmentinfo_model = new assessmentinfo_model();
+        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype($application_type_id);
+
+        if ($application_type_name){
+            $this->validateAddApplicationtype();
+
+            if (!$this->form_validation->run()){
+
+                 $application_type_id_post = $this->input->post('application_type_id');
+                //$application_type_id_post = $application_type_id;
+                $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id_post);
+                if ($addResult){
+                    $form_message = 'Add Success!';
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('assessmentinfo_add',array(
+                        'application_type_name'=>$application_type_name,
+                        'form_message'=>$form_message,
+                        'application_type_id'=>$application_type_id
+                    ));
+                    $this->load->view('footer');
+                    $this->redirectMasterPage($application_type_id);
+                }
+            }
+        } else {
+            $application_type_name = '';
+            $form_message = 'There are discrepancies on the student details, please recheck before adding subjects';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('assessmentinfo_add',array(
+                'application_type_name'=>$application_type_name,
+                'form_message'=>$form_message,
+                'application_type_id'=>$application_type_id
+            ));
+            $this->load->view('footer');
+            $this->redirectMasterPage($application_type_id,2);
+        }
+    }
+
+    public function addApplicationtype()
+    {
+        $this->validateAddForm();
+
+        if (!$this->form_validation->run()){
+            $form_message = '';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('assessmentinfo_add',array('form_message'=>$form_message));
+            $this->load->view('footer');
+        } else {
+            $assessmentinfo_model = new assessmentinfo_model();
+            $application_type_id = $this->input->post('application_type_id');
+
+
+            $addResult = $assessmentinfo_model->addAssessmentinfoApplicationtype($application_type_id);
+            if ($addResult){
+                $form_message = 'Add Success!';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('assessmentinfo_list',array(
+                    'assessmentinfo_data'=>$assessmentinfo_model->Lib_getAllApplicationtype(),
+                    'list_fields'=>$this->listFields(),
+                    'form_message'=>$form_message,
+                    $this->redirectIndex()
+                ));
+                $this->load->view('footer');
+            }
+        }
+    }
+
+    protected function validateAddApplicationtype()
+    {
+        $config = array(
+            array(
+                'field'   => 'application_type_id',
+                'label'   => 'application_type_name',
+                'rules'   => 'required'
+            )
+        );
+
+        return $this->form_validation->set_rules($config);
+    }
+
   public function redirectIndex()
     {
         $page = base_url();
@@ -222,10 +309,10 @@ class assessmentinfo extends CI_Controller {
         $sec = "1";
         header("Refresh: $sec; url=$page");
     }
-/*
+
     public function redirectMasterPage($id,$sec = 1)
     {
         $page = base_url('assessmentinfo/assessmentinfo_masterview/' . $id . '.html');
         header("Refresh: $sec; url=$page");
-    }*/
+    }
 }

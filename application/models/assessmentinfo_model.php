@@ -62,7 +62,7 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
     /*
-    // get application type
+     get application type
     public function getApplicationtype($id = 0)
     {
         $query = $this->db->get_where('lib_application_type',array('application_type_id'=>$id,'DELETED'=>0));
@@ -148,10 +148,10 @@ class assessmentinfo_model extends CI_Model {
         }
         $this->db->close();
     }
-/*
-    public function getStudentSubjects($id = 0)
+//select
+    public function Lib_getAllApplicationtype($id = 0)
     {
-        $query = $this->db->get_where('tbl_student_subjects',array('student_id'=>$id,'DELETED' => 0));
+        $query = $this->db->get_where('lib_application_type',array('application_type_id'=>$id,'DELETED' => 0));
         if ($query->num_rows() > 0){
             return $query->result();
         } else {
@@ -160,66 +160,13 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function getOneStudentSubjects($id = 0)
-    {
-        $query = $this->db->get_where('tbl_student_subjects',array('student_subject_id'=>$id,'DELETED' => 0));
-        $result = $query->row();
-        return array(
-            'student_subject_id' => $result->student_subject_id,
-            'student_id'=> $result->student_id,
-            'subject_id'=> $result->subject_id,
-            'grade'=> $result->grade,
-            'remarks'=> $result->remarks
-        );
-    }
-
-    public function getStudentName($id = 0)
-    {
-        $query = $this->db->get_where('tbl_students',array('student_id'=>$id,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            $rowDetails = $query->row();
-            return $rowDetails->lastname . ', ' . $rowDetails->firstname . ' ' . $rowDetails->middlename . ' ' . $rowDetails->extname;
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
-    }
-
-    public function getSubjectName($id = 0)
-    {
-        $query = $this->db->get_where('lib_subjects',array('subject_id'=>$id,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            $rowDetails = $query->row();
-            return $rowDetails->subject_name;
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
-    }
-
-    public function Lib_getAllSubjects($course = NULL, $year = 0, $sem = 0)
-    {
-        $query = $this->db->get_where('lib_subjects',array(
-            'DELETED'   =>  0,
-            'course'    =>  $course,
-            'year'      =>  $year,
-            'sem'       =>  $sem
-        ));
-        if ($query->num_rows() > 0){
-            return $query->result();
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
-    }
-
-    public function addStudSubjects($student_id = NULL, $subject_id = 0)
+    public function addAssessmentinfoApplicationtype($application_type_id = NULL)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_student_subjects(student_id,subject_id)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id)
                            VALUES
-                           ("'.$student_id.'","'.$subject_id.'")
+                           ("'.$application_type_id.'")
                            ');
 
         if ($this->db->trans_status() === FALSE)
@@ -235,51 +182,17 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function editStudSubjects($student_subject_id = 0,$grade,$remarks)
+    public function getSubjectName($id = 0)
     {
-        $this->db->trans_begin();
-
-        $this->db->query('UPDATE tbl_student_subjects SET
-                          grade='.$grade.',
-                          remarks="'.$remarks.'"
-                          WHERE
-                          student_subject_id='.$student_subject_id.'
-                          ');
-
-        if ($this->db->trans_status() === FALSE)
-        {
-            $this->db->trans_rollback();
+        $query = $this->db->get_where('lib_application_type',array('application_type_id'=>$id,'DELETED'=>0));
+        if ($query->num_rows() > 0){
+            $rowDetails = $query->row();
+            return $rowDetails->application_type_name;
+        } else {
             return FALSE;
-        }
-        else
-        {
-            $this->db->trans_commit();
-            return TRUE;
         }
         $this->db->close();
     }
 
-    public function deleteStudentSubject($id)
-    {
-        $this->db->trans_begin();
-
-        $this->db->query('UPDATE tbl_student_subjects SET
-                          DELETED=1
-                          WHERE
-                          student_subject_id='.$id.'
-                          ');
-
-        if ($this->db->trans_status() === FALSE)
-        {
-            $this->db->trans_rollback();
-            return FALSE;
-        }
-        else
-        {
-            $this->db->trans_commit();
-            return TRUE;
-        }
-        $this->db->close();
-    }*/
 
 }

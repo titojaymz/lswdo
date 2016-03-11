@@ -35,15 +35,15 @@ echo validation_errors();
                 <i class="fa fa-key"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="First Name" name="firstname" required autofocus>
+                <input type="text" class="form-control" placeholder="First Name" name="firstname" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Middle Name" name="middlename" required autofocus>
+                <input type="text" class="form-control" placeholder="Middle Name" name="middlename" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Sur Name" name="surname" required autofocus>
+                <input type="text" class="form-control" placeholder="Sur Name" name="surname" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
