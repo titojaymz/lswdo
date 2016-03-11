@@ -211,45 +211,29 @@ class assessmentinfo extends CI_Controller {
 
 //select
 
-    public function addApplicationtype($application_type_id = 0, $application_type_name = 0)
+    public function addApplicationtype()
     {
         $assessmentinfo_model = new assessmentinfo_model();
-        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype($application_type_id);
+        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
 
-        if ($application_type_name){
+
             $this->validateAddApplicationtype();
 
             if (!$this->form_validation->run()){
 
                  $application_type_id_post = $this->input->post('application_type_id');
                 //$application_type_id_post = $application_type_id;
-                $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id_post);
-                if ($addResult){
+
                     $form_message = 'Add Success!';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('assessmentinfo_add',array(
-                        'application_type_name'=>$application_type_name,
-                        'form_message'=>$form_message,
-                        'application_type_id'=>$application_type_id
+                        'application'=>$application_type_name
                     ));
                     $this->load->view('footer');
-                    $this->redirectMasterPage($application_type_id);
-                }
+
             }
-        } else {
-            $application_type_name = '';
-            $form_message = 'There are discrepancies on the student details, please recheck before adding subjects';
-            $this->load->view('header');
-            $this->load->view('nav');
-            $this->load->view('assessmentinfo_add',array(
-                'application_type_name'=>$application_type_name,
-                'form_message'=>$form_message,
-                'application_type_id'=>$application_type_id
-            ));
-            $this->load->view('footer');
-            $this->redirectMasterPage($application_type_id,2);
-        }
+
     }
 /*
     public function addApplicationtype()
@@ -287,7 +271,7 @@ class assessmentinfo extends CI_Controller {
     {
         $config = array(
             array(
-                'field'   => 'application_type_id',
+                'field'   => 'application_type_name',
                 'label'   => 'application_type_name',
                 'rules'   => 'required'
             )
