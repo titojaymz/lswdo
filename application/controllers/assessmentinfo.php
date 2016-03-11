@@ -251,7 +251,7 @@ class assessmentinfo extends CI_Controller {
             $this->redirectMasterPage($application_type_id,2);
         }
     }
-
+/*
     public function addApplicationtype()
     {
         $this->validateAddForm();
@@ -282,7 +282,7 @@ class assessmentinfo extends CI_Controller {
             }
         }
     }
-
+*/
     protected function validateAddApplicationtype()
     {
         $config = array(
