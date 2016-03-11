@@ -89,7 +89,7 @@ class assessmentinfo_model extends CI_Model {
 
         return $this->db->query($get_application_type)->result();
     }
-*/
+*/ //df
     public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
