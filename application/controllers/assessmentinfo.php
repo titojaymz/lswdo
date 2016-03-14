@@ -169,11 +169,11 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function delete_student($id = 0)
+    public function delete_assessmentinfo($id = 0)
     {
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
-            $deleteResult = $assessmentinfo_model->deletestudent($id);
+            $deleteResult = $assessmentinfo_model->deleteassessmentinfo($id);
             if ($deleteResult){
                 $form_message = 'Delete Success!';
                 $this->load->view('header');
