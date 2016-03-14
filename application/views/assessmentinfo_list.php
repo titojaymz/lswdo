@@ -34,16 +34,7 @@ if (!$this->session->userdata('user_data')){
                 <th>Profile ID</th>
                 <th>Status of Application</th>
                 <th>Region</th>
-                <th>Province</th>
-                <th>City</th>
-                <th>Brgy</th>
-                <th>Street Address</th>
-                <th>SWDO Name</th>
-                <th>Contact No</th>
-                <th>Email</th>
-                <th>Website</th>
-                <th>Total IRA</th>
-                <th>Total Budget LSWDO</th>
+
 
             </tr>
             </thead>
@@ -53,22 +44,12 @@ if (!$this->session->userdata('user_data')){
                     <td><?php echo $assessmentinfoData->profile_id ?></td>
                     <td><?php echo $assessmentinfoData->application_type_id ?></td>
                     <td><?php echo $assessmentinfoData->lgu_type_id ?></td>
-                    <td><?php echo $assessmentinfoData->region_code ?></td>
-                    <td><?php echo $assessmentinfoData->prov_code ?></td>
-                    <td><?php echo $assessmentinfoData->city_code ?></td>
-                    <td><?php echo $assessmentinfoData->brgy_code ?></td>
-                    <td><?php echo $assessmentinfoData->street_address ?></td>
-                    <td><?php echo $assessmentinfoData->swdo_name ?></td>
-                    <td><?php echo $assessmentinfoData->contact_no ?></td>
-                    <td><?php echo $assessmentinfoData->email ?></td>
-                    <td><?php echo $assessmentinfoData->website ?></td>
-                    <td><?php echo $assessmentinfoData->total_ira ?></td>
-                    <td><?php echo $assessmentinfoData->total_budget_lswdo ?></td>
+
                     <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View Details </a></td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
-                            <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('assessmentinfo/delete_student/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-trash"></i> </a>
+
                         </div>
 
                     </td>

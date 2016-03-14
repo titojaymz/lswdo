@@ -36,7 +36,7 @@ if (!$this->session->userdata('user_id')){
             </div>
 
             <div class="form-group">
-                <label for="application">Status of Application:</label>
+                <label for="application_type">Status of Application:</label>
 
                 <select class="form-control" name="application_type_id" id="application_type_id">
                     <option select value="">Please select</option>
@@ -48,86 +48,33 @@ if (!$this->session->userdata('user_id')){
 
         <div class="form-group">
             <div class="form-group">
-                    <label for="women" class="control-label">Identifying Information</label>
+                    <label for="identify_info" class="control-label">Identifying Information</label>
                 </div>
             <div class="form-group">
-                <label for="lgu_type">Type of LSWDO:</label>
+                <label for="lgu_type_id">Type of LSWDO:</label>
                 <select class="form-control" name="lgu_type_id" id="lgu_type_id">
                     <option select value="">Please select</option>
-                    <?php foreach($lgu_type as $LGUtypes): ?>
-                        <option value="<?php echo $LGUtypes->lgu_type_id ?>"><?php echo $LGUtypes->lgu_type_name ?></option>
+                    <?php foreach($lgu_type as $lgus): ?>
+                        <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
+
             <div class="form-group">
                 <label for="region_code">Region:</label>
-                <div class="group">
-                    <select name="region_code" id="region_code" class="form-control" onchange="get_prov();">
-                        <option value="0">Choose Region</option>
-                        <?php foreach($rpmb['region_code'] as $regionselect): ?>
-                            <option value="<?php echo $regionselect->region_code; ?>"
-                                <?php if(isset($_SESSION['region'])) {
-                                    if($regionselect->region_code == $_SESSION['region']) {
-                                        echo " selected";
-                                    }
-                                } ?>
-                                >
-                                <?php echo $regionselect->region_name; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                <input class="form-control" type="text" name="region_code" value="<?php echo set_value('region_code') ?>" placeholder="region_code">
             </div>
             <div class="form-group">
                 <label for="prov_code">Province:</label>
-                <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
-                    <option value="0">Choose Province</option>
-                    <?php foreach($rpmb['regionlist'] as $regionselect): ?>
-                        <option value="<?php echo $regionselect->region_code; ?>"
-                            <?php if(isset($_SESSION['region'])) {
-                                if($regionselect->region_code == $_SESSION['region']) {
-                                    echo " selected";
-                                }
-                            } ?>
-                            >
-                            <?php echo $regionselect->region_name; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <input class="form-control" type="text" name="prov_code" value="<?php echo set_value('prov_code') ?>" placeholder="prov_code">
             </div>
              <div class="form-group">
                 <label for="city_code">City:</label>
-                 <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
-                     <option value="0">Choose City</option>
-                     <?php foreach($rpmb['regionlist'] as $regionselect): ?>
-                         <option value="<?php echo $regionselect->region_code; ?>"
-                             <?php if(isset($_SESSION['region'])) {
-                                 if($regionselect->region_code == $_SESSION['region']) {
-                                     echo " selected";
-                                 }
-                             } ?>
-                             >
-                             <?php echo $regionselect->region_name; ?>
-                         </option>
-                     <?php endforeach; ?>
-                 </select>
+                 <input class="form-control" type="text" name="city_code" value="<?php echo set_value('city_code') ?>" placeholder="city_code">
             </div>
             <div class="form-group">
                 <label for="brgy_code">Baranggay:</label>
-                <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
-                    <option value="0">Choose Baranggay</option>
-                    <?php foreach($rpmb['regionlist'] as $regionselect): ?>
-                        <option value="<?php echo $regionselect->region_code; ?>"
-                            <?php if(isset($_SESSION['region'])) {
-                                if($regionselect->region_code == $_SESSION['region']) {
-                                    echo " selected";
-                                }
-                            } ?>
-                            >
-                            <?php echo $regionselect->region_name; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('brgy_code') ?>" placeholder="swdo_name">
             </div>
             <div class="form-group">
                 <label for="street_address">Street Address:</label>

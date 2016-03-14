@@ -61,35 +61,7 @@ class assessmentinfo_model extends CI_Model {
         }
         $this->db->close();
     }
-    /*
-     get application type
-    public function getApplicationtype($id = 0)
-    {
-        $query = $this->db->get_where('lib_application_type',array('application_type_id'=>$id,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            return $query->row();
-          } else {
-            return FALSE;
-        }
-        $this->db->close();
-    }
 
-    public function get_application_type(){
-        $get_application_type = "
-        SELECT
-          application_type_id,
-          application_type_name
-        FROM
-          lib_application_type
-        WHERE
-          application_type_id > '0'
-        ORDER BY
-          application_type_id
-        ";
-
-        return $this->db->query($get_application_type)->result();
-    }
-*/ //df
     public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
@@ -167,50 +139,6 @@ class assessmentinfo_model extends CI_Model {
             return $query->result();
         } else {
             return FALSE;
-        }
-        $this->db->close();
-    }
-
-    public function addAssessmentinfoApplicationtype($application_type_id = NULL)
-    {
-        $this->db->trans_begin();
-
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id)
-                           VALUES
-                           ("'.$application_type_id.'")
-                           ');
-
-        if ($this->db->trans_status() === FALSE)
-        {
-            $this->db->trans_rollback();
-            return FALSE;
-        }
-        else
-        {
-            $this->db->trans_commit();
-            return TRUE;
-        }
-        $this->db->close();
-    }
-
-    public function addAssessmentinfoLGUtype($lgu_type_id = NULL)
-    {
-        $this->db->trans_begin();
-
-        $this->db->query('INSERT INTO tbl_lswdo(lgu_type_id)
-                           VALUES
-                           ("'.$lgu_type_id.'")
-                           ');
-
-        if ($this->db->trans_status() === FALSE)
-        {
-            $this->db->trans_rollback();
-            return FALSE;
-        }
-        else
-        {
-            $this->db->trans_commit();
-            return TRUE;
         }
         $this->db->close();
     }

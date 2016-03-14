@@ -24,13 +24,8 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-      //  $region_name = $assessmentinfo_model->Lib_getRegion();
 
         $this->validateAddForm();
-
-       // $application_type_name = $this->input->post('application_type_id');
-       // $lgu_type_id = $this->input->post('lgu_type_id');
-
 
         if (!$this->form_validation->run()){
             $form_message = '';
@@ -40,11 +35,10 @@ class assessmentinfo extends CI_Controller {
             $this->load->view('assessmentinfo_add',array(
                 'application' => $application_type_name,
                 'lgu_type' => $lgu_type_name,
-             //   'region_name' => $region_name,
                 'form_message'=>$form_message));
             $this->load->view('footer');
         } else {
-
+            $assessmentinfo_model = new assessmentinfo_model();
             $application_type_id = $this->input->post('application_type_id');
             $lgu_type_id = $this->input->post('lgu_type_id');
             $region_code = $this->input->post('region_code');
@@ -132,98 +126,62 @@ class assessmentinfo extends CI_Controller {
     }
 
 
-        public function assessmentinfo_masterview($id = 0,$form_message = '')
-        {
-            $assessmentinfo_model = new assessmentinfo_model();
-            $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
-            if ($AssessmentDetails){
-                $form_message = $form_message;
-                $data = array(
-                    'profile_id'                 =>      $AssessmentDetails->profile_id,
-                   'application_type_id'      =>      $AssessmentDetails->application_type_id,
-                   'lgu_type_id'      =>      $AssessmentDetails->lgu_type_id,
-                   'region_code'      =>      $AssessmentDetails->region_code,
-                   'prov_code'      =>      $AssessmentDetails->prov_code,
-                   'city_code'      =>      $AssessmentDetails->city_code,
-                   'brgy_code'      =>      $AssessmentDetails->brgy_code,
-                   'street_address'      =>      $AssessmentDetails->street_address,
-                   'swdo_name'      =>      $AssessmentDetails->swdo_name,
-                   'contact_no'      =>      $AssessmentDetails->contact_no,
-                   'email'      =>      $AssessmentDetails->email,
-                   'website'      =>      $AssessmentDetails->website,
-                   'total_ira'      =>      $AssessmentDetails->total_ira,
-                   'total_budget_lswdo'      =>      $AssessmentDetails->total_budget_lswdo
-
-                );
-            } else {
-                $form_message = 'No records found!';
-                $data = array(
-                    'form_message'      =>      $form_message
-                );
-            }
-            $this->load->view('header');
-            $this->load->view('nav');
-            $this->load->view('assessmentinfo_masterview',$data);
-            $this->load->view('footer');
-        }
-
-        public function delete_student($id = 0)
-        {
-            $assessmentinfo_model = new assessmentinfo_model();
-            if ($id > 0){
-                $deleteResult = $assessmentinfo_model->deletestudent($id);
-                if ($deleteResult){
-                    $form_message = 'Delete Success!';
-                    $this->load->view('header');
-                    $this->load->view('nav');
-                    $this->load->view('student_list',array(
-                        'student_data'=>$assessmentinfo_model->getAssessmentinfo(),
-                        'list_fields'=>$this->listFields(),
-                        'form_message'=>$form_message,
-                        $this->redirectIndex()
-                    ));
-                    $this->load->view('footer');
-                }
-            }
-        }
-
-    public function listFields()
-    {
-        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
-        return $query->list_fields();
-    }
-/*
-    public function addApplicationtype()
+    public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
         $assessmentinfo_model = new assessmentinfo_model();
-        $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
-        $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+        $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
+        if ($AssessmentDetails){
+            $form_message = $form_message;
+            $data = array(
+                'profile_id'                 =>      $AssessmentDetails->profile_id,
+                'application_type_id'      =>      $AssessmentDetails->application_type_id,
+                'lgu_type_id'      =>      $AssessmentDetails->lgu_type_id,
+                'region_code'      =>      $AssessmentDetails->region_code,
+                'prov_code'      =>      $AssessmentDetails->prov_code,
+                'city_code'      =>      $AssessmentDetails->city_code,
+                'brgy_code'      =>      $AssessmentDetails->brgy_code,
+                'street_address'      =>      $AssessmentDetails->street_address,
+                'swdo_name'      =>      $AssessmentDetails->swdo_name,
+                'contact_no'      =>      $AssessmentDetails->contact_no,
+                'email'      =>      $AssessmentDetails->email,
+                'website'      =>      $AssessmentDetails->website,
+                'total_ira'      =>      $AssessmentDetails->total_ira,
+                'total_budget_lswdo'      =>      $AssessmentDetails->total_budget_lswdo
 
-
-        $this->validateAddApplicationtype();
-
-        // if (!$this->form_validation->run()){
-
-        $application_type_id = $this->input->post('application_type_id');
-        $lgu_type_id = $this->input->post('lgu_type_id');
-
-        //$application_type_id_post = $application_type_id;
-
-        $form_message = 'Add Success!';
+            );
+        } else {
+            $form_message = 'No records found!';
+            $data = array(
+                'form_message'      =>      $form_message
+            );
+        }
         $this->load->view('header');
         $this->load->view('nav');
-        $this->load->view('assessmentinfo_add', array(
-            'application' => $application_type_name,
-            'list_fields' => $this->listFields(),
-            'form_message' => $form_message
-        ));
+        $this->load->view('assessmentinfo_masterview',$data);
         $this->load->view('footer');
+    }
 
-        // }
+    public function delete_student($id = 0)
+    {
+        $assessmentinfo_model = new assessmentinfo_model();
+        if ($id > 0){
+            $deleteResult = $assessmentinfo_model->deletestudent($id);
+            if ($deleteResult){
+                $form_message = 'Delete Success!';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('student_list',array(
+                    'student_data'=>$assessmentinfo_model->getAssessmentinfo(),
+                    'list_fields'=>$this->listFields(),
+                    'form_message'=>$form_message,
+                    $this->redirectIndex()
+                ));
+                $this->load->view('footer');
+            }
+        }
+    }
 
-    }*/
-
-      protected function validateEditForm()
+    protected function validateEditForm()
     {
         $config = array(
             array(
@@ -245,13 +203,13 @@ class assessmentinfo extends CI_Controller {
     {
         $config = array(
             array(
-                'field'   => 'application_type_name',
-                'label'   => 'application_type_name',
+                'field'   => 'application_type_id',
+                'label'   => 'application_type_id',
                 'rules'   => 'required'
             ),
             array(
-                'field'   => 'lgu_type_name',
-                'label'   => 'lgu_type_name',
+                'field'   => 'lgu_type_id',
+                'label'   => 'lgu_type_id',
                 'rules'   => 'required'
             )
         );
@@ -259,20 +217,13 @@ class assessmentinfo extends CI_Controller {
         return $this->form_validation->set_rules($config);
     }
 
-    protected function validateAddApplicationtype()
+    public function listFields()
     {
-        $config = array(
-            array(
-                'field'   => 'application_type_name',
-                'label'   => 'application_type_name',
-                'rules'   => 'required'
-            )
-        );
-
-        return $this->form_validation->set_rules($config);
+        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
+        return $query->list_fields();
     }
 
-  public function redirectIndex()
+    public function redirectIndex()
     {
         $page = base_url();
         $sec = "1";
