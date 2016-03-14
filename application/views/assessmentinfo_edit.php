@@ -24,7 +24,7 @@ echo $form_message;
         </div>
         <div class="form-group">
             <label for="application_type_id">application_type_id</label>
-            <input class="form-control" type="text" name="application_type_id" value="<?php echo $assessmentinfo_details->application_type_id ?>" placeholder="application_type_id">
+            <input class="form-control" type="text" name="application_type_id" value="<?php echo $assessmentinfo_details->application_type_id ?>" placeholder="application_type_id" readonly>
         </div>
         <div class="form-group">
             <label for="lgu_type_id">lgu_type_id</label>
