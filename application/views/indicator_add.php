@@ -62,7 +62,7 @@
                                                     <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>" name = "compliance<?php echo $secondCategory->indicator_id ?>" value = "2"/> Not Compliance</td>
                                                     <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>" name = "compliance<?php echo $secondCategory->indicator_id ?>" value = "3"/> N/A</td>
                                                 <?php } ?>
-                                            </tr>
+                                            </tr><!-- -->
                                             <?php } ?>
                                     <?php endforeach ?>
                                 <?php } else { ?>
