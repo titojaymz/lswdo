@@ -111,11 +111,7 @@
                         <?php endforeach ?>
                     <?php endforeach ?>
                 </table>
-<?php
-$compliance = "select123";
-$indicator = substr($compliance, strpos($compliance, "t") + 1);
-echo $indicator;
-?>
+
                 <?php echo form_close() ?>
 <!--              <pre>-->
 <!--                    --><?php //print_r($getSecondCategory); ?>

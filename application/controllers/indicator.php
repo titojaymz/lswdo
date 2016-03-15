@@ -46,9 +46,20 @@ class indicator extends CI_Controller
             $this->load->view('footer');
         } else {
                 foreach($indicator_model->getCategoriesFromFI() as $firstCatBronze):
-                    $compliance = $this->input->post('select'.$firstCatBronze->indicator_id);
+                    if($firstCatBronze->indicator_checklist_id != '0') {
+                        $compliance = $this->input->post('compliance' . $firstCatBronze->indicator_id);
+                        $profile = '9';
+                        $indicator = $firstCatBronze->indicator_id;
+                        $findings = "hehe";
+                        $addResult = $indicator_model->insertFirstIndicator($profile, $indicator, $compliance, $findings);
+                    } else {
+                        continue;
+                    }
+                endforeach;
+                foreach($indicator_model->getSecondCategoriesFromFI() as $secondCat):
+                    $compliance = $this->input->post('compliance'.$secondCat->indicator_id);
                     $profile = '9';
-                    $indicator = $firstCatBronze->indicator_id;
+                    $indicator = $secondCat->indicator_id;
                     $findings = "hehe";
                     $addResult = $indicator_model->insertFirstIndicator($profile,$indicator,$compliance,$findings);
                 endforeach;
@@ -74,7 +85,7 @@ class indicator extends CI_Controller
         $config = array(
 
             array(
-                'field'   => 'selectIA1B',
+                'field'   => 'complianceIA1B',
                 'rules'   => 'required|integer'
             )
         );
