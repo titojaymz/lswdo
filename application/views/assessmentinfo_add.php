@@ -42,9 +42,7 @@ if (!$this->session->userdata('user_id')){
                     <?php endforeach ?>
                 </select>
             </div>
-<pre>
-    <?php echo $applications->application_type_name ?>
-    </pre>
+
             <div class="form-group">
                 <label for="lgu_type_id">Type of LSWDO:</label>
                 <select class="form-control" name="lgu_type_id" id="lgu_type_id">

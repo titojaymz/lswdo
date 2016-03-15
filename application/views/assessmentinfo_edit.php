@@ -20,7 +20,7 @@ echo $form_message;
         <div class="form-group">
             <label for="profile_id">profile_id:</label>
             <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
-            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>">
+            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" >
         </div>
         <div class="form-group">
             <label for="application_type_id">application_type_id</label>
