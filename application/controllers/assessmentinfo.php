@@ -24,6 +24,9 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+       // $region_name = $assessmentinfo_model->Lib_getRegion();
+        //$prov_name = $assessmentinfo_model->Lib_getProvince();
+       // $city_name = $assessmentinfo_model->Lib_getCity();
 
         $this->validateAddForm();
 
@@ -35,10 +38,13 @@ class assessmentinfo extends CI_Controller {
             $this->load->view('assessmentinfo_add',array(
                 'application' => $application_type_name,
                 'lgu_type' => $lgu_type_name,
+              //  'region' => $region_name,
+              //  'province' => $prov_name,
                 'form_message'=>$form_message));
             $this->load->view('footer');
         } else {
             $assessmentinfo_model = new assessmentinfo_model();
+
             $application_type_id = $this->input->post('application_type_id');
             $lgu_type_id = $this->input->post('lgu_type_id');
             $region_code = $this->input->post('region_code');
@@ -61,6 +67,8 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_add',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
+                  //  'region' => $region_name,
+                 //   'province' => $prov_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
@@ -161,17 +169,17 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function delete_student($id = 0)
+    public function delete_assessmentinfo($id = 0)
     {
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
-            $deleteResult = $assessmentinfo_model->deletestudent($id);
+            $deleteResult = $assessmentinfo_model->deleteassessmentinfo($id);
             if ($deleteResult){
                 $form_message = 'Delete Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
-                $this->load->view('student_list',array(
-                    'student_data'=>$assessmentinfo_model->getAssessmentinfo(),
+                $this->load->view('assessmentinfo_list',array(
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
                     $this->redirectIndex()
@@ -202,6 +210,7 @@ class assessmentinfo extends CI_Controller {
     protected function validateAddForm()
     {
         $config = array(
+
             array(
                 'field'   => 'application_type_id',
                 'label'   => 'application_type_id',

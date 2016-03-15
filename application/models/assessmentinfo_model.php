@@ -142,8 +142,52 @@ class assessmentinfo_model extends CI_Model {
         }
         $this->db->close();
     }
+/*
+    public function Lib_getRegion()
+    {
+        $query = $this->db->get_where('lib_regions',array('DELETED' => 0));
+        if ($query->num_rows() > 0){
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+        $this->db->close();
+    }
 
+    public function Lib_getProvince()
+    {
+        $query = $this->db->get_where('lib_provinces',array('DELETED' => 0));
+        if ($query->num_rows() > 0){
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+        $this->db->close();
+    }
 
+    public function Lib_getCity()
+    {
+        $query = $this->db->get_where('lib_cities',array('DELETED' => 0));
+        if ($query->num_rows() > 0){
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+        $this->db->close();
+    }
+
+    public function Lib_getBrgy()
+    {
+        $query = $this->db->get_where('lib_brgy',array('DELETED' => 0));
+        if ($query->num_rows() > 0){
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+        $this->db->close();
+    }
+
+*/
 
 
 }

@@ -33,7 +33,10 @@ if (!$this->session->userdata('user_data')){
             <tr>
                 <th>Profile ID</th>
                 <th>Status of Application</th>
-                <th>Region</th>
+                <th>LGU Type</th>
+                <th>SWDO Name</th>
+                <th>Total IRA</th>
+                <th>Total Budget LSWDO</th>
 
 
             </tr>
@@ -44,6 +47,9 @@ if (!$this->session->userdata('user_data')){
                     <td><?php echo $assessmentinfoData->profile_id ?></td>
                     <td><?php echo $assessmentinfoData->application_type_id ?></td>
                     <td><?php echo $assessmentinfoData->lgu_type_id ?></td>
+                    <td><?php echo $assessmentinfoData->swdo_name ?></td>
+                    <td><?php echo $assessmentinfoData->total_ira ?></td>
+                    <td><?php echo $assessmentinfoData->total_budget_lswdo ?></td>
 
                     <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View Details </a></td>
                     <td>

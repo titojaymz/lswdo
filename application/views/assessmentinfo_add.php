@@ -29,27 +29,20 @@ if (!$this->session->userdata('user_id')){
 
 <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
         <div class="form-group">
-            <div class="form-group form-group-sm">
-                <div class="col-lg-4 col-sm-4">
-                    <label for="geo" class="control-label">Geographic Information</label>
+            <div class="form-group">
+                    <label for="identify_info" class="control-label">Identifying Information</label>
                 </div>
-            </div>
 
             <div class="form-group">
-                <label for="application_type">Status of Application:</label>
-
+                <label for="application_type_id">Status of Application:</label>
                 <select class="form-control" name="application_type_id" id="application_type_id">
                     <option select value="">Please select</option>
-                    <?php foreach($application as $Applicationtypes): ?>
-                        <option value="<?php echo $Applicationtypes->application_type_id ?>"><?php echo $Applicationtypes->application_type_name ?></option>
+                    <?php foreach($application as $applications): ?>
+                        <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
 
-        <div class="form-group">
-            <div class="form-group">
-                    <label for="identify_info" class="control-label">Identifying Information</label>
-                </div>
             <div class="form-group">
                 <label for="lgu_type_id">Type of LSWDO:</label>
                 <select class="form-control" name="lgu_type_id" id="lgu_type_id">
@@ -59,39 +52,104 @@ if (!$this->session->userdata('user_id')){
                     <?php endforeach ?>
                 </select>
             </div>
-
+<!--
             <div class="form-group">
                 <label for="region_code">Region:</label>
-                <input class="form-control" type="text" name="region_code" value="<?php echo set_value('region_code') ?>" placeholder="region_code">
+                <select class="form-control" name="lgu_type_id" id="lgu_type_id">
+                    <option select value="">Please select</option>
+                    <?php //foreach($region as $regions): ?>
+                        <option value="<?php //echo $regions->region_code ?>"><?php //echo $regions->region_name ?></option>
+                    <?php //endforeach ?>
+                </select>
             </div>
+
             <div class="form-group">
                 <label for="prov_code">Province:</label>
-                <input class="form-control" type="text" name="prov_code" value="<?php echo set_value('prov_code') ?>" placeholder="prov_code">
+                <select class="form-control" name="prov_code" id="prov_code">
+                    <option select value="">Please select</option>
+                    <?php //foreach($prov as $provs): ?>
+                        <option value="<?php //echo $provs->prov_code ?>"><?php //echo $provs->prov_name ?></option>
+                    <?php //endforeach ?>
+                </select>
             </div>
+
              <div class="form-group">
                 <label for="city_code">City:</label>
-                 <input class="form-control" type="text" name="city_code" value="<?php echo set_value('city_code') ?>" placeholder="city_code">
+                 <select class="form-control" name="city_code" id="city_code">
+                     <option select value="">Please select</option>
+                     <?php //foreach($city as $cities): ?>
+                         <option value="<?php //echo $cities->city_code ?>"><?php //echo $cities->city_name ?></option>
+                     <?php //endforeach ?>
+                 </select>
             </div>
+
             <div class="form-group">
-                <label for="brgy_code">Baranggay:</label>
-                <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('brgy_code') ?>" placeholder="swdo_name">
+                <label for="no_city_code">No. of Cities:</label>
+                <input class="form-control" type="text" name="no_city_code" value="" placeholder="no_city_code" readonly>
             </div>
+
             <div class="form-group">
-                <label for="street_address">Street Address:</label>
-                <input class="form-control" type="text" name="street_address" value="<?php echo set_value('street_address') ?>" placeholder="street_address">
+                <label for="no_muni_code">No. of Municipalities:</label>
+                <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
             </div>
+
+            <div class="form-group">
+                <label for="brgy_code">Barangays:</label>
+                <select class="form-control" name="brgy_code" id="brgy_code">
+                    <option select value="">Please select</option>
+                    <?php //foreach($brgy as $brgys): ?>
+                        <option value="<?php //echo $brgys->brgy_code ?>"><?php //echo $brgys->brgy_name ?></option>
+                    <?php //endforeach ?>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="no_brgy_code">No. of Barangays:</label>
+                <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="no_brgy_code" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="income_class">Income Class:</label>
+                <input class="form-control" type="text" name="income_class" value="" placeholder="income_class" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="total_pop">Total Population:</label>
+                <input class="form-control" type="text" name="total_pop" value="" placeholder="total_pop" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="total_poor">Total No. of Poor Families:</label>
+                <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor" readonly>
+            </div>
+-->
             <div class="form-group">
                 <label for="swdo_name">SWDO Name:</label>
                 <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="swdo_name">
             </div>
+
+          <!---
+            <div class="form-group">
+                <label for="designation">Designation:</label>
+                <input class="form-control" type="text" name="designation" value="" placeholder="designation" readonly>
+            </div>
+
+            -->
+            <div class="form-group">
+                <label for="street_address">Street Address:</label>
+                <input class="form-control" type="text" name="street_address" value="<?php echo set_value('street_address') ?>" placeholder="street_address">
+            </div>
+
             <div class="form-group">
                 <label for="contact_no">Contact No:</label>
                 <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="contact_no">
             </div>
+
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="email">
             </div>
+
             <div class="form-group">
                 <label for="website">Website:</label>
                 <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="website">
