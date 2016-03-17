@@ -7,7 +7,90 @@ if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
 //echo validation_errors();
+
 ?>
+<script type="text/javascript">
+    function askLGU() {
+        var e = document.getElementById("lgu_type_id").value;
+        if (e == 1)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "none";
+            document.getElementById("groupLGUCity").style.visibility = "hidden";
+            document.getElementById("groupLGUBrgy").style.display = "none";
+            document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+        }
+        else
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
+            document.getElementById("groupLGUBrgy").style.display = "block";
+            document.getElementById("groupLGUBrgy").style.visibility = "visible";
+        }
+    }
+
+    function get_provinces() {
+        var region_code = $('#regionlist').val();
+        $('#citylist option:gt(0)').remove().end();
+        $('#brgylist option:gt(0)').remove().end();
+            if(region_code > 0) {
+            $.ajax({
+            url: "<?php echo base_url('assessmentinfo/populate_prov'); ?>",
+            async: false,
+            type: "POST",
+            data: "region_code="+region_code,
+                dataType: "html",
+                success: function(data) {
+                $('#div_provlist').html(data);
+                    }
+        });
+            } else {
+        $('#provlist option:gt(0)').remove().end();
+                    }
+        }
+    function get_cities() {
+        var prov_code = $('#provlist').val();
+        $('#brgylist option:gt(0)').remove().end();
+        if(prov_code > 0) {
+        $.ajax({
+        url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+        async: false,
+        type: "POST",
+        data: "prov_code="+prov_code,
+        dataType: "html",
+        success: function(data) {
+        $('#div_citylist').html(data);
+        }
+        });
+        } else {
+        $('#citylist option:gt(0)').remove().end();
+        }
+        }
+    function get_brgy() {
+        var city_code = $('#citylist').val();
+        if(city_code > 0) {
+        $.ajax({
+        url: "<?php echo base_url('assessmentinfo/populate_brgy'); ?>",
+        async: false,
+        type: "POST",
+        data: "city_code="+city_code,
+        dataType: "html",
+        success: function(data) {
+        $('#div_brgylist').html(data);
+        }
+        });
+        } else {
+        $('#brgylist option:gt(0)').remove().end();
+        }
+        }
+</script>
 <body>
 
 <?php if ($form_message <> '') { ?>
@@ -25,11 +108,15 @@ if (!$this->session->userdata('user_id')){
         <div class="row">
 <div class="col-md-3"></div>
 <div id="addassessment" class="col-md-6">
+    <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
     <form method="post" class="form-horizontal">
-
-<?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
         <div class="form-group">
+
             <div class="form-group">
+                <label for="geo_info" class="control-label">Geographic Information</label>
+            </div>
+
+                  <div class="form-group">
                     <label for="identify_info" class="control-label">Identifying Information</label>
                 </div>
 
@@ -42,46 +129,135 @@ if (!$this->session->userdata('user_id')){
                     <?php endforeach ?>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label for="lgu_type_id">Type of LSWDO:</label>
-                <select class="form-control" name="lgu_type_id" id="lgu_type_id">
-                    <option select value="">Please select</option>
-                    <?php foreach($lgu_type as $lgus): ?>
-                        <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-<!--
-            <div class="form-group">
-                <label for="region_code">Region:</label>
-                <select class="form-control" name="lgu_type_id" id="lgu_type_id">
-                    <option select value="">Please select</option>
-                    <?php //foreach($region as $regions): ?>
-                        <option value="<?php //echo $regions->region_code ?>"><?php //echo $regions->region_name ?></option>
-                    <?php //endforeach ?>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="prov_code">Province:</label>
-                <select class="form-control" name="prov_code" id="prov_code">
-                    <option select value="">Please select</option>
-                    <?php //foreach($prov as $provs): ?>
-                        <option value="<?php //echo $provs->prov_code ?>"><?php //echo $provs->prov_name ?></option>
-                    <?php //endforeach ?>
-                </select>
-            </div>
-
              <div class="form-group">
-                <label for="city_code">City:</label>
-                 <select class="form-control" name="city_code" id="city_code">
-                     <option select value="">Please select</option>
-                     <?php //foreach($city as $cities): ?>
-                         <option value="<?php //echo $cities->city_code ?>"><?php //echo $cities->city_name ?></option>
-                     <?php //endforeach ?>
-                 </select>
-            </div>
+                <label class="control-label">Type of LSWDO</label>
+            <!--Select-->
+                      <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
+                            <option select value="">Please select</option>
+                            <?php foreach($lgu_type as $lgus): ?>
+                                <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
+                            <?php endforeach ?>
+                        </select>
+            <!--Region-->
+                        <div id="groupLGUregion">
+                            <div class="form-group form-group-sm">
+                                <label for="regionlist" class="col-lg-2 control-label">Region</label>
+                                <div id="div_regionlist" class="col-lg-8">
+                                    <fieldset>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();">
+                                                    <option value="0">Choose Region</option>
+                                                    <?php foreach($regionlist as $regionselect): ?>
+                                                        <option value="<?php echo $regionselect->region_code; ?>"
+                                                            <?php if(isset($_SESSION['region'])) {
+                                                                if($regionselect->region_code == $_SESSION['region']) {
+                                                                    echo " selected";
+                                                                }
+                                                            } ?>
+                                                            >
+                                                            <?php echo $regionselect->region_name; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div><!--END Region-->
+
+                <!--Province-->
+                <div id="groupLGUProvince">
+                    <div class="form-group form-group-sm">
+                        <label for="provlist" class="col-lg-2 control-label">Province</label>
+                        <div id="div_provlist" class="col-lg-8">
+                            <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
+                                <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                                    ?>
+                                    <option value="0">Choose Province</option>
+                                    <?php
+                                    foreach ($provlist as $provselect) { ?>
+                                        <option value="<?php echo $provselect->prov_code; ?>"
+                                            <?php
+                                            if (isset($_SESSION['province']) and $provselect->prov_code== $_SESSION['province']) {
+                                                echo " selected";
+                                            } ?>
+                                            >
+                                            <?php echo $provselect->prov_name; ?></option>
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <option>Select Region First</option>
+                                    <?php
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--End Province-->
+                <!--City-->
+                <div id="groupLGUCity">
+                    <div class="form-group form-group-sm">
+                        <label for="citylist" class="col-lg-2 control-label">City</label>
+                        <div id="div_citylist" class="col-lg-8">
+                            <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
+                                <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                                    ?>
+                                    <option value="0">Choose City</option>
+                                    <?php
+                                    foreach ($citylist as $cityselect) { ?>
+                                        <option value="<?php echo $cityselect->city_code; ?>"
+                                            <?php
+                                            if (isset($_SESSION['city']) and $cityselect->city_code== $_SESSION['city']) {
+                                                echo " selected";
+                                            } ?>
+                                            >
+                                            <?php echo $cityselect->city_name; ?></option>
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <option>Select Province First</option>
+                                    <?php
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--End City-->
+
+                <!--Brgy-->
+                <div id="groupLGUBrgy">
+                    <div class="form-group form-group-sm">
+                        <label for="brgylist" class="col-lg-2 control-label">Barangay</label>
+                        <div id="div_brgylist" class="col-lg-8">
+                            <select id="brgylist" name="brgylist" class="form-control">
+                                <?php if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
+                                    ?>
+                                    <option value="0">Choose Barangay</option>
+                                    <?php
+                                    foreach ($brgylist as $brgyselect) { ?>
+                                        <option value="<?php echo $brgyselect->brgy_code; ?>"
+                                            <?php
+                                            if (isset($_SESSION['brgy']) and $brgyselect->brgy_code == $_SESSION['brgy']) {
+                                                echo " selected";
+                                            } ?>
+                                            >
+                                            <?php echo $brgyselect->brgy_name; ?></option>
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <option>Select City First</option>
+                                    <?php
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--End Brgy-->
+             </div>  <!--End Select-->
 
             <div class="form-group">
                 <label for="no_city_code">No. of Cities:</label>
@@ -91,16 +267,6 @@ if (!$this->session->userdata('user_id')){
             <div class="form-group">
                 <label for="no_muni_code">No. of Municipalities:</label>
                 <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
-            </div>
-
-            <div class="form-group">
-                <label for="brgy_code">Barangays:</label>
-                <select class="form-control" name="brgy_code" id="brgy_code">
-                    <option select value="">Please select</option>
-                    <?php //foreach($brgy as $brgys): ?>
-                        <option value="<?php //echo $brgys->brgy_code ?>"><?php //echo $brgys->brgy_name ?></option>
-                    <?php //endforeach ?>
-                </select>
             </div>
 
             <div class="form-group">
@@ -122,19 +288,19 @@ if (!$this->session->userdata('user_id')){
                 <label for="total_poor">Total No. of Poor Families:</label>
                 <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor" readonly>
             </div>
--->
+
             <div class="form-group">
                 <label for="swdo_name">SWDO Name:</label>
                 <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="swdo_name">
             </div>
 
-          <!---
+
             <div class="form-group">
                 <label for="designation">Designation:</label>
                 <input class="form-control" type="text" name="designation" value="" placeholder="designation" readonly>
             </div>
 
-            -->
+
             <div class="form-group">
                 <label for="street_address">Street Address:</label>
                 <input class="form-control" type="text" name="street_address" value="<?php echo set_value('street_address') ?>" placeholder="street_address">
@@ -176,7 +342,7 @@ if (!$this->session->userdata('user_id')){
             <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
         </div>
         </div>
-
+        </div>
     </form>
 </div>
 <div class="col-md-3"></div>

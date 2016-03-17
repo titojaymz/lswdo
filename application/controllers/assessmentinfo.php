@@ -7,15 +7,48 @@ class assessmentinfo extends CI_Controller {
 
     public function index()
     {
+        //grace
+        $this->load->library('pagination');
+        $this->load->library('model');
+        $user_region = $this->session->userdata('uregion');
+        //grace
+
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
+
+        //grace
+
+        //rpmb
+
+        $this->init_rpmb_session();
+        $this->init_rpmbsearch_session();
+      //  $rpmb['lgu_typelist'] = $this->assessmentinfo_model->get_lgu_type();
+        $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+
+       // if(isset($_SESSION['region']) or isset($_SESSION['lgu_type'])) {
+      //      $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions($_SESSION['lgu_type']);
+      //  }
+        if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+            $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
+        }
+        if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+            $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
+        }
+        if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
+            $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
+        }
+        //grace
+
         $this->load->view('header');
         $this->load->view('nav');
+        $this->load->view('sidebar');
+        $this->load->view('assessmentinfo_masterview', $rpmb);
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
             'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
+        $this->load->view('sidepanel');
         $this->load->view('footer');
     }
 
@@ -35,22 +68,34 @@ class assessmentinfo extends CI_Controller {
             $this->load->view('header');
             $this->load->view('nav');
             $this->load->view('sidebar');
-            $this->load->view('assessmentinfo_add',array(
-                'application' => $application_type_name,
-                'lgu_type' => $lgu_type_name,
-              //  'region' => $region_name,
-              //  'province' => $prov_name,
-                'form_message'=>$form_message));
+
+            $this->init_rpmb_session();
+            $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+            $rpmb['application'] = $application_type_name;
+            $rpmb['lgu_type'] = $lgu_type_name;
+            $rpmb['form_message'] = $form_message;
+
+            if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
+            }
+            if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
+            }
+            if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
+                $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
+            }
+
+            $this->load->view('assessmentinfo_add',$rpmb);
             $this->load->view('footer');
         } else {
             $assessmentinfo_model = new assessmentinfo_model();
 
             $application_type_id = $this->input->post('application_type_id');
             $lgu_type_id = $this->input->post('lgu_type_id');
-            $region_code = $this->input->post('region_code');
-            $prov_code = $this->input->post('prov_code');
-            $city_code = $this->input->post('city_code');
-            $brgy_code = $this->input->post('brgy_code');
+            $regionlist = $this->input->post('regionlist');
+            $provlist = $this->input->post('provlist');
+            $citylist = $this->input->post('citylist');
+            $brgylist = $this->input->post('brgylist');
             $street_address = $this->input->post('street_address');
             $swdo_name = $this->input->post('swdo_name');
             $contact_no = $this->input->post('contact_no');
@@ -59,11 +104,61 @@ class assessmentinfo extends CI_Controller {
             $total_ira = $this->input->post('total_ira');
             $total_budget_lswdo = $this->input->post('total_budget_lswdo');
 
-            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
+            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
             if ($addResult){
+
+                $this->load->library('pagination');
+                $this->load->library('model');
+                $config=array();
+                $config['base_url'] = base_url().'assessmentinfo/index';
+                $config['total_rows'] = $this->assessmentinfo_model->record_count();
+                $config['per_page'] = 10;
+
+                $config['full_tag_open'] = '<div class="pagination pagination-sm"><ul>';
+                $config['full_tag_open'] = '<ul class="pagination pagination-sm">';
+                $config['full_tag_close'] = '</ul>';
+                $config['first_link'] = false;
+                $config['last_link'] = false;
+                $config['first_tag_open'] = '<li>';
+                $config['first_tag_close'] = '</li>';
+                $config['prev_link'] = '&laquo';
+                $config['prev_tag_open'] = '<li class="prev">';
+                $config['prev_tag_close'] = '</li>';
+                $config['next_link'] = '&raquo';
+                $config['next_tag_open'] = '<li>';
+                $config['next_tag_close'] = '</li>';
+                $config['last_tag_open'] = '<li>';
+                $config['last_tag_close'] = '</li>';
+                $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+                $config['num_tag_open'] = '<li>';
+                $config['num_tag_close'] = '</li>';
+
+                $this->pagination->initialize($config);
+              //  $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
+                //rpmb
+                $this->init_rpmb_session();
+                $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+
+                if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                    $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
+                }
+                if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                    $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
+                }
+                if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
+                    $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
+                }
+                //call the model function to get the family info data
+                $datarpmb = array_merge($data,$rpmb); //added array merge
+                $this->load->view('sidebar');
+                $this->load->view('assessmentinfo_masterview', $datarpmb);
+
                 $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
+
+
                 $this->load->view('assessmentinfo_add',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
@@ -137,6 +232,9 @@ class assessmentinfo extends CI_Controller {
     public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
         $assessmentinfo_model = new assessmentinfo_model();
+        $this->load->view('header');
+        $this->load->view('nav');
+        $this->load->view('sidebar');
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
         if ($AssessmentDetails){
             $form_message = $form_message;
@@ -186,6 +284,102 @@ class assessmentinfo extends CI_Controller {
                 ));
                 $this->load->view('footer');
             }
+        }
+    }
+/*
+    public function populate_region() {
+        if($_POST['lgu_type_id'] > 0 and isset($_POST) and isset($_POST['lgu_type_id'])) {
+
+            $lgu_type_id = $_POST['lgu_type_id'];
+            $regionlist = $this->assessmentinfo_model->get_regions($lgu_type_id);
+
+            $region_list[] = "Choose Type of LSWDO";
+            foreach($regionlist as $tempregion) {
+                $region_list[$tempregion->region_code] = $tempregion->region_name;
+            }
+
+            $regionlist_prop = 'id="regionlist" name="regionlist" class="form-control" onChange="get_prov();"';
+
+            echo form_dropdown('regionlist', $region_list, '', $regionlist_prop);
+        }
+    }
+*/
+    public function populate_prov() {
+        if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
+
+            $region_code = $_POST['region_code'];
+            $provlist = $this->assessmentinfo_model->get_provinces($region_code);
+
+            $province_list[] = "Choose Province";
+            foreach($provlist as $tempprov) {
+                $province_list[$tempprov->prov_code] = $tempprov->prov_name;
+            }
+
+            $provlist_prop = 'id="provlist" name="provlist" class="form-control" onChange="get_cities();"';
+
+            echo form_dropdown('provlist', $province_list, '', $provlist_prop);
+        }
+    }
+
+    public function populate_cities() {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
+            $prov_code = $_POST['prov_code'];
+            $citylist = $this->assessmentinfo_model->get_cities($prov_code);
+
+            $city_list[] = "Choose City";
+            foreach($citylist as $tempcities) {
+                $city_list[$tempcities->city_code] = $tempcities->city_name;
+            }
+
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
+            echo form_dropdown('citylist', $city_list,'',$citylist_prop);
+        }
+    }
+
+    public function populate_brgy() {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code'])) {
+            $city_code = $_POST['city_code'];
+            $brgylist = $this->assessmentinfo_model->get_brgy($city_code);
+
+            $brgy_list[] = "Choose Barangay";
+            foreach($brgylist as $tempbrgy) {
+                $brgy_list[$tempbrgy->brgy_code] = $tempbrgy->brgy_name;
+            }
+
+            $brgylist_prop = 'id="brgylist" name="brgylist" class="form-control"';
+            echo form_dropdown('brgylist', $brgy_list,'',$brgylist_prop);
+        }
+    }
+
+    public function init_rpmb_session() {
+
+        if(isset($_POST['regionlist']) and $_POST['regionlist'] > 0) {
+            $_SESSION['region'] = $_POST['regionlist'];
+        }
+        if(isset($_POST['provlist']) and $_POST['provlist'] > 0) {
+            $_SESSION['province'] = $_POST['provlist'];
+        }
+        if(isset($_POST['citylist']) and $_POST['citylist'] > 0) {
+            $_SESSION['city'] = $_POST['citylist'];
+        }
+        if(isset($_POST['brgylist']) and $_POST['brgylist'] > 0) {
+            $_SESSION['brgy'] = $_POST['brgylist'];
+        }
+    }
+
+    public function init_rpmbsearch_session() {
+
+        if(isset($_POST['regionlistsearch']) and $_POST['regionlistsearch'] > 0) {
+            $_SESSION['regionsearch'] = $_POST['regionlistsearch'];
+        }
+        if(isset($_POST['provlistsearch']) and $_POST['provlistsearch'] > 0) {
+            $_SESSION['provincesearch'] = $_POST['provlistsearch'];
+        }
+        if(isset($_POST['citylistsearch']) and $_POST['citylistsearch'] > 0) {
+            $_SESSION['city'] = $_POST['citylist'];
+        }
+        if(isset($_POST['brgylist']) and $_POST['brgylist'] > 0) {
+            $_SESSION['brgy'] = $_POST['brgylist'];
         }
     }
 
