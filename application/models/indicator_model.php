@@ -8,14 +8,12 @@ class indicator_model extends CI_Model
         $query = $this->db->get_where('lib_indicator_codes', array('indicator_id' => 'I'));
         return $query->row();
     }
-
     public function getFirstIndicators(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');
         $query = $this->db->get_where('lib_indicator_codes', array('mother_indicator_id' => 'I'));
         return $query->result();
     }
-
     public function getCategoriesFromFI(){
         $unformat = "";
         foreach($this->getFirstIndicators() as $firstIndicators):
@@ -23,12 +21,6 @@ class indicator_model extends CI_Model
         endforeach;
         $format = substr($unformat,0,-1);
 
-//        $this->db->select('indicator_id,mother_indicator_id,indicator_name');
-//        $this->db->from('lib_indicator_codes');
-//        $this->db->where_in('mother_indicator_id',$format);
-//        $this->db->order_by('indicator_name','ASC');
-//        $query = $this->db->get();
-//        return $this->db;.
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
                 FROM (`lib_indicator_codes`)
                 WHERE `mother_indicator_id` IN ('.$format.')';
@@ -49,6 +41,75 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
+
+    public function getSecondMotherIndicator(){
+        $this->db->select('indicator_id,mother_indicator_id,indicator_name');
+        $this->db->order_by('indicator_name','ASC');
+        $query = $this->db->get_where('lib_indicator_codes', array('indicator_id' => 'II'));
+        return $query->row();
+    }
+    public function getSecondIndicators(){
+        $this->db->select('indicator_id,mother_indicator_id,indicator_name');
+        $this->db->order_by('indicator_name','ASC');
+        $query = $this->db->get_where('lib_indicator_codes', array('mother_indicator_id' => 'II'));
+        return $query->result();
+    }
+    public function getCategoriesFromSI(){
+        $unformat = "";
+        foreach($this->getSecondIndicators() as $secondIndicators):
+            $unformat .= "'".$secondIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
+    public function getSecondCategoriesFromSI(){
+        $unformat = "";
+        foreach($this->getCategoriesFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getSecondCategoriesLowerFromSI(){
+        $unformat = "";
+        foreach($this->getSecondCategoriesFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getSecondCategoriesLowerLowerFromSI(){
+        $unformat = "";
+        foreach($this->getSecondCategoriesLowerFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
+
+
 
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings){
         $this->db->trans_begin();
