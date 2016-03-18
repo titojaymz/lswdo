@@ -42,13 +42,11 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
-        $this->load->view('assessmentinfo_masterview', $rpmb);
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
             'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
-        $this->load->view('sidepanel');
         $this->load->view('footer');
     }
 

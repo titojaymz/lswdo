@@ -30,19 +30,26 @@
                         </tr>
                         <tr>
                             <td align="center" colspan = "14">
+                                <!-- Mother Indicator eg. I. Administration and Organization-->
                                 <b><?php echo $firstMotherIndicator->indicator_name; ?></b>
                             </td>
                         </tr>
+                        <!-- foreach for Child Indicators eg. A. B. CL. D. E. F. G. and so on.... -->
                         <?php foreach($firstIndicators as $first_indicators): ?>
                             <tr>
+                                <!-- Title for the Child Indicators!!!  -->
                                 <td colspan = "14" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
                             </tr>
+                            <!--
+                            newArray is a new Array for this version..
+                            Pinag sanib-sanib ang mga column na may kaparehas na indiciator ID like IA1, IA2, IB1 and so on.
+                            -->
                                 <?php
                                 $newArray = array();
                                 foreach($getFirstCategory as $item):
-                                    $arr = explode("-", $item->indicator_id, 2);
-                                    $first = $arr[0];
-                                    $newArray[$first][] = $item->indicator_checklist_id;
+                                    $arr = explode("-", $item->indicator_id, 2); //kinukuha lahat ng indicator id tpos tatanggalin ung -1 example sa una IA1-1 magiging IA1
+                                    $first = $arr[0]; // yung IA1 eto ung mggng number ng mga array, eg. IA1, IA2
+                                    $newArray[$first][] = $item->indicator_checklist_id; //eto naman yung mga mggng value sa loob ng arrays.
                                     $newArray[$first][] = $item->indicator_name;
                                 endforeach
                                 ?>
@@ -60,38 +67,38 @@
                                 endforeach;
                                 ?>
                             <tr>
-                                <?php  $number = 1; ?>
+                                <?php  $number = 1; ?> <!-- ung $number para makuha ung laman nung array na newArray at secondNewArray, yung indicator_name ung kinukuha neto -->
                                 <?php  $number2 = 1; ?>
-                                <?php  $checklist = 0; ?>
+                                <?php  $checklist = 0; ?><!-- ung $checklist para makuha ung laman nung array na newArray at secondNewArray, yung indicator_checklist_id ung kinukuha neto -->
                                 <?php  $checklist2 = 0; ?>
-                                <?php foreach($newArray as $a => $iteem): ?>
+                                <?php foreach($newArray as $a => $iteem): ?> <!-- array for NewArray for child lower indicator -->
                                     <?php foreach($getFirstCategory as $firstCategory):?>
-                                        <?php if($firstCategory->mother_indicator_id == $first_indicators->indicator_id) { ?>
+                                        <?php if($firstCategory->mother_indicator_id == $first_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
                                         <?php $arr = explode("-", $firstCategory->indicator_id, 2);?>
                                         <?php $firsts = $arr[0];?>
-                                        <?php if ($a == $firsts) { ?>
-                                            <?php if($iteem[$checklist] == 0){?>
-                                                        <td colspan = "11"><b><?php echo $iteem[$number]; ?></b></td>
+                                        <?php if ($a == $firsts) { ?><!-- $a is IA1, IA2  tapos ung $firsts eto dn ung IA1, etc pero kinukuha to sa indicator_id-->
+                                            <?php if($iteem[$checklist] == 0){?> <!-- so ung checklist dito ay para kunin ung value ng indicator checklist sa newArray ang value nian is $iteem[0] which is ung $iteem[0] sa newArray ay ung indicator_checklist_id sa db  -->
+                                                        <td colspan = "11"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
                                                     </tr>
                                                     <tr>
-                                                    <?php foreach($secondNewArray as $b => $secondItems): ?>
+                                                    <?php foreach($secondNewArray as $b => $secondItems): ?> <!-- array for secondNewArray for child lower lower indicator -->
                                                        <?php foreach($getSecondCategory as $secondCategory):?>
                                                         <?php if($secondCategory->mother_indicator_id == $firstCategory->indicator_id) { ?>
                                                         <?php $arrays = explode("-", $secondCategory->indicator_id, 2);?>
                                                         <?php $seconds = $arrays[0];?>
                                                         <?php if ($b == $seconds) { ?>
-                                                            <?php $counting2 = count($secondItems); ?>
-                                                               <?php if($counting2 > 1){ ?>
-                                                                   <td><?php echo $secondItems[$number2]; ?></td>
+                                                            <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
+                                                               <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
+                                                                   <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required/> Compliance</td>
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2"/> Not Compliance</td>
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "3"/> N/A</td>
-                                                                       <?php if($counting2 > 3){ ?>
-                                                                       <td><?php echo $secondItems[$number2 + 2]; ?></td>
+                                                                       <?php if($counting2 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
+                                                                       <td><?php echo $secondItems[$number2 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required/> Compliance</td>
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2"/> Not Compliance</td>
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "3"/> N/A</td>
-                                                                       <?php if($counting2 > 5){ ?>
+                                                                       <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $secondItems[$number2 + 4]; ?></td>
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required/> Compliance</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2"/> Not Compliance</td>
