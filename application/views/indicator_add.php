@@ -114,19 +114,9 @@
                                                     <td><?php echo $int1 ?></td>
                                                     <?php if($counting > 1){ ?>
                                                         <td><?php echo $iteem[$number]; ?></td>
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td><div class="radio"><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required/><label for="compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze"> - Compliance</label></div></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>asd</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>asd</td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
+                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required/> Compliance</td>
+                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2"/> Not Compliance</td>
+                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3"/> N/A</td>
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
                                                             <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required/> Compliance</td>
