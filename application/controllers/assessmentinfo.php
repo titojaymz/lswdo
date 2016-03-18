@@ -37,6 +37,7 @@ class assessmentinfo extends CI_Controller {
                 'lgu_type' => $lgu_type_name,
                 'form_message'=>$form_message));
             $this->load->view('footer');
+
         } else {
             $assessmentinfo_model = new assessmentinfo_model();
             $application_type_id = $this->input->post('application_type_id');

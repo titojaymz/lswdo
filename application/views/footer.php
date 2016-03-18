@@ -256,6 +256,20 @@ $(document).ready(function() {
     } );
 } );
 </script>
+<!-- carla-->
+
+<script type="text/javascript" src="js/date-range-picker/daterangepicker.js"></script>
+<!-- Basic Date Range Picker -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#date-range-picker').daterangepicker(null, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+</script>
+
+
+<!-- carla-->
 </body>
 </html>
 <?php // jfsbaldo merged 020520161408
