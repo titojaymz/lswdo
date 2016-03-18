@@ -68,20 +68,24 @@ class indicator extends CI_Controller
                     }
                 endforeach;
                 foreach($indicator_model->getSecondCategoriesFromFI() as $secondCat):
+                    if($secondCat->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
                     $profile = '9';
                     $indicator = $secondCat->indicator_id;
-                    $findings = 'hahahaha';
+                    $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
                         $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings);
                     }
                     if($complianceSilver != ""){
                         $addResultSilver = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceSilver, $findings);
-                    }if($complianceGold != ""){
+                    } if($complianceGold != ""){
                     $addResultGold = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceGold, $findings);
                 }
+                    } else {
+                        continue;
+                    }
                 endforeach;
             if($addResultBronze || $addResultSilver || $addResultGold){
                 $form_message = 'Add Success!';

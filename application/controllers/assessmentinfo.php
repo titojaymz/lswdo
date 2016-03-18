@@ -47,7 +47,6 @@ class assessmentinfo extends CI_Controller {
             'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
-        $this->load->view('sidepanel');
         $this->load->view('footer');
     }
 
