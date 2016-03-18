@@ -76,6 +76,16 @@
                                     $thirdNewArray[$third][] = $thirdItem->indicator_name;
                                 endforeach;
                                 ?>
+
+                                <?php
+                                $fourthNewArray = array();
+                                foreach($getSecondCategoryLowerLower as $fourthItem):
+                                    $arrSec = explode("-", $fourthItem->indicator_id, 2);
+                                    $fourth = $arrSec[0];
+                                    $fourthNewArray[$fourth][] = $fourthItem->indicator_checklist_id;
+                                    $fourthNewArray[$fourth][] = $fourthItem->indicator_name;
+                                endforeach;
+                                ?>
                                     <!--<pre>
                                     <?php /*print_r($getSecondCategoryLower); */?>
                                     <?php /*echo count($getSecondCategoryLower['IA1']) / 3; */?>
@@ -84,9 +94,11 @@
                                 <?php  $number = 1; ?> <!-- ung $number para makuha ung laman nung array na newArray at secondNewArray, yung indicator_name ung kinukuha neto -->
                                 <?php  $number2 = 1; ?>
                                 <?php  $number3 = 1; ?>
+                                <?php  $number4 = 1; ?>
                                 <?php  $checklist = 0; ?><!-- ung $checklist para makuha ung laman nung array na newArray at secondNewArray, yung indicator_checklist_id ung kinukuha neto -->
                                 <?php  $checklist2 = 0; ?>
                                 <?php  $checklist3 = 0; ?>
+                                <?php  $checklist4 = 0; ?>
                                 <?php foreach($newArray as $a => $iteem): ?> <!-- array for NewArray for child lower indicator -->
                                     <?php foreach($getFirstCategory as $firstCategory):?>
                                         <?php if($firstCategory->mother_indicator_id == $second_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
@@ -117,6 +129,43 @@
 
                                                                                     <td colspan = "11"><b><?php echo $iteeem[$number3]; ?></b></td>
 
+                                                                                         <?php foreach($fourthNewArray as $d => $fourthItem): ?>
+                                                                                            <?php foreach ($getSecondCategoryLowerLower as $secondCategoryLowerLower):?>
+                                                                                                 <?php if($secondCategoryLowerLower->mother_indicator_id == $secondCategoryLower->indicator_id){ ?>
+                                                                                                    <?php $arrss = explode("-", $secondCategoryLowerLower->indicator_id, 2);?>
+                                                                                                        <?php $fourths = $arrss[0];?>
+                                                                                                        </tr>
+                                                                                                             <?php if ($d == $fourths) { ?>
+                                                                                                                <?php if($fourthItem[$checklist4] == 0){?>
+                                                                                                                      <td colspan = "11"><b><?php echo $fourthItem[$number4]; ?></b></td>
+
+                                                                                                             <?php } else { ?>
+                                                                                                                     <?php $counting4 = count($fourthItem); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
+                                                                                                                       <?php if($counting4 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
+                                                                                                                           <td><?php echo $fourthItem[$number4]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
+                                                                                                                           <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "1" required/> Compliance</td>
+                                                                                                                           <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "2"/> Not Compliance</td>
+                                                                                                                           <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "3"/> N/A</td>
+                                                                                                                               <?php if($counting4 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
+                                                                                                                               <td><?php echo $fourthItem[$number4 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                                                                               <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "1" required/> Compliance</td>
+                                                                                                                               <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "2"/> Not Compliance</td>
+                                                                                                                               <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "3"/> N/A</td>
+                                                                                                                               <?php if($counting4 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
+                                                                                                                                   <td><?php echo $fourthItem[$number4 + 4]; ?></td>
+                                                                                                                                   <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "1" required/> Compliance</td>
+                                                                                                                                   <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "2"/> Not Compliance</td>
+                                                                                                                                   <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "3"/> N/A</td>
+                                                                                                                                   <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"></textarea></td>
+                                                                                                                               <?php } ?>
+                                                                                                                           <?php } ?>
+                                                                                                                       <?php } ?>
+                                                                                                                       <?php break; ?>
+                                                                                                             <?php } ?>
+                                                                                                             <?php } ?>
+                                                                                                 <?php } ?>
+                                                                                            <?php  endforeach;?>
+                                                                                         <?php  endforeach;?>
                                                                                  <?php } else {?>
                                                               <?php $counting3 = count($iteeem); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                                <?php if($counting3 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
@@ -134,7 +183,7 @@
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "1" required/> Compliance</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "2"/> Not Compliance</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "3"/> N/A</td>
-                                                                           <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
+                                                                           <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"></textarea></td>
                                                                        <?php } ?>
                                                                    <?php } ?>
                                                                <?php } ?>
