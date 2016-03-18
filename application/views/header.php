@@ -7,11 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<link href="<?php echo base_url('assets/bootstrap/css/root.css'); ?>" rel="stylesheet">
-	
-	<style type="text/css">
-		body{background: #F5F5F5;}
 
-	</style>
     <meta charset="utf-8">
     <title>LSWDO</title>
 </head>

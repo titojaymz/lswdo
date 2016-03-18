@@ -8,8 +8,8 @@ class assessmentinfo extends CI_Controller {
     public function index()
     {
         //grace
-        $this->load->library('pagination');
-        $this->load->library('model');
+        //$this->load->library('pagination');
+       // $this->load->library('model');
         $user_region = $this->session->userdata('uregion');
         //grace
 
@@ -85,6 +85,7 @@ class assessmentinfo extends CI_Controller {
 
             $this->load->view('assessmentinfo_add',$rpmb);
             $this->load->view('footer');
+
         } else {
             $assessmentinfo_model = new assessmentinfo_model();
 
@@ -105,35 +106,7 @@ class assessmentinfo extends CI_Controller {
             $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
             if ($addResult){
 
-                $this->load->library('pagination');
-                $this->load->library('model');
-                $config=array();
-                $config['base_url'] = base_url().'assessmentinfo/index';
-                $config['total_rows'] = $this->assessmentinfo_model->record_count();
-                $config['per_page'] = 10;
-
-                $config['full_tag_open'] = '<div class="pagination pagination-sm"><ul>';
-                $config['full_tag_open'] = '<ul class="pagination pagination-sm">';
-                $config['full_tag_close'] = '</ul>';
-                $config['first_link'] = false;
-                $config['last_link'] = false;
-                $config['first_tag_open'] = '<li>';
-                $config['first_tag_close'] = '</li>';
-                $config['prev_link'] = '&laquo';
-                $config['prev_tag_open'] = '<li class="prev">';
-                $config['prev_tag_close'] = '</li>';
-                $config['next_link'] = '&raquo';
-                $config['next_tag_open'] = '<li>';
-                $config['next_tag_close'] = '</li>';
-                $config['last_tag_open'] = '<li>';
-                $config['last_tag_close'] = '</li>';
-                $config['cur_tag_open'] = '<li class="active"><a href="#">';
-                $config['cur_tag_close'] = '</a></li>';
-                $config['num_tag_open'] = '<li>';
-                $config['num_tag_close'] = '</li>';
-
-                $this->pagination->initialize($config);
-              //  $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
+                //  $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
                 //rpmb
                 $this->init_rpmb_session();
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
@@ -148,9 +121,8 @@ class assessmentinfo extends CI_Controller {
                     $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
                 }
                 //call the model function to get the family info data
-                $datarpmb = array_merge($data,$rpmb); //added array merge
+
                 $this->load->view('sidebar');
-                $this->load->view('assessmentinfo_masterview', $datarpmb);
 
                 $form_message = 'Add Success!';
                 $this->load->view('header');
@@ -225,7 +197,6 @@ class assessmentinfo extends CI_Controller {
         }
 
     }
-
 
     public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
