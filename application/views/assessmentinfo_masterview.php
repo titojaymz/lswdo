@@ -14,6 +14,7 @@ if ($form_message){ ?>
 <div class="col-md-2"></div>
 <div class="col-md-8">
     <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index.html') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
+    <a href="<?php echo base_url()?>assessmentinfo/addAssessmentinfo/<?php echo $profile_id ?>/<?php echo $application_type_id ?>/<?php echo $lgu_type_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
     <br><br>
     <table class="table table-bordered">
         <tr>
@@ -23,44 +24,25 @@ if ($form_message){ ?>
             <th>Status of Application:</th><td><?php echo $application_type_id ?></td>
         </tr>
         <tr>
-            <th>Region:</th><td><?php echo $lgu_type_id ?></td>
+            <th>LGU Type:</th><td><?php echo $lgu_type_id ?></td>
+        </tr>
+        <tr>
+            <th>SWDO Name:</th><td><?php echo $swdo_name ?></td>
+        </tr>
+        <tr>
+            <th>Street Address:</th><td><?php echo $street_address ?></td>
+        </tr>
+        <tr>
+            <th>Email:</th><td><?php echo $email ?></td>
+        </tr>
+        <tr>
+            <th>Total IRA:</th><td><?php echo $total_ira ?></td>
+        </tr>
+        <tr>
+            <th>Total Budget LSWDO:</th><td><?php echo $total_budget_lswdo ?></td>
         </tr>
 
     </table>
-    <br><br><br>
-    <a href="<?php echo base_url()?>assessmentinfo/addAssessmentinfo/<?php echo $profile_id ?>/<?php echo $application_type_id ?>/<?php echo $lgu_type_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
-    <br><br>
-    <?php if ($student_subjects){ ?>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Profile ID</th>
-                <th>Status of Application</th>
-                <th>Region</th>
 
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach($student_subjects as $subjectDetails): ?>
-                <tr>
-                    <?php
-                    $subname = new Assessmentinfo_Model();
-                    ?>
-                    <td><?php echo $subname->getSubjectName($subjectDetails->subject_id) ?></td>
-                    <td><?php echo $subjectDetails->grade ?></td>
-                    <td><?php echo $subjectDetails->remarks ?></td>
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn btn-sm btn-primary" href="<?php echo base_url('students/editstudentsubject/'.$subjectDetails->student_subject_id.'.html') ?>"><i class="fa fa-edit"></i> </a>
-                            <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('students/deletesubject/'.$student_id.'/'.$subjectDetails->student_subject_id.'.html') ?>"><i class="fa fa-trash"></i> </a>
-                        </div>
-                    </td>
-                </tr>
-            <?php endforeach ?>
-            </tbody>
-        </table>
-    <?php } else { ?>
-        No Records Found!
-    <?php } ?>
 </div>
 <div class="col-md-2"></div>

@@ -17,6 +17,7 @@
             </div>
             <div class = "panel-body" style="display: block;">
                 <a href="<?php echo base_url('indicator/indicatorAdd') ?>" class = "btn btn-lg btn-rounded btn-option4">Add Indicator</a>
+                <a href="<?php echo base_url('indicator/indicatorAddpart2') ?>" class = "btn btn-lg btn-rounded btn-option4">Add Indicator Part II</a>
                 <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                 <table class="table table-bordered table-striped">
                     <tr>
@@ -73,6 +74,7 @@
                                         <?php } ?>
                                     <?php endforeach ?>
                                 <?php } ?>
+<!--                               else-->
                                 <?php if($firstCatBronze->indicator_checklist_id == 'Bronze'){ ?>
                                     <tr>
                                         <td><b>BRONZE LEVEL ( MUST )</b><bR><?php echo $firstCatBronze->indicator_name ?></td>
@@ -111,11 +113,7 @@
                         <?php endforeach ?>
                     <?php endforeach ?>
                 </table>
-<?php
-$compliance = "select123";
-$indicator = substr($compliance, strpos($compliance, "t") + 1);
-echo $indicator;
-?>
+
                 <?php echo form_close() ?>
 <!--              <pre>-->
 <!--                    --><?php //print_r($getSecondCategory); ?>
