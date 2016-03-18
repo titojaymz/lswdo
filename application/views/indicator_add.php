@@ -20,22 +20,22 @@
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <td colspan = "1"><b>BRONZE LEVEL <BR> (MUST)</b></td>
-                            <td colspan = "3"><b>Compliance</b></td>
-                            <td colspan = "1"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
-                            <td colspan = "3"><b>Compliance</b></td>
-                            <td colspan = "1"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
-                            <td colspan = "3"><b>Compliance</b></td>
-                            <td colspan = "1"><b>Specific Findings and Recommendation</b></td>
+                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
+                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
+                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
                         </tr>
                         <tr>
-                            <td align="center" colspan = "13">
+                            <td align="center" colspan = "14">
                                 <b><?php echo $firstMotherIndicator->indicator_name; ?></b>
                             </td>
                         </tr>
                         <?php foreach($firstIndicators as $first_indicators): ?>
                             <tr>
-                                <td colspan = "13" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
+                                <td colspan = "14" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
                             </tr>
                                 <?php
                                 $newArray = array();
@@ -46,7 +46,10 @@
                                     $newArray[$first][] = $item->indicator_name;
                                 endforeach
                                 ?>
-                                <pre><?php print_r($newArray); ?></pre>
+                                <!--<pre>
+                                    <?php /*print_r($newArray); */?>
+                                    <?php /*echo count($newArray['IA1']) / 3; */?>
+                                </pre>-->
                                 <?php
                                 $secondNewArray = array();
                                 foreach($getSecondCategory as $secondItem):
@@ -68,7 +71,7 @@
                                         <?php $firsts = $arr[0];?>
                                         <?php if ($a == $firsts) { ?>
                                             <?php if($iteem[$checklist] == 0){?>
-                                                        <td colspan = "10"><b><?php echo $iteem[$number]; ?></b></td>
+                                                        <td colspan = "11"><b><?php echo $iteem[$number]; ?></b></td>
                                                     </tr>
                                                     <tr>
                                                     <?php foreach($secondNewArray as $b => $secondItems): ?>
@@ -77,20 +80,26 @@
                                                         <?php $arrays = explode("-", $secondCategory->indicator_id, 2);?>
                                                         <?php $seconds = $arrays[0];?>
                                                         <?php if ($b == $seconds) { ?>
-
-                                                              <td><?php echo $secondItems[$number2]; ?></td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Bronze" name = "compliance<?php echo $secondCategory->indicator_id ?>Bronze" value = "1"/> Compliance</td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Bronze" name = "compliance<?php echo $secondCategory->indicator_id ?>Bronze" value = "2"/> Not Compliance</td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Bronze" name = "compliance<?php echo $secondCategory->indicator_id ?>Bronze" value = "3"/> N/A</td>
-                                                               <td><?php echo $secondItems[$number2 + 2]; ?></td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Silver" name = "compliance<?php echo $secondCategory->indicator_id ?>Silver" value = "1"/> Compliance</td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Silver" name = "compliance<?php echo $secondCategory->indicator_id ?>Silver" value = "2"/> Not Compliance</td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Silver" name = "compliance<?php echo $secondCategory->indicator_id ?>Silver" value = "3"/> N/A</td>
-                                                               <td><?php echo $secondItems[$number2 + 4]; ?></td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Gold" name = "compliance<?php echo $secondCategory->indicator_id ?>Gold" value = "1"/> Compliance</td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Gold" name = "compliance<?php echo $secondCategory->indicator_id ?>Gold" value = "2"/> Not Compliance</td>
-                                                               <td><input type="radio" id = "compliance<?php echo $secondCategory->indicator_id ?>Gold" name = "compliance<?php echo $secondCategory->indicator_id ?>Gold" value = "3"/> N/A</td>
-                                                               <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
+                                                            <?php $counting2 = count($secondItems); ?>
+                                                               <?php if($counting2 > 1){ ?>
+                                                                   <td><?php echo $secondItems[$number2]; ?></td>
+                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required/> Compliance</td>
+                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2"/> Not Compliance</td>
+                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "3"/> N/A</td>
+                                                                       <?php if($counting2 > 3){ ?>
+                                                                       <td><?php echo $secondItems[$number2 + 2]; ?></td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required/> Compliance</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2"/> Not Compliance</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "3"/> N/A</td>
+                                                                       <?php if($counting2 > 5){ ?>
+                                                                           <td><?php echo $secondItems[$number2 + 4]; ?></td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required/> Compliance</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2"/> Not Compliance</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "3"/> N/A</td>
+                                                                           <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
+                                                                       <?php } ?>
+                                                                   <?php } ?>
+                                                               <?php } ?>
                                                                <?php break; ?>
                                                         <?php }  else { ?>
                                                         </tr>
@@ -101,21 +110,33 @@
                                                     </tr>
                                                 <?php } else { ?>
                                                     <?php $counting = count($iteem); ?>
+                                                    <?php $int1 = intval(preg_replace('/[^0-9]+/', '', $a), 10); ?>
+                                                    <td><?php echo $int1 ?></td>
                                                     <?php if($counting > 1){ ?>
                                                         <td><?php echo $iteem[$number]; ?></td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1"/> Compliance - compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze</td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2"/> Not Compliance</td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3"/> N/A</td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><div class="radio"><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required/><label for="compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze"> - Compliance</label></div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>asd</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>asd</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1"/> Complianc - compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2"/> Not Compliance</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required/> Compliance</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" required/> Not Compliance</td>
                                                             <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "3"/> N/A</td>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1"/> Compliance - compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold</td>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required/> Compliance</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Not Compliance</td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "3"/> N/A</td>
+                                                                <td width = "25%"><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "3"/> N/A</td>
                                                                 <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
 
                                                             <?php }  ?>
