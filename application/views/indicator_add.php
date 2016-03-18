@@ -88,6 +88,8 @@
                                                         <?php $seconds = $arrays[0];?>
                                                         <?php if ($b == $seconds) { ?>
                                                             <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
+                                                            <?php $int2 = intval(preg_replace('/[^0-9]+/', '', $b), 10); ?>
+                                                            <td><?php echo $int2 ?></td>
                                                                <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                    <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required/> Compliance</td>
@@ -137,7 +139,13 @@
                                                                 <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
 
                                                             <?php }  ?>
-                                                        <?php }  ?>
+                                                        <?php } else {  ?>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <?php }?>
                                                     <?php }?>
                                                     <?php break; ?>
                                             <?php }  ?>
