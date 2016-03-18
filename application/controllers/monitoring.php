@@ -3,7 +3,10 @@
 
 class monitoring extends CI_Controller
 {
-
+    public function index()
+    {
+        $form_message = "";
+    }
 
     public function monitoring_list()
     {

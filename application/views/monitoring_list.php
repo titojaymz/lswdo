@@ -65,6 +65,7 @@
                     //$ref_id =
                     echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
                     $getCertList = $certification_model->getCertList();
+
                     ?>
 
                     <?php
@@ -81,10 +82,14 @@
                     <h4>Certification Details</h4>
                     <table class="table table-bordered table-striped">
                         <tr>
+                            <td align="center"><b>&nbsp;</b></td>
                             <td align="center"><b>Certificate No</b></td>
                             <td align="center"><b>Date Issued</b></td>
                             <td align="center"><b>Validity In Years</b></td>
                             <td align="center"><b>Valid until</b></td>
+                            <td align="center"><b>Visit Count</b></td>
+                            <td align="center"><b>Visit Date</b></td>
+                            <td align="center"><b>Remarks</b></td>
 
                         </tr>
 
@@ -123,53 +128,40 @@
                                     $date_valid_val = date_format($validUntilToDate, "F d, Y");
 
                                     echo "<td align=\"center\"><b>".$date_valid_val." </b></td>";
+
+                                    $getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($ref_id_cert);
+
+                                    foreach($getMonitoringListByRefID as $keyMonitoring => $valMonitoring)
+                                    {
+                                        echo "<td align=\"center\"><b>";
+                                        //echo $valMonitoring['visit_count'];
+                                        $getVisitCountByID = $monitoring_model->getVisitCountByID($valMonitoring['visit_count']);
+
+                                        foreach($getVisitCountByID as $keyVisit => $valVisit)
+                                        {
+                                            echo $valVisit['visit_count'];
+                                        }//end foreach $getVisitCountByID
+
+                                        echo " </b></td>";
+
+                                        echo "<td align=\"center\"><b>";
+
+                                        $visitDateToDate = date_create($valMonitoring['visit_date']);
+                                        $visit_date_val = date_format($visitDateToDate, "F d, Y");
+
+                                        echo $visit_date_val;
+                                        echo " </b></td>";
+
+                                        //Remarks
+                                        echo "<td align=\"center\"><b>" . $valMonitoring['remarks'] . " </b></td>";
+                                    } //end foreach $getMonitoringListByRefID
+
                                     echo "</tr>";
                                 }
                             ?>
 
                     </table>
 
-                    <br/></br>
-                    <h4>Status of Monitoring/Date</h4>
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <td align="center"><b>Visit Count</b></td>
-                            <td align="center"><b>Visit Date</b></td>
-                            <td align="center"><b>Remarks</b></td>
-                        </tr>
-                        <tr>
-                            <?php
-
-                                $getMonitoringList = $monitoring_model->getMonitoringList();
-                                foreach($getMonitoringList as $key => $val)
-                                {
-                                    //echo ;
-
-                                    $getVisitCountByID = $monitoring_model->getVisitCountByID($val['visit_count']);
-                                    foreach ($getVisitCountByID as $keyVisitCount => $valVisitCount)
-                                    {
-                                        echo "<td align=\"center\"><b>" . $valVisitCount['visit_count'] . " </b></td>";
-
-                                    }
-
-                                    $visitDateToDate = date_create($val['visit_date']);
-                                    $visit_date_val = date_format($visitDateToDate, "F d, Y");
-
-                                    echo "<td align=\"center\"><b>" . $visit_date_val . " </b></td>";
-                                    echo "<td align=\"center\"><b>" . $val['remarks'] . " </b></td>";
-
-                                    //print_r($getVisitCountByID);
-                                    //echo $key;
-                                    /*echo $val['visit_date'];
-                                    echo $val['remarks'];*/
-
-                                    echo " </tr>";
-
-                                }
-                            ?>
-
-
-                    </table>
 
                     <hr>
 

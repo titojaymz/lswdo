@@ -63,7 +63,8 @@
 
                         <?php
 
-                        $ref_id = $this->uri->segment('3'); //$_GET['ref_id']
+                        $ref_id = $this->uri->segment('3'); //ref_id for tbl_lswdo_certificate; ref_cert_id for lswdo_monitoring
+                        //$ref_id = $this->uri->segment('4'); //$_GET['ref_cert_id']
                         echo "<input id=\"ref_cert_id\" name=\"ref_cert_id\" type=\"text\" value=\"$ref_id\"/>";
 
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
@@ -93,6 +94,7 @@
 
                                     <?php
                                     $getCertListByID = $certification_model->getCertListByID($ref_id);
+                                    $getValidity = $monitoring_model->getValidity($ref_id);
                                     foreach($getCertListByID as $key => $val)
                                     {
                                         echo "<td align=\"center\">";
@@ -128,6 +130,45 @@
                                         echo "</select>";
                                         echo "</td>";
                                         echo "</tr>";
+
+                                        //visit_count
+                                        echo "<tr>";
+                                        echo "<td align=\"center\"><b>Visit Count</b></td>";
+                                        echo "<td align=\"center\">";
+                                        echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
+                                        foreach ($getVisitCount as $key=>$val)
+                                        {
+                                            echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'>";
+                                            echo $val['visit_count'];
+                                            echo "</option>";
+                                        }
+                                        echo "</select>";
+                                        echo "</td>";
+                                        echo "</tr>";
+
+                                        $getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($ref_id);
+
+                                        foreach ($getMonitoringListByRefID as $keyMonitoring => $valMonitoring)
+                                        {
+
+                                        //visit_date
+                                        echo "<tr>";
+                                        echo "<td align=\"center\"><b>Visit Date</b></td>";
+                                        echo "<td align=\"center\">";
+                                        echo " <input type=\"text\" id=\"visit_date\" name=\"visit_date\" class=\"form-control\" value = '".$valMonitoring['visit_date']."' placeholder = 'Enter Visit Date' />";
+                                        echo "</td>";
+                                        echo "</tr>";
+
+                                        //remarks
+                                        echo "<tr>";
+                                        echo "<td align=\"center\"><b>Remarks</b></td>";
+                                        echo "<td align=\"center\">";
+                                        echo "<textarea class=\"form-control\" rows=\"3\" id=\"remarks\" name=\"remarks\" placeholder=\"Type your message...\">".$valMonitoring['remarks']."</textarea>";
+                                        echo "</td>";
+                                        echo "</tr>";
+
+
+                                        }//end of $getMonitoringListByRefID
 
                                         $certificate_no = $this->input->post('certificate_no');
                                         $current_certificate = '0';
@@ -168,60 +209,10 @@
 
                         </tr>
 
-                        <tr>
-                            <td align="center"><b>Validity</b></td>
-                            <td>
-                                <?php
-                                //print_r($getVisitCount);
-                                echo "<select name = 'validity' onchange='validityDate()' id='validity' class=\"form-control\">";
-                                foreach ($getValidity as $key=>$val)
-                                {
-                                    echo "<option id='".$val['validity_id']."' value='".$val['validity_inyears']."'>";
-                                    echo $val['validity_title'];
-                                    echo "</option>";
-                                }
-                                echo "</select>";
-                                ?>
-                            </td>
-                        </tr>
-
                     </table>
 
 
-                    <br/></br>
-                    <h4>Status of Monitoring/Date</h4>
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <td><b>Visit Count</b></td>
-                            <td align="center">
-                            <?php
-                                //print_r($getVisitCount);
-                                echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
-                                foreach ($getVisitCount as $key=>$val)
-                                {
-                                    echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'>";
-                                    echo $val['visit_count'];
-                                    echo "</option>";
-                                }
-                                 echo "</select>";
-                            ?>
-                            </td>
-                        </tr>
-                        </tr>
-                            <td><b>Visit Date</b></td>
-                            <td align="center">
 
-                                <input type="text" id="visit_date" name="visit_date" class="form-control" placeholder = 'Enter Visit Date' />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Remarks</b></td>
-                            <td>
-                                <textarea class="form-control" rows="3" id="remarks" name="remarks" placeholder="Type your message..."></textarea>
-                            </td>
-                        </tr>
-
-                    </table>
 
 
                     <hr>
