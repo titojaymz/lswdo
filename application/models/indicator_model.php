@@ -148,20 +148,20 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
-    public function getSecondCategoriesLowerFromTI(){
-        $unformat = "";
-        foreach($this->getSecondCategoriesFromTI() as $secondCat):
-            $unformat .= "'".$secondCat->indicator_id."',";
-        endforeach;
-        $format = substr($unformat,0,-1);
-
-        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
-                FROM (`lib_indicator_codes`)
-                WHERE `mother_indicator_id` IN ('.$format.')';
-        $query = $this->db->query($sql);
-        return  $query->result();
-    }
+//    public function getSecondCategoriesLowerFromTI(){
+//        $unformat = "";
+//        foreach($this->getSecondCategoriesFromTI() as $secondCat):
+//            $unformat .= "'".$secondCat->indicator_id."',";
+//        endforeach;
+//        $format = substr($unformat,0,-1);
 //
+//        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+//                FROM (`lib_indicator_codes`)
+//                WHERE `mother_indicator_id` IN ('.$format.')';
+//        $query = $this->db->query($sql);
+//        return  $query->result();
+//    }
+////
 //    public function getSecondCategoriesLowerLowerFromTI(){
 //        $unformat = "";
 //        foreach($this->getSecondCategoriesLowerFromTI() as $secondCat):

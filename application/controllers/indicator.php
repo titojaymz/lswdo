@@ -52,7 +52,7 @@ class indicator extends CI_Controller
                         $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
                         $profile = '9';
                         $indicator = $firstCatBronze->indicator_id;
-                        $findings =  'hahahaha';
+                        $findings = $this->input->post('textArea'. $firstCatBronze->indicator_id);
                         if($complianceBronze != ""){
                             $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings);
                         }
@@ -113,7 +113,7 @@ class indicator extends CI_Controller
         }
 
         $indicator_model = new indicator_model();
-        $this->validateAddIndicator();
+        $this->validateAddIndicatorpart3();
 
         if (!$this->form_validation->run()){
             $form_message = '';
@@ -125,18 +125,17 @@ class indicator extends CI_Controller
                 'thirdIndicators' => $indicator_model->getThirdIndicators(),
                 'getFirstCategory' => $indicator_model->getCategoriesFromTI(),
                 'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI(),
-                'getSecondCategoryLower' => $indicator_model->getSecondCategoriesLowerFromTI(),
             ));
             $this->load->view('footer');
         } else {
-            foreach($indicator_model->getCategoriesFromFI() as $firstCatBronze):
+            foreach($indicator_model->getCategoriesFromTI() as $firstCatBronze):
                 if($firstCatBronze->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
                     $profile = '9';
                     $indicator = $firstCatBronze->indicator_id;
-                    $findings =  'hahahaha';
+                    $findings = $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
                         $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings);
                     }
@@ -151,7 +150,7 @@ class indicator extends CI_Controller
                     continue;
                 }
             endforeach;
-            foreach($indicator_model->getSecondCategoriesFromFI() as $secondCat):
+            foreach($indicator_model->getSecondCategoriesFromTI() as $secondCat):
                 if($secondCat->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
@@ -171,16 +170,17 @@ class indicator extends CI_Controller
                     continue;
                 }
             endforeach;
+
             if($addResultBronze || $addResultSilver || $addResultGold){
                 $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
-                $this->load->view('indicator_view', array(
-                    'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
-                    'firstIndicators' => $indicator_model->getFirstIndicators(),
-                    'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
-                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
+                $this->load->view('indicator_addpart3', array(
+                    'thirdMotherIndicator' => $indicator_model->getThirdMotherIndicator(),
+                    'thirdIndicators' => $indicator_model->getThirdIndicators(),
+                    'getFirstCategory' => $indicator_model->getCategoriesFromTI(),
+                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI(),
                 ));
                 $this->load->view('footer');
             }
@@ -220,7 +220,7 @@ class indicator extends CI_Controller
                     $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
                     $profile = '9';
                     $indicator = $firstCatBronze->indicator_id;
-                    $findings =  'hahahaha';
+                    $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
                         $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings);
                     }
@@ -328,11 +328,24 @@ class indicator extends CI_Controller
 
     }
     protected function validateAddIndicatorpart2()
+{
+    $config = array(
+
+        array(
+            'field'   => 'complianceIIA1-1Bronze',
+            'rules'   => 'required|integer'
+        )
+    );
+
+    return $this->form_validation->set_rules($config);
+
+}
+    protected function validateAddIndicatorpart3()
     {
         $config = array(
 
             array(
-                'field'   => 'complianceIIA1-1Bronze',
+                'field'   => 'complianceIIIA11-1Bronze',
                 'rules'   => 'required|integer'
             )
         );

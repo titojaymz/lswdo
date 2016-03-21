@@ -67,25 +67,6 @@
                                 endforeach;
                                 ?>
 
-                                 <?php
-                                $thirdNewArray = array();
-                                foreach($getSecondCategoryLower as $thirdItem):
-                                    $arrSec = explode("-", $thirdItem->indicator_id, 2);
-                                    $third = $arrSec[0];
-                                    $thirdNewArray[$third][] = $thirdItem->indicator_checklist_id;
-                                    $thirdNewArray[$third][] = $thirdItem->indicator_name;
-                                endforeach;
-                                ?>
-
-                                <?php
-                                $fourthNewArray = array();
-                                foreach($getSecondCategoryLowerLower as $fourthItem):
-                                    $arrSec = explode("-", $fourthItem->indicator_id, 2);
-                                    $fourth = $arrSec[0];
-                                    $fourthNewArray[$fourth][] = $fourthItem->indicator_checklist_id;
-                                    $fourthNewArray[$fourth][] = $fourthItem->indicator_name;
-                                endforeach;
-                                ?>
 <!--                                    <pre>-->
 <!--                                    --><?php //print_r($secondNewArray);?>
 <!--                                    </pre>-->
@@ -96,8 +77,6 @@
                                 <?php  $number4 = 1; ?>
                                 <?php  $checklist = 0; ?><!-- ung $checklist para makuha ung laman nung array na newArray at secondNewArray, yung indicator_checklist_id ung kinukuha neto -->
                                 <?php  $checklist2 = 0; ?>
-                                <?php  $checklist3 = 0; ?>
-                                <?php  $checklist4 = 0; ?>
                                 <?php foreach($newArray as $a => $iteem): ?> <!-- array for NewArray for child lower indicator -->
                                     <?php foreach($getFirstCategory as $firstCategory):?>
                                         <?php if($firstCategory->mother_indicator_id == $third_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
