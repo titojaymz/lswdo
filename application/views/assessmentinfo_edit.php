@@ -21,9 +21,9 @@ echo validation_errors();
 
     function get_prov() {
         var region_code = $('#regionlist').val();
-        var provCode = <?php echo $assessmentinfo_details->prov_code; ?>
+        var provCode =  $('#prov_pass').val();
 
-            $('#citylist option:gt(0)').remove().end();
+        $('#citylist option:gt(0)').remove().end();
         $('#brgylist option:gt(0)').remove().end();
 
         if(region_code > 0) {
@@ -45,7 +45,7 @@ echo validation_errors();
     }
     function get_cities() {
         var prov_code = $('#provlist').val();
-        var cityCode = <?php echo $assessmentinfo_details->city_code; ?>
+        var cityCode = $('#city_pass').val();
 
             $('#brgylist option:gt(0)').remove().end();
 
@@ -68,7 +68,7 @@ echo validation_errors();
     }
     function get_brgy() {
         var city_code = $('#citylist').val();
-        var brgy = <?php echo $assessmentinfo_details->brgy_code; ?>
+        var brgy = $('#brgy_pass').val();
 
         if(city_code > 0) {
             $.ajax({
@@ -192,11 +192,14 @@ echo validation_errors();
                 </select>
             </div>
         </div>
+        <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
+        <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
+        <input class="form-control" type="hidden" id = "brgy_pass" name="brgy_pass" value = "<?php echo $assessmentinfo_details->brgy_code ?>" >
         <pre>
-            <?php print_r($provlist)?>
+
             <?php echo $assessmentinfo_details->region_code ?>
             <?php echo $assessmentinfo_details->prov_code ?>
-            <?php echo $provselect->prov_code ?>
+
             <?php echo $assessmentinfo_details->city_code ?>
             <?php echo $assessmentinfo_details->brgy_code ?>
         </pre>

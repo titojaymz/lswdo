@@ -21,7 +21,6 @@ class assessmentinfo extends CI_Controller {
         //rpmb
 
         $this->init_rpmb_session();
-        $this->init_rpmbsearch_session();
       //  $rpmb['lgu_typelist'] = $this->assessmentinfo_model->get_lgu_type();
         $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
 
