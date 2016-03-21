@@ -18,6 +18,7 @@
             <div class = "panel-body" style="display: block;">
                 <a href="<?php echo base_url('indicator/indicatorAdd') ?>" class = "btn btn-lg btn-rounded btn-option4">Add Indicator</a>
                 <a href="<?php echo base_url('indicator/indicatorAddpart2') ?>" class = "btn btn-lg btn-rounded btn-option4">Add Indicator Part II</a>
+                <a href="<?php echo base_url('indicator/indicatorAddpart3') ?>" class = "btn btn-lg btn-rounded btn-option4">Add Indicator Part III</a>
                 <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                 <table class="table table-bordered table-striped">
                     <tr>

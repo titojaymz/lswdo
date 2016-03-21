@@ -108,9 +108,73 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
+    public function getThirdMotherIndicator(){
+        $this->db->select('indicator_id,mother_indicator_id,indicator_name');
+        $this->db->order_by('indicator_name','ASC');
+        $query = $this->db->get_where('lib_indicator_codes', array('indicator_id' => 'III'));
+        return $query->row();
+    }
+    public function getThirdIndicators(){
+        $this->db->select('indicator_id,mother_indicator_id,indicator_name');
+        $this->db->order_by('indicator_name','ASC');
+        $query = $this->db->get_where('lib_indicator_codes', array('mother_indicator_id' => 'III'));
+        return $query->result();
+    }
+    public function getCategoriesFromTI(){
+        $unformat = "";
+        foreach($this->getThirdIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
 
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
 
+    public function getSecondCategoriesFromTI(){
+        $unformat = "";
+        foreach($this->getCategoriesFromTI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
 
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
+//    public function getSecondCategoriesLowerFromTI(){
+//        $unformat = "";
+//        foreach($this->getSecondCategoriesFromTI() as $secondCat):
+//            $unformat .= "'".$secondCat->indicator_id."',";
+//        endforeach;
+//        $format = substr($unformat,0,-1);
+//
+//        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+//                FROM (`lib_indicator_codes`)
+//                WHERE `mother_indicator_id` IN ('.$format.')';
+//        $query = $this->db->query($sql);
+//        return  $query->result();
+//    }
+////
+//    public function getSecondCategoriesLowerLowerFromTI(){
+//        $unformat = "";
+//        foreach($this->getSecondCategoriesLowerFromTI() as $secondCat):
+//            $unformat .= "'".$secondCat->indicator_id."',";
+//        endforeach;
+//        $format = substr($unformat,0,-1);
+//
+//        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+//                FROM (`lib_indicator_codes`)
+//                WHERE `mother_indicator_id` IN ('.$format.')';
+//        $query = $this->db->query($sql);
+//        return  $query->result();
+//    }
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings){
         $this->db->trans_begin();
         $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom)
