@@ -14,7 +14,7 @@ echo validation_errors();
 
     document.onreadystatechange=function(){
         get_prov();
-        get_city();
+        get_cities();
         get_brgy();
 
     }
@@ -43,7 +43,7 @@ echo validation_errors();
         }
 
     }
-    function get_city() {
+    function get_cities() {
         var prov_code = $('#provlist').val();
         var cityCode = <?php echo $assessmentinfo_details->city_code; ?>
 
@@ -90,9 +90,6 @@ echo validation_errors();
 
     }
 
-
-
-    }
 </script>
 <div class="content">
 
@@ -150,7 +147,7 @@ echo validation_errors();
         </div>
         <div class="form-group">
         <div id="div_regionlist" >
-            <label for="lgu_type_id">region</label>
+            <label for="regionlist">region</label>
             <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
                 <option value="0">Choose Region</option>
                 <?php foreach($regionlist as $regionselect): ?>
@@ -171,10 +168,10 @@ echo validation_errors();
 
             <label for="provlist">prov_code</label>
             <div id="div_provlist">
-                <select id="provlist" name="provlist" class="form-control" onChange="get_city();">
+                <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
                     <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
                         ?>
-                        <option value="0">Choose Region First</option>
+                        <option value="0">Choose Province</option>
                         <?php
                         foreach ($provlist as $provselect) { ?>
                             <option value="<?php echo $provselect->prov_code; ?>"
@@ -199,11 +196,12 @@ echo validation_errors();
             <?php print_r($provlist)?>
             <?php echo $assessmentinfo_details->region_code ?>
             <?php echo $assessmentinfo_details->prov_code ?>
+            <?php echo $provselect->prov_code ?>
             <?php echo $assessmentinfo_details->city_code ?>
             <?php echo $assessmentinfo_details->brgy_code ?>
         </pre>
         <div class="form-group">
-            <label for="brgy_code">city_code</label>
+            <label for="citylist">city_code</label>
             <div id="div_citylist">
                 <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
                     <?php if($assessmentinfo_details->city_code or $assessmentinfo_details->prov_code) {
@@ -211,13 +209,13 @@ echo validation_errors();
                         <option value="0">Choose Province First</option>
                         <?php
                         foreach ($citylist as $cityselect) { ?>
-                            <option value="<?php echo $cityselect->city_code; ?>"
+                            <option value="<?php echo $cityselect->city_name; ?>"
                                 <?php
                                 if ($cityselect->city_code== $assessmentinfo_details->city_code) {
                                     echo " selected";
                                 } ?>
                                 >
-                                <?php echo $cityselect->city_name; ?></option>
+                                <?php echo $cityselect->city_code; ?></option>
                             <?php
                         }
                     } else {
@@ -229,7 +227,7 @@ echo validation_errors();
             </div>
             </div>
         <div class="form-group">
-            <label for="brgy_code">brgy_code</label>
+            <label for="brgylist">brgy_code</label>
             <div id="div_brgylist">
                 <select id="brgylist" name="brgylist" class="form-control">
                     <?php if($assessmentinfo_details->brgy_code or $assessmentinfo_details->city_code) {
@@ -243,7 +241,7 @@ echo validation_errors();
                                     echo " selected";
                                 } ?>
                                 >
-                                <?php echo $brgyselect->brgy_name; ?></option>
+                                <?php echo $brgyselect->brgy_code; ?></option>
                             <?php
                         }
                     } else {

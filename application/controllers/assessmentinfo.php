@@ -349,8 +349,8 @@ class assessmentinfo extends CI_Controller {
             $citylist = $this->assessmentinfo_model->get_cities($prov_code);
 
             $city_list[] = "Choose City";
-            foreach($citylist as $tempcities) {
-                $city_list[$tempcities->city_code] = $tempcities->city_name;
+            foreach($citylist as $tempcity) {
+                $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
             $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
