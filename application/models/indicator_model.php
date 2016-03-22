@@ -8,6 +8,11 @@ class indicator_model extends CI_Model
         return $query->result();
     }
 
+    public function getLGUtype($profID){
+        $this->db->select('lgu_type_id');
+        $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $profID));
+        return $query->row();
+    }
     public function getFirstMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');
@@ -20,30 +25,41 @@ class indicator_model extends CI_Model
         $query = $this->db->get_where('lib_indicator_codes', array('mother_indicator_id' => 'I'));
         return $query->result();
     }
-    public function getCategoriesFromFI(){
+    public function getCategoriesFromFI($lguType){
         $unformat = "";
         foreach($this->getFirstIndicators() as $firstIndicators):
             $unformat .= "'".$firstIndicators->indicator_id."',";
         endforeach;
         $format = substr($unformat,0,-1);
 
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1)';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2,3)';
+        }
+
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
                 FROM (`lib_indicator_codes`)
-                WHERE `mother_indicator_id` IN ('.$format.')';
+                WHERE `mother_indicator_id` IN ('.$format.') and '.$where2;
         $query = $this->db->query($sql);
         return  $query->result();
     }
 
-    public function getSecondCategoriesFromFI(){
+    public function getSecondCategoriesFromFI($lguType){
         $unformat = "";
-        foreach($this->getCategoriesFromFI() as $secondCat):
+        foreach($this->getCategoriesFromFI($lguType) as $secondCat):
             $unformat .= "'".$secondCat->indicator_id."',";
         endforeach;
         $format = substr($unformat,0,-1);
 
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1)';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2,3)';
+        }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
                 FROM (`lib_indicator_codes`)
-                WHERE `mother_indicator_id` IN ('.$format.')';
+                WHERE `mother_indicator_id` IN ('.$format.') and '.$where2;
         $query = $this->db->query($sql);
         return  $query->result();
     }
@@ -153,6 +169,7 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
+
 
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings){
         $this->db->trans_begin();
