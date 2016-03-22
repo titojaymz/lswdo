@@ -354,12 +354,12 @@ class indicator extends CI_Controller
                     $indicator = $firstCatBronze->indicator_id;
                     $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
-                        $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
                     }
                     if($complianceSilver != ""){
-                        $addResultSilver = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
                     }if($complianceGold != ""){
-                        $addResultGold = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
                     }
 
 
@@ -376,18 +376,18 @@ class indicator extends CI_Controller
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
-                        $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
                     }
                     if($complianceSilver != ""){
-                        $addResultSilver = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
                     } if($complianceGold != ""){
-                        $addResultGold = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
                     }
                 } else {
                     continue;
                 }
             endforeach;
-            if($addResultBronze || $addResultSilver || $addResultGold){
+            if($updateResultBronze || $updateResultSilver || $updateResultGold){
                 $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
