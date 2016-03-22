@@ -20,7 +20,7 @@
 
                     <?php $countLS = count($getLSWDO) ?>
                     <?php if($countLS > 0){ ?>
-                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEditpart3/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
                         <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
