@@ -11,6 +11,31 @@ echo validation_errors();
 ?>
 <body>
 <script type="text/javascript">
+    function askLGU() {
+        var e = document.getElementById("lgu_type_id").value;
+        if (e == 1)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "none";
+            document.getElementById("groupLGUCity").style.visibility = "hidden";
+            document.getElementById("groupLGUBrgy").style.display = "none";
+            document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+        }
+        else
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
+            document.getElementById("groupLGUBrgy").style.display = "block";
+            document.getElementById("groupLGUBrgy").style.visibility = "visible";
+        }
+    }
 
     document.onreadystatechange=function(){
         get_prov();
@@ -129,9 +154,10 @@ echo validation_errors();
         </div>
 
         <div class="form-group">
-            <label for="lgu_type_id">lgu_type_id</label>
-            <select name="lgu_type_id" id="lgu_type_id" class="form-control"">
-            <option value="0">-Please select-</option>
+            <label class="control-label">Type of LSWDO</label>
+
+            <select name="lgu_type_id" id="lgu_type_id" class="form-control" onchange="askLGU();">
+            <option select value="0">-Please select-</option>
             <?php foreach($lgu_type_id as $lgus): ?>
                 <option value="<?php echo $lgus->lgu_type_id; ?>"
                     <?php if(isset($assessmentinfo_details->lgu_type_id)) {
@@ -144,45 +170,52 @@ echo validation_errors();
                 </option>
             <?php endforeach; ?>
             </select>
-        </div>
-        <div class="form-group">
-        <div id="div_regionlist" >
-            <label for="regionlist">region</label>
-            <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
-                <option value="0">Choose Region</option>
-                <?php foreach($regionlist as $regionselect): ?>
-                    <option value="<?php echo $regionselect->region_code; ?>"
-                        <?php if(isset($assessmentinfo_details->region_code )) {
-                            if($regionselect->region_code == $assessmentinfo_details->region_code) {
-                                echo " selected";
-                            }
-                        } ?>
-                        >
-                        <?php echo $regionselect->region_name; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        </div>
-        <div class="form-group">
 
-            <label for="provlist">prov_code</label>
-            <div id="div_provlist">
-                <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
-                    <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
-                        ?>
-                        <option value="0">Choose Province</option>
-                        <?php
-                        foreach ($provlist as $provselect) { ?>
-                            <option value="<?php echo $provselect->prov_code; ?>"
+            <div id="groupLGUregion">
+                <div class="form-group form-group-sm">
+                    <label for="regionlist" class="col-lg-2 control-label">Region</label>
+                    <div id="div_regionlist" class="col-lg-8">
+                        <fieldset>
+                            <div class="control-group">
+                                <div class="controls">
+                                     <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
+                                      <option value="0">Choose Region</option>
+                                         <?php foreach($regionlist as $regionselect): ?>
+                                            <option value="<?php echo $regionselect->region_code; ?>"
+                                             <?php if(isset($assessmentinfo_details->region_code )) {
+                                                if($regionselect->region_code == $assessmentinfo_details->region_code) {
+                                                    echo " selected";
+                                                   }
+                                                } ?>
+                                                >
+                                              <?php echo $regionselect->region_name; ?>
+                                            </option>
+                                      <?php endforeach; ?>
+                                     </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
 
-                                <?php
-                                if ($provselect->prov_code == $assessmentinfo_details->prov_code) {
-                                    echo " selected";
-                                } ?>
-                                >
-                                <?php echo $provselect->prov_code; ?></option>
-                            <?php
+        <div id="groupLGUProvince">
+            <div class="form-group form-group-sm">
+                <label for="provlist" class="col-lg-2 control-label">Province</label>
+                     <div id="div_provlist" class="col-lg-8">
+                          <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
+                           <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
+                                ?>
+                                <option value="0">Choose Province</option>
+                               <?php
+                                  foreach ($provlist as $provselect) { ?>
+                                  <option value="<?php echo $provselect->prov_code; ?>"
+                                  <?php
+                                     if ($provselect->prov_code == $assessmentinfo_details->prov_code) {
+                                        echo " selected";
+                                    } ?>
+                                      >
+                                 <?php echo $provselect->prov_code; ?></option>
+                               <?php
                         }
                     } else {
                         ?>
@@ -192,21 +225,17 @@ echo validation_errors();
                 </select>
             </div>
         </div>
+        </div>
+
         <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
         <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
         <input class="form-control" type="hidden" id = "brgy_pass" name="brgy_pass" value = "<?php echo $assessmentinfo_details->brgy_code ?>" >
-        <pre>
 
-            <?php echo $assessmentinfo_details->region_code ?>
-            <?php echo $assessmentinfo_details->prov_code ?>
-
-            <?php echo $assessmentinfo_details->city_code ?>
-            <?php echo $assessmentinfo_details->brgy_code ?>
-        </pre>
-        <div class="form-group">
-            <label for="citylist">city_code</label>
-            <div id="div_citylist">
-                <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
+            <div id="groupLGUCity">
+                <div class="form-group form-group-sm">
+                    <label for="citylist" class="col-lg-2 control-label">City</label>
+                    <div id="div_citylist" class="col-lg-8">
+                    <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
                     <?php if($assessmentinfo_details->city_code or $assessmentinfo_details->prov_code) {
                         ?>
                         <option value="0">Choose Province First</option>
@@ -229,11 +258,14 @@ echo validation_errors();
                 </select>
             </div>
             </div>
-        <div class="form-group">
-            <label for="brgylist">brgy_code</label>
-            <div id="div_brgylist">
-                <select id="brgylist" name="brgylist" class="form-control">
-                    <?php if($assessmentinfo_details->brgy_code or $assessmentinfo_details->city_code) {
+            </div>
+
+            <div id="groupLGUBrgy">
+            <div class="form-group form-group-sm">
+                <label for="brgylist" class="col-lg-2 control-label">Barangay</label>
+                <div id="div_brgylist" class="col-lg-8">
+                    <select id="brgylist" name="brgylist" class="form-control">
+                       <?php if($assessmentinfo_details->brgy_code or $assessmentinfo_details->city_code) {
                         ?>
                         <option value="0">Choose Barangay</option>
                         <?php
@@ -245,15 +277,17 @@ echo validation_errors();
                                 } ?>
                                 >
                                 <?php echo $brgyselect->brgy_code; ?></option>
-                            <?php
-                        }
-                    } else {
-                        ?>
-                        <option>Select City First</option>
-                        <?php
-                    } ?>
-                </select>
-            </div>
+                                 <?php
+                                  }
+                               } else {
+                                    ?>
+                               <option>Select City First</option>
+                              <?php
+                                } ?>
+                           </select>
+                     </div>
+                 </div>
+                </div>
         </div>
         <div class="form-group">
             <label for="street_address">street_address</label>
