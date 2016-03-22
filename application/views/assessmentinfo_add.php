@@ -109,7 +109,7 @@ if (!$this->session->userdata('user_id')){
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-<br><br><br>
+<br><br>
             <div class="form-group">
                 <label for="geo_info" class="control-label">Geographic Information</label>
             </div>

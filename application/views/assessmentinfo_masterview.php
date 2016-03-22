@@ -8,17 +8,13 @@ if (!$this->session->userdata('user_data')){
 }
 ?>
 <body>
-<div class="modal-body">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div id="addassessment" class="col-md-6">
-                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
-                <form method="post" class="form-horizontal">
-                    <div class="form-group">
-<div class="col-md-2"></div>
-<div class="col-md-8">
-    <br><br><br>
+<div class="content">
+
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    <br><br><br>
     <div class="form-group">
         <label for="geo_info" class="control-label"> View: Identifying Information </label>
     </div>
@@ -57,7 +53,13 @@ if (!$this->session->userdata('user_data')){
 <div class="col-md-2"></div>
 </div>
 </div>
-            </form>
-        </div>
-        <div class="col-md-3"></div>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
 </body>
