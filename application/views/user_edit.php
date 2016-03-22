@@ -2,7 +2,7 @@
 
 if (!$this->session->userdata('user_data')){
     redirect('/users/login','location');
-
+//test0000000
 }
 $user_region = $this->session->userdata('uregion');
 ?><!DOCTYPE html>
@@ -35,9 +35,40 @@ $user_region = $this->session->userdata('uregion');
                         <input class="form-control"  type="hidden" name="myid" value="<?php echo $this->session->userdata('uid')?>">
                     </div>
                     <div id="edit" class="col-lg-6">
+
                     <div class="form-group">
-                        <label for="full_name">Full Name:</label>
-                        <input class="form-control" type="text" name="full_name" value="<?php echo $user_details->full_name ?>" placeholder="Full Name">
+                        <label for="firstname">First Name:</label>
+                        <input class="form-control" type="text" name="firstname" value="<?php echo $user_details->firstname ?>" placeholder="First Name">
+                    </div>
+
+                        <div class="form-group">
+                        <label for="middlename">Middle Name:</label>
+                        <input class="form-control" type="text" name="middlename" value="<?php echo $user_details->middlename ?>" placeholder="Middle Name">
+                    </div>
+
+                        <div class="form-group">
+                        <label for="surname">Sur Name:</label>
+                        <input class="form-control" type="text" name="surname" value="<?php echo $user_details->surname ?>" placeholder="Sur Name">
+                    </div>
+
+                        <div class="form-group">
+                        <label for="extensionname">Extension Name:</label>
+                        <input class="form-control" type="text" name="extensionname" value="<?php echo $user_details->extensionname ?>" placeholder="Extension Name">
+                    </div>
+
+                        <div class="form-group">
+                        <label for="position">Position:</label>
+                        <input class="form-control" type="text" name="position" value="<?php echo $user_details->position ?>" placeholder="Position">
+                    </div>
+
+                        <div class="form-group">
+                        <label for="designation">Designation:</label>
+                        <input class="form-control" type="text" name="designation" value="<?php echo $user_details->designation ?>" placeholder="Designation">
+                    </div>
+
+                        <div class="form-group">
+                        <label for="contactno">Contact No:</label>
+                        <input class="form-control" type="text" name="contactno" value="<?php echo $user_details->contactno ?>" placeholder="Contact No">
                     </div>
 
                     <div class="form-group">

@@ -8,15 +8,13 @@ $region = $this->session->userdata('uregion');
   <ul class="sidebar-panel nav">
     <li class="sidetitle">MAIN</li>
     <li><a href="<?php echo base_url('dashboardc/dashboard/'.$region.'') ?>"><span class="icon color5"><i class="fa fa-dashboard"></i></span>Dashboard</a></li> <!--edited link! -->
-    <li><a href="<?php echo base_url('familyinfo/index') ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Family Information</a></li>
-    <li><a href="<?php echo base_url('reports/index') ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Reports</a></li>
-    <?php
-    switch ($access) {
-      case "-1" :
-    ?>
+    <li><a href="<?php echo base_url('assessmentinfo/index') ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
+<!--    <li><a href="--><?php //echo base_url('indicator/indicatorView') ?><!--"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Indicators</a></li>-->
+    <li><a href="<?php echo base_url('monitoring/monitoring_list') ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Monitoring</a></li><!--carla for monitoring! -->
+
     <li><a href="#"><span class="icon color9"><i class="fa fa-book"></i></span>Libraries<span class="caret"></span></a> <!--removed link to index -->
       <ul>
-        <li><a href="<?php echo base_url('libraries/family_position') ?>">Family Position</a></li>
+        <li><a href="<?php echo base_url('libraries/assessment_position') ?>">Standards and Indicators</a></li>
       </ul>
     </li>
     <li><a href="#"><span class="icon color9"><i class="fa fa-user-plus"></i></span>Access Control<span class="caret"></span></a> <!--added module -->
@@ -26,10 +24,7 @@ $region = $this->session->userdata('uregion');
         <li><a href="#">User Permissions</a></li>
       </ul>
     </li>
-    <?php break;
-     case "2" :
-    break;
-    default: }?>
+
   </ul>
 
   <ul class="sidebar-panel nav">
