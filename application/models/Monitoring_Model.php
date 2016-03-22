@@ -1,11 +1,8 @@
 <?php
 
-class Monitoring_model extends CI_Model
+class Monitoring_Model extends CI_Model
 {
     public function getMonitoringList(){
-       /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
-        $this->db->order_by('visit_date','ASC');
-        $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
 
         $sql = 'SELECT ref_id,profile_id,visit_count,visit_date,remarks
                 FROM `tbl_lswdo_monitoring`
@@ -13,14 +10,14 @@ class Monitoring_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result_array();
     }
-    public function getMonitoringListByRefID($ref_cert_id){
+    public function getMonitoringListByRefID($ref_id){
         /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
          $this->db->order_by('visit_date','ASC');
          $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
 
         $sql = 'SELECT ref_id,ref_cert_id,profile_id,visit_count,visit_date,remarks
                 FROM `tbl_lswdo_monitoring`
-                WHERE ref_cert_id = '.$ref_cert_id.';';
+                WHERE ref_id = '.$ref_id.';';
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -33,7 +30,7 @@ class Monitoring_model extends CI_Model
         return $query->row();
     }
 
-    public function getVisitCount(){
+    /*public function getVisitCount(){
         $sql = 'SELECT visit_id, visit_count
                 FROM `lib_visit_count`;';
         $query = $this->db->query($sql);
@@ -50,24 +47,35 @@ class Monitoring_model extends CI_Model
         //return  $query->result();
         //return  $query->row();
         return $query->result_array();
-    }
+    }*/
 
-    public function getValidity(){
+    /*public function getValidity(){
         $sql = 'SELECT validity_id, validity_inyears, validity_title
                 FROM `lib_validity`;';
         $query = $this->db->query($sql);
         //return  $query->result();
         //return  $query->row();
         return $query->result_array();
-    }
+    }*/
+
+    /*public function getValidityByID($validity_id){
+        $sql = 'SELECT validity_id, validity_inyears, validity_title
+                FROM `lib_validity`
+                where validity_id = '.$validity_id.';';
+        $query = $this->db->query($sql);
+        //return  $query->result();
+        //return  $query->row();
+        return $query->result_array();
+    }*/
 
 
 
-    public function insertLswdoMonitoring($profile_id, $visit_count, $visit_date,$remarks,$created_by,$date_created,$modified_by,$date_modified,$deleted){
+    public function insertLswdoMonitoring($profile_id,$ref_cert_id, $visit_count, $visit_date,$remarks,$created_by,$date_created,$modified_by,$date_modified,$deleted){
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_lswdo_monitoring(profile_id, visit_count, visit_date,remarks,created_by,date_created,modified_by,date_modified,deleted)
+        $this->db->query('Insert into tbl_lswdo_monitoring(profile_id,ref_cert_id, visit_count, visit_date,remarks,created_by,date_created,modified_by,date_modified,deleted)
                           VALUES(
                           "'.$profile_id.'",
+                          "'.$ref_cert_id.'",
                           "'.$visit_count.'",
                           "'.$visit_date.'",
                           "'.$remarks.'",

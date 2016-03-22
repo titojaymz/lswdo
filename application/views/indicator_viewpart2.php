@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    II. Administration and Organization
+                    II. Program Management
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
                         <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
@@ -18,7 +18,7 @@
                 </div>
                 <div class = "panel-body" style="display: block;">
 
-                    <?php $countLS = count($getLSWDO) ?>
+                    <?php $countLS = count($checkPart2) ?>
                     <?php if($countLS > 0){ ?>
                     <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>

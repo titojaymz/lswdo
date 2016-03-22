@@ -20,6 +20,7 @@ class indicator extends CI_Controller
             'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
             'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+            'checkPart1' => $indicator_model->getCheckPart1($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -42,6 +43,7 @@ class indicator extends CI_Controller
             'getSecondCategoryLower' => $indicator_model->getSecondCategoriesLowerFromSI(),
             'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI(),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+            'checkPart2' => $indicator_model->getCheckPart2($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -62,6 +64,7 @@ class indicator extends CI_Controller
             'getFirstCategory' => $indicator_model->getCategoriesFromTI(),
             'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI(),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+            'checkPart3' => $indicator_model->getCheckPart3($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -145,7 +148,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex($profID);
+                $this->redirectIndexAdd($profID);
             }
 
 
@@ -274,7 +277,7 @@ class indicator extends CI_Controller
                     'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI(),
                     'profileID' => $profID,));
                      $this->load->view('footer');
-
+                $this->redirectIndexAddPart2($profID);
             }
 
 
@@ -453,7 +456,91 @@ class indicator extends CI_Controller
 
         }
     }
+    public function indicatorEditpart3($profID)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
 
+        $indicator_model = new indicator_model();
+        $this->validateAddIndicator();
+
+        if (!$this->form_validation->run()){
+            $form_message = '';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('indicator_editpart3', array(
+                'thirdMotherIndicator' => $indicator_model->getThirdMotherIndicator(),
+                'thirdIndicators' => $indicator_model->getThirdIndicators(),
+                'getFirstCategory' => $indicator_model->getCategoriesFromTI(),
+                'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI(),
+                'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+                'profileID' => $profID,
+            ));
+            $this->load->view('footer');
+        } else {
+            foreach($indicator_model->getCategoriesFromTI() as $firstCatBronze):
+                if($firstCatBronze->indicator_checklist_id != '0') {
+                    $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
+                    $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
+                    $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
+                    $profile = $this->input->post('profID');
+                    $indicator = $firstCatBronze->indicator_id;
+                    $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
+                    if($complianceBronze != ""){
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                    }
+                    if($complianceSilver != ""){
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                    }if($complianceGold != ""){
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                    }
+
+
+                } else {
+                    continue;
+                }
+            endforeach;
+            foreach($indicator_model->getSecondCategoriesFromTI() as $secondCat):
+                if($secondCat->indicator_checklist_id != '0') {
+                    $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
+                    $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
+                    $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
+                    $profile =$profile = $this->input->post('profID');
+                    $indicator = $secondCat->indicator_id;
+                    $findings = $this->input->post('textArea'. $secondCat->indicator_id);
+                    if($complianceBronze != ""){
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                    }
+                    if($complianceSilver != ""){
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                    } if($complianceGold != ""){
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                    }
+                } else {
+                    continue;
+                }
+            endforeach;
+            if($updateResultBronze || $updateResultSilver || $updateResultGold){
+                $form_message = 'Add Success!';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('indicator_view', array(
+                    'thirdMotherIndicator' => $indicator_model->getThirdMotherIndicator(),
+                    'thirdIndicators' => $indicator_model->getThirdIndicators(),
+                    'getFirstCategory' => $indicator_model->getCategoriesFromTI(),
+                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI(),
+                ));
+                $this->load->view('footer');
+                $this->redirectIndex($profID);
+            }
+
+
+        }
+    }
     protected function validateAddIndicator()
     {
         $config = array(
@@ -496,6 +583,19 @@ class indicator extends CI_Controller
     public function redirectIndex($profID)
     {
         $page = base_url('indicator/indicatorView/'.$profID);
+//        $sec = "1";
+        header("Location: $page");
+    }
+
+    public function redirectIndexAdd($profID)
+    {
+        $page = base_url('indicator/indicatorViewpart2/'.$profID);
+//        $sec = "1";
+        header("Location: $page");
+    }
+    public function redirectIndexAddPart2($profID)
+    {
+        $page = base_url('indicator/indicatorViewpart3/'.$profID);
 //        $sec = "1";
         header("Location: $page");
     }

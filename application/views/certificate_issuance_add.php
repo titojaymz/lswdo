@@ -52,7 +52,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    Monitoring Details
+                    Certification Details
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
                         <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
@@ -63,7 +63,7 @@
 
                         <?php
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("monitoring/monitoring_list", $attributes);
+                        echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
 
                         ?>
                                  <input id="btn_back" name="btn_back" type="submit" class="btn btn-primary" value="Back To List"/>
@@ -74,8 +74,8 @@
 
                     </div>
                     <?php
-                        $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("monitoring/monitoring_add", $attributes);
+                        $attributes = array("class" => "form-horizontal", "id" => "certificate_issuanceForm", "name" => "certificate_issuanceForm");
+                        echo form_open("certificate_issuance/certificate_issuance_add", $attributes);
 
 
                         //profile_id
@@ -83,19 +83,19 @@
                         echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
                     ?>
                         <!-- date Valid-->
-                      <!--  <input type="hidden" id="month_valid" name="month_valid" class="form-control" placeholder="month_valid" />
-                        <input type="hidden" id="day_valid" name="day_valid" class="form-control" placeholder="day_valid" />
-                        <input type="hidden" id="year_valid" name="year_valid" class="form-control" placeholder="year_valid" />-->
+                        <input type="text" id="month_valid" name="month_valid" class="form-control" placeholder="month_valid" />
+                        <input type="text" id="day_valid" name="day_valid" class="form-control" placeholder="day_valid" />
+                        <input type="text" id="year_valid" name="year_valid" class="form-control" placeholder="year_valid" />
                         <!-- date Valid-->
 
-                   <!-- <h4>Certification Details</h4>
+                    <h4>Certification Details</h4>
                     <table class="table table-bordered table-striped">
-                        <tr>;
+                        <tr>
                             <td align="center"><b>Certification No</b></td>
                             <td><b>
                                     <?php
-/*                                        echo "<input type='text' id='txtCertNo' name = 'txtCertNo' class=\"form-control\" placeholder = 'Enter Certificate Number'/>";
-                                    */?>
+                                        echo "<input type='text' id='txtCertNo' name = 'txtCertNo' class=\"form-control\" placeholder = 'Enter Certificate Number'/>";
+                                    ?>
                             </b></td>
                         </tr>
                         <tr>
@@ -108,7 +108,7 @@
                             <td align="center"><b>Validity</b></td>
                             <td>
                                 <?php
-/*                                //print_r($getVisitCount);
+                                //print_r($getVisitCount);
                                 echo "<select name = 'validity' onchange='validityDate()' id='validity' class=\"form-control\">";
                                 foreach ($getValidity as $key=>$val)
                                 {
@@ -117,20 +117,21 @@
                                     echo "</option>";
                                 }
                                 echo "</select>";
-                                */?>
+                                ?>
                             </td>
                         </tr>
 
-                    </table>-->
+                    </table>
 
-
-                    <br/>
+                    <!--
+                    <br/></br>
+                    <h4>Status of Monitoring/Date</h4>
                     <table class="table table-bordered table-striped">
                         <tr>
                             <td><b>Visit Count</b></td>
                             <td align="center">
                             <?php
-                                //print_r($getVisitCount);
+/*                                //print_r($getVisitCount);
                                 echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
                                 foreach ($getVisitCount as $key=>$val)
                                 {
@@ -139,7 +140,7 @@
                                     echo "</option>";
                                 }
                                  echo "</select>";
-                            ?>
+                            */?>
                             </td>
                         </tr>
                         </tr>
@@ -155,54 +156,39 @@
                             </td>
                         </tr>
 
-                    </table>
+                    </table>-->
 
                     <?php
-                    $profile_id ='9';
-                    $visit_count = $this->input->post('visit_count');
-                    //date
-                    $strVisitDate = $this->input->post('visit_date');
-                    $visitDateToDate = date_create($strVisitDate);
-                    $visit_date = date_format($visitDateToDate, "Y-m-d");
-                    //date
-                    //$visit_date = $this->input->post('visitDate');
-                    $remarks = $this->input->post('remarks');
-                    $created_by = '104';
-                    $date_created = 'NOW()';
-                    $modified_by='104';
-                    $date_modified = '0000-00-00';
-                    $deleted='0';
-                    $ref_cert_id = 0;
+                    //$profile_id ='9';
+                    //$visit_count = $this->input->post('visit_count');
+                    ////date
+                    //$strVisitDate = $this->input->post('visit_date');
+                    //$visitDateToDate = date_create($strVisitDate);
+                    //$visit_date = date_format($visitDateToDate, "Y-m-d");
+                    ////date
+                    ////$visit_date = $this->input->post('visitDate');
+                    //$remarks = $this->input->post('remarks');
+                    //$created_by = '104';
+                    //$date_created = 'NOW()';
+                    //$modified_by='104';
+                    //$date_modified = '0000-00-00';
+                    //$deleted='0';
 
 
-                    /*$sql = 'Insert into tbl_lswdo_monitoring(profile_id, visit_count, visit_date,remarks,created_by,date_created,modified_by,date_modified,deleted)
-                          VALUES(
-                          "'.$profile_id.'",
-                          "'.$visit_count.'",
-                          "'.$visit_date.'",
-                          "'.$remarks.'",
-                          "'.$created_by.'",
-                          '.$date_created.',
-                          "'.$modified_by.'",
-                          "'.$date_modified.'",
-                          "'.$deleted.'"
-                          )';*/
-
-                    $sql ='Insert into tbl_lswdo_monitoring(profile_id,ref_cert_id, visit_count, visit_date,remarks,created_by,date_created,modified_by,date_modified,deleted)
-                          VALUES(
-                          "'.$profile_id.'",
-                          "'.$ref_cert_id.'",
-                          "'.$visit_count.'",
-                          "'.$visit_date.'",
-                          "'.$remarks.'",
-                          "'.$created_by.'",
-                          '.$date_created.',
-                          "'.$modified_by.'",
-                          "'.$date_modified.'",
-                          "'.$deleted.'"
-                          )';
-
-                    echo $sql;
+                    //$sql = 'Insert into tbl_lswdo_monitoring(profile_id, visit_count, visit_date,remarks,created_by,date_created,modified_by,date_modified,deleted)
+                    //      VALUES(
+                    //      "'.$profile_id.'",
+                    //      "'.$visit_count.'",
+                    //      "'.$visit_date.'",
+                    //      "'.$remarks.'",
+                    //      "'.$created_by.'",
+                    //      '.$date_created.',
+                    //      "'.$modified_by.'",
+                    //      "'.$date_modified.'",
+                    //      "'.$deleted.'"
+                    //      )';
+//
+                    //echo $sql;
                     ?>
 
 

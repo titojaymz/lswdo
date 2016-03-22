@@ -7,7 +7,21 @@ class indicator_model extends CI_Model
         $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID));
         return $query->result();
     }
-
+    public function getCheckPart1($profID){
+        $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IA1-1'));
+        return $query->row();
+    }
+    public function getCheckPart2($profID){
+        $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIA1-1'));
+        return $query->row();
+    }
+    public function getCheckPart3($profID){
+        $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIIA11-1'));
+        return $query->row();
+    }
     public function getLGUtype($profID){
         $this->db->select('lgu_type_id');
         $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $profID));
