@@ -10,14 +10,15 @@ class indicator extends CI_Controller
             redirect('/users/login','location');
         }
         $indicator_model = new indicator_model();
+        $lguTypes = $indicator_model->getLGUtype($profID);
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('indicator_view', array(
             'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
             'firstIndicators' => $indicator_model->getFirstIndicators(),
-            'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
-            'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
+            'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
+            'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
             'profileID' => $profID,
         ));
@@ -74,7 +75,7 @@ class indicator extends CI_Controller
 
         $indicator_model = new indicator_model();
         $this->validateAddIndicator();
-
+        $lguTypes = $indicator_model->getLGUtype($profID);
         if (!$this->form_validation->run()){
             $form_message = '';
             $this->load->view('header');
@@ -83,13 +84,14 @@ class indicator extends CI_Controller
             $this->load->view('indicator_add', array(
                 'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
                 'firstIndicators' => $indicator_model->getFirstIndicators(),
-                'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
-                'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
+                'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
+                'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
+                'LGUType' => $indicator_model->getLGUtype($profID),
                 'profileID' => $profID,
             ));
             $this->load->view('footer');
         } else {
-                foreach($indicator_model->getCategoriesFromFI() as $firstCatBronze):
+                foreach($indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id) as $firstCatBronze):
                     if($firstCatBronze->indicator_checklist_id != '0') {
                         $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
                         $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
@@ -111,7 +113,7 @@ class indicator extends CI_Controller
                         continue;
                     }
                 endforeach;
-                foreach($indicator_model->getSecondCategoriesFromFI() as $secondCat):
+                foreach($indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id) as $secondCat):
                     if($secondCat->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
@@ -139,8 +141,8 @@ class indicator extends CI_Controller
                 $this->load->view('indicator_view', array(
                     'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
                     'firstIndicators' => $indicator_model->getFirstIndicators(),
-                    'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
-                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
+                    'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
+                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
                 $this->redirectIndex($profID);
@@ -375,7 +377,7 @@ class indicator extends CI_Controller
 
         $indicator_model = new indicator_model();
         $this->validateAddIndicator();
-
+        $lguTypes = $indicator_model->getLGUtype($profID);
         if (!$this->form_validation->run()){
             $form_message = '';
             $this->load->view('header');
@@ -384,14 +386,14 @@ class indicator extends CI_Controller
             $this->load->view('indicator_edit', array(
                 'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
                 'firstIndicators' => $indicator_model->getFirstIndicators(),
-                'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
-                'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
+                'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
+                'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 'getLSWDO' => $indicator_model->getLSWDOdata($profID),
                 'profileID' => $profID,
             ));
             $this->load->view('footer');
         } else {
-            foreach($indicator_model->getCategoriesFromFI() as $firstCatBronze):
+            foreach($indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id) as $firstCatBronze):
                 if($firstCatBronze->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
@@ -413,7 +415,7 @@ class indicator extends CI_Controller
                     continue;
                 }
             endforeach;
-            foreach($indicator_model->getSecondCategoriesFromFI() as $secondCat):
+            foreach($indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id) as $secondCat):
                 if($secondCat->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
@@ -441,8 +443,8 @@ class indicator extends CI_Controller
                 $this->load->view('indicator_view', array(
                     'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
                     'firstIndicators' => $indicator_model->getFirstIndicators(),
-                    'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
-                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
+                    'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
+                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
                 $this->redirectIndex($profID);
