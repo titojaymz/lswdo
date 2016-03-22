@@ -131,22 +131,22 @@ echo validation_errors();
                 <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
                 <form method="post" class="form-horizontal">
                     <div class="form-group">
-<br><br><br>
+                <br><br><br>
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information</label>
                         </div>
 
                         <div class="form-group">
-                            <label for="identify_info" class="control-label">Edit record: Identifying Information</label>
+                            <label for="identify_info" class="control-label">Edit Record: Identifying Information</label>
                         </div>
         <div class="form-group">
-            <label for="profile_id">profile_id:</label>
+            <label for="profile_id">Profile ID:</label>
             <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
             <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" >
         </div>
 
         <div class="form-group">
-            <label for="application_type_id">application_type_id</label>
+            <label for="application_type_id">Application Type: </label>
             <select name="application_type_id" id="application_type_id" class="form-control"">
             <option value="0">-Please select-</option>
             <?php foreach($application_type_id as $applications): ?>
@@ -164,7 +164,7 @@ echo validation_errors();
         </div>
 
         <div class="form-group">
-            <label class="control-label">Type of LSWDO</label>
+            <label class="control-label">LSWDO Type: </label>
 
             <select name="lgu_type_id" id="lgu_type_id" class="form-control" onchange="askLGU();">
             <option select value="0">-Please select-</option>
@@ -183,7 +183,7 @@ echo validation_errors();
 
             <div id="groupLGUregion">
                 <div class="form-group form-group-sm">
-                    <label for="regionlist" class="col-lg-2 control-label">Region</label>
+                    <label for="regionlist" class="col-lg-2 control-label">Region: </label>
                     <div id="div_regionlist" class="col-lg-8">
                         <fieldset>
                             <div class="control-group">
@@ -210,7 +210,7 @@ echo validation_errors();
 
         <div id="groupLGUProvince">
             <div class="form-group form-group-sm">
-                <label for="provlist" class="col-lg-2 control-label">Province</label>
+                <label for="provlist" class="col-lg-2 control-label">Province: </label>
                      <div id="div_provlist" class="col-lg-8">
                           <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
                            <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
@@ -243,7 +243,7 @@ echo validation_errors();
 
             <div id="groupLGUCity">
                 <div class="form-group form-group-sm">
-                    <label for="citylist" class="col-lg-2 control-label">City</label>
+                    <label for="citylist" class="col-lg-2 control-label">City: </label>
                     <div id="div_citylist" class="col-lg-8">
                     <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
                     <?php if($assessmentinfo_details->city_code or $assessmentinfo_details->prov_code) {
@@ -272,7 +272,7 @@ echo validation_errors();
 
             <div id="groupLGUBrgy">
             <div class="form-group form-group-sm">
-                <label for="brgylist" class="col-lg-2 control-label">Barangay</label>
+                <label for="brgylist" class="col-lg-2 control-label">Barangay: </label>
                 <div id="div_brgylist" class="col-lg-8">
                     <select id="brgylist" name="brgylist" class="form-control">
                        <?php if($assessmentinfo_details->brgy_code or $assessmentinfo_details->city_code) {
@@ -299,28 +299,24 @@ echo validation_errors();
                  </div>
                 </div>
         </div>
-
-                        <div class="form-group">
-                            <label for="street_address">Total Population:</label>
-                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
-                        </div>
-                        <div class="form-group">
-                            <label for="street_address">Total Population:</label>
-                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
-                        </div>
-                        <div class="form-group">
-                            <label for="street_address">Total Population:</label>
-                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
-                        </div>
+        <div class="form-group">
+                <label for="no_cities">No. of Cities/Municipalities:</label>
+               <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities">
+          </div>
+        <div class="form-group">
+            <label for="no_brgy_code">No. of Barangays:</label>
+            <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays">
+        </div>
 
          <div class="form-group">
-             <label for="street_address">Total Population:</label>
-             <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+             <label for="total_pop">Total Population:</label>
+             <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population">
          </div>
-                        <div class="form-group">
-                 <label for="street_address">Total No. of Poor Families:</label>
-                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
-                        </div>
+
+          <div class="form-group">
+              <label for="total_poor">Total No. of Poor Families:</label>
+              <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families">
+          </div>
 
         <div class="form-group">
             <label for="swdo_name">SWDO Name:</label>
@@ -328,8 +324,8 @@ echo validation_errors();
         </div>
 
         <div class="form-group">
-            <label for="swdo_name">Designation:</label>
-            <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Designation">
+            <label for="designation">Designation:</label>
+            <input class="form-control" type="text" name="designation" value="" placeholder="Designation">
         </div>
 
         <div class="form-group">
@@ -341,18 +337,22 @@ echo validation_errors();
             <label for="contact_no">Contact No:</label>
             <input class="form-control" type="text" name="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
         </div>
+
         <div class="form-group">
             <label for="email">Email:</label>
             <input class="form-control" type="text" name="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
         </div>
+
         <div class="form-group">
             <label for="website">Website:</label>
             <input class="form-control" type="text" name="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
         </div>
+
         <div class="form-group">
             <label for="total_ira">Total IRA:</label>
             <input class="form-control" type="text" name="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total IRA">
         </div>
+
         <div class="form-group">
             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
             <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">

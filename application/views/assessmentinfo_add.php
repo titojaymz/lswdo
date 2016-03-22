@@ -261,13 +261,8 @@ if (!$this->session->userdata('user_id')){
              </div>  <!--End Select-->
 
             <div class="form-group">
-                <label for="no_city_code">No. of Cities:</label>
+                <label for="no_city_code">No. of Cities/Municipalities:</label>
                 <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
-            </div>
-
-            <div class="form-group">
-                <label for="no_muni_code">No. of Municipalities:</label>
-                <input class="form-control" type="text" name="no_muni_code" value="" placeholder="No. of Municipalities" readonly>
             </div>
 
             <div class="form-group">
