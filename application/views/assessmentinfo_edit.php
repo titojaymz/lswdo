@@ -117,22 +117,13 @@ echo validation_errors();
 
 </script>
 <body>
+<div class="content">
 
-<?php if (validation_errors() <> '') { ?>
-    <div class="alert alert-danger">
-        <strong><?php echo validation_errors() ?></strong>
-    </div>
-<?php } ?>
-<div class="modal-body">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div id="addassessment" class="col-md-6">
-                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
-                <form method="post" class="form-horizontal">
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
                     <div class="form-group">
-                <br><br><br>
-                        <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information</label>
                         </div>
 
@@ -184,7 +175,7 @@ echo validation_errors();
             <div id="groupLGUregion">
                 <div class="form-group form-group-sm">
                     <label for="regionlist" class="col-lg-2 control-label">Region: </label>
-                    <div id="div_regionlist" class="col-lg-8">
+                    <div id="div_regionlist" class="col-lg-6">
                         <fieldset>
                             <div class="control-group">
                                 <div class="controls">
@@ -207,7 +198,7 @@ echo validation_errors();
                     </div>
                 </div>
             </div>
-
+<br>
         <div id="groupLGUProvince">
             <div class="form-group form-group-sm">
                 <label for="provlist" class="col-lg-2 control-label">Province: </label>
@@ -240,7 +231,7 @@ echo validation_errors();
         <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
         <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
         <input class="form-control" type="hidden" id = "brgy_pass" name="brgy_pass" value = "<?php echo $assessmentinfo_details->brgy_code ?>" >
-
+            <br>
             <div id="groupLGUCity">
                 <div class="form-group form-group-sm">
                     <label for="citylist" class="col-lg-2 control-label">City: </label>
@@ -269,7 +260,7 @@ echo validation_errors();
             </div>
             </div>
             </div>
-
+            <br>
             <div id="groupLGUBrgy">
             <div class="form-group form-group-sm">
                 <label for="brgylist" class="col-lg-2 control-label">Barangay: </label>
@@ -299,6 +290,7 @@ echo validation_errors();
                  </div>
                 </div>
         </div>
+                    <br>
         <div class="form-group">
                 <label for="no_cities">No. of Cities/Municipalities:</label>
                <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities">
@@ -362,10 +354,16 @@ echo validation_errors();
                             <div class="btn-group">
             <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
             <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
-        </div>
-                    </div>
-            </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
             </form>
-        </div>
-        <div class="col-md-3"></div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
 </body>
