@@ -478,7 +478,7 @@ class indicator extends CI_Controller
             ));
             $this->load->view('footer');
         } else {
-            foreach($indicator_model->getCategoriesFromFI() as $firstCatBronze):
+            foreach($indicator_model->getCategoriesFromTI() as $firstCatBronze):
                 if($firstCatBronze->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
@@ -500,7 +500,7 @@ class indicator extends CI_Controller
                     continue;
                 }
             endforeach;
-            foreach($indicator_model->getSecondCategoriesFromFI() as $secondCat):
+            foreach($indicator_model->getSecondCategoriesFromTI() as $secondCat):
                 if($secondCat->indicator_checklist_id != '0') {
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
