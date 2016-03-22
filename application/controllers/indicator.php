@@ -40,6 +40,7 @@ class indicator extends CI_Controller
             'getSecondCategory' => $indicator_model->getSecondCategoriesFromSI(),
             'getSecondCategoryLower' => $indicator_model->getSecondCategoriesLowerFromSI(),
             'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI(),
+            'getLSWDO' => $indicator_model->getLSWDOdata($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -262,16 +263,16 @@ class indicator extends CI_Controller
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
-                $this->load->view('indicator_addpart2', array(
+                $this->load->view('indicator_viewpart2', array(
                     'secondMotherIndicator' => $indicator_model->getSecondMotherIndicator(),
                     'secondIndicators' => $indicator_model->getSecondIndicators(),
                     'getFirstCategory' => $indicator_model->getCategoriesFromSI(),
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromSI(),
                     'getSecondCategoryLower' => $indicator_model->getSecondCategoriesLowerFromSI(),
-                    'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI()
-                ));
-                $this->load->view('footer');
-                $this->redirectIndex($profID);
+                    'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI(),
+                    'profileID' => $profID,));
+                     $this->load->view('footer');
+
             }
 
 
