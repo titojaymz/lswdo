@@ -154,33 +154,6 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
-//    public function getSecondCategoriesLowerFromTI(){
-//        $unformat = "";
-//        foreach($this->getSecondCategoriesFromTI() as $secondCat):
-//            $unformat .= "'".$secondCat->indicator_id."',";
-//        endforeach;
-//        $format = substr($unformat,0,-1);
-//
-//        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
-//                FROM (`lib_indicator_codes`)
-//                WHERE `mother_indicator_id` IN ('.$format.')';
-//        $query = $this->db->query($sql);
-//        return  $query->result();
-//    }
-////
-//    public function getSecondCategoriesLowerLowerFromTI(){
-//        $unformat = "";
-//        foreach($this->getSecondCategoriesLowerFromTI() as $secondCat):
-//            $unformat .= "'".$secondCat->indicator_id."',";
-//        endforeach;
-//        $format = substr($unformat,0,-1);
-//
-//        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
-//                FROM (`lib_indicator_codes`)
-//                WHERE `mother_indicator_id` IN ('.$format.')';
-//        $query = $this->db->query($sql);
-//        return  $query->result();
-//    }
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings){
         $this->db->trans_begin();
         $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom)
@@ -190,6 +163,24 @@ class indicator_model extends CI_Model
                           "'.$compliance.'",
                           "'.$findings.'"
                           )');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+    public function updateIndicator($profileID,$indicator_id, $compliance, $findings){
+        $this->db->trans_begin();
+        $this->db->query('update tbl_lswdo_standard_indicators SET
+                            compliance_indicator_id = '.$compliance.' ,
+                            findings_recom = "'.$findings.'"
+                            where profile_id = '.$profileID.' and indicator_id = "'.$indicator_id.'" ;');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
