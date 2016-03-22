@@ -2,6 +2,12 @@
 
 class indicator_model extends CI_Model
 {
+    public function getLSWDOdata($profID){
+        $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID));
+        return $query->result();
+    }
+
     public function getFirstMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');
