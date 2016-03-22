@@ -291,23 +291,29 @@ echo validation_errors();
                 </div>
         </div>
                     <br>
+                    <br>
         <div class="form-group">
                 <label for="no_cities">No. of Cities/Municipalities:</label>
-               <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities">
+               <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
           </div>
         <div class="form-group">
             <label for="no_brgy_code">No. of Barangays:</label>
-            <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays">
+            <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays" readonly>
         </div>
 
          <div class="form-group">
              <label for="total_pop">Total Population:</label>
-             <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population">
+             <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
+         </div>
+
+          <div class="form-group">
+             <label for="income_class">Income Class:</label>
+             <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
          </div>
 
           <div class="form-group">
               <label for="total_poor">Total No. of Poor Families:</label>
-              <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families">
+              <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
           </div>
 
         <div class="form-group">

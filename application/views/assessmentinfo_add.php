@@ -103,14 +103,12 @@ if (!$this->session->userdata('user_id')){
         <strong><?php echo validation_errors() ?></strong>
     </div>
 <?php } ?>
-<div class="modal-body">
-    <div class="container">
-        <div class="row">
-<div class="col-md-3"></div>
-<div id="addassessment" class="col-md-6">
-    <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
-    <form method="post" class="form-horizontal">
-        <div class="form-group">
+<div class="content">
+
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
 <br><br><br>
             <div class="form-group">
                 <label for="geo_info" class="control-label">Geographic Information</label>
@@ -166,7 +164,7 @@ if (!$this->session->userdata('user_id')){
                             </div>
                         </div>
                  <!--END Region-->
-
+<br>
                 <!--Province-->
                 <div id="groupLGUProvince">
                     <div class="form-group form-group-sm">
@@ -197,6 +195,7 @@ if (!$this->session->userdata('user_id')){
                     </div>
                 </div>
                 <!--End Province-->
+                 <br>
                 <!--City-->
                 <div id="groupLGUCity">
                     <div class="form-group form-group-sm">
@@ -227,7 +226,7 @@ if (!$this->session->userdata('user_id')){
                     </div>
                 </div>
                 <!--End City-->
-
+                 <br>
                 <!--Brgy-->
                 <div id="groupLGUBrgy">
                     <div class="form-group form-group-sm">
@@ -259,7 +258,8 @@ if (!$this->session->userdata('user_id')){
                 </div>
                 <!--End Brgy-->
              </div>  <!--End Select-->
-
+                    <br>
+                    <br>
             <div class="form-group">
                 <label for="no_city_code">No. of Cities/Municipalities:</label>
                 <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
@@ -339,7 +339,13 @@ if (!$this->session->userdata('user_id')){
         </div>
         </div>
         </div>
-    </form>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
 </div>
-<div class="col-md-3"></div>
+</div>
+
+</div>
 </body>
