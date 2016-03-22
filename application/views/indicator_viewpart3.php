@@ -257,7 +257,7 @@
                         </table>
                         <?php echo form_close() ?>
                     <?php } else { ?>
-                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAdd/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
+                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart3/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
                     <?php } ?>
                 </div>
             </div>
