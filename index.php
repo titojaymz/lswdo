@@ -34,11 +34,15 @@ if (defined('ENVIRONMENT'))
 	{
 		case 'development':
 			error_reporting(E_ALL);
+			// Display errors in output
+			ini_set('display_errors', 1);
 		break;
 
 		case 'testing':
 		case 'production':
 			error_reporting(0);
+		// Display errors in output
+		ini_set('display_errors', 1);
 		break;
 
 		default:
