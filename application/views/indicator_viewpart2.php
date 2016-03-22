@@ -18,7 +18,7 @@
                 </div>
                 <div class = "panel-body" style="display: block;">
 
-                    <?php $countLS = count($getLSWDO) ?>
+                    <?php $countLS = count($checkPart2) ?>
                     <?php if($countLS > 0){ ?>
                     <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>

@@ -20,6 +20,7 @@ class indicator extends CI_Controller
             'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
             'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+            'checkPart1' => $indicator_model->getCheckPart1($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -42,6 +43,7 @@ class indicator extends CI_Controller
             'getSecondCategoryLower' => $indicator_model->getSecondCategoriesLowerFromSI(),
             'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI(),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+            'checkPart2' => $indicator_model->getCheckPart2($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -62,6 +64,7 @@ class indicator extends CI_Controller
             'getFirstCategory' => $indicator_model->getCategoriesFromTI(),
             'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI(),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID),
+            'checkPart3' => $indicator_model->getCheckPart3($profID),
             'profileID' => $profID,
         ));
         $this->load->view('footer');
@@ -145,7 +148,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex($profID);
+                $this->redirectIndexAdd($profID);
             }
 
 
@@ -274,7 +277,7 @@ class indicator extends CI_Controller
                     'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI(),
                     'profileID' => $profID,));
                      $this->load->view('footer');
-
+                $this->redirectIndexAddPart2($profID);
             }
 
 
@@ -580,6 +583,19 @@ class indicator extends CI_Controller
     public function redirectIndex($profID)
     {
         $page = base_url('indicator/indicatorView/'.$profID);
+//        $sec = "1";
+        header("Location: $page");
+    }
+
+    public function redirectIndexAdd($profID)
+    {
+        $page = base_url('indicator/indicatorViewpart2/'.$profID);
+//        $sec = "1";
+        header("Location: $page");
+    }
+    public function redirectIndexAddPart2($profID)
+    {
+        $page = base_url('indicator/indicatorViewpart3/'.$profID);
 //        $sec = "1";
         header("Location: $page");
     }
