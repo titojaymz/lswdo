@@ -73,8 +73,8 @@
                             <tr>
                                 <?php  $number = 1; ?> <!-- ung $number para makuha ung laman nung array na newArray at secondNewArray, yung indicator_name ung kinukuha neto -->
                                 <?php  $number2 = 1; ?>
-                                <?php  $number3 = 1; ?>
-                                <?php  $number4 = 1; ?>
+<!--                                --><?php // $number3 = 1; ?>
+<!--                                --><?php // $number4 = 1; ?>
                                 <?php  $checklist = 0; ?><!-- ung $checklist para makuha ung laman nung array na newArray at secondNewArray, yung indicator_checklist_id ung kinukuha neto -->
                                 <?php  $checklist2 = 0; ?>
                                 <?php foreach($newArray as $a => $iteem): ?> <!-- array for NewArray for child lower indicator -->
