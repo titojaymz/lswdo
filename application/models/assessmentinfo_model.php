@@ -5,6 +5,12 @@
  */
 class assessmentinfo_model extends CI_Model {
 
+
+    public function record_count() { //pagination query
+        return $this->db->count_all("tbl_lswdo");
+    }
+
+
     public function getAssessmentinfo()
     {
         $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
@@ -142,9 +148,6 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function record_count() { //pagination query
-        return $this->db->count_all("tbl_lswdo");
-    }
 /*
     public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
         $region_access = $user_region;

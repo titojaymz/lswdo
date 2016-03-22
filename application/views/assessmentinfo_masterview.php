@@ -7,6 +7,7 @@ if (!$this->session->userdata('user_data')){
     redirect('/users/login','location');
 }
 ?>
+<body>
 <div class="modal-body">
     <div class="container">
         <div class="row">
@@ -17,7 +18,11 @@ if (!$this->session->userdata('user_data')){
                     <div class="form-group">
 <div class="col-md-2"></div>
 <div class="col-md-8">
-    <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index.html') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
+    <br><br><br>
+    <div class="form-group">
+        <label for="geo_info" class="control-label"> View: Identifying Information </label>
+    </div>
+    <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
     <a href="<?php echo base_url()?>assessmentinfo/addAssessmentinfo/<?php echo $profile_id ?>/<?php echo $application_type_id ?>/<?php echo $lgu_type_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
     <br><br>
     <table class="table table-bordered">
@@ -52,6 +57,7 @@ if (!$this->session->userdata('user_data')){
 <div class="col-md-2"></div>
 </div>
 </div>
-</form>
-</div>
-<div class="col-md-3"></div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+</body>

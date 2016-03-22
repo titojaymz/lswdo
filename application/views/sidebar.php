@@ -14,7 +14,7 @@ $region = $this->session->userdata('uregion');
 
     <li><a href="#"><span class="icon color9"><i class="fa fa-book"></i></span>Libraries<span class="caret"></span></a> <!--removed link to index -->
       <ul>
-        <li><a href="<?php echo base_url('libraries/assessment_position') ?>">Standards and Indicators</a></li>
+        <li><a href="<?php echo base_url('libraries/indicator/index') ?>">Standards and Indicators</a></li>
       </ul>
     </li>
     <li><a href="#"><span class="icon color9"><i class="fa fa-user-plus"></i></span>Access Control<span class="caret"></span></a> <!--added module -->

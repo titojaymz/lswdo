@@ -116,19 +116,29 @@ echo validation_errors();
     }
 
 </script>
-<div class="content">
+<body>
 
-    <div class = "row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-title">
-                <h1>Edit Assessment of Functionality </h1>
-                </div>
-                <div class = "panel-body" style="display: block;">
-<div class="col-md-3"></div>
-<div class="col-md-6">
-    <form method="post" class="form-horizontal">
+<?php if (validation_errors() <> '') { ?>
+    <div class="alert alert-danger">
+        <strong><?php echo validation_errors() ?></strong>
+    </div>
+<?php } ?>
+<div class="modal-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div id="addassessment" class="col-md-6">
+                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
+                <form method="post" class="form-horizontal">
+                    <div class="form-group">
+<br><br><br>
+                        <div class="form-group">
+                            <label for="geo_info" class="control-label">Geographic Information</label>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="identify_info" class="control-label">Edit record: Identifying Information</label>
+                        </div>
         <div class="form-group">
             <label for="profile_id">profile_id:</label>
             <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
@@ -289,46 +299,73 @@ echo validation_errors();
                  </div>
                 </div>
         </div>
+
+                        <div class="form-group">
+                            <label for="street_address">Total Population:</label>
+                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="street_address">Total Population:</label>
+                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="street_address">Total Population:</label>
+                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+                        </div>
+
+         <div class="form-group">
+             <label for="street_address">Total Population:</label>
+             <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+         </div>
+                        <div class="form-group">
+                 <label for="street_address">Total No. of Poor Families:</label>
+                            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+                        </div>
+
         <div class="form-group">
-            <label for="street_address">street_address</label>
-            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="street_address">
-        </div>
-        <div class="form-group">
-            <label for="swdo_name">swdo_name</label>
+            <label for="swdo_name">SWDO Name:</label>
             <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="swdo_name">
         </div>
+
         <div class="form-group">
-            <label for="contact_no">contact_no</label>
-            <input class="form-control" type="text" name="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="contact_no">
+            <label for="swdo_name">Designation:</label>
+            <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Designation">
+        </div>
+
+        <div class="form-group">
+            <label for="street_address">Street Address:</label>
+            <input class="form-control" type="text" name="street_address" value="<?php echo $assessmentinfo_details->street_address ?>" placeholder="Street Address">
+        </div>
+
+        <div class="form-group">
+            <label for="contact_no">Contact No:</label>
+            <input class="form-control" type="text" name="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
         </div>
         <div class="form-group">
-            <label for="email">email</label>
-            <input class="form-control" type="text" name="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="email">
+            <label for="email">Email:</label>
+            <input class="form-control" type="text" name="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
         </div>
         <div class="form-group">
-            <label for="website">website</label>
-            <input class="form-control" type="text" name="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="website">
+            <label for="website">Website:</label>
+            <input class="form-control" type="text" name="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
         </div>
         <div class="form-group">
-            <label for="total_ira">total_ira</label>
-            <input class="form-control" type="text" name="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="total_ira">
+            <label for="total_ira">Total IRA:</label>
+            <input class="form-control" type="text" name="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total IRA">
         </div>
         <div class="form-group">
-            <label for="total_budget_lswdo">total_budget_lswdo</label>
-            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="total_budget_lswdo">
+            <label for="total_budget_lswdo">Total Budget LSWDO:</label>
+            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
         </div>
-        <div class="btn-group">
+
+                        <div class="form-group">
+                            <div class="btn-group">
             <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
             <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
         </div>
-    </form>
-</div>
+                    </div>
             </div>
-
+            </form>
         </div>
-    </div>
-</div>
-</div>
-
-</div>
+        <div class="col-md-3"></div>
 </body>

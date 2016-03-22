@@ -154,6 +154,7 @@ class assessmentinfo extends CI_Controller {
                 $form_message = '';
                 $this->load->view('header');
                 $this->load->view('nav');
+                $this->load->view('sidebar');
                 $rpmb['application_type_id'] = $this->assessmentinfo_model->Lib_getAllApplicationtype();
                 $rpmb['lgu_type_id'] = $this->assessmentinfo_model->Lib_getLGUtype();
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
@@ -163,7 +164,6 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('sidepanel');
                 $this->load->view('footer');
 
-                $this->load->view('footer');
             } else {
                 $id = $this->input->post('profile_id');
                 $application_type_id = $this->input->post('application_type_id');

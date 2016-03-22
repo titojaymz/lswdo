@@ -12,6 +12,10 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
+                    <div class="form-group">
+                        <label for="list_info" class="control-label">Assessment Information List</label>
+                    </div>
+
                     <a class="btn btn-sm btn-success" href="<?php echo base_url('assessmentinfo/addAssessmentinfo') ?>"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
 
                 </div>
@@ -32,7 +36,7 @@
             <tr>
                 <th>Profile ID</th>
                 <th>Status of Application</th>
-                <th>LGU Type</th>
+                <th>LSWDO Type</th>
                 <th>SWDO Name</th>
                 <th>Total IRA</th>
                 <th>Total Budget LSWDO</th>
