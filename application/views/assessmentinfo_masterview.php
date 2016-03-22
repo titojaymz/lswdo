@@ -6,11 +6,15 @@
 if (!$this->session->userdata('user_data')){
     redirect('/users/login','location');
 }
-if ($form_message){ ?>
-    <div class="alert alert-success">
-        <strong><?php echo $form_message ?></strong>
-    </div>
-<?php } ?>
+?>
+<div class="modal-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div id="addassessment" class="col-md-6">
+                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
+                <form method="post" class="form-horizontal">
+                    <div class="form-group">
 <div class="col-md-2"></div>
 <div class="col-md-8">
     <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index.html') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
@@ -46,3 +50,8 @@ if ($form_message){ ?>
 
 </div>
 <div class="col-md-2"></div>
+</div>
+</div>
+</form>
+</div>
+<div class="col-md-3"></div>

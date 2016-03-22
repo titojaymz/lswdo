@@ -9,6 +9,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('assets/bootstrap/css/root.css'); ?>" rel="stylesheet">
 
     <meta charset="utf-8">
+    <style type="text/css">
+        body{background: #F5F5F5;}
+
+    </style>
     <title>LSWDO</title>
 </head>
 <body>

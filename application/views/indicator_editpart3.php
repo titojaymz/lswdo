@@ -11,7 +11,9 @@
     }
 </style>
 <div class="content">
-
+    <!--<prE>-->
+    <!--    --><?php //print_r($getLSWDO); ?>
+    <!--</prE>-->
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -23,7 +25,6 @@
                     </ul>
                 </div>
                 <div class = "panel-body" style="display: block;">
-                    <h1><?php echo $LGUType->lgu_type_id ?></h1>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                     <input type = "hidden" id="profID" name ="profID" value ="<?php echo $profileID ?>"/>
                     <?php $unformat = ""; ?>
@@ -40,14 +41,14 @@
                         <tr>
                             <td align="center" colspan = "14">
                                 <!-- Mother Indicator eg. I. Administration and Organization-->
-                                <b><?php echo $firstMotherIndicator->indicator_name; ?></b>
+                                <b><?php echo $thirdMotherIndicator->indicator_name; ?></b>
                             </td>
                         </tr>
                         <!-- foreach for Child Indicators eg. A. B. CL. D. E. F. G. and so on.... -->
-                        <?php foreach($firstIndicators as $first_indicators): ?>
+                        <?php foreach($thirdIndicators as $third_indicators): ?>
                             <tr>
                                 <!-- Title for the Child Indicators!!!  -->
-                                <td colspan = "14" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
+                                <td colspan = "14" align="center"><b><?php echo $third_indicators->indicator_name; ?></b></td>
                             </tr>
                             <!--
                             newArray is a new Array for this version..
@@ -82,7 +83,7 @@
                                 <?php  $checklist2 = 0; ?>
                                 <?php foreach($newArray as $a => $iteem): ?> <!-- array for NewArray for child lower indicator -->
                                     <?php foreach($getFirstCategory as $firstCategory):?>
-                                        <?php if($firstCategory->mother_indicator_id == $first_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
+                                        <?php if($firstCategory->mother_indicator_id == $third_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
                                         <?php $arr = explode("-", $firstCategory->indicator_id, 2);?>
                                         <?php $firsts = $arr[0];?>
                                         <?php if ($a == $firsts) { ?><!-- $a is IA1, IA2  tapos ung $firsts eto dn ung IA1, etc pero kinukuha to sa indicator_id-->
@@ -101,27 +102,42 @@
                                                             <td><?php echo $int2 ?></td>
                                                                <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                    <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
-                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required/> Compliance</td>
-                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2"/> Not Compliance</td>
-                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "3"/> N/A</td>
+                                                                   <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                   <?php if($value->indicator_id == $b.'-'.$secondItems[$checklist2]){ ?>
+                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
+                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
+                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
+                                                                   <?php } ?>
+                                                                   <?php endforeach ?>
                                                                        <?php if($counting2 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
                                                                        <td><?php echo $secondItems[$number2 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
-                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required/> Compliance</td>
-                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2"/> Not Compliance</td>
-                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "3"/> N/A</td>
+                                                                       <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                       <?php if($value->indicator_id == $b.'-'.$secondItems[$checklist2+2]){ ?>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
+                                                                       <?php } ?>
+                                                                   <?php endforeach ?>
                                                                        <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $secondItems[$number2 + 4]; ?></td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required/> Compliance</td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2"/> Not Compliance</td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "3"/> N/A</td>
-                                                                           <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
+                                                                           <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                               <?php if($value->indicator_id == $b.'-'.$secondItems[$checklist2+4]){ ?>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
+                                                                           <?php } ?>
+                                                                   <?php endforeach ?>
+                                                                   <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?>
                                                                        <?php } else {  ?>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
-                                                            <?php }?>
+                                                           <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?><?php }?>
                                                         <?php } else {  ?>
                                                         <td></td>
                                                         <td></td>
@@ -131,8 +147,9 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
-                                                        <?php }?>
+                                                        <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?> <?php }?>
                                                                <?php } ?>
                                                                <?php break; ?>
                                                         <?php }  else { ?>
@@ -148,27 +165,42 @@
                                                     <td><?php echo $int1 ?></td>
                                                     <?php if($counting > 1){ ?>
                                                         <td><?php echo $iteem[$number]; ?></td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required/> Compliance</td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2"/> Not Compliance</td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3"/> N/A</td>
+                                                        <?php foreach($getLSWDO as $key=>$value): ?>
+                                                        <?php if($value->indicator_id == $a.'-'.$iteem[$checklist]){ ?>
+                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
+                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
+                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
+                                                        <?php } ?>
+                                                        <?php endforeach ?>
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required/> Compliance</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" required/> Not Compliance</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "3"/> N/A</td>
+                                                           <?php foreach($getLSWDO as $key=>$value): ?>
+                                                        <?php if($value->indicator_id == $a.'-'.$iteem[$checklist+2]){ ?>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
+                                                             <?php } ?>
+                                                        <?php endforeach ?>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required/> Compliance</td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Not Compliance</td>
-                                                                <td width = "25%"><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "3"/> N/A</td>
-                                                                <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
-
+                                                                <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                <?php if($value->indicator_id == $a.'-'.$iteem[$checklist+4]){ ?>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
+                                                                <?php } ?>
+                                                                <?php endforeach ?>
+                                                                <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?>
                                                             <?php } else {  ?>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                            <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?>
                                                             <?php }?>
                                                         <?php } else {  ?>
                                                         <td></td>
@@ -179,7 +211,9 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                       <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?>
                                                         <?php }?>
                                                     <?php }?>
                                                     <?php break; ?>

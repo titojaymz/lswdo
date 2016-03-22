@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    I. Administration and Organization
+                    III. Case Management
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
                         <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
@@ -20,30 +20,30 @@
 
                     <?php $countLS = count($getLSWDO) ?>
                     <?php if($countLS > 0){ ?>
-                    <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
-                    <?php echo form_open('',array('class'=>'form-horizontal')) ?>
-                    <?php $unformat = ""; ?>
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
-                            <td align = "center"><b>Compliance</b></td>
-                            <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
-                            <td align = "center"><b>Compliance</b></td>
-                            <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
-                            <td align = "center"><b>Compliance</b></td>
-                            <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
-                        </tr>
-                        <tr>
-                            <td align="center" colspan = "8">
-                                <!-- Mother Indicator eg. I. Administration and Organization-->
-                                <b><?php echo $firstMotherIndicator->indicator_name; ?></b>
-                            </td>
-                        </tr>
-                        <!-- foreach for Child Indicators eg. A. B. CL. D. E. F. G. and so on.... -->
-                        <?php foreach($firstIndicators as $first_indicators): ?>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEditpart3/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
+                        <?php echo form_open('',array('class'=>'form-horizontal')) ?>
+                        <?php $unformat = ""; ?>
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                                <td align = "center"><b>Compliance</b></td>
+                                <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
+                                <td align = "center"><b>Compliance</b></td>
+                                <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
+                                <td align = "center"><b>Compliance</b></td>
+                                <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan = "8">
+                                    <!-- Mother Indicator eg. I. Administration and Organization-->
+                                    <b><?php echo $thirdMotherIndicator->indicator_name; ?></b>
+                                </td>
+                            </tr>
+                            <!-- foreach for Child Indicators eg. A. B. CL. D. E. F. G. and so on.... -->
+                            <?php foreach($thirdIndicators as $third_indicators): ?>
                             <tr>
                                 <!-- Title for the Child Indicators!!!  -->
-                                <td colspan = "8" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
+                                <td colspan = "8" align="center"><b><?php echo $third_indicators->indicator_name; ?></b></td>
                             </tr>
                             <!--
                             newArray is a new Array for this version..
@@ -77,12 +77,12 @@
                                 <?php  $checklist2 = 0; ?>
                                 <?php foreach($newArray as $a => $iteem): ?> <!-- array for NewArray for child lower indicator -->
                                     <?php foreach($getFirstCategory as $firstCategory):?>
-                                        <?php if($firstCategory->mother_indicator_id == $first_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
+                                        <?php if($firstCategory->mother_indicator_id == $third_indicators->indicator_id) { ?> <!-- if mother_indicator of first Category is equal to first_indicators indicator_id -->
                                         <?php $arr = explode("-", $firstCategory->indicator_id, 2);?>
                                         <?php $firsts = $arr[0];?>
                                         <?php if ($a == $firsts) { ?><!-- $a is IA1, IA2  tapos ung $firsts eto dn ung IA1, etc pero kinukuha to sa indicator_id-->
                                             <?php if($iteem[$checklist] == 0){?> <!-- so ung checklist dito ay para kunin ung value ng indicator checklist sa newArray ang value nian is $iteem[0] which is ung $iteem[0] sa newArray ay ung indicator_checklist_id sa db  -->
-                                                        <td colspan = "8"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
+                                                        <td colspan = "12"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
                                                     </tr>
                                                     <tr>
                                                     <?php foreach($secondNewArray as $b => $secondItems): ?> <!-- array for secondNewArray for child lower lower indicator -->
@@ -91,6 +91,7 @@
                                                         <?php $arrays = explode("-", $secondCategory->indicator_id, 2);?>
                                                         <?php $seconds = $arrays[0];?>
                                                         <?php if ($b == $seconds) { ?>
+
                                                             <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                             <?php $int2 = intval(preg_replace('/[^0-9]+/', '', $b), 10); ?>
                                                             <td><?php echo $int2 ?></td>
@@ -253,10 +254,10 @@
                                 <?php  endforeach;?>
                             </tr>
                     <?php endforeach ?>
-                    </table>
-                    <?php echo form_close() ?>
+                        </table>
+                        <?php echo form_close() ?>
                     <?php } else { ?>
-                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAdd/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
+                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart3/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
                     <?php } ?>
                 </div>
             </div>
