@@ -164,7 +164,8 @@ if (!$this->session->userdata('user_id')){
                                         </div>
                                 </div>
                             </div>
-                        </div><!--END Region-->
+                        </div>
+                 <!--END Region-->
 
                 <!--Province-->
                 <div id="groupLGUProvince">
