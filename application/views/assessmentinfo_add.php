@@ -109,7 +109,7 @@ if (!$this->session->userdata('user_id')){
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-<br><br>
+<br>
             <div class="form-group">
                 <label for="geo_info" class="control-label">Geographic Information</label>
             </div>
@@ -164,7 +164,7 @@ if (!$this->session->userdata('user_id')){
                             </div>
                         </div>
                  <!--END Region-->
-<br>
+
                 <!--Province-->
                 <div id="groupLGUProvince">
                     <div class="form-group form-group-sm">
@@ -195,7 +195,7 @@ if (!$this->session->userdata('user_id')){
                     </div>
                 </div>
                 <!--End Province-->
-                 <br>
+
                 <!--City-->
                 <div id="groupLGUCity">
                     <div class="form-group form-group-sm">
@@ -226,7 +226,7 @@ if (!$this->session->userdata('user_id')){
                     </div>
                 </div>
                 <!--End City-->
-                 <br>
+
                 <!--Brgy-->
                 <div id="groupLGUBrgy">
                     <div class="form-group form-group-sm">
@@ -258,8 +258,7 @@ if (!$this->session->userdata('user_id')){
                 </div>
                 <!--End Brgy-->
              </div>  <!--End Select-->
-                    <br>
-                    <br>
+                 
             <div class="form-group">
                 <label for="no_city_code">No. of Cities/Municipalities:</label>
                 <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
