@@ -50,6 +50,7 @@ class users extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('login',array($rpmb,'form_message'=>$form_message));
                 $this->load->view('footer');
+                $this->redirectIndexLogin();
             } else {
                 $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Registration Failed!<a href="#" class="closed">&times;</a></div>';
                 $this->load->view('header');
@@ -161,6 +162,12 @@ class users extends CI_Controller {
     {
         $page = base_url();
         $sec = "1";
+        header("Refresh: $sec; url=$page");
+    }
+    public function redirectIndexLogin()
+    {
+        $page = base_url('users/login');
+        $sec = "0.5";
         header("Refresh: $sec; url=$page");
     }
     public function init_rpmb_session() {

@@ -16,6 +16,7 @@
                     </ul>
                 </div>
                 <div class = "panel-body" style="display: block;">
+
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">

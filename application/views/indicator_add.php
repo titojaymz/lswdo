@@ -23,7 +23,7 @@
                     </ul>
                 </div>
                 <div class = "panel-body" style="display: block;">
-                    <h1><?php echo $LGUType->lgu_type_id ?></h1>
+
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                     <input type = "hidden" id="profID" name ="profID" value ="<?php echo $profileID ?>"/>
                     <?php $unformat = ""; ?>
