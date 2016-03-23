@@ -171,7 +171,7 @@ echo validation_errors();
                 </option>
             <?php endforeach; ?>
             </select>
-
+<br>
             <div id="groupLGUregion">
                 <div class="form-group form-group-sm">
                     <label for="regionlist" class="col-lg-2 control-label">Region: </label>
@@ -198,7 +198,7 @@ echo validation_errors();
                     </div>
                 </div>
             </div>
-<br>
+
         <div id="groupLGUProvince">
             <div class="form-group form-group-sm">
                 <label for="provlist" class="col-lg-2 control-label">Province: </label>
@@ -231,7 +231,7 @@ echo validation_errors();
         <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
         <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
         <input class="form-control" type="hidden" id = "brgy_pass" name="brgy_pass" value = "<?php echo $assessmentinfo_details->brgy_code ?>" >
-            <br>
+
             <div id="groupLGUCity">
                 <div class="form-group form-group-sm">
                     <label for="citylist" class="col-lg-2 control-label">City: </label>
@@ -260,7 +260,7 @@ echo validation_errors();
             </div>
             </div>
             </div>
-            <br>
+
             <div id="groupLGUBrgy">
             <div class="form-group form-group-sm">
                 <label for="brgylist" class="col-lg-2 control-label">Barangay: </label>
@@ -290,8 +290,7 @@ echo validation_errors();
                  </div>
                 </div>
         </div>
-                    <br>
-                    <br>
+
         <div class="form-group">
                 <label for="no_cities">No. of Cities/Municipalities:</label>
                <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
