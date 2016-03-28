@@ -184,7 +184,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexAdd($profID);
+                $this->redirectIndex($profID);
             }
 
 
@@ -313,7 +313,7 @@ class indicator extends CI_Controller
                     'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI($lguTypes->lgu_type_id),
                     'profileID' => $profID,));
                      $this->load->view('footer');
-                $this->redirectIndexAddPart2($profID);
+                $this->redirectIndexAdd($profID);
             }
 
 
@@ -400,7 +400,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexViewAll($profID);
+                $this->redirectIndexAddPart2($profID);
             }
 
 
@@ -486,7 +486,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexViewAll($profID);
+                $this->redirectIndex($profID);
             }
 
 
@@ -617,7 +617,7 @@ class indicator extends CI_Controller
                     'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI($lguTypes->lgu_type_id),
                     'profileID' => $profID,));
                 $this->load->view('footer');
-                $this->redirectIndexViewAll($profID);
+                $this->redirectIndexAdd($profID);
             }
 
 
@@ -702,12 +702,36 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexViewAll($profID);
+                $this->redirectIndexAddPart2($profID);
             }
 
 
         }
     }
+
+    public function indicatorDelete($profID)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $indicator_model = new indicator_model();
+
+            $updateResult = $indicator_model->deleteIndicator($profID);
+            if($updateResult){
+                $form_message = 'Add Success!';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('indicator_view');
+                $this->load->view('footer');
+                $this->redirectIndex($profID);
+            }
+
+
+        }
+
     protected function validateAddIndicator()
     {
         $config = array(

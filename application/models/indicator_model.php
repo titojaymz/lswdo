@@ -4,12 +4,12 @@ class indicator_model extends CI_Model
 {
     public function getLSWDOdata($profID){
         $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
-        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID));
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID , 'DELETED' => 0));
         return $query->result();
     }
     public function getCheckPart1($profID){
         $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
-        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IA1-1'));
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IA1-1', 'DELETED' => 0));
         return $query->row();
     }
     public function getCheckPart2($profID){
@@ -213,12 +213,13 @@ class indicator_model extends CI_Model
 
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings){
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom)
+        $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom,DELETED)
                           VALUES(
                           "'.$profileID.'",
                           "'.$indicator_id.'",
                           "'.$compliance.'",
-                          "'.$findings.'"
+                          "'.$findings.'",
+                          "0"
                           )');
         if ($this->db->trans_status() === FALSE)
         {
@@ -250,4 +251,62 @@ class indicator_model extends CI_Model
         }
         $this->db->close();
     }
+    public function deleteIndicator($profileID){
+
+        $unformat1 = "";
+        foreach($this->getdeleteCategoriesFromFI() as $secondCat):
+            $unformat1 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format1 = substr($unformat1,0,-1);
+
+        $unformat = "";
+        foreach($this->getdeleteSecondCategoriesFromFI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $this->db->trans_begin();
+        $this->db->query('update tbl_lswdo_standard_indicators SET
+                            DELETED = 1
+                            where profile_id = '.$profileID.' and indicator_id  IN ('.$format1.','.$format.');');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+
+    public function getdeleteCategoriesFromFI(){
+        $unformat = "";
+        foreach($this->getFirstIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getdeleteSecondCategoriesFromFI(){
+        $unformat = "";
+        foreach($this->getdeleteCategoriesFromFI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
 }
