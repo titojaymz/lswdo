@@ -171,7 +171,7 @@
                                                                                                                                         <?php } ?>
                                                                                                                                         <?php endforeach ?>
                                                                                                                                         <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                                                                                            <?php if($d.'-'.$fourthItem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                                                                                            <?php if($d.'-'.$fourthItem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea>asaD</td> <?php }  ?>
                                                                                                                                        <?php endforeach ?>
                                                                                                                                <?php } ?>
                                                                                                                            <?php } ?>
@@ -212,7 +212,7 @@
                                                                 <?php } ?>
                                                                 <?php endforeach ?>
                                                                 <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                    <?php if($c.'-'.$iteeem[$checklist3] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                    <?php if($c.'-'.$iteeem[$checklist3] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> asaC<?php }  ?>
                                                                    <?php endforeach ?>
                                                                        <?php } ?>
                                                                    <?php } ?>
@@ -256,7 +256,7 @@
                                                                            <?php } ?>
                                                                    <?php endforeach ?>
                                                                    <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea>asaB</td> <?php }  ?>
                                                                    <?php endforeach ?>
                                                                        <?php } ?>
                                                                    <?php } ?>
@@ -274,7 +274,7 @@
                                                 <?php } else { ?>
                                                     <?php $counting = count($iteem); ?>
                                                     <?php $int1 = intval(preg_replace('/[^0-9]+/', '', $a), 10); ?>
-                                                    <td><?php echo $int1 ?></td>
+<!--                                                    <td>--><?php //echo $int1 ?><!--</td>-->
                                                     <?php if($counting > 1){ ?>
                                                           <td><?php echo $iteem[$number]; ?></td>
                                                         <?php foreach($getLSWDO as $key=>$value): ?>
@@ -303,10 +303,30 @@
                                                                 <?php } ?>
                                                                 <?php endforeach ?>
                                                                 <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea>asaA</td> <?php }  ?>
+                                                                   <?php endforeach ?>
+                                                             <?php } else {  ?>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <?php foreach($getLSWDO as $key=>$value): ?>
                                                                     <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
                                                                    <?php endforeach ?>
-                                                            <?php }  ?>
-                                                        <?php }  ?>
+                                                            <?php }?>
+                                                        <?php } else {  ?>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                       <?php foreach($getLSWDO as $key=>$value): ?>
+                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
+                                                                   <?php endforeach ?>
+                                                        <?php }?>
                                                     <?php }?>
                                                     <?php break; ?>
                                             <?php }  ?>
