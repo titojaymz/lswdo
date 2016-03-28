@@ -747,7 +747,7 @@ class indicator extends CI_Controller
             $this->load->view('sidebar');
             $this->load->view('indicator_viewpart2');
             $this->load->view('footer');
-            $this->redirectIndex($profID);
+            $this->redirectIndexAdd($profID);
         }
 
 
