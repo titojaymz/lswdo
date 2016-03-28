@@ -309,4 +309,102 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
+
+    public function deleteIndicatorpart2($profileID){
+
+        $unformat1 = "";
+        foreach($this->getdeleteCategoriesFromSI() as $secondCat):
+            $unformat1 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format1 = substr($unformat1,0,-1);
+
+        $unformat = "";
+        foreach($this->getdeleteSecondCategoriesFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getdeleteSecondCategoriesLowerFromSI() as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat3 = "";
+        foreach($this->getdeleteSecondCategoriesLowerLowerFromSI() as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $this->db->trans_begin();
+        $this->db->query('update tbl_lswdo_standard_indicators SET
+                            DELETED = 1
+                            where profile_id = '.$profileID.' and indicator_id  IN ('.$format1.','.$format.','.$format2.','.$format3.');');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+    public function getdeleteCategoriesFromSI(){
+        $unformat = "";
+        foreach($this->getSecondIndicators() as $secondIndicators):
+            $unformat .= "'".$secondIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
+    public function getdeleteSecondCategoriesFromSI(){
+        $unformat = "";
+        foreach($this->getdeleteCategoriesFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getdeleteSecondCategoriesLowerFromSI(){
+        $unformat = "";
+        foreach($this->getdeleteSecondCategoriesFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getdeleteSecondCategoriesLowerLowerFromSI(){
+        $unformat = "";
+        foreach($this->getdeleteSecondCategoriesLowerFromSI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
+
 }

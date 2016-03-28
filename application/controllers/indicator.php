@@ -717,7 +717,6 @@ class indicator extends CI_Controller
         }
 
         $indicator_model = new indicator_model();
-
             $updateResult = $indicator_model->deleteIndicator($profID);
             if($updateResult){
                 $form_message = 'Add Success!';
@@ -731,6 +730,28 @@ class indicator extends CI_Controller
 
 
         }
+    public function indicatorDeletepart2($profID)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $indicator_model = new indicator_model();
+        $lguTypes = $indicator_model->getLGUtype($profID);
+        $updateResult = $indicator_model->deleteIndicatorpart2($profID);
+        if($updateResult){
+            $form_message = 'Add Success!';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('indicator_viewpart2');
+            $this->load->view('footer');
+            $this->redirectIndex($profID);
+        }
+
+
+    }
 
     protected function validateAddIndicator()
     {
