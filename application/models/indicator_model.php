@@ -406,5 +406,62 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
+    public function deleteIndicatorpart3($profileID){
+
+        $unformat1 = "";
+        foreach($this->getdeleteCategoriesFromTI() as $secondCat):
+            $unformat1 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format1 = substr($unformat1,0,-1);
+
+        $unformat = "";
+        foreach($this->getdeleteSecondCategoriesFromTI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $this->db->trans_begin();
+        $this->db->query('update tbl_lswdo_standard_indicators SET
+                            DELETED = 1
+                            where profile_id = '.$profileID.' and indicator_id  IN ('.$format1.','.$format.');');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+
+    public function getdeleteCategoriesFromTI(){
+        $unformat = "";
+        foreach($this->getThirdIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getdeleteSecondCategoriesFromTI(){
+        $unformat = "";
+        foreach($this->getdeleteCategoriesFromTI() as $secondCat):
+            $unformat .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
 
 }

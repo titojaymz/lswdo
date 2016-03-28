@@ -752,6 +752,28 @@ class indicator extends CI_Controller
 
 
     }
+    public function indicatorDeletepart3($profID)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $indicator_model = new indicator_model();
+        $lguTypes = $indicator_model->getLGUtype($profID);
+        $updateResult = $indicator_model->deleteIndicatorpart3($profID);
+        if($updateResult){
+            $form_message = 'Add Success!';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('indicator_viewpart3');
+            $this->load->view('footer');
+            $this->redirectIndexAdd($profID);
+        }
+
+
+    }
 
     protected function validateAddIndicator()
     {
