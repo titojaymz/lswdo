@@ -18,6 +18,7 @@
                 <div class = "panel-body" style="display: block;">
 
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
+                    <input type = "hidden" id="profID" name ="profID" value ="<?php echo $profileID ?>"/>
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>

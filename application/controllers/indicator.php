@@ -222,7 +222,7 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
-                    $profile = '9';
+                    $profile = $this->input->post('profID');
                     $indicator = $firstCatBronze->indicator_id;
                     $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
@@ -244,7 +244,7 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
-                    $profile = '9';
+                    $profile = $this->input->post('profID');
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
@@ -264,7 +264,7 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $secondCatLower->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCatLower->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCatLower->indicator_id . 'Gold');
-                    $profile = '9';
+                    $profile = $this->input->post('profID');
                     $indicator = $secondCatLower->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCatLower->indicator_id);
                     if($complianceBronze != ""){
@@ -284,7 +284,7 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $secondCatLowerLower->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCatLowerLower->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCatLowerLower->indicator_id . 'Gold');
-                    $profile = '9';
+                    $profile = $this->input->post('profID');
                     $indicator = $secondCatLowerLower->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCatLowerLower->indicator_id);
                     if($complianceBronze != ""){
@@ -350,7 +350,7 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
-                    $profile = '9';
+                    $profile = $this->input->post('profID');
                     $indicator = $firstCatBronze->indicator_id;
                     $findings = $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
@@ -372,7 +372,7 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
-                    $profile = '9';
+                    $profile = $this->input->post('profID');
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
@@ -400,7 +400,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexAddPart2($profID);
+                $this->redirectIndexViewAll($profID);
             }
 
 
