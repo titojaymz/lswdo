@@ -9,7 +9,7 @@ class assessmentinfo extends CI_Controller {
     {
         //grace
         //$this->load->library('pagination');
-       // $this->load->library('model');
+        // $this->load->library('model');
         $user_region = $this->session->userdata('uregion');
         //grace
 
@@ -21,12 +21,12 @@ class assessmentinfo extends CI_Controller {
         //rpmb
 
         $this->init_rpmb_session();
-      //  $rpmb['lgu_typelist'] = $this->assessmentinfo_model->get_lgu_type();
+        //  $rpmb['lgu_typelist'] = $this->assessmentinfo_model->get_lgu_type();
         $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
 
-       // if(isset($_SESSION['region']) or isset($_SESSION['lgu_type'])) {
-      //      $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions($_SESSION['lgu_type']);
-      //  }
+        // if(isset($_SESSION['region']) or isset($_SESSION['lgu_type'])) {
+        //      $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions($_SESSION['lgu_type']);
+        //  }
         if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
             $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
         }
@@ -54,9 +54,9 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-       // $region_name = $assessmentinfo_model->Lib_getRegion();
+        // $region_name = $assessmentinfo_model->Lib_getRegion();
         //$prov_name = $assessmentinfo_model->Lib_getProvince();
-       // $city_name = $assessmentinfo_model->Lib_getCity();
+        // $city_name = $assessmentinfo_model->Lib_getCity();
 
         $this->validateAddForm();
 
@@ -131,8 +131,8 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_add',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                  //  'region' => $region_name,
-                 //   'province' => $prov_name,
+                    //  'region' => $region_name,
+                    //   'province' => $prov_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
@@ -155,13 +155,13 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
+
                 $rpmb['application_type_id'] = $this->assessmentinfo_model->Lib_getAllApplicationtype();
                 $rpmb['lgu_type_id'] = $this->assessmentinfo_model->Lib_getLGUtype();
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
-
                 $rpmb['assessmentinfo_details'] = $this->assessmentinfo_model->getAssessmentinfoByID($id);
                 $this->load->view('assessmentinfo_edit',$rpmb);
-                $this->load->view('sidepanel');
+
                 $this->load->view('footer');
 
             } else {
@@ -238,7 +238,6 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('assessmentinfo_listview', $datarpmb);
                     $this->load->view('sidepanel');
                     $this->load->view('footer');
-                    $this->load->view('footer');
                 }
                 $this->redirectIndex();
             }
@@ -282,8 +281,6 @@ class assessmentinfo extends CI_Controller {
                 'form_message'      =>      $form_message
             );
         }
-        $this->load->view('header');
-        $this->load->view('nav');
         $this->load->view('assessmentinfo_masterview',$data);
         $this->load->view('footer');
     }
@@ -307,24 +304,24 @@ class assessmentinfo extends CI_Controller {
             }
         }
     }
-/*
-    public function populate_region() {
-        if($_POST['lgu_type_id'] > 0 and isset($_POST) and isset($_POST['lgu_type_id'])) {
+    /*
+        public function populate_region() {
+            if($_POST['lgu_type_id'] > 0 and isset($_POST) and isset($_POST['lgu_type_id'])) {
 
-            $lgu_type_id = $_POST['lgu_type_id'];
-            $regionlist = $this->assessmentinfo_model->get_regions($lgu_type_id);
+                $lgu_type_id = $_POST['lgu_type_id'];
+                $regionlist = $this->assessmentinfo_model->get_regions($lgu_type_id);
 
-            $region_list[] = "Choose Type of LSWDO";
-            foreach($regionlist as $tempregion) {
-                $region_list[$tempregion->region_code] = $tempregion->region_name;
+                $region_list[] = "Choose Type of LSWDO";
+                foreach($regionlist as $tempregion) {
+                    $region_list[$tempregion->region_code] = $tempregion->region_name;
+                }
+
+                $regionlist_prop = 'id="regionlist" name="regionlist" class="form-control" onChange="get_prov();"';
+
+                echo form_dropdown('regionlist', $region_list, '', $regionlist_prop);
             }
-
-            $regionlist_prop = 'id="regionlist" name="regionlist" class="form-control" onChange="get_prov();"';
-
-            echo form_dropdown('regionlist', $region_list, '', $regionlist_prop);
         }
-    }
-*/
+    */
     public function populate_prov() {
         if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
 
