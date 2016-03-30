@@ -66,7 +66,8 @@ class monitoring extends CI_Controller
             $visit_model = new Visit_model();
             $monitoring_model = new Monitoring_Model();*/
 
-            $profile_id ='9';
+            //$profile_id ='9';
+            $profile_id =$this->input->post('profile_id');
             $ref_cert_id = '0';
             $visit_count = $this->input->post('visit_count');
 
@@ -86,8 +87,8 @@ class monitoring extends CI_Controller
             $addResult = $monitoring_model->insertLswdoMonitoring($profile_id,$ref_cert_id, $visit_count, $visit_date, $remarks, $created_by, $date_created, $modified_by, $date_modified, $deleted);
 
             if ($addResult) {
-
-                $form_message = 'Add Success!';
+                $indicator_model = new indicator_model();
+                /*$form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
@@ -99,12 +100,34 @@ class monitoring extends CI_Controller
                     'visit_model' => $visit_model,
                     'validity_model' => $validity_model,
                 ));
+                $this->load->view('footer');*/
+
+                $form_message = '';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('indicator_add', array(
+                    'firstMotherIndicator' => $indicator_model->getFirstMotherIndicator(),
+                    'firstIndicators' => $indicator_model->getFirstIndicators(),
+                    //'getFirstCategory' => $indicator_model->getCategoriesFromFI($lguTypes->lgu_type_id),
+                    //'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
+                    //'LGUType' => $indicator_model->getLGUtype($profID),
+                    //'profileID' => $profID,
+                ));
                 $this->load->view('footer');
 
-
+                $this->redirectIndex($profile_id,$addResult);
             }
         }
     }
+
+    public function redirectIndex($profID,$addResult)
+    {
+        $page = base_url('indicator/indicatorView/'.$profID.'/'.$addResult);
+//        $sec = "1";
+        header("Location: $page");
+    }
+
 
     public function monitoring_edit()
     {
@@ -159,18 +182,8 @@ class monitoring extends CI_Controller
             $year_valid = $this->input->post('year_valid');
             $DELETED = '0';
 
-           // $updateResult = $monitoring_model->updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$remarks,$modified_by,$date_modified,$deleted);
-            $updateResult = $certification_model->updateLswdoCertificate($ref_id,
-                $certificate_no,
-                $current_certificate,
-                $date_issued,
-                $validity,
-                $month_valid,
-                $day_valid,
-                $year_valid,
-                $modified_by,
-                $DELETED);
 
+            $updateResult = $monitoring_model->updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$remarks,$modified_by,$deleted);
 
             if ($updateResult) {
 

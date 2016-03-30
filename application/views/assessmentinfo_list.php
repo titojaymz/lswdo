@@ -34,6 +34,9 @@
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
                 <th>Profile ID</th>
                 <th>Status of Application</th>
                 <th>LSWDO Type</th>
@@ -47,17 +50,6 @@
             <tbody>
             <?php foreach($assessmentinfo_data as $assessmentinfoData): ?>
                 <tr>
-                    <td><?php echo $assessmentinfoData->profile_id ?></td>
-                    <td><?php echo $assessmentinfoData->application_type_id ?></td>
-                    <td><?php echo $assessmentinfoData->lgu_type_id ?></td>
-                    <td><?php echo $assessmentinfoData->swdo_name ?></td>
-                    <td><?php echo $assessmentinfoData->total_ira ?></td>
-                    <td><?php echo $assessmentinfoData->total_budget_lswdo ?></td>
-
-                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View </a></td>
-                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('indicator/indicatorView/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-list"></i> Indicators </a></td>
-<!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart2/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 2 </a></td>-->
-<!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart3/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 3 </a></td>-->
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
@@ -65,6 +57,20 @@
                         </div>
 
                     </td>
+                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View </a></td>
+                    <!--<td><a class="btn btn-xs btn-success" href="<?php /*echo base_url('indicator/indicatorView/' . $assessmentinfoData->profile_id) */?>"><i class="fa fa-list"></i> Indicators </a></td>-->
+                    <td><a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-list"></i> Indicators </a></td>
+                    <td><?php echo $assessmentinfoData->profile_id ?></td>
+                    <td><?php echo $assessmentinfoData->application_type_id ?></td>
+                    <td><?php echo $assessmentinfoData->lgu_type_id ?></td>
+                    <td><?php echo $assessmentinfoData->swdo_name ?></td>
+                    <td><?php echo $assessmentinfoData->total_ira ?></td>
+                    <td><?php echo $assessmentinfoData->total_budget_lswdo ?></td>
+
+
+<!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart2/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 2 </a></td>-->
+<!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart3/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 3 </a></td>-->
+
                 </tr>
             <?php endforeach ?>
             </tbody>

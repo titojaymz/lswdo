@@ -7,11 +7,19 @@ class assessmentinfo extends CI_Controller {
 
     public function index()
     {
+
+        //carla
+
+        $monitoring_model = new Monitoring_Model();
+
+        //carla
+
         //grace
         //$this->load->library('pagination');
         // $this->load->library('model');
         $user_region = $this->session->userdata('uregion');
         //grace
+
 
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
@@ -44,7 +52,8 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
             'list_fields'=>$this->listFields(),
-            'form_message'=>$form_message
+            'form_message'=>$form_message,
+            //'getRefID'=>$monitoring_model->getMonitoringListByRefID($ref_id),
         ));
         $this->load->view('footer');
     }

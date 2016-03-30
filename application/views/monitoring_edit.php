@@ -80,7 +80,8 @@
                     </div>
                     <?php
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("monitoring/monitoring_edit/$ref_id", $attributes);
+                       // echo form_open("monitoring/monitoring_edit/$ref_id", $attributes);
+                        echo form_open("", $attributes);
 
 
                     ?>
@@ -181,7 +182,7 @@
                                                 ref_id = "'.$ref_id.'"
                                                 ';
 
-                                       // echo $sql;
+                                        echo $sql;
 
 
                                     ?>

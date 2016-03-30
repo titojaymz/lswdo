@@ -3,7 +3,7 @@
 
 class indicator extends CI_Controller
 {
-    public function indicatorView($profID)
+    public function indicatorView($profID,$ref_id)
     {
         if (!$this->session->userdata('user_id'))
         {
