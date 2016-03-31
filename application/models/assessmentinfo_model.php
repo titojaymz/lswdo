@@ -34,11 +34,11 @@ class assessmentinfo_model extends CI_Model {
     }
 
 
-    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$swdo_name,$designation,$office_address,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,swdo_name,designation,office_address,contact_no,email,website,total_ira,total_budget_lswdo,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,date_created)
                           VALUES
                           (
                           "'.$application_type_id.'",
@@ -46,9 +46,9 @@ class assessmentinfo_model extends CI_Model {
                           "'.$regionlist.'",
                           "'.$provlist.'",
                           "'.$citylist.'",
+                          "'.$office_address.'",
                           "'.$swdo_name.'",
                           "'.$designation.'",
-                          "'.$office_address.'",
                           "'.$contact_no.'",
                           "'.$email.'",
                           "'.$website.'",
@@ -70,19 +70,19 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$utilization,$no_bene_served,$budget_present_year,$no_target_bene)
+    public function insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,utilization,no_bene_served,budget_present_year,no_target_bene,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
                           VALUES
                           (
                           "'.$profile_id.'",
                           "'.$sector_id.'",
                           "'.$year_indicated.'",
+                          "'.$budget_present_year.'",
                           "'.$utilization.'",
                           "'.$no_bene_served.'",
-                          "'.$budget_present_year.'",
                           "'.$no_target_bene.'",
                           Now()
                           )');
