@@ -20,11 +20,7 @@
 
                 </div>
                 <div class = "panel-body" style="display: block;">
-                    <?php if ($form_message <> '') { ?>
-                        <div class="alert alert-success">
-                            <strong><?php echo $form_message ?></strong>
-                        </div>
-                    <?php } ?>
+
                     <?php if (validation_errors() <> '') { ?>
                         <div class="alert alert-danger">
                             <strong><?php echo validation_errors() ?></strong>

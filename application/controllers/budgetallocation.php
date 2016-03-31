@@ -27,7 +27,7 @@ class budgetallocation extends CI_Controller {
     {
 
         $budgetallocation_model = new budgetallocation_model();
-        $sector_id = $budgetallocation_model->get_Sector();
+        $sector_id = $budgetallocation_model->get_sector();
 
         $this->validateAddForm();
 
@@ -57,7 +57,7 @@ class budgetallocation extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('budgetallocation_list',array(
-                    'budgetallocation_data'=>$budgetallocation_model->get_Sector(),
+                    'budgetallocation_data'=>$budgetallocation_model->get_sector(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
                     $this->redirectIndex()
@@ -100,7 +100,7 @@ class budgetallocation extends CI_Controller {
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('budgetallocation_list',array(
-                        'budgetallocation_data'=>$budgetallocation_model->get_Sector(),
+                        'budgetallocation_data'=>$budgetallocation_model->get_sector(),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message,
                         $this->redirectIndex()

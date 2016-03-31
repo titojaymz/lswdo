@@ -99,13 +99,13 @@ if (!$this->session->userdata('user_id')){
         <strong><?php echo validation_errors() ?></strong>
     </div>
 <?php } ?>
-<div class="modal-body">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div id="addassessment" class="col-md-6">
-                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
-                <form method="post" class="form-horizontal">
+<body>
+<div class="content">
+
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
                     <div class="form-group">
 
                         <div class="form-group">
@@ -224,20 +224,41 @@ if (!$this->session->userdata('user_id')){
                             </div>
                             <!--End City-->
 
-                            <div id="groupcities">
-                                <div class="form-group form-group-sm">
-                                    <label for="nocitylist" class="col-lg-2 control-label">No. of Cities:</label>
-                                    <div id="div_nocitylist" class="col-lg-8">
-                                        <input class="form-control" type="text" name="no_city_code" value="" placeholder="no_city_code" readonly>
+                            <?php
+                            $result = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
+                            $row = mysql_fetch_assoc($result);
+                            $no_cities = $row['value_sum'];
+
+                            $result2 = mysql_query('SELECT lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS value_sum FROM lib_brgy left join lib_cities on lib_brgy.city_code=lib_cities.city_code where lib_cities.city_name="san carlos city"');
+                            $row2 = mysql_fetch_assoc($result2);
+                            $no_muni = $row2['value_sum'];
+
+                            $result2 = mysql_query('SELECT lib_cities.income_class as value_sum FROM lib_cities where city_name like "%butuan city%"');
+                            $row2 = mysql_fetch_assoc($result2);
+                            $no_brgy = $row2['value_sum'];
+
+                            $result3 = mysql_query('SELECT lib_cities.income_class as income_class FROM lib_cities Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code');
+                            $row3 = mysql_fetch_assoc($result3);
+                            $income_class = $row3['income_class'];
+                            ?>
+
+                            <div id="groupCity">
+                                <label for="nocitylist" class="col-lg-2 control-label">No. of Cities:</label>
+                                <fieldset>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input class="form-control" type="text" name="no_city_code" value="<?php echo $no_cities;?>" placeholder="No. of Cities" readonly>
+                                        </div>
                                     </div>
-                                </div>
+
+                                </fieldset>
                             </div>
 
                             <div id="groupmuni">
                                 <div class="form-group form-group-sm">
                                     <label for="no_muni_code" class="col-lg-2 control-label">No. of Municipalities:</label>
                                     <div id="div_nomunilist" class="col-lg-8">
-                                        <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
+                                        <input class="form-control" type="text" name="no_muni_code" value="<?php echo $no_muni;?>" placeholder="No. of Municipalities" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +267,7 @@ if (!$this->session->userdata('user_id')){
                                 <div class="form-group form-group-sm">
                                     <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
                                     <div id="div_nobrgylist" class="col-lg-8">
-                                        <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="no_brgy_code" readonly>
+                                        <input class="form-control" type="text" name="no_brgy_code" value="<?php echo $no_brgy;?>" placeholder="No. of Barangays" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -255,47 +276,47 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="income_class">Income Class:</label>
-                            <input class="form-control" type="text" name="income_class" value="" placeholder="income_class" readonly>
+                            <input class="form-control" type="text" name="income_class" value="<?php echo $income_class;?>" placeholder="Income Class" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="total_pop">Total Population:</label>
-                            <input class="form-control" type="text" name="total_pop" value="" placeholder="total_pop" readonly>
+                            <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
-                            <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor">
+                            <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="swdo_name">SWDO Name:</label>
-                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="swdo_name">
+                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="SWDO Name">
                         </div>
 
                         <div class="form-group">
                             <label for="designation">Designation:</label>
-                            <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="designation">
+                            <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation">
                         </div>
 
                         <div class="form-group">
                             <label for="office_address">Office Address:</label>
-                            <te class="form-textarea" type="textarea" rows="3" cols="5" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="office_addresss">
+                            <te class="form-textarea" type="textarea" rows="3" cols="5" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Addresss">
                         </div>
 
                         <div class="form-group">
                             <label for="contact_no">Contact No:</label>
-                            <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="contact_no">
+                            <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No">
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email:</label>
-                            <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="email">
+                            <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email">
                         </div>
 
                         <div class="form-group">
                             <label for="website">Website:</label>
-                            <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="website">
+                            <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website">
                         </div>
 
                         <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
@@ -305,11 +326,52 @@ if (!$this->session->userdata('user_id')){
                         </div>
                         <div class="form-group">
                             <label for="total_ira">Total IRA:</label>
-                            <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="total_ira">
+                            <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
                         </div>
                         <div class="form-group">
                             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="total_budget_lswdo">
+                            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
+                        </div>
+
+                        <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
+
+                        <div class="form-group">
+                            <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sector_id">Sector:</label>
+                            <select class="form-control" name="sector_id" id="sector_id">
+                                <option select value="">Please select</option>
+                                <?php foreach($sector_id as $sectors): ?>
+                                    <option value="<?php echo $sectors->sector_id ?>"><?php echo $sectors->sector_name ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year_indicated">Year Indicated:</label>
+                            <input class="form-control" type="text" name="year_indicated" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="utilization">Utilization:</label>
+                            <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget_present_year">Budget for the Present Year:</label>
+                            <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_bene_served">Number of Beneficiaries Served:</label>
+                            <input class="form-control" type="text" name="no_bene_served" value="<?php echo set_value('no_bene_served') ?>" placeholder="Number of Beneficiaries Served">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_target_bene">Number of Target Beneficiaries:</label>
+                            <input class="form-control" type="text" name="no_target_bene" value="<?php echo set_value('no_target_bene') ?>" placeholder="Number of Target Beneficiaries">
                         </div>
 
 
@@ -323,4 +385,10 @@ if (!$this->session->userdata('user_id')){
                 </form>
             </div>
             <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
 </body>
