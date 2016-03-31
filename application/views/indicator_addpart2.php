@@ -54,10 +54,7 @@
                                     $newArray[$first][] = $item->indicator_name;
                                 endforeach
                                 ?>
-                                <!--<pre>
-                                    <?php /*print_r($newArray); */?>
-                                    <?php /*echo count($newArray['IA1']) / 3; */?>
-                                </pre>-->
+
                                 <?php
                                 $secondNewArray = array();
                                 foreach($getSecondCategory as $secondItem):
@@ -87,10 +84,9 @@
                                     $fourthNewArray[$fourth][] = $fourthItem->indicator_name;
                                 endforeach;
                                 ?>
-                                    <!--<pre>
-                                    <?php /*print_r($getSecondCategoryLower); */?>
-                                    <?php /*echo count($getSecondCategoryLower['IA1']) / 3; */?>
-                                    </pre>-->
+<!--                                  <pre>-->
+<!--                                    --><?php //print_r($thirdNewArray); ?>
+<!--                                  </pre>-->
                             <tr>
                                 <?php  $number = 1; ?> <!-- ung $number para makuha ung laman nung array na newArray at secondNewArray, yung indicator_name ung kinukuha neto -->
                                 <?php  $number2 = 1; ?>
@@ -167,6 +163,49 @@
                                                                                          <?php  endforeach;?>
                                                                                  <?php } else {?>
                                                               <?php $counting3 = count($iteeem); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
+                                                               <?php if($counting3 > 6){ ?>
+                                                               <?php if($counting3 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
+                                                                   <td><?php echo $iteeem[$number3]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
+                                                                   <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "1" required/> Compliance</td>
+                                                                   <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "2"/> Not Compliance</td>
+                                                                   <td>
+                                                                        <table>
+                                                                           <tr>
+                                                                           <td><?php echo $iteeem[$number3 + 2]; ?><br><br></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                           </tr>
+                                                                           <tr>
+                                                                           <td><?php echo $iteeem[$number3 + 4]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                          </tr>
+                                                                        </table>
+                                                                   </td>
+                                                                    <td>
+                                                                    <table>
+                                                                           <tr>
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" value = "1" required/> Compliance</td><!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                           </tr>
+                                                                           <tr>
+                                                                           <td><br><br><br><br><br><br><br><br><br><br><br><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" value = "1" required/> Compliance</td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                          </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <td>
+                                                                    <table>
+                                                                           <tr>
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" value = "2"/> Not Compliance</td><!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                           </tr>
+                                                                           <tr>
+                                                                           <td><br><br><br><br><br><br><br><br><br><br><br><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" value = "1" required/> Not Compliance</td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                          </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <?php if($counting3 > 6){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
+                                                                           <td><?php echo $iteeem[$number3 + 6]; ?></td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "1" required/> Compliance</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "2"/> Not Compliance</td>
+                                                                           <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"></textarea></td>
+                                                                       <?php } ?>
+                                                               <?php } ?>
+                                                               <?php } else { ?>
                                                                <?php if($counting3 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                    <td><?php echo $iteeem[$number3]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
                                                                    <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "1" required/> Compliance</td>
@@ -183,6 +222,7 @@
                                                                        <?php } ?>
                                                                    <?php } ?>
                                                                <?php } ?>
+                                                               <?php }?>
                                                                <?php break; ?>
                                                                        <?php }?>
                                                                          <?php }?>

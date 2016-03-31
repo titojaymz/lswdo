@@ -79,9 +79,9 @@ class monitoring extends CI_Controller
             //date
 
             $remarks = $this->input->post('remarks');
-            $created_by = '104';
+            $created_by = '115';
             $date_created = 'NOW()';
-            $modified_by='104';
+            $modified_by='115';
             $date_modified = '0000-00-00';
             $deleted='0';
 
