@@ -16,108 +16,88 @@
 
 
 <pre>
-
-
-
-
 <?php
-
-//$score = "";
-//$newscore = "";
-//$region_name = "";
-//
-//foreach ($getRegionName as $getRegName):
-//    $region_name .= "'".$getRegName->region_name."',";
-//
-//    foreach ($getIndicator as $getIn):
-//
-//        if($getRegName->region_name == $getIn->region_name)
-//        {
-//
-//            $newscore .= "".$getIn->TotalScore.",";
-////            break;
-//        }
-//        else
-//        {
-//
-//            $newscore .= "0,";
-////            break;
-//        }
-//
-//    endforeach;
-//
-//    $score_format =  substr($newscore,0,-1);
-//
-//endforeach;
-//$region_format =  substr($region_name,0,-1);
-//echo $region_format;
-//echo "<br>";
-//echo "<br>";
-//echo $newscore;
-
-///test
-
-
-
-$score = "";
+$region_name = "";
+$ffscore_format = "";
+$fscore_format = "";
+$pfscore_format = "";
 $newscore = "";
-$newArray = array();
-foreach($getRegionName  as $getRegName):
-    $arr = $getRegName->region_name;
-    $first = $arr;
-    foreach($getIndicator  as $getIn):
-        if($getRegName->region_name == $getIn->region_name)
-        {
-            $newArray[$first][1] = $getIn->lgu_type_id;
-            $newArray[$first][2] = $getIn->TotalScore;
-            $newArray[$first][3] = $getIn->FinalScore;
+$ff = 0;
+$f = 0;
+$pf = 0;
+$ffscore = "";
+$fscore = "";
+$pfscore = "";
+print_r($getIndicator);
 
-        } else {
-            $newArray[$first][1] = "";
-            $newArray[$first][2] = 0;
-            $newArray[$first][3] = 0;
-        }
-    endforeach;
+//$newArray = array();
+//
+//foreach ($getIndicator['target2'] as $key => $innerArr1) {
+//    $newArray['target'][$key] = array_merge(
+//        $getIndicator['target1'][$key],  /* 0th and 1st index */
+//        array($innerArr1[1])        /* 2nd index    //     */
+//    );
+//}
+//
+//print_r($newArray);
+
+
+foreach($getIndicator as $getIn):
+    $region_name .= "'".$getIn->region_name."',";
+
+
+    echo $getIn->profile_id;
+    echo "</br>";
+    echo $getIn->FinalScore;
+    echo "</br>";
+    $getPerc = $getIn->FinalScore;
+    if($getPerc == 100){
+        $ff++;
+
+    }
+    else
+    {
+        $ff = $ff +0;
+    }
+    if($getPerc > 50 && $getPerc < 100){
+        $f++;
+
+    }
+    else
+    {
+        $f = $f +0;
+    }
+    if($getPerc < 51) {
+        $pf++;
+
+    }
+    else
+    {
+        $pf = $pf +0;
+    }
+    $ffscore .= "".$ff.",";
+    $fscore .= "".$f.",";
+    $pfscore .= "".$pf.",";
+
 endforeach;
 
-print_r($newArray);
-/*foreach ($getIndicator as $getIn):
-    $score = "".$getIn->TotalScore."";
-    $region_name ="";
-
-    foreach ($getRegionName as $getRegName):
-
-            if($getRegName->region_name == $getIn->region_name)
-            {
-                $region_name .= "'".$getIn->region_name."',";
-                $newscore .= "".$score.",";
-                break;
-
-            }
-            else
-            {
-                $region_name .= "'".$getRegName->region_name."',";
-                $newscore .= "0,";
-
-
-            }
-
-    endforeach;
-
-    $region_format =  substr($region_name,0,-1);
-
-
-endforeach;
-echo $region_format;
-echo "<br>";
-echo "<br>";
-echo $newscore;
-$score_format =  substr($newscore,0,-1);*/
+$region_format =  substr($region_name,0,-1);
+$ffscore_format =  substr($ffscore,0,-1);
+$fscore_format =  substr($fscore,0,-1);
+$pfscore_format =  substr($pfscore,0,-1);
+echo "</br>";
+echo $ffscore_format;
+echo "</br>";
+echo $fscore_format;
+echo "</br>";
+echo $pfscore_format;
 
 ?>
 
 
+
 </pre>
+
 
 
                         <style type="text/css">
@@ -136,8 +116,7 @@ $score_format =  substr($newscore,0,-1);*/
                                         text: ''
                                     },
                                     xAxis: {
-                                        categories: [<?php echo $region_format;?>
-                                        ],
+                                        categories: [<?php echo $region_format;?>],
                                         crosshair: true
                                     },
                                     yAxis: {
@@ -162,15 +141,15 @@ $score_format =  substr($newscore,0,-1);*/
                                     },
                                     series: [{
                                         name: 'Fully Functional',
-                                        data: [<?php echo $score_format;?>]
+                                        data: [<?php echo $ffscore_format;?>]
 
                                     }, {
                                         name: 'Functional',
-                                        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3, 105.0, 104.3, 91.2, 83.5, 106.6]
+                                        data: [<?php echo $fscore_format;?>]
 
                                     }, {
                                         name: 'Partially Functional',
-                                        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2, 105.0, 104.3, 91.2, 83.5, 106.6]
+                                        data: [<?php echo $pfscore_format;?>]
 
                                     }]
                                 });

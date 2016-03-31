@@ -306,7 +306,7 @@ echo validation_errors();
 
                     <div class="form-group">
                         <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                        <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
+                        <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO" readonly>
                     </div>
 
 
