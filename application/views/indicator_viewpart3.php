@@ -20,7 +20,7 @@
 
                     <?php $countLS = count($checkPart3) ?>
                     <?php if($countLS > 0){ ?>
-                        <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>II. PROGRAM MANAGEMENT</b></a><br><br>
+                        <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>II. PROGRAM MANAGEMENT</b></a><br><br>
                         <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEditpart3/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a>
                         <a class="btn btn-m btn-option4" href="<?php echo base_url('indicator/indicatordeletepart3/'.$profileID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
                         <?php echo form_open('',array('class'=>'form-horizontal')) ?>
@@ -259,7 +259,7 @@
                         </table>
                         <?php echo form_close() ?>
                     <?php } else { ?>
-                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart3/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
+                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
                     <?php } ?>
                 </div>
             </div>

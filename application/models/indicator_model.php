@@ -2,24 +2,41 @@
 
 class indicator_model extends CI_Model
 {
-    public function getLSWDOdata($profID){
+    public function getLSWDOdata($profID,$ref_id){
         $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
-        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID , 'DELETED' => 0));
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID , 'DELETED' => 0, 'ref_id' => $ref_id));
         return $query->result();
     }
-    public function getCheckPart1($profID){
+    public function getScorePerProf($profID,$ref_id){
+        $sql = 'select  b.lgu_type_id, SUM(IF(a.compliance_indicator_id = 1, 1, 0)) as TotalScore,
+                case b.lgu_type_id
+                when 1 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100
+                when 2 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100
+                when 3 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100
+                end as FinalScore
+                FROM tbl_lswdo_standard_indicators a
+                INNER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                where a.deleted = 0 and a.indicator_id LIKE "%-1%"  and b.profile_id ='.$profID.' and a.ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return  $query->row();
+
+
+
+    }
+    public function getCheckPart1($profID,$ref_id){
         $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
-        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IA1-1', 'DELETED' => 0));
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IA1-1', 'DELETED' => 0, 'ref_id' => $ref_id));
         return $query->row();
     }
-    public function getCheckPart2($profID){
+    public function getCheckPart2($profID,$ref_id){
         $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
-        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIA1-1', 'DELETED' => 0));
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIA1-1', 'DELETED' => 0, 'ref_id' => $ref_id));
         return $query->row();
     }
-    public function getCheckPart3($profID){
+    public function getCheckPart3($profID,$ref_id){
         $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
-        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIIA11-1', 'DELETED' => 0));
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIIA11-1', 'DELETED' => 0, 'ref_id' => $ref_id));
         return $query->row();
     }
     public function getLGUtype($profID){
@@ -27,6 +44,7 @@ class indicator_model extends CI_Model
         $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $profID));
         return $query->row();
     }
+
     public function getFirstMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');
@@ -77,7 +95,6 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
-
     public function getSecondMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');
@@ -109,7 +126,6 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
-
     public function getSecondCategoriesFromSI($lguType){
         $unformat = "";
         foreach($this->getCategoriesFromSI($lguType) as $secondCat):
@@ -191,7 +207,6 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
-
     public function getSecondCategoriesFromTI($lguType){
         $unformat = "";
         foreach($this->getCategoriesFromTI($lguType) as $secondCat):
@@ -210,15 +225,15 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
-
-    public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings){
+    public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings,$refID){
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom,DELETED)
+        $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom,ref_id,DELETED)
                           VALUES(
                           "'.$profileID.'",
                           "'.$indicator_id.'",
                           "'.$compliance.'",
                           "'.$findings.'",
+                          "'.$refID.'",
                           "0"
                           )');
         if ($this->db->trans_status() === FALSE)

@@ -22,8 +22,8 @@
                     <?php if($countLS > 0){ ?>
                         <table>
                             <tr>
-                                <td align= "left" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorView/'.$profileID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>I. ADMINISTRATION and ORGANIZATION</b></a></td>
-                                <td align= "right" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>III. CASE MANAGEMENT</b></a></td>
+                                <td align= "left" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorView/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>I. ADMINISTRATION and ORGANIZATION</b></a></td>
+                                <td align= "right" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>III. CASE MANAGEMENT</b></a></td>
                             </tr>
                         </table>
                     <br>
@@ -442,7 +442,7 @@
                     </table>
                     <?php echo form_close() ?>
                     <?php } else { ?>
-                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart2/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
+                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
                     <?php } ?>
                 </div>
             </div>

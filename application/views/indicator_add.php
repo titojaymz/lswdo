@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <!DOCTYPE HTML>
 <html>
-<?php error_reporting(0) ?>
+
 <body>
 <style>
     label {

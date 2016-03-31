@@ -930,7 +930,10 @@
                             </tr>
                     <?php endforeach ?>
                         </table>
+
                         <?php echo form_close() ?>
+
+
                     <?php } else { ?>
                         <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAddpart3/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
                     <?php } ?>
@@ -938,6 +941,47 @@
             </div>
         </div>
     </div>
+    <pre>
+       <?php print_r($scoreProf); ?>
+    </pre>
+    <?php
+        $getPerc = number_format($scoreProf->FinalScore,2);
+        if($getPerc == 100){
+            $level = 'Fully Functional';
+        } elseif($getPerc > 50 && $getPerc < 100){
+            $level = 'Functional';
+        } elseif($getPerc < 51) {
+            $level = 'Partially Functional';
+        }
+
+    ?>
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    Score
+                    <ul class="panel-tools">
+                        <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                        <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                    </ul>
+                </div>
+                <div class = "panel-body" style="display: block;">
+        <table class="table table-bordered table-striped" width = "100%">
+        <tr>
+            <td width ="25%"><b>Score: </b></td>
+            <td width ="25%"><b>Percentage</b></td>
+            <td width ="25%"><b>Level of Functionality: </b></td>
+
+        </tr>
+        <tr>
+            <td><?php echo $scoreProf->TotalScore; ?></td>
+            <td><?php echo $getPerc.'%'; ?></td>
+            <td><?php echo $level; ?></td>
+        </tr>
+    </table>
+                </div>
+            </div>
+        </div>
     <a class="btn btn-m btn-option2" href="<?php echo base_url('assessmentinfo/index/') ?>"><i class="fa fa-check-circle-o"></i> Finish</a><br><br>
 </div>
 </body>

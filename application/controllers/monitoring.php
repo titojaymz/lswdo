@@ -14,6 +14,7 @@ class monitoring extends CI_Controller
         $certification_model = new Certification_Model();
         $validity_model = new Validity_model();
         $visit_model = new Visit_model();
+        $indi_model = new indicator_model();
 
         $this->load->view('header');
         $this->load->view('nav');
