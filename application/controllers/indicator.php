@@ -413,7 +413,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexViewAll($profID);
+                $this->redirectIndexViewAll($profID,$ref_id);
             }
 
 
@@ -843,9 +843,9 @@ class indicator extends CI_Controller
 //        $sec = "1";
         header("Location: $page");
     }
-    public function redirectIndexViewAll($profID)
+    public function redirectIndexViewAll($profID,$ref_id)
     {
-        $page = base_url('indicator/indicatorViewAll/'.$profID);
+        $page = base_url('indicator/indicatorViewAll/'.$profID.'/'.$ref_id);
 //        $sec = "1";
         header("Location: $page");
     }

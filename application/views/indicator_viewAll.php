@@ -968,12 +968,14 @@
                 <div class = "panel-body" style="display: block;">
         <table class="table table-bordered table-striped" width = "100%">
         <tr>
+            <td width ="25%"><b></b></td>
             <td width ="25%"><b>Score: </b></td>
             <td width ="25%"><b>Percentage</b></td>
             <td width ="25%"><b>Level of Functionality: </b></td>
 
         </tr>
         <tr>
+            <td>Bronze</td>
             <td><?php echo $scoreProf->TotalScore; ?></td>
             <td><?php echo $getPerc.'%'; ?></td>
             <td><?php echo $level; ?></td>
