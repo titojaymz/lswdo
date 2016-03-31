@@ -62,7 +62,8 @@
                 <div class = "panel-body" style="display: block;">
 
                     <?php
-                    $profile_id = $getDataByProfileID->profile_id;
+                    //$profile_id = $getDataByProfileID->profile_id;
+                    $profile_id = $this->uri->segment('3');
                     //$ref_id =
                     echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
                     //$getCertList = $certification_model->getCertList();
@@ -71,7 +72,7 @@
 
                     <?php
                         $attributes = array("class" => "form-horizontal", "id" => "addCert", "name" => "addCert");
-                        echo form_open("monitoring/monitoring_add", $attributes);
+                        echo form_open("monitoring/monitoring_add/$profile_id", $attributes);
                     ?>
 
 
@@ -83,6 +84,7 @@
 
                     <table class="table table-bordered table-striped">
                         <tr>
+                            <td align="center"><b>&nbsp;</b></td>
                             <td align="center"><b>&nbsp;</b></td>
                             <!--<td align="center"><b>Certificate No</b></td>
                             <td align="center"><b>Date Issued</b></td>
@@ -97,15 +99,20 @@
                         <tr>
 
                             <?php
-                                    $getMonitoringList = $monitoring_model->getMonitoringList();
-
+                                    //$getMonitoringList = $monitoring_model->getMonitoringList();
+                                    $getMonitoringList = $monitoring_model->getMonitoringListByRefID($profile_id);
 
                                     foreach($getMonitoringList as $keyMonitoring => $valMonitoring)
                                     {
                                         $ref_id = $valMonitoring['ref_id'];
                                         echo "<td align=\"center\"><b>";
-                                        echo "<a class='btn btn-sm btn-primary' href= 'monitoring_edit/$ref_id/'>
+                                        echo "<a class='btn btn-sm btn-primary' href= '../monitoring_edit/$ref_id/'>
                                             <i class=\"fa fa-edit\"></i>Edit </a>";
+                                        echo " </b></td>";
+
+                                        echo "<td align=\"center\"><b>";
+                                        echo "<a class='btn btn-sm btn-primary' href= '../../indicator/indicatorView/$profile_id/$ref_id/'>
+                                            <i class=\"fa fa-edit\"></i>View Indicators </a>";
                                         echo " </b></td>";
 
                                         echo "<td align=\"center\"><b>";

@@ -142,14 +142,13 @@
 
                                                                                                              <?php } else { ?>
                                                                                                                      <?php $counting4 = count($fourthItem); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
-                                                                                                                       <?php if($counting4 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
+                                                                                                                            <?php if($counting4 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
 
                                                                                                                             <td><?php echo $fourthItem[$number4]; ?></td>
                                                                                                                                 <?php foreach($getLSWDO as $key=>$value): ?>
                                                                                                                                 <?php if($value->indicator_id == $d.'-'.$fourthItem[$checklist4]){ ?>
                                                                                                                                 <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                                                                                 <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                                                                                <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                                                                                 <?php } ?>
                                                                                                                                 <?php endforeach ?>
                                                                                                                                 <?php if($counting4 > 3){?>
@@ -158,7 +157,6 @@
                                                                                                                                 <?php if($value->indicator_id == $d.'-'.$fourthItem[$checklist4+2]){ ?>
                                                                                                                                     <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                                                                                     <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                                                                                    <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                                                                                      <?php } ?>
                                                                                                                                 <?php endforeach ?>
                                                                                                                                     <?php if($counting4 > 5){ ?>
@@ -167,11 +165,10 @@
                                                                                                                                         <?php if($value->indicator_id == $d.'-'.$fourthItem[$checklist4+4]){ ?>
                                                                                                                                         <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                                                                                         <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                                                                                        <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                                                                                         <?php } ?>
                                                                                                                                         <?php endforeach ?>
                                                                                                                                         <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                                                                                            <?php if($d.'-'.$fourthItem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea>asaD</td> <?php }  ?>
+                                                                                                                                            <?php if($d.'-'.$fourthItem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
                                                                                                                                        <?php endforeach ?>
                                                                                                                                <?php } ?>
                                                                                                                            <?php } ?>
@@ -190,7 +187,6 @@
                                                         <?php if($value->indicator_id == $c.'-'.$iteeem[$checklist3]){ ?>
                                                         <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                         <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                        <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                         <?php } ?>
                                                         <?php endforeach ?>
                                                         <?php if($counting3 > 3){?>
@@ -199,7 +195,6 @@
                                                         <?php if($value->indicator_id == $c.'-'.$iteeem[$checklist+2]){ ?>
                                                             <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                             <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                              <?php } ?>
                                                         <?php endforeach ?>
                                                             <?php if($counting3 > 5){ ?>
@@ -208,11 +203,10 @@
                                                                 <?php if($value->indicator_id == $c.'-'.$iteeem[$checklist+4]){ ?>
                                                                 <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                 <?php } ?>
                                                                 <?php endforeach ?>
                                                                 <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                    <?php if($c.'-'.$iteeem[$checklist3] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> asaC<?php }  ?>
+                                                                    <?php if($c.'-'.$iteeem[$checklist3] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td><?php }  ?>
                                                                    <?php endforeach ?>
                                                                        <?php } ?>
                                                                    <?php } ?>
@@ -234,7 +228,6 @@
                                                                    <?php if($value->indicator_id == $b.'-'.$secondItems[$checklist2]){ ?>
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                   <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                    <?php } ?>
                                                                    <?php endforeach ?>
                                                                        <?php if($counting2 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
@@ -243,7 +236,6 @@
                                                                        <?php if($value->indicator_id == $b.'-'.$secondItems[$checklist2+2]){ ?>
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                        <?php } ?>
                                                                    <?php endforeach ?>
                                                                        <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
@@ -252,11 +244,10 @@
                                                                                <?php if($value->indicator_id == $b.'-'.$secondItems[$checklist2+4]){ ?>
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                            <?php } ?>
                                                                    <?php endforeach ?>
                                                                    <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea>asaB</td> <?php }  ?>
+                                                                    <?php if($b.'-'.$secondItems[$checklist2] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
                                                                    <?php endforeach ?>
                                                                        <?php } ?>
                                                                    <?php } ?>
@@ -281,7 +272,6 @@
                                                         <?php if($value->indicator_id == $a.'-'.$iteem[$checklist]){ ?>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                         <?php } ?>
                                                         <?php endforeach ?>
                                                         <?php if($counting > 3){?>
@@ -290,7 +280,6 @@
                                                         <?php if($value->indicator_id == $a.'-'.$iteem[$checklist+2]){ ?>
                                                             <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                             <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                              <?php } ?>
                                                         <?php endforeach ?>
                                                             <?php if($counting > 5){ ?>
@@ -299,11 +288,10 @@
                                                                 <?php if($value->indicator_id == $a.'-'.$iteem[$checklist+4]){ ?>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "3" <?php if($value->compliance_indicator_id == 3){ echo "checked"; } ?>/> N/A</td>
                                                                 <?php } ?>
                                                                 <?php endforeach ?>
                                                                 <?php foreach($getLSWDO as $key=>$value): ?>
-                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea>asaA</td> <?php }  ?>
+                                                                    <?php if($a.'-'.$iteem[$checklist] == $value->indicator_id ){ ?> <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"><?php echo $value->findings_recom; ?></textarea></td> <?php }  ?>
                                                                    <?php endforeach ?>
                                                              <?php } else {  ?>
                                                             <td></td>

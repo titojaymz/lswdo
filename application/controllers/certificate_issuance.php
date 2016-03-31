@@ -10,20 +10,23 @@ class certificate_issuance extends CI_Controller
 
     public function certificate_issuance_list()
     {
-        //require_once "Monitoring_Model.php";
-        //if (!$this->session->userdata('user_id'))
-        //{
-        //    redirect('/users/login','location');
-        //}
+
         $monitoring_model = new Monitoring_Model();
         $certification_model = new Certification_Model();
-        //monitoring_model = new monitoring_model();
+        $validity_model = new Validity_model();
+        $visit_model = new Visit_model();
 
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('certificate_issuance_list', array(
-            'certification_model' => $certification_model,
+            'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+            'getVisitCount'=>$visit_model->getVisitCount(),
+            'getValidity' => $validity_model->getValidity(),
+            'monitoring_model'=>$monitoring_model,
+            'certification_model'=>$certification_model,
+            'visit_model' => $visit_model,
+            'validity_model' => $validity_model,
         ));
         $this->load->view('footer');
     }
@@ -196,6 +199,7 @@ class certificate_issuance extends CI_Controller
                     'certification_model'=>$certification_model,
                     'visit_model' => $visit_model,
                     'validity_model' => $validity_model,
+                    //'updateResult' => $updateResult,
                 ));
                 $this->load->view('footer');
 

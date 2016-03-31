@@ -57,6 +57,8 @@
                    // error_reporting(1);
 
                     ini_set('display_errors', 1);
+
+                    //echo $updateResult;
                     ?>
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
@@ -71,17 +73,19 @@
                     //echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
                     $getCertList = $certification_model->getCertList();
 
+                    echo "<a id ='btn_addCert' class='btn btn-lrg btn-primary' href= 'certificate_issuance_add'> Add Cert </a>";
+
                     ?>
 
                     <?php
                         $attributes = array("class" => "form-horizontal", "id" => "addCert", "name" => "addCert");
-                        echo form_open("certificate_issuance/certificate_issuance_add", $attributes);
+                        //echo form_open("certificate_issuance/certificate_issuance_add", $attributes);
                     ?>
 
 
-                    <div class="btn-group">
+                   <!-- <div class="btn-group">
                         <input id="btn_addCert" name="btn_addCert" type="submit" class="btn btn-primary" value="Add Cert"/>
-                    </div>
+                    </div>-->
 
                     <br/>
                     <h4>Certification Details</h4>
@@ -172,7 +176,7 @@
 
 
                     </div>
-                    <?php echo form_close() ?>
+                    <?php //echo form_close() ?>
                     <!--              <pre>-->
                     <!--                    --><?php //print_r($getSecondCategory); ?>
                     <!--                </pre>-->

@@ -80,7 +80,7 @@
                     </div>
                     <?php
                     $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                    echo form_open("", $attributes);
+                    echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
                     //echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
 
 

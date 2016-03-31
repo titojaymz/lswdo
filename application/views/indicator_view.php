@@ -3,7 +3,12 @@
 <html>
 <?php error_reporting(0) ?>
 <body>
+<?php
+if(count($checkPart1) > 0 && count($checkPart2) > 0 && count($checkPart3) > 0){
+    redirect('indicator/indicatorViewAll/'.$profileID.'/'.$refID,'location');
+}
 
+?>
 <div class="content">
 
     <div class = "row">
@@ -20,8 +25,8 @@
 
                     <?php $countLS = count($checkPart1) ?>
                     <?php if($countLS > 0){ ?>
-                    <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>II. PROGRAM MANAGEMENT</b></a><br><br><br>
-                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
+                    <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>II. PROGRAM MANAGEMENT</b></a><br><br>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a>
                         <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorDelete/'.$profileID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                     <?php $unformat = ""; ?>
@@ -258,7 +263,7 @@
                     </table>
                     <?php echo form_close() ?>
                     <?php } else { ?>
-                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAdd/'.$profileID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
+                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorAdd/'.$profileID.'/'.$refID) ?>"><i class="fa fa-list"></i> Add</a><br><br>
                     <?php } ?>
                 </div>
             </div>

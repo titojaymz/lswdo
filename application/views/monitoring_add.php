@@ -63,7 +63,8 @@
 
                         <?php
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("monitoring/monitoring_list", $attributes);
+                        //echo form_open("monitoring/monitoring_list", $attributes);
+                        echo form_open("assessmentinfo/index/", $attributes);
 
                         ?>
                                  <input id="btn_back" name="btn_back" type="submit" class="btn btn-primary" value="Back To List"/>
@@ -74,13 +75,21 @@
 
                     </div>
                     <?php
+                        $profile_id = $this->uri->segment('3');
+
+
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("monitoring/monitoring_add", $attributes);
+                        //echo form_open("indicator/indicatorView/$profile_id", $attributes);
+                        echo form_open("", $attributes);
 
+                        echo "<input type=\"text\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
 
+                        //echo $this->input->post('profile_id');
                         //profile_id
-                        $profile_id = $getDataByProfileID->profile_id;
-                        echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
+                        //$profile_id = $getDataByProfileID->profile_id;
+
+
+
                     ?>
                         <!-- date Valid-->
                       <!--  <input type="hidden" id="month_valid" name="month_valid" class="form-control" placeholder="month_valid" />
@@ -202,7 +211,7 @@
                           "'.$deleted.'"
                           )';
 
-                    echo $sql;
+                   // echo $sql;
                     ?>
 
 

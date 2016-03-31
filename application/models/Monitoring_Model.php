@@ -10,14 +10,14 @@ class Monitoring_Model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result_array();
     }
-    public function getMonitoringListByRefID($ref_id){
+    public function getMonitoringListByRefID($profile_id){
         /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
          $this->db->order_by('visit_date','ASC');
          $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
 
         $sql = 'SELECT ref_id,ref_cert_id,profile_id,visit_count,visit_date,remarks
                 FROM `tbl_lswdo_monitoring`
-                WHERE ref_id = '.$ref_id.';';
+                WHERE profile_id = '.$profile_id.';';
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -92,14 +92,17 @@ class Monitoring_Model extends CI_Model
            return FALSE;
        }
        else
-       {
+
+       {   $insert_id = $this->db->insert_id();
            $this->db->trans_commit();
-           return TRUE;
+
+           //return TRUE;
+           return $insert_id;
        }
         $this->db->close();
     }
 
-    public function updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$remarks,$modified_by,$date_modified,$deleted){
+    public function updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$remarks,$modified_by,$deleted){
 
         $this->db->trans_begin();
 
@@ -108,7 +111,8 @@ class Monitoring_Model extends CI_Model
 					visit_date = "'.$visit_date.'",
 					remarks = "'.$remarks.'",
 					modified_by = "'.$modified_by.'",
-					date_modified = now()
+					date_modified = now(),
+					deleted = "'.$deleted.'"
 					WHERE
 					ref_id = "'.$ref_id.'"
 					AND
