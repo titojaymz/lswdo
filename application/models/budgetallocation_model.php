@@ -118,7 +118,7 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
-    public function get_Sector(){
+    public function get_sector(){
         $get_Sector = "
         SELECT
           sector_id,
