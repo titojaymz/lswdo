@@ -34,11 +34,11 @@ class assessmentinfo_model extends CI_Model {
     }
 
 
-    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo)
                           VALUES
                           (
                           "'.$application_type_id.'",
@@ -46,8 +46,7 @@ class assessmentinfo_model extends CI_Model {
                           "'.$regionlist.'",
                           "'.$provlist.'",
                           "'.$citylist.'",
-                          "'.$brgylist.'",
-                          "'.$street_address.'",
+                          "'.$office_address.'",
                           "'.$swdo_name.'",
                           "'.$contact_no.'",
                           "'.$email.'",
@@ -69,7 +68,7 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$office_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
@@ -79,8 +78,7 @@ class assessmentinfo_model extends CI_Model {
                           region_code="'.$region_code.'",
                           prov_code="'.$prov_code.'",
                           city_code="'.$city_code.'",
-                          brgy_code="'.$brgy_code.'",
-                          street_address="'.$street_address.'",
+                          office_address="'.$office_address.'",
                           swdo_name="'.$swdo_name.'",
                           contact_no="'.$contact_no.'",
                           email="'.$email.'",

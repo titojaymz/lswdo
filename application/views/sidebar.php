@@ -9,6 +9,9 @@ $region = $this->session->userdata('uregion');
     <li class="sidetitle">MAIN</li>
     <li><a href="<?php echo base_url('dashboardc/dashboard/'); ?>"><span class="icon color5"><i class="fa fa-dashboard"></i></span>Dashboard</a></li> <!--edited link! -->
     <li><a href="<?php echo base_url('assessmentinfo/index'); ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
+
+    <li><a href="<?php echo base_url('assessmentinfo/index') ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
+    <li><a href="<?php echo base_url('budgetallocation/index') ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Budget Allocation</a></li>
 <!--    <li><a href="--><?php //echo base_url('indicator/indicatorView') ?><!--"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Indicators</a></li>-->
     <!--<li><a href="<?php /*echo base_url('monitoring/monitoring_list') */?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Monitoring</a></li><!--carla for monitoring! -->
     <li><a href="<?php echo base_url('certificate_issuance/certificate_issuance_list') ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Certification Details</a></li><!--carla for Certification Details! -->

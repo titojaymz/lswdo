@@ -22,6 +22,12 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "hidden";
             document.getElementById("groupLGUBrgy").style.display = "none";
             document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+            document.getElementById("groupcities").style.display = "block";
+            document.getElementById("groupcities").style.visibility = "visible";
+            document.getElementById("groupmuni").style.display = "block";
+            document.getElementById("groupmuni").style.visibility = "visible";
+            document.getElementById("groupbrgy").style.display = "none";
+            document.getElementById("groupbrgy").style.visibility = "hidden";
         }
         else
         {
@@ -33,6 +39,12 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "visible";
             document.getElementById("groupLGUBrgy").style.display = "block";
             document.getElementById("groupLGUBrgy").style.visibility = "visible";
+            document.getElementById("groupcities").style.display = "none";
+            document.getElementById("groupcities").style.visibility = "hidden";
+            document.getElementById("groupmuni").style.display = "none";
+            document.getElementById("groupmuni").style.visibility = "hidden";
+            document.getElementById("groupbrgy").style.display = "block";
+            document.getElementById("groupbrgy").style.visibility = "visible";
         }
     }
 
@@ -73,23 +85,7 @@ if (!$this->session->userdata('user_id')){
             $('#citylist option:gt(0)').remove().end();
         }
     }
-    function get_brgy() {
-        var city_code = $('#citylist').val();
-        if(city_code > 0) {
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_brgy'); ?>",
-                async: false,
-                type: "POST",
-                data: "city_code="+city_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#div_brgylist').html(data);
-                }
-            });
-        } else {
-            $('#brgylist option:gt(0)').remove().end();
-        }
-    }
+
 </script>
 <body>
 
@@ -228,52 +224,34 @@ if (!$this->session->userdata('user_id')){
                             </div>
                             <!--End City-->
 
-                            <!--Brgy-->
-                            <div id="groupLGUBrgy">
+                            <div id="groupcities">
                                 <div class="form-group form-group-sm">
-                                    <label for="brgylist" class="col-lg-2 control-label">Barangay</label>
-                                    <div id="div_brgylist" class="col-lg-8">
-                                        <select id="brgylist" name="brgylist" class="form-control">
-                                            <?php if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
-                                                ?>
-                                                <option value="0">Choose Barangay</option>
-                                                <?php
-                                                foreach ($brgylist as $brgyselect) { ?>
-                                                    <option value="<?php echo $brgyselect->brgy_code; ?>"
-                                                        <?php
-                                                        if (isset($_SESSION['brgy']) and $brgyselect->brgy_code == $_SESSION['brgy']) {
-                                                            echo " selected";
-                                                        } ?>
-                                                        >
-                                                        <?php echo $brgyselect->brgy_name; ?></option>
-                                                    <?php
-                                                }
-                                            } else {
-                                                ?>
-                                                <option>Select City First</option>
-                                                <?php
-                                            } ?>
-                                        </select>
+                                    <label for="nocitylist" class="col-lg-2 control-label">No. of Cities:</label>
+                                    <div id="div_nocitylist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_city_code" value="" placeholder="no_city_code" readonly>
                                     </div>
                                 </div>
                             </div>
-                            <!--End Brgy-->
+
+                            <div id="groupmuni">
+                                <div class="form-group form-group-sm">
+                                    <label for="no_muni_code" class="col-lg-2 control-label">No. of Municipalities:</label>
+                                    <div id="div_nomunilist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="groupbrgy">
+                                <div class="form-group form-group-sm">
+                                    <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
+                                    <div id="div_nobrgylist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="no_brgy_code" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>  <!--End Select-->
-
-                        <div class="form-group">
-                            <label for="no_city_code">No. of Cities:</label>
-                            <input class="form-control" type="text" name="no_city_code" value="" placeholder="no_city_code" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="no_muni_code">No. of Municipalities:</label>
-                            <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="no_brgy_code">No. of Barangays:</label>
-                            <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="no_brgy_code" readonly>
-                        </div>
 
                         <div class="form-group">
                             <label for="income_class">Income Class:</label>
@@ -287,7 +265,7 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
-                            <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor" readonly>
+                            <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor">
                         </div>
 
                         <div class="form-group">
@@ -295,16 +273,14 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="swdo_name">
                         </div>
 
-
                         <div class="form-group">
                             <label for="designation">Designation:</label>
-                            <input class="form-control" type="text" name="designation" value="" placeholder="designation" readonly>
+                            <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="designation">
                         </div>
 
-
                         <div class="form-group">
-                            <label for="street_address">Street Address:</label>
-                            <input class="form-control" type="text" name="street_address" value="<?php echo set_value('street_address') ?>" placeholder="street_address">
+                            <label for="office_address">Office Address:</label>
+                            <te class="form-textarea" type="textarea" rows="3" cols="5" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="office_addresss">
                         </div>
 
                         <div class="form-group">

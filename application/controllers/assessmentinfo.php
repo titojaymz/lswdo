@@ -7,19 +7,11 @@ class assessmentinfo extends CI_Controller {
 
     public function index()
     {
-
-        //carla
-
-        $monitoring_model = new Monitoring_Model();
-
-        //carla
-
         //grace
         //$this->load->library('pagination');
         // $this->load->library('model');
         $user_region = $this->session->userdata('uregion');
         //grace
-
 
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
@@ -41,9 +33,7 @@ class assessmentinfo extends CI_Controller {
         if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
             $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
         }
-        if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
-            $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
-        }
+
         //grace
 
         $this->load->view('header');
@@ -52,8 +42,7 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
             'list_fields'=>$this->listFields(),
-            'form_message'=>$form_message,
-            //'getRefID'=>$monitoring_model->getMonitoringListByRefID($ref_id),
+            'form_message'=>$form_message
         ));
         $this->load->view('footer');
     }
@@ -87,9 +76,7 @@ class assessmentinfo extends CI_Controller {
             if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                 $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
             }
-            if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
-                $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
-            }
+
 
             $this->load->view('assessmentinfo_add',$rpmb);
             $this->load->view('footer');
@@ -102,8 +89,7 @@ class assessmentinfo extends CI_Controller {
             $regionlist = $this->input->post('regionlist');
             $provlist = $this->input->post('provlist');
             $citylist = $this->input->post('citylist');
-            $brgylist = $this->input->post('brgylist');
-            $street_address = $this->input->post('street_address');
+            $office_address = $this->input->post('office_address');
             $swdo_name = $this->input->post('swdo_name');
             $contact_no = $this->input->post('contact_no');
             $email = $this->input->post('email');
@@ -111,7 +97,7 @@ class assessmentinfo extends CI_Controller {
             $total_ira = $this->input->post('total_ira');
             $total_budget_lswdo = $this->input->post('total_budget_lswdo');
 
-            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
+            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
             if ($addResult){
 
                 //  $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
@@ -125,9 +111,7 @@ class assessmentinfo extends CI_Controller {
                 if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                     $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                 }
-                if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
-                    $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
-                }
+
                 //call the model function to get the family info data
 
                 $this->load->view('sidebar');
@@ -180,8 +164,7 @@ class assessmentinfo extends CI_Controller {
                 $regionlist = $this->input->post('regionlist');
                 $provlist = $this->input->post('provlist');
                 $citylist = $this->input->post('citylist');
-                $brgylist = $this->input->post('brgylist');
-                $street_address = $this->input->post('street_address');
+                $office_address = $this->input->post('office_address');
                 $swdo_name = $this->input->post('swdo_name');
                 $contact_no = $this->input->post('contact_no');
                 $email = $this->input->post('email');
@@ -189,7 +172,7 @@ class assessmentinfo extends CI_Controller {
                 $total_ira = $this->input->post('total_ira');
                 $total_budget_lswdo = $this->input->post('total_budget_lswdo');
 
-                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
+                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo);
                 if ($updateResult){
                     // $this->load->view('student_update_success',array('redirectIndex'=>$this->redirectIndex()));
                     $this->load->library('pagination');
@@ -235,9 +218,6 @@ class assessmentinfo extends CI_Controller {
                     if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                         $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                     }
-                    if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
-                        $rpmb['brgylist'] = $this->assessmentinfo_model->get_brgy($_SESSION['city']);
-                    }
 
                     $datarpmb = array_merge($data,$rpmb);
                     $form_message = 'Update Success';
@@ -274,8 +254,7 @@ class assessmentinfo extends CI_Controller {
                 'region_code'      =>      $AssessmentDetails->region_code,
                 'prov_code'      =>      $AssessmentDetails->prov_code,
                 'city_code'      =>      $AssessmentDetails->city_code,
-                'brgy_code'      =>      $AssessmentDetails->brgy_code,
-                'street_address'      =>      $AssessmentDetails->street_address,
+                'office_address'      =>      $AssessmentDetails->street_address,
                 'swdo_name'      =>      $AssessmentDetails->swdo_name,
                 'contact_no'      =>      $AssessmentDetails->contact_no,
                 'email'      =>      $AssessmentDetails->email,
@@ -363,21 +342,6 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
-    public function populate_brgy() {
-        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code'])) {
-            $city_code = $_POST['city_code'];
-            $brgylist = $this->assessmentinfo_model->get_brgy($city_code);
-
-            $brgy_list[] = "Choose Barangay";
-            foreach($brgylist as $tempbrgy) {
-                $brgy_list[$tempbrgy->brgy_code] = $tempbrgy->brgy_name;
-            }
-
-            $brgylist_prop = 'id="brgylist" name="brgylist" class="form-control"';
-            echo form_dropdown('brgylist', $brgy_list,'',$brgylist_prop);
-        }
-    }
-
     public function init_rpmb_session() {
 
         if(isset($_POST['regionlist']) and $_POST['regionlist'] > 0) {
@@ -388,9 +352,6 @@ class assessmentinfo extends CI_Controller {
         }
         if(isset($_POST['citylist']) and $_POST['citylist'] > 0) {
             $_SESSION['city'] = $_POST['citylist'];
-        }
-        if(isset($_POST['brgylist']) and $_POST['brgylist'] > 0) {
-            $_SESSION['brgy'] = $_POST['brgylist'];
         }
     }
 
@@ -434,7 +395,7 @@ class assessmentinfo extends CI_Controller {
 
     public function listFields()
     {
-        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
+        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
 
