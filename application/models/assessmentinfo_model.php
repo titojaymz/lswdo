@@ -34,11 +34,11 @@ class assessmentinfo_model extends CI_Model {
     }
 
 
-    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo)
                           VALUES
                           (
                           "'.$application_type_id.'",
@@ -48,13 +48,11 @@ class assessmentinfo_model extends CI_Model {
                           "'.$citylist.'",
                           "'.$office_address.'",
                           "'.$swdo_name.'",
-                          "'.$designation.'",
                           "'.$contact_no.'",
                           "'.$email.'",
                           "'.$website.'",
                           "'.$total_ira.'",
-                          "'.$total_budget_lswdo.'",
-                          Now()
+                          "'.$total_budget_lswdo.'"
                           )');
 
         if ($this->db->trans_status() === FALSE)
@@ -70,37 +68,7 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
-    {
-        $this->db->trans_begin();
-
-        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
-                          VALUES
-                          (
-                          "'.$profile_id.'",
-                          "'.$sector_id.'",
-                          "'.$year_indicated.'",
-                          "'.$budget_present_year.'",
-                          "'.$utilization.'",
-                          "'.$no_bene_served.'",
-                          "'.$no_target_bene.'",
-                          Now()
-                          )');
-
-        if ($this->db->trans_status() === FALSE)
-        {
-            $this->db->trans_rollback();
-            return FALSE;
-        }
-        else
-        {
-            $this->db->trans_commit();
-            return TRUE;
-        }
-        $this->db->close();
-    }
-
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$office_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
@@ -112,13 +80,11 @@ class assessmentinfo_model extends CI_Model {
                           city_code="'.$city_code.'",
                           office_address="'.$office_address.'",
                           swdo_name="'.$swdo_name.'",
-                          designation="'.$designation.'",
                           contact_no="'.$contact_no.'",
                           email="'.$email.'",
                           website="'.$website.'",
                           total_ira="'.$total_ira.'",
-                          total_budget_lswdo="'.$total_budget_lswdo.'",
-                          date_modified=Now()
+                          total_budget_lswdo="'.$total_budget_lswdo.'"
                           WHERE
                           profile_id = "'.$id.'"
                           ');

@@ -22,8 +22,8 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "hidden";
             document.getElementById("groupLGUBrgy").style.display = "none";
             document.getElementById("groupLGUBrgy").style.visibility = "hidden";
-            document.getElementById("groupCity").style.display = "block";
-            document.getElementById("groupCity").style.visibility = "visible";
+            document.getElementById("groupcities").style.display = "block";
+            document.getElementById("groupcities").style.visibility = "visible";
             document.getElementById("groupmuni").style.display = "block";
             document.getElementById("groupmuni").style.visibility = "visible";
             document.getElementById("groupbrgy").style.display = "none";
@@ -39,13 +39,12 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "visible";
             document.getElementById("groupLGUBrgy").style.display = "block";
             document.getElementById("groupLGUBrgy").style.visibility = "visible";
-            document.getElementById("groupCity").style.display = "none";
-            document.getElementById("groupCity").style.visibility = "hidden";
+            document.getElementById("groupcities").style.display = "none";
+            document.getElementById("groupcities").style.visibility = "hidden";
             document.getElementById("groupmuni").style.display = "none";
             document.getElementById("groupmuni").style.visibility = "hidden";
             document.getElementById("groupbrgy").style.display = "block";
             document.getElementById("groupbrgy").style.visibility = "visible";
-
         }
     }
 
@@ -100,278 +99,228 @@ if (!$this->session->userdata('user_id')){
         <strong><?php echo validation_errors() ?></strong>
     </div>
 <?php } ?>
-<body>
-<div class="content">
-
-    <div class = "row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-title">
-
-
+<div class="modal-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div id="addassessment" class="col-md-6">
+                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
+                <form method="post" class="form-horizontal">
                     <div class="form-group">
-                        <label for="geo_info" class="control-label">Geographic Information</label>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="identify_info" class="control-label">Identifying Information</label>
-                    </div>
+                        <div class="form-group">
+                            <label for="geo_info" class="control-label">Geographic Information</label>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="application_type_id">Status of Application:</label>
-                        <select class="form-control" name="application_type_id" id="application_type_id">
-                            <option select value="">Please select</option>
-                            <?php foreach($application as $applications): ?>
-                                <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Type of LSWDO</label>
-                        <!--Select-->
-                        <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
-                            <option select value="">Please select</option>
-                            <?php foreach($lgu_type as $lgus): ?>
-                                <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
-                            <?php endforeach ?>
-                        </select>
-                        <!--Region-->
-                        <div id="groupLGUregion">
-                            <div class="form-group form-group-sm">
-                                <label for="regionlist" class="col-lg-2 control-label">Region</label>
-                                <div id="div_regionlist" class="col-lg-8">
-                                    <fieldset>
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();">
-                                                    <option value="0">Choose Region</option>
-                                                    <?php foreach($regionlist as $regionselect): ?>
-                                                        <option value="<?php echo $regionselect->region_code; ?>"
-                                                            <?php if(isset($_SESSION['region'])) {
-                                                                if($regionselect->region_code == $_SESSION['region']) {
-                                                                    echo " selected";
-                                                                }
-                                                            } ?>
-                                                            >
-                                                            <?php echo $regionselect->region_name; ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
+                        <div class="form-group">
+                            <label for="identify_info" class="control-label">Identifying Information</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="application_type_id">Status of Application:</label>
+                            <select class="form-control" name="application_type_id" id="application_type_id">
+                                <option select value="">Please select</option>
+                                <?php foreach($application as $applications): ?>
+                                    <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Type of LSWDO</label>
+                            <!--Select-->
+                            <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
+                                <option select value="">Please select</option>
+                                <?php foreach($lgu_type as $lgus): ?>
+                                    <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <!--Region-->
+                            <div id="groupLGUregion">
+                                <div class="form-group form-group-sm">
+                                    <label for="regionlist" class="col-lg-2 control-label">Region</label>
+                                    <div id="div_regionlist" class="col-lg-8">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <div class="controls">
+                                                    <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();">
+                                                        <option value="0">Choose Region</option>
+                                                        <?php foreach($regionlist as $regionselect): ?>
+                                                            <option value="<?php echo $regionselect->region_code; ?>"
+                                                                <?php if(isset($_SESSION['region'])) {
+                                                                    if($regionselect->region_code == $_SESSION['region']) {
+                                                                        echo " selected";
+                                                                    }
+                                                                } ?>
+                                                                >
+                                                                <?php echo $regionselect->region_name; ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--END Region-->
-
-                        <!--Province-->
-                        <div id="groupLGUProvince">
-                            <div class="form-group form-group-sm">
-                                <label for="provlist" class="col-lg-2 control-label">Province</label>
-                                <div id="div_provlist" class="col-lg-8">
-                                    <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
-                                        <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
-                                            ?>
-                                            <option value="0">Choose Province</option>
-                                            <?php
-                                            foreach ($provlist as $provselect) { ?>
-                                                <option value="<?php echo $provselect->prov_code; ?>"
-                                                    <?php
-                                                    if (isset($_SESSION['province']) and $provselect->prov_code== $_SESSION['province']) {
-                                                        echo " selected";
-                                                    } ?>
-                                                    >
-                                                    <?php echo $provselect->prov_name; ?></option>
-                                                <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <option>Select Region First</option>
-                                            <?php
-                                        } ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!--End Province-->
-                        <!--City-->
-                        <div id="groupLGUCity">
-                            <div class="form-group form-group-sm">
-                                <label for="citylist" class="col-lg-2 control-label">City</label>
-                                <div id="div_citylist" class="col-lg-8">
-                                    <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
-                                        <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
-                                            ?>
-                                            <option value="0">Choose City</option>
-                                            <?php
-                                            foreach ($citylist as $cityselect) { ?>
-                                                <option value="<?php echo $cityselect->city_code; ?>"
-                                                    <?php
-                                                    if (isset($_SESSION['city']) and $cityselect->city_code== $_SESSION['city']) {
-                                                        echo " selected";
-                                                    } ?>
-                                                    >
-                                                    <?php echo $cityselect->city_name; ?></option>
-                                                <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <option>Select Province First</option>
-                                            <?php
-                                        } ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!--End City-->
-
-                        <div id="groupCity">
-                            <label for="nocitylist" class="col-lg-2 control-label">No. of Cities:</label>
-                            <fieldset>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
                                     </div>
                                 </div>
+                            </div>
+                            <!--END Region-->
 
-                            </fieldset>
-                        </div>
-
-                        <div id="groupmuni">
-                            <div class="form-group form-group-sm">
-                                <label for="no_muni_code" class="col-lg-2 control-label">No. of Municipalities:</label>
-                                <div id="div_nomunilist" class="col-lg-8">
-                                    <input class="form-control" type="text" name="no_muni_code" value="" placeholder="No. of Municipalities" readonly>
+                            <!--Province-->
+                            <div id="groupLGUProvince">
+                                <div class="form-group form-group-sm">
+                                    <label for="provlist" class="col-lg-2 control-label">Province</label>
+                                    <div id="div_provlist" class="col-lg-8">
+                                        <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
+                                            <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                                                ?>
+                                                <option value="0">Choose Province</option>
+                                                <?php
+                                                foreach ($provlist as $provselect) { ?>
+                                                    <option value="<?php echo $provselect->prov_code; ?>"
+                                                        <?php
+                                                        if (isset($_SESSION['province']) and $provselect->prov_code== $_SESSION['province']) {
+                                                            echo " selected";
+                                                        } ?>
+                                                        >
+                                                        <?php echo $provselect->prov_name; ?></option>
+                                                    <?php
+                                                }
+                                            } else {
+                                                ?>
+                                                <option>Select Region First</option>
+                                                <?php
+                                            } ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div id="groupbrgy">
-                            <div class="form-group form-group-sm">
-                                <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
-                                <div id="div_nobrgylist" class="col-lg-8">
-                                    <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays" readonly>
+                            <!--End Province-->
+                            <!--City-->
+                            <div id="groupLGUCity">
+                                <div class="form-group form-group-sm">
+                                    <label for="citylist" class="col-lg-2 control-label">City</label>
+                                    <div id="div_citylist" class="col-lg-8">
+                                        <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
+                                            <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                                                ?>
+                                                <option value="0">Choose City</option>
+                                                <?php
+                                                foreach ($citylist as $cityselect) { ?>
+                                                    <option value="<?php echo $cityselect->city_code; ?>"
+                                                        <?php
+                                                        if (isset($_SESSION['city']) and $cityselect->city_code== $_SESSION['city']) {
+                                                            echo " selected";
+                                                        } ?>
+                                                        >
+                                                        <?php echo $cityselect->city_name; ?></option>
+                                                    <?php
+                                                }
+                                            } else {
+                                                ?>
+                                                <option>Select Province First</option>
+                                                <?php
+                                            } ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            <!--End City-->
+
+                            <div id="groupcities">
+                                <div class="form-group form-group-sm">
+                                    <label for="nocitylist" class="col-lg-2 control-label">No. of Cities:</label>
+                                    <div id="div_nocitylist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_city_code" value="" placeholder="no_city_code" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="groupmuni">
+                                <div class="form-group form-group-sm">
+                                    <label for="no_muni_code" class="col-lg-2 control-label">No. of Municipalities:</label>
+                                    <div id="div_nomunilist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="groupbrgy">
+                                <div class="form-group form-group-sm">
+                                    <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
+                                    <div id="div_nobrgylist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="no_brgy_code" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>  <!--End Select-->
+
+                        <div class="form-group">
+                            <label for="income_class">Income Class:</label>
+                            <input class="form-control" type="text" name="income_class" value="" placeholder="income_class" readonly>
                         </div>
 
-                    </div>  <!--End Select-->
+                        <div class="form-group">
+                            <label for="total_pop">Total Population:</label>
+                            <input class="form-control" type="text" name="total_pop" value="" placeholder="total_pop" readonly>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="income_class">Income Class:</label>
-                        <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
-                    </div>
+                        <div class="form-group">
+                            <label for="total_poor">Total No. of Poor Families:</label>
+                            <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="total_pop">Total Population:</label>
-                        <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
-                    </div>
+                        <div class="form-group">
+                            <label for="swdo_name">SWDO Name:</label>
+                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="swdo_name">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="total_poor">Total No. of Poor Families:</label>
-                        <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
-                    </div>
+                        <div class="form-group">
+                            <label for="designation">Designation:</label>
+                            <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="designation">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="swdo_name">SWDO Name:</label>
-                        <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="SWDO Name">
-                    </div>
+                        <div class="form-group">
+                            <label for="office_address">Office Address:</label>
+                            <te class="form-textarea" type="textarea" rows="3" cols="5" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="office_addresss">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="designation">Designation:</label>
-                        <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation">
-                    </div>
+                        <div class="form-group">
+                            <label for="contact_no">Contact No:</label>
+                            <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="contact_no">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="office_address">Office Address:</label>
-                        <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address">
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="email">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="contact_no">Contact No:</label>
-                        <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No">
-                    </div>
+                        <div class="form-group">
+                            <label for="website">Website:</label>
+                            <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="website">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email">
-                    </div>
+                        <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
 
-                    <div class="form-group">
-                        <label for="website">Website:</label>
-                        <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website">
-                    </div>
-
-                    <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
-
-                    <div class="form-group">
-                        <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="total_ira">Total IRA:</label>
-                        <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
-                    </div>
-                    <div class="form-group">
-                        <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                        <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
-                    </div>
-
-                    <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
-
-                    <div class="form-group">
-                        <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sector_id">Sector:</label>
-                        <select class="form-control" name="sector_id" id="sector_id">
-                            <option select value="">Please select</option>
-                            <?php foreach($sector_id as $sectors): ?>
-                                <option value="<?php echo $sectors->sector_id ?>"><?php echo $sectors->sector_name ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="year_indicated">Year Indicated:</label>
-                        <input class="form-control" type="text" name="year_indicated" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="utilization">Utilization:</label>
-                        <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="budget_present_year">Budget for the Present Year:</label>
-                        <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="no_bene_served">Number of Beneficiaries Served:</label>
-                        <input class="form-control" type="text" name="no_bene_served" value="<?php echo set_value('no_bene_served') ?>" placeholder="Number of Beneficiaries Served">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="no_target_bene">Number of Target Beneficiaries:</label>
-                        <input class="form-control" type="text" name="no_target_bene" value="<?php echo set_value('no_target_bene') ?>" placeholder="Number of Target Beneficiaries">
-                    </div>
+                        <div class="form-group">
+                            <label for="budget" class="control-label">Budget Allocation and Utilization</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="total_ira">Total IRA:</label>
+                            <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="total_ira">
+                        </div>
+                        <div class="form-group">
+                            <label for="total_budget_lswdo">Total Budget LSWDO:</label>
+                            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="total_budget_lswdo">
+                        </div>
 
 
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                            <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
+                                <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </form>
             </div>
             <div class="col-md-3"></div>
-        </div>
-    </div>
-</div>
-</div>
-
-</div>
 </body>
