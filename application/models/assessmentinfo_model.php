@@ -34,11 +34,11 @@ class assessmentinfo_model extends CI_Model {
     }
 
 
-    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$swdo_name,$designation,$office_address,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,swdo_name,designation,office_address,contact_no,email,website,total_ira,total_budget_lswdo,date_created)
                           VALUES
                           (
                           "'.$application_type_id.'",
@@ -46,14 +46,15 @@ class assessmentinfo_model extends CI_Model {
                           "'.$regionlist.'",
                           "'.$provlist.'",
                           "'.$citylist.'",
-                          "'.$brgylist.'",
-                          "'.$street_address.'",
                           "'.$swdo_name.'",
+                          "'.$designation.'",
+                          "'.$office_address.'",
                           "'.$contact_no.'",
                           "'.$email.'",
                           "'.$website.'",
                           "'.$total_ira.'",
-                          "'.$total_budget_lswdo.'"
+                          "'.$total_budget_lswdo.'",
+                          Now()
                           )');
 
         if ($this->db->trans_status() === FALSE)
@@ -69,7 +70,37 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$utilization,$no_bene_served,$budget_present_year,$no_target_bene)
+    {
+        $this->db->trans_begin();
+
+        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,utilization,no_bene_served,budget_present_year,no_target_bene,date_created)
+                          VALUES
+                          (
+                          "'.$profile_id.'",
+                          "'.$sector_id.'",
+                          "'.$year_indicated.'",
+                          "'.$utilization.'",
+                          "'.$no_bene_served.'",
+                          "'.$budget_present_year.'",
+                          "'.$no_target_bene.'",
+                          Now()
+                          )');
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
@@ -79,14 +110,15 @@ class assessmentinfo_model extends CI_Model {
                           region_code="'.$region_code.'",
                           prov_code="'.$prov_code.'",
                           city_code="'.$city_code.'",
-                          brgy_code="'.$brgy_code.'",
-                          street_address="'.$street_address.'",
+                          office_address="'.$office_address.'",
                           swdo_name="'.$swdo_name.'",
+                          designation="'.$designation.'",
                           contact_no="'.$contact_no.'",
                           email="'.$email.'",
                           website="'.$website.'",
                           total_ira="'.$total_ira.'",
-                          total_budget_lswdo="'.$total_budget_lswdo.'"
+                          total_budget_lswdo="'.$total_budget_lswdo.'",
+                          date_modified=Now()
                           WHERE
                           profile_id = "'.$id.'"
                           ');

@@ -22,6 +22,12 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "hidden";
             document.getElementById("groupLGUBrgy").style.display = "none";
             document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+            document.getElementById("groupCity").style.display = "block";
+            document.getElementById("groupCity").style.visibility = "visible";
+            document.getElementById("groupmuni").style.display = "block";
+            document.getElementById("groupmuni").style.visibility = "visible";
+            document.getElementById("groupbrgy").style.display = "none";
+            document.getElementById("groupbrgy").style.visibility = "hidden";
         }
         else
         {
@@ -33,6 +39,13 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "visible";
             document.getElementById("groupLGUBrgy").style.display = "block";
             document.getElementById("groupLGUBrgy").style.visibility = "visible";
+            document.getElementById("groupCity").style.display = "none";
+            document.getElementById("groupCity").style.visibility = "hidden";
+            document.getElementById("groupmuni").style.display = "none";
+            document.getElementById("groupmuni").style.visibility = "hidden";
+            document.getElementById("groupbrgy").style.display = "block";
+            document.getElementById("groupbrgy").style.visibility = "visible";
+
         }
     }
 
@@ -73,23 +86,7 @@ if (!$this->session->userdata('user_id')){
             $('#citylist option:gt(0)').remove().end();
         }
     }
-    function get_brgy() {
-        var city_code = $('#citylist').val();
-        if(city_code > 0) {
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_brgy'); ?>",
-                async: false,
-                type: "POST",
-                data: "city_code="+city_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#div_brgylist').html(data);
-                }
-            });
-        } else {
-            $('#brgylist option:gt(0)').remove().end();
-        }
-    }
+
 </script>
 <body>
 
@@ -103,14 +100,14 @@ if (!$this->session->userdata('user_id')){
         <strong><?php echo validation_errors() ?></strong>
     </div>
 <?php } ?>
-<div class="modal-body">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div id="addassessment" class="col-md-6">
-                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
-                <form method="post" class="form-horizontal">
-                    <div class="form-group">
+<body>
+<div class="content">
+
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+
 
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information</label>
@@ -223,103 +220,86 @@ if (!$this->session->userdata('user_id')){
                                                 <?php
                                             } ?>
                                         </select>
-                                    </div>
                                 </div>
+                            </div>
                             </div>
                             <!--End City-->
 
-                            <!--Brgy-->
-                            <div id="groupLGUBrgy">
-                                <div class="form-group form-group-sm">
-                                    <label for="brgylist" class="col-lg-2 control-label">Barangay</label>
-                                    <div id="div_brgylist" class="col-lg-8">
-                                        <select id="brgylist" name="brgylist" class="form-control">
-                                            <?php if(isset($_SESSION['brgy']) or isset($_SESSION['city'])) {
-                                                ?>
-                                                <option value="0">Choose Barangay</option>
-                                                <?php
-                                                foreach ($brgylist as $brgyselect) { ?>
-                                                    <option value="<?php echo $brgyselect->brgy_code; ?>"
-                                                        <?php
-                                                        if (isset($_SESSION['brgy']) and $brgyselect->brgy_code == $_SESSION['brgy']) {
-                                                            echo " selected";
-                                                        } ?>
-                                                        >
-                                                        <?php echo $brgyselect->brgy_name; ?></option>
-                                                    <?php
-                                                }
-                                            } else {
-                                                ?>
-                                                <option>Select City First</option>
-                                                <?php
-                                            } ?>
-                                        </select>
+                            <div id="groupCity">
+                                <label for="nocitylist" class="col-lg-2 control-label">No. of Cities:</label>
+                                <fieldset>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
+                                        </div>
                                     </div>
+
+                                </fieldset>
+                            </div>
+
+                            <div id="groupmuni">
+                                <div class="form-group form-group-sm">
+                                         <label for="no_muni_code" class="col-lg-2 control-label">No. of Municipalities:</label>
+                                         <div id="div_nomunilist" class="col-lg-8">
+                                        <input class="form-control" type="text" name="no_muni_code" value="" placeholder="No. of Municipalities" readonly>
+                                         </div>
                                 </div>
                             </div>
-                            <!--End Brgy-->
+
+                            <div id="groupbrgy">
+                                <div class="form-group form-group-sm">
+                                    <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
+                                    <div id="div_nobrgylist" class="col-lg-8">
+                                     <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays" readonly>
+                                     </div>
+                                 </div>
+                            </div>
+
                         </div>  <!--End Select-->
 
                         <div class="form-group">
-                            <label for="no_city_code">No. of Cities:</label>
-                            <input class="form-control" type="text" name="no_city_code" value="" placeholder="no_city_code" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="no_muni_code">No. of Municipalities:</label>
-                            <input class="form-control" type="text" name="no_muni_code" value="" placeholder="no_muni_code" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="no_brgy_code">No. of Barangays:</label>
-                            <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="no_brgy_code" readonly>
-                        </div>
-
-                        <div class="form-group">
                             <label for="income_class">Income Class:</label>
-                            <input class="form-control" type="text" name="income_class" value="" placeholder="income_class" readonly>
+                            <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="total_pop">Total Population:</label>
-                            <input class="form-control" type="text" name="total_pop" value="" placeholder="total_pop" readonly>
+                            <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
-                            <input class="form-control" type="text" name="total_poor" value="" placeholder="total_poor" readonly>
+                            <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="swdo_name">SWDO Name:</label>
-                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="swdo_name">
+                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="SWDO Name">
                         </div>
-
 
                         <div class="form-group">
                             <label for="designation">Designation:</label>
-                            <input class="form-control" type="text" name="designation" value="" placeholder="designation" readonly>
+                            <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation">
                         </div>
 
-
                         <div class="form-group">
-                            <label for="street_address">Street Address:</label>
-                            <input class="form-control" type="text" name="street_address" value="<?php echo set_value('street_address') ?>" placeholder="street_address">
+                        <label for="office_address">Office Address:</label>
+                            <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address">
                         </div>
 
                         <div class="form-group">
                             <label for="contact_no">Contact No:</label>
-                            <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="contact_no">
+                            <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No">
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email:</label>
-                            <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="email">
+                            <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email">
                         </div>
 
                         <div class="form-group">
                             <label for="website">Website:</label>
-                            <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="website">
+                            <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website">
                         </div>
 
                         <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
@@ -329,12 +309,14 @@ if (!$this->session->userdata('user_id')){
                         </div>
                         <div class="form-group">
                             <label for="total_ira">Total IRA:</label>
-                            <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="total_ira">
+                            <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
                         </div>
                         <div class="form-group">
                             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="total_budget_lswdo">
+                            <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
                         </div>
+
+                        <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
 
 
                         <div class="form-group">
@@ -347,4 +329,10 @@ if (!$this->session->userdata('user_id')){
                 </form>
             </div>
             <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
 </body>
