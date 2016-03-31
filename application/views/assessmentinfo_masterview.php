@@ -14,7 +14,7 @@ if (!$this->session->userdata('user_data')){
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    <br><br><br>
+
     <div class="form-group">
         <label for="geo_info" class="control-label"> View: Identifying Information </label>
     </div>
@@ -32,13 +32,28 @@ if (!$this->session->userdata('user_data')){
             <th>LGU Type:</th><td><?php echo $lgu_type_id ?></td>
         </tr>
         <tr>
+            <th>Region Code:</th><td><?php echo $region_code ?></td>
+        </tr>
+        <tr>
+            <th>Province Code:</th><td><?php echo $prov_code ?></td>
+        </tr>
+        <tr>
+            <th>City Code:</th><td><?php echo $city_code ?></td>
+        </tr>
+        <tr>
             <th>SWDO Name:</th><td><?php echo $swdo_name ?></td>
         </tr>
         <tr>
-            <th>Street Address:</th><td><?php echo $street_address ?></td>
+            <th>Designation:</th><td><?php echo $designation ?></td>
+        </tr>
+        <tr>
+            <th>Office Address:</th><td><?php echo $office_address ?></td>
         </tr>
         <tr>
             <th>Email:</th><td><?php echo $email ?></td>
+        </tr>
+        <tr>
+            <th>Contact No:</th><td><?php echo $contact_no ?></td>
         </tr>
         <tr>
             <th>Total IRA:</th><td><?php echo $total_ira ?></td>

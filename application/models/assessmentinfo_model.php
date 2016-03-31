@@ -252,6 +252,22 @@ class assessmentinfo_model extends CI_Model {
     }
 */
 
+    public function get_sector(){
+        $get_Sector = "
+        SELECT
+          sector_id,
+          sector_name
+        FROM
+          lib_sector
+        WHERE
+          sector_id > '0'
+        ORDER BY
+          sector_id
+        ";
+
+        return $this->db->query($get_Sector)->result();
+    }
+
     public function get_no_cities() {
         $get_no_cities = "
         SELECT

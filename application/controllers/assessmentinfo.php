@@ -75,7 +75,6 @@ class assessmentinfo extends CI_Controller {
                 $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
             }
 
-
             $this->load->view('assessmentinfo_add',$rpmb);
             $this->load->view('footer');
 
@@ -169,15 +168,14 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('footer');
             }
 
+            $addResult = $budgetallocation_model->insertBudgetAllocation($sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
 
-            $addResult2 = $budgetallocation_model->insertBudgetAllocation($sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
-
-            if ($addResult2){
+            if ($addResult){
                 $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
-                $this->load->view('budgetallocation_list',array(
-                    'budgetallocation_data'=>$budgetallocation_model->get_sector(),
+                $this->load->view('assessmentinfo_list',array(
+                    'assessmentinfo_data'=>$budgetallocation_model->get_sector(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
                     $this->redirectIndex()
@@ -369,7 +367,7 @@ class assessmentinfo extends CI_Controller {
                 'region_code'      =>      $AssessmentDetails->region_code,
                 'prov_code'      =>      $AssessmentDetails->prov_code,
                 'city_code'      =>      $AssessmentDetails->city_code,
-                'office_address'      =>      $AssessmentDetails->street_address,
+                'office_address'      =>      $AssessmentDetails->office_address,
                 'swdo_name'      =>      $AssessmentDetails->swdo_name,
                 'designation'      =>      $AssessmentDetails->designation,
                 'contact_no'      =>      $AssessmentDetails->contact_no,
