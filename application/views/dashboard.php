@@ -28,13 +28,28 @@ $pf = 0;
 $ffscore = "";
 $fscore = "";
 $pfscore = "";
+print_r($getIndicator);
+
+//$newArray = array();
+//
+//foreach ($getIndicator['target2'] as $key => $innerArr1) {
+//    $newArray['target'][$key] = array_merge(
+//        $getIndicator['target1'][$key],  /* 0th and 1st index */
+//        array($innerArr1[1])        /* 2nd index         */
+//    );
+//}
+//
+//print_r($newArray);
+
 
 foreach($getIndicator as $getIn):
     $region_name .= "'".$getIn->region_name."',";
-    $newscore .= "".$getIn->TotalScore.",";
 
+
+    echo $getIn->profile_id;
     echo "</br>";
-
+    echo $getIn->FinalScore;
+    echo "</br>";
     $getPerc = $getIn->FinalScore;
     if($getPerc == 100){
         $ff++;
