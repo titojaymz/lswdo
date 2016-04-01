@@ -56,8 +56,9 @@ class budgetallocation extends CI_Controller {
                 $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
-                $this->load->view('budgetallocation_list',array(
-                    'budgetallocation_data'=>$budgetallocation_model->get_sector(),
+                $this->load->view('budgetallocation_add',array(
+                    'sector_id' => $sector_id,
+                    'budgetallocation_data'=>$budgetallocation_model->getBudgetAllocation(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
                     $this->redirectIndex()
