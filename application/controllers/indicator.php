@@ -113,6 +113,7 @@ class indicator extends CI_Controller
             'checkPart3' => $indicator_model->getCheckPart3($profID,$ref_id),
             'scoreProf' => $indicator_model->getScorePerProf($profID,$ref_id),
             'profileID' => $profID,
+            'refID' => $ref_id,
         ));
         $this->load->view('footer');
     }
@@ -413,7 +414,20 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexViewAll($profID,$ref_id);
+
+
+
+                $scoreProf = $indicator_model->getScorePerProf($profID, $ref_id);
+                $getPerc = $scoreProf->FinalScore;
+                if($getPerc == 100){
+                    $level = 'Fully Functional';
+                } elseif($getPerc > 50 && $getPerc < 100){
+                    $level = 'Functional';
+                } elseif($getPerc < 51) {
+                    $level = 'Partially Functional';
+                }
+                $addFunction = $indicator_model->insertFunctionality($profID, $ref_id,$level,'');
+                $this->redirectIndexAddPart2($profID,$ref_id);
             }
 
 
@@ -442,6 +456,7 @@ class indicator extends CI_Controller
                 'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 'getLSWDO' => $indicator_model->getLSWDOdata($profID,$ref_id),
                 'profileID' => $profID,
+                'refID' => $ref_id,
             ));
             $this->load->view('footer');
         } else {
@@ -454,12 +469,12 @@ class indicator extends CI_Controller
                     $indicator = $firstCatBronze->indicator_id;
                     $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     }if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
 
 
@@ -476,12 +491,12 @@ class indicator extends CI_Controller
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     } if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
                 } else {
                     continue;
@@ -499,7 +514,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex($profID);
+                $this->redirectIndex($profID,$ref_id);
             }
 
 
@@ -529,6 +544,7 @@ class indicator extends CI_Controller
                 'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI($lguTypes->lgu_type_id),
                 'getLSWDO' => $indicator_model->getLSWDOdata($profID,$ref_id),
                 'profileID' => $profID,
+                'refID' => $ref_id,
 
             ));
             $this->load->view('footer');
@@ -542,12 +558,12 @@ class indicator extends CI_Controller
                     $indicator = $firstCatBronze->indicator_id;
                     $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     }if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
 
 
@@ -564,12 +580,12 @@ class indicator extends CI_Controller
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     } if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
                 } else {
                     continue;
@@ -584,12 +600,12 @@ class indicator extends CI_Controller
                     $indicator = $secondCatLower->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCatLower->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     } if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
                 } else {
                     continue;
@@ -604,12 +620,12 @@ class indicator extends CI_Controller
                     $indicator = $secondCatLowerLower->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCatLowerLower->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     } if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
                 } else {
                     continue;
@@ -629,7 +645,7 @@ class indicator extends CI_Controller
                     'getSecondCategoryLowerLower' => $indicator_model->getSecondCategoriesLowerLowerFromSI($lguTypes->lgu_type_id),
                     'profileID' => $profID,));
                 $this->load->view('footer');
-                $this->redirectIndexAdd($profID);
+                $this->redirectIndexAdd($profID,$ref_id);
             }
 
 
@@ -657,6 +673,7 @@ class indicator extends CI_Controller
                 'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 'getLSWDO' => $indicator_model->getLSWDOdata($profID,$ref_id),
                 'profileID' => $profID,
+                'refID' => $ref_id,
             ));
             $this->load->view('footer');
         } else {
@@ -669,12 +686,12 @@ class indicator extends CI_Controller
                     $indicator = $firstCatBronze->indicator_id;
                     $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     }if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
 
 
@@ -691,12 +708,12 @@ class indicator extends CI_Controller
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
-                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings);
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
                     }
                     if($complianceSilver != ""){
-                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings);
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
                     } if($complianceGold != ""){
-                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings);
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
                     }
                 } else {
                     continue;
@@ -714,7 +731,7 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexAddPart2($profID);
+                $this->redirectIndexAddPart2($profID,$ref_id);
             }
 
 
@@ -729,7 +746,7 @@ class indicator extends CI_Controller
         }
 
         $indicator_model = new indicator_model();
-            $updateResult = $indicator_model->deleteIndicator($profID);
+            $updateResult = $indicator_model->deleteIndicator($profID,$ref_id);
             if($updateResult){
                 $form_message = 'Add Success!';
                 $this->load->view('header');
@@ -751,7 +768,7 @@ class indicator extends CI_Controller
 
         $indicator_model = new indicator_model();
         $lguTypes = $indicator_model->getLGUtype($profID);
-        $updateResult = $indicator_model->deleteIndicatorpart2($profID);
+        $updateResult = $indicator_model->deleteIndicatorpart2($profID,$ref_id);
         if($updateResult){
             $form_message = 'Add Success!';
             $this->load->view('header');
@@ -773,7 +790,7 @@ class indicator extends CI_Controller
 
         $indicator_model = new indicator_model();
         $lguTypes = $indicator_model->getLGUtype($profID);
-        $updateResult = $indicator_model->deleteIndicatorpart3($profID);
+        $updateResult = $indicator_model->deleteIndicatorpart3($profID,$ref_id);
         if($updateResult){
             $form_message = 'Add Success!';
             $this->load->view('header');
@@ -837,9 +854,9 @@ class indicator extends CI_Controller
 //        $sec = "1";
         header("Location: $page");
     }
-    public function redirectIndexAddPart2($profID)
+    public function redirectIndexAddPart2($profID,$ref_id)
     {
-        $page = base_url('indicator/indicatorViewpart3/'.$profID);
+        $page = base_url('indicator/indicatorViewpart3/'.$profID.'/'.$ref_id);
 //        $sec = "1";
         header("Location: $page");
     }

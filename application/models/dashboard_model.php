@@ -10,7 +10,7 @@ class dashboard_model extends CI_Model
      */
     public function getFunctionalityScore()
     {
-        $sql = 'select c.region_name, b.lgu_type_id, SUM(IF(a.compliance_indicator_id = 1, 1, 0)) as TotalScore,
+        $sql = 'select c.region_name,b.profile_id,
                 case b.lgu_type_id
                 when 1 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100
                 when 2 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100
@@ -22,7 +22,40 @@ class dashboard_model extends CI_Model
                 INNER JOIN lib_regions c
                 ON b.region_code = c.region_code
 
-                where a.deleted = 0 and a.indicator_id LIKE "%-1%" GROUP BY c.region_name;';
+                where a.deleted = 0 and a.indicator_id LIKE "%-1%" GROUP BY b.profile_id;';
+       /* $sql = 'select c.region_name,b.profile_id,
+                case b.lgu_type_id
+                when 1 then
+								case when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100 = 100
+								Then \'Fully Functional\'
+								when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100 > 50 &&  (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100 < 100
+								Then \'Functional\'
+								when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100 < 51
+								Then \'Partially Functional\' end
+                when 2 then
+								case when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 = 100
+								Then \'Fully Functional\'
+								when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 > 50 &&  (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 < 100
+								Then \'Functional\'
+								when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 < 51
+								Then \'Partially Functional\' end
+                when 3 then
+								case when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 = 100
+								Then \'Fully Functional\'
+								when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 > 50 &&  (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 < 100
+								Then \'Functional\'
+								when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100 < 51
+								Then \'Partially Functional\' end
+                end as FinalScore
+
+
+                FROM tbl_lswdo_standard_indicators a
+                INNER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                INNER JOIN lib_regions c
+                ON b.region_code = c.region_code
+
+                where a.deleted = 0 and a.indicator_id LIKE "%-1%" GROUP BY b.profile_id';*/
         $query = $this->db->query($sql);
         return $query->result();
 

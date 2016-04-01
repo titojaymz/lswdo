@@ -225,6 +225,27 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
+    public function insertFunctionality($profileID,$ref_id, $level_function, $region_code){
+        $this->db->trans_begin();
+        $this->db->query('Insert into tbl_functionality(prof_id,ref_id,level_function,region_code)
+                          VALUES(
+                          "'.$profileID.'",
+                          "'.$ref_id.'",
+                          "'.$level_function.'",
+                          "'.$region_code.'"
+                          )');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings,$refID){
         $this->db->trans_begin();
         $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom,ref_id,DELETED)
@@ -248,12 +269,12 @@ class indicator_model extends CI_Model
         }
         $this->db->close();
     }
-    public function updateIndicator($profileID,$indicator_id, $compliance, $findings){
+    public function updateIndicator($profileID,$indicator_id, $compliance, $findings,$refID){
         $this->db->trans_begin();
         $this->db->query('update tbl_lswdo_standard_indicators SET
                             compliance_indicator_id = '.$compliance.' ,
                             findings_recom = "'.$findings.'"
-                            where profile_id = '.$profileID.' and indicator_id = "'.$indicator_id.'" ;');
+                            where profile_id = '.$profileID.' and indicator_id = "'.$indicator_id.'" and ref_id = '.$refID.' ;');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
@@ -266,7 +287,7 @@ class indicator_model extends CI_Model
         }
         $this->db->close();
     }
-    public function deleteIndicator($profileID){
+    public function deleteIndicator($profileID,$ref_id){
 
         $unformat1 = "";
         foreach($this->getdeleteCategoriesFromFI() as $secondCat):
@@ -283,7 +304,7 @@ class indicator_model extends CI_Model
         $this->db->trans_begin();
         $this->db->query('update tbl_lswdo_standard_indicators SET
                             DELETED = 1
-                            where profile_id = '.$profileID.' and indicator_id  IN ('.$format1.','.$format.');');
+                            where profile_id = '.$profileID.' and ref_id = '.$ref_id.' and indicator_id  IN ('.$format1.','.$format.');');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
@@ -325,7 +346,7 @@ class indicator_model extends CI_Model
     }
 
 
-    public function deleteIndicatorpart2($profileID){
+    public function deleteIndicatorpart2($profileID,$ref_id){
 
         $unformat1 = "";
         foreach($this->getdeleteCategoriesFromSI() as $secondCat):
@@ -354,7 +375,7 @@ class indicator_model extends CI_Model
         $this->db->trans_begin();
         $this->db->query('update tbl_lswdo_standard_indicators SET
                             DELETED = 1
-                            where profile_id = '.$profileID.' and indicator_id  IN ('.$format1.','.$format.','.$format2.','.$format3.');');
+                            where profile_id = '.$profileID.' and ref_id = '.$ref_id.' and indicator_id  IN ('.$format1.','.$format.','.$format2.','.$format3.');');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
@@ -421,7 +442,7 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
-    public function deleteIndicatorpart3($profileID){
+    public function deleteIndicatorpart3($profileID,$ref_id){
 
         $unformat1 = "";
         foreach($this->getdeleteCategoriesFromTI() as $secondCat):
@@ -438,7 +459,7 @@ class indicator_model extends CI_Model
         $this->db->trans_begin();
         $this->db->query('update tbl_lswdo_standard_indicators SET
                             DELETED = 1
-                            where profile_id = '.$profileID.' and indicator_id  IN ('.$format1.','.$format.');');
+                            where profile_id = '.$profileID.' and ref_id = '.$ref_id.' and indicator_id  IN ('.$format1.','.$format.');');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
