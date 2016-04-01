@@ -72,7 +72,7 @@ $region_format =  substr($regionsName,0,-1);
 //foreach ($getIndicator['target2'] as $key => $innerArr1) {
 //    $newArray['target'][$key] = array_merge(
 //        $getIndicator['target1'][$key],  /* 0th and 1st index */
-//        array($innerArr1[1])        /* 2nd index    //     */
+//        array($innerArasdr1[1])        /* 2nd index    //     */
 //    );asdasd
 //}
 //
