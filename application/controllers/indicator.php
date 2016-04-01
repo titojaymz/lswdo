@@ -414,6 +414,19 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
+
+
+
+                $scoreProf = $indicator_model->getScorePerProf($profID, $ref_id);
+                $getPerc = $scoreProf->FinalScore;
+                if($getPerc == 100){
+                    $level = 'Fully Functional';
+                } elseif($getPerc > 50 && $getPerc < 100){
+                    $level = 'Functional';
+                } elseif($getPerc < 51) {
+                    $level = 'Partially Functional';
+                }
+                $addFunction = $indicator_model->insertFunctionality($profID, $ref_id,$level,'');
                 $this->redirectIndexAddPart2($profID,$ref_id);
             }
 

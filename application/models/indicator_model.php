@@ -225,6 +225,27 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
+    public function insertFunctionality($profileID,$ref_id, $level_function, $region_code){
+        $this->db->trans_begin();
+        $this->db->query('Insert into tbl_functionality(prof_id,ref_id,level_function,region_code)
+                          VALUES(
+                          "'.$profileID.'",
+                          "'.$ref_id.'",
+                          "'.$level_function.'",
+                          "'.$region_code.'"
+                          )');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings,$refID){
         $this->db->trans_begin();
         $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom,ref_id,DELETED)
