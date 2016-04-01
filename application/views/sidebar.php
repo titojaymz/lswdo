@@ -15,9 +15,11 @@ $region = $this->session->userdata('uregion');
     <li><a href="<?php echo base_url('certificate_issuance/certificate_issuance_list') ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Certification Details</a></li><!--carla for Certification Details! -->
 
     <li><a href="#"><span class="icon color9"><i class="fa fa-book"></i></span>Libraries<span class="caret"></span></a> <!--removed link to index -->
+     <!--
       <ul>
         <li><a href="<?php echo base_url('libraries/indicator/index') ?>">Standards and Indicators</a></li>
       </ul>
+        -->
     </li>
     <li><a href="#"><span class="icon color9"><i class="fa fa-user-plus"></i></span>Access Control<span class="caret"></span></a> <!--added module -->
       <ul>
