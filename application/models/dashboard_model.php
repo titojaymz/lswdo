@@ -10,20 +10,19 @@ class dashboard_model extends CI_Model
      */
     public function getFunctionalityScore()
     {
-        $sql = 'select c.region_name,b.profile_id,
-                case b.lgu_type_id
-                when 1 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100
-                when 2 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100
-                when 3 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 91) * 100
-                end as FinalScore
-                FROM tbl_lswdo_standard_indicators a
-                INNER JOIN tbl_lswdo b
-                ON a.profile_id = b.profile_id
-                INNER JOIN lib_regions c
-                ON b.region_code = c.region_code
-
-                where a.deleted = 0 and a.indicator_id LIKE "%-1%" GROUP BY b.profile_id;';
-       /* $sql = 'select c.region_name,b.profile_id,
+        $sql = '
+SELECT
+SUM(IF(a.level_function = \'Functional\',1,0)) \'Functional\',
+SUM(IF(a.level_function = \'Fully Functional\',1,0)) \'FullyFunctional\',
+SUM(IF(a.level_function = \'Partially Functional\',1,0)) \'PartiallyFunctional\'
+,c.region_name,a.prof_id,ref_id
+FROM `tbl_functionality` a
+INNER JOIN tbl_lswdo b
+ON b.profile_id = a.prof_id
+Inner Join lib_regions c
+ON b.region_code = c.region_code
+GROUP BY c.region_name;';
+        /*$sql = 'select c.region_name,b.profile_id,
                 case b.lgu_type_id
                 when 1 then
 								case when (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100 = 100

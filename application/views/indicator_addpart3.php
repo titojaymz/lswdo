@@ -117,7 +117,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>asa1<textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
+                                                            <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
                                                             <?php }?>
                                                         <?php } else {  ?>
                                                         <td></td>
@@ -128,7 +128,7 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td>asa2<textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
+                                                        <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
                                                         <?php }?>
                                                                <?php } ?>
                                                                <?php break; ?>
