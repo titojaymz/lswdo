@@ -15,7 +15,7 @@
                         <title>Highcharts Example</title>
 
 
-<pre>
+<!--<pre>-->
 <?php
 $f = '';
 $ff = '';
@@ -155,7 +155,7 @@ $region_format =  substr($regionsName,0,-1);
 
 
 
-</pre>
+<!--</pre>-->
 
 
 
