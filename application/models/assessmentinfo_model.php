@@ -12,13 +12,16 @@ class assessmentinfo_model extends CI_Model {
 
     public function getAssessmentinfo()
     {
-        $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
-        if ($query->num_rows() > 0){
-            return $query->result();
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
+        $sql = 'select a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
+from tbl_lswdo a
+inner join lib_lgu_type b
+on a.lgu_type_id = b.lgu_type_id
+inner join lib_application_type c
+on a.application_type_id = c.application_type_id
+where a.deleted = 0 ';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
     }
 
 
