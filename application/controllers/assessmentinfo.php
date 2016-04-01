@@ -52,6 +52,8 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+        $income_class = $assessmentinfo_model->get_incomeclass();
+
         // $region_name = $assessmentinfo_model->Lib_getRegion();
         //$prov_name = $assessmentinfo_model->Lib_getProvince();
         // $city_name = $assessmentinfo_model->Lib_getCity();
@@ -66,6 +68,7 @@ class assessmentinfo extends CI_Controller {
 
             $this->init_rpmb_session();
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+            $rpmb['income_class'] = $income_class;
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
             $rpmb['form_message'] = $form_message;
@@ -89,6 +92,7 @@ class assessmentinfo extends CI_Controller {
             $regionlist = $this->input->post('regionlist');
             $provlist = $this->input->post('provlist');
             $citylist = $this->input->post('citylist');
+            $income_class = $this->input->post('income_class');
             $office_address = $this->input->post('office_address');
             $swdo_name = $this->input->post('swdo_name');
             $designation = $this->input->post('designation');
@@ -126,6 +130,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_add',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
+                    'income_class' => $income_class,
                     //  'region' => $region_name,
                     //   'province' => $prov_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),

@@ -54,9 +54,7 @@
                                 <td><?php echo $budgetallocationData->no_bene_served ?></td>
                                 <td><?php echo $budgetallocationData->no_target_bene ?></td>
 
-                                <td><a class="btn btn-xs btn-success" href="<?php echo base_url('budgetallocation/budgetallocation_masterview/' . $budgetallocationData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View </a></td>
-                                <td><a class="btn btn-xs btn-success" href="<?php echo base_url('indicator/indicatorView/' . $budgetallocationData->profile_id) ?>"><i class="fa fa-list"></i> Indicators </a></td>
-                                <!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart2/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 2 </a></td>-->
+                              <!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart2/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 2 </a></td>-->
                                 <!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart3/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 3 </a></td>-->
                                 <td>
                                     <div class="btn-group">

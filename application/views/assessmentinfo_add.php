@@ -88,7 +88,6 @@ if (!$this->session->userdata('user_id')){
     }
 
 </script>
-<body>
 
 <?php if ($form_message <> '') { ?>
     <div class="alert alert-success">
@@ -108,8 +107,6 @@ if (!$this->session->userdata('user_id')){
             <div class="panel panel-default">
                 <div class="panel-title">
                     <form method="post" class="form-horizontal">
-
-
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information</label>
                         </div>

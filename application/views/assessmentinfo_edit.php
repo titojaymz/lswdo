@@ -310,47 +310,6 @@ echo validation_errors();
                     </div>
 
 
-                    <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector ---------------*/?>
-
-                    <div class="form-group">
-                        <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sector_id">Sector:</label>
-                        <select class="form-control" name="sector_id" id="sector_id">
-                            <option select value="">Please select</option>
-                            <?php foreach($sector_id as $sectors): ?>
-                                <option value="<?php echo $sectors->sector_id ?>"><?php echo $sectors->sector_name ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="year_indicated">Year Indicated:</label>
-                        <input class="form-control" type="text" name="year_indicated" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="utilization">Utilization:</label>
-                        <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="budget_present_year">Budget for the Present Year:</label>
-                        <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="no_bene_served">Number of Beneficiaries Served:</label>
-                        <input class="form-control" type="text" name="no_bene_served" value="<?php echo set_value('no_bene_served') ?>" placeholder="Number of Beneficiaries Served">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="no_target_bene">Number of Target Beneficiaries:</label>
-                        <input class="form-control" type="text" name="no_target_bene" value="<?php echo set_value('no_target_bene') ?>" placeholder="Number of Target Beneficiaries">
-                    </div>
-
 
                     <div class="form-group">
                         <div class="btn-group">

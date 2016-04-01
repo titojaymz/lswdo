@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         body{background: #F5F5F5;}
 
     </style>
-    <title>LSWDO</title>
+    <title>MSFLSWDO</title>
 </head>
 <body>
 

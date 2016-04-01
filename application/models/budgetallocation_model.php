@@ -36,14 +36,13 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
-    public function insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
+    public function insertBudgetAllocation($sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
                           VALUES
                           (
-                          "'.$profile_id.'",
                           "'.$sector_id.'",
                           "'.$year_indicated.'",
                           "'.$budget_present_year.'",

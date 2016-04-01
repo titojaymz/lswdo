@@ -88,26 +88,22 @@ if (!$this->session->userdata('user_id')){
     }
 
 </script>
-<body>
 
 <?php if (validation_errors() <> '') { ?>
     <div class="alert alert-danger">
         <strong><?php echo validation_errors() ?></strong>
     </div>
 <?php } ?>
-<div class="modal-body">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div id="addassessment" class="col-md-6">
-                <?php /*---------------sdf------------- lswdo certificate--------------------------------------------------*/?>
-                <form method="post" class="form-horizontal">
-                    <div class="form-group">
+<body>
+<div class="content">
 
-                                            <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
-
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    <form method="post" class="form-horizontal">
                         <div class="form-group">
-                            <label for="budget" class="control-label">Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector</label>
+                            <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                         </div>
 
                         <div class="form-group">
@@ -152,8 +148,14 @@ if (!$this->session->userdata('user_id')){
                                 <a class="btn btn-warning btn-group" href="/lswdo/budgetallocation/index.html"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
-                    </div>
+                </div>
                 </form>
             </div>
             <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
 </body>

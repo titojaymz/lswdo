@@ -35,6 +35,8 @@ class budgetallocation extends CI_Controller {
             $form_message = '';
             $this->load->view('header');
             $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('sidepanel');
 
             $rpmb['sector_id'] = $sector_id;
 
@@ -79,6 +81,9 @@ class budgetallocation extends CI_Controller {
                 $form_message = '';
                 $this->load->view('header');
                 $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('sidepanel');
+
                 $this->load->view('budgetallocation_edit',array(
                     'budgetallocation_details'=>$budgetallocation_model->getBudgetAllocationByID($id),
                     'listFields'=>$this->listFields(),
