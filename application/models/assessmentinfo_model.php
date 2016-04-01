@@ -280,5 +280,68 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_brgy,$city_code)->result();
     }
 
+    public function get_incomeclass(){
+        $get_incomeclass = "
+        SELECT
+         city_code,
+          income_class
+        FROM
+          lib_cities
+        WHERE
+          prov_code > '0'
+        ORDER BY
+          city_code
+        ";
+
+        return $this->db->query($get_incomeclass)->result();
+    }
+
+    public function get_no_cities() {
+        $get_no_cities = "
+        SELECT
+        lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS No_Cities
+        FROM
+          lib_cities
+          left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code
+        WHERE
+          lib_provinces.prov_code = ?
+        ORDER BY
+          lib_cities.city_name
+           ";
+
+        return $this->db->query($get_no_cities)->result();
+    }
+
+    public function get_no_muni() {
+        $get_no_muni = "
+        SELECT
+        lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS No_Muni
+        FROM
+          lib_cities
+         left join lib_cities on lib_brgy.city_code=lib_cities.city_code
+        WHERE
+          lib_cities.city_code = ?
+        ORDER BY
+          lib_cities.city_name
+           ";
+        return $this->db->query($get_no_muni)->result();
+    }
+
+    public function get_no_brgy() {
+        $get_no_brgy = "
+        SELECT
+      lib_brgy.brgy_name,
+count(lib_brgy.brgy_code) AS No_Brgy
+        FROM
+          tbl_lswdo
+         Inner Join lib_brgy ON tbl_lswdo.brgy_code = lib_brgy.brgy_code
+        WHERE
+          lib_brgy.brgy_code = ?
+        ORDER BY
+          lib_brgy.brgy_name
+           ";
+
+        return $this->db->query($get_no_brgy)->result();
+    }
 
 }
