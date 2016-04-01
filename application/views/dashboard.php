@@ -37,6 +37,7 @@ foreach ($getIndicator as $item)
 {
     // Use the category name to identify unique categories
     $name = $item['region_name'];
+    $id = $item['profile_id'];
 
 //    echo $name.'<br>';
     // If the category appears in the auxiliary variable
@@ -44,7 +45,7 @@ foreach ($getIndicator as $item)
     {
         // Then add the orders total to it
 
-        $result[$name]['FinalScore'] += $item['FinalScore'];
+        $result[$name]['FinalScore'] == $item['FinalScore'];
     }
     else // Otherwise
     {
@@ -62,6 +63,7 @@ foreach($data as $dashboard):
 echo $regionsName;
 endforeach;
 $region_format =  substr($regionsName,0,-1);
+print_r($getIndicator);
 //$newArray = array();
 //
 //foreach ($getIndicator['target2'] as $key => $innerArr1) {
