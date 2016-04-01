@@ -20,7 +20,7 @@
 
                     <?php $countLS = count($checkPart1) ?>
                     <?php if($countLS > 0){ ?>
-                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
                         <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
@@ -277,7 +277,7 @@
 
                     <?php $countLS = count($checkPart2) ?>
                     <?php if($countLS > 0){ ?>
-                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
                         <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
@@ -695,7 +695,7 @@
 
                     <?php $countLS = count($checkPart3) ?>
                     <?php if($countLS > 0){ ?>
-                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEditpart3/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEditpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Edit</a><br><br>
                         <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
@@ -941,9 +941,6 @@
             </div>
         </div>
     </div>
-    <pre>
-       <?php print_r($scoreProf); ?>
-    </pre>
     <?php
         $getPerc = number_format($scoreProf->FinalScore,2);
         if($getPerc == 100){
