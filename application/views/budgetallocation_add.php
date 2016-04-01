@@ -103,7 +103,7 @@ if (!$this->session->userdata('user_id')){
                 <div class="panel-title">
                     <form method="post" class="form-horizontal">
                         <div class="form-group">
-                            <label for="budget" class="control-label">Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector</label>
+                            <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                         </div>
 
                         <div class="form-group">
