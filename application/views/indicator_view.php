@@ -26,8 +26,8 @@ if(count($checkPart1) > 0 && count($checkPart2) > 0 && count($checkPart3) > 0){
                     <?php $countLS = count($checkPart1) ?>
                     <?php if($countLS > 0){ ?>
                     <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>II. PROGRAM MANAGEMENT</b></a><br><br>
-                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID) ?>"><i class="fa fa-check-square"></i> Edit</a>
-                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorDelete/'.$profileID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
+                        <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEdit/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Edit</a>
+                        <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorDelete/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
