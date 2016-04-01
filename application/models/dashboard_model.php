@@ -57,7 +57,7 @@ class dashboard_model extends CI_Model
 
                 where a.deleted = 0 and a.indicator_id LIKE "%-1%" GROUP BY b.profile_id';
         $query = $this->db->query($sql);
-        return $query->result_array();
+        return $query->result();
 
 
     }

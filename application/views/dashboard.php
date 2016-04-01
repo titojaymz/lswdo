@@ -30,15 +30,15 @@ $fscore = "";
 $pfscore = "";
 
 // Auxiliary variable
-$result = array();
+/*$result = array();
 
 // Go over the data one by one
 foreach ($getIndicator as $item)
 {
     // Use the category name to identify unique categories
-    $name = $item['region_name'];
+    $name = $item['profile_id'];
 
-//    echo $name.'<br>';
+    echo $name.'<br>';
     // If the category appears in the auxiliary variable
     if (isset($result[$name]))
     {
@@ -62,6 +62,11 @@ foreach($data as $dashboard):
 echo $regionsName;
 endforeach;
 $region_format =  substr($regionsName,0,-1);
+
+*/
+
+
+
 //$newArray = array();
 //
 //foreach ($getIndicator['target2'] as $key => $innerArr1) {
@@ -73,58 +78,58 @@ $region_format =  substr($regionsName,0,-1);
 //
 //
 //
-//foreach($getIndicator as $getIn):
-//    $region_name .= "'".$getIn->region_name."',";
-//
-//    foreach($getRegionName as $regName):
-//        if($getIn->region_name == $regName->region_name){
-//            $getPerc = $getIn->FinalScore;
-//            if($getPerc == 100){
-//                $ff = $ff + 1;
-//
-//            }
-//            else
-//            {
-//                $ff = $ff +0;
-//            }
-//            if($getPerc > 50 && $getPerc < 100){
-//                $f = $f + 1;
-//
-//            }
-//            else
-//            {
-//                $f = $f +0;
-//            }
-//            if($getPerc < 51) {
-//                $pf = $pf + 1;
-//
-//            }
-//            else
-//            {
-//                $pf = $pf +0;
-//            }
-//            $ffscore .= "".$ff.",";
-//            $fscore .= "".$f.",";
-//            $pfscore .= "".$pf.",";
-//        }
-//    endforeach;
-//
-//
-//
-//
-//
-//endforeach;
-//
-//$region_format =  substr($region_name,0,-1);
-//$ffscore_format =  substr($ffscore,0,-1);
-//$fscore_format =  substr($fscore,0,-1);
-//$pfscore_format =  substr($pfscore,0,-1);
-//echo "</br>";
-//echo $ffscore_format;
-//echo "</br>";
-//echo $fscore_format;
-//echo "</br>";
-//echo $pfscore_format;
+foreach($getIndicator as $getIn):
+    $region_name .= "'".$getIn->region_name."',";
+
+    foreach($getRegionName as $regName):
+        if($getIn->region_name == $regName->region_name){
+            $getPerc = $getIn->FinalScore;
+            if($getPerc == 100){
+                $ff = $ff + 1;
+
+            }
+            else
+            {
+                $ff = $ff +0;
+            }
+            if($getPerc > 50 && $getPerc < 100){
+                $f = $f + 1;
+
+            }
+            else
+            {
+                $f = $f +0;
+            }
+            if($getPerc < 51) {
+                $pf = $pf + 1;
+
+            }
+            else
+            {
+                $pf = $pf +0;
+            }
+            $ffscore .= "".$ff.",";
+            $fscore .= "".$f.",";
+            $pfscore .= "".$pf.",";
+        }
+    endforeach;
+
+
+
+
+
+endforeach;
+
+$region_format =  substr($region_name,0,-1);
+$ffscore_format =  substr($ffscore,0,-1);
+$fscore_format =  substr($fscore,0,-1);
+$pfscore_format =  substr($pfscore,0,-1);
+echo "</br>";
+echo $ffscore_format;
+echo "</br>";
+echo $fscore_format;
+echo "</br>";
+echo $pfscore_format;
 
 ?>
 
