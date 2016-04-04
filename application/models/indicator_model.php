@@ -39,6 +39,11 @@ class indicator_model extends CI_Model
         $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IIIA11-1', 'DELETED' => 0, 'ref_id' => $ref_id));
         return $query->row();
     }
+    public function getCheckPart4($profID,$ref_id){
+        $this->db->select('profile_id, indicator_id, compliance_indicator_id, findings_recom');
+        $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID, 'indicator_id' => 'IV1-1', 'DELETED' => 0, 'ref_id' => $ref_id));
+        return $query->row();
+    }
     public function getLGUtype($profID){
         $this->db->select('lgu_type_id');
         $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $profID));
@@ -225,6 +230,32 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
+    public function getFourthMotherIndicator(){
+        $this->db->select('indicator_id,mother_indicator_id,indicator_name');
+        $this->db->order_by('indicator_name','ASC');
+        $query = $this->db->get_where('lib_indicator_codes', array('indicator_id' => 'IV'));
+        return $query->row();
+    }
+    public function getFourthIndicators(){
+        $this->db->select('indicator_id,mother_indicator_id,indicator_name,indicator_checklist_id,lgu_type_id');
+        $this->db->order_by('indicator_id','ASC');
+        $query = $this->db->get_where('lib_indicator_codes', array('mother_indicator_id' => 'IV'));
+        return $query->result();
+    }
+    public function getCategoriesFromFourthI(){
+        $unformat = "";
+        foreach($this->getFourthIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+
     public function insertFunctionality($profileID,$ref_id, $level_function, $region_code){
         $this->db->trans_begin();
         $this->db->query('Insert into tbl_functionality(prof_id,ref_id,level_function,region_code)
@@ -344,7 +375,6 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
-
 
     public function deleteIndicatorpart2($profileID,$ref_id){
 
