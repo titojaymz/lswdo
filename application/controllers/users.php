@@ -78,6 +78,7 @@ class users extends CI_Controller {
             $ifUserExist = $Model_user->ifUserExist();
             if ($ifUserExist > 0){
                 $this->session->set_userdata('user_id',$Model_user->retrieveUserData()->uid);
+                $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
                 $this->load->view('header');
 				$this->load->view('nav');
                 $this->load->view('login');
@@ -93,6 +94,7 @@ class users extends CI_Controller {
 
     public function logout()
     {
+        $this->session->unset_userdata('user_id');
         $this->session->sess_destroy();
         $this->load->view('logout');
     }

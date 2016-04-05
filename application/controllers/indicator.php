@@ -136,10 +136,14 @@ class indicator extends CI_Controller
             'thirdIndicators' => $indicator_model->getThirdIndicators(),
             'getFifthCategory' => $indicator_model->getCategoriesFromTI($lguTypes->lgu_type_id),
             'getSixCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
+            'fourthMotherIndicator' => $indicator_model->getFourthMotherIndicator(),
+            'fourthIndicators' => $indicator_model->getFourthIndicators(),
+            'fourthCategory' => $indicator_model->getCategoriesFromFourthI(),
             'getLSWDO' => $indicator_model->getLSWDOdata($profID,$ref_id),
             'checkPart1' => $indicator_model->getCheckPart1($profID,$ref_id),
             'checkPart2' => $indicator_model->getCheckPart2($profID,$ref_id),
             'checkPart3' => $indicator_model->getCheckPart3($profID,$ref_id),
+            'checkPart4' => $indicator_model->getCheckPart4($profID,$ref_id),
             'scoreProf' => $indicator_model->getScorePerProf($profID,$ref_id),
             'profileID' => $profID,
             'refID' => $ref_id,
@@ -500,8 +504,13 @@ class indicator extends CI_Controller
                     }
                     if($complianceSilver != ""){
                         $addResultSilver = $indicator_model->insertFirstIndicator($profID, $indicator, $complianceSilver, $findings,$ref_id);
-                    }if($complianceGold != ""){
+                    } else {
+                        continue;
+                    }
+                    if($complianceGold != ""){
                         $addResultGold = $indicator_model->insertFirstIndicator($profID, $indicator, $complianceGold, $findings,$ref_id);
+                    } else {
+                        continue;
                     }
                 } else {
                     continue;
@@ -818,6 +827,91 @@ class indicator extends CI_Controller
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
                    $profile = $this->input->post('profID');
+                    $indicator = $secondCat->indicator_id;
+                    $findings = $this->input->post('textArea'. $secondCat->indicator_id);
+                    if($complianceBronze != ""){
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
+                    }
+                    if($complianceSilver != ""){
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
+                    } if($complianceGold != ""){
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
+                    }
+                } else {
+                    continue;
+                }
+            endforeach;
+            if($updateResultBronze || $updateResultSilver || $updateResultGold){
+                $form_message = 'Add Success!';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('indicator_view', array(
+                    'thirdMotherIndicator' => $indicator_model->getThirdMotherIndicator(),
+                    'thirdIndicators' => $indicator_model->getThirdIndicators(),
+                    'getFirstCategory' => $indicator_model->getCategoriesFromTI($lguTypes->lgu_type_id),
+                    'getSecondCategory' => $indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id),
+                ));
+                $this->load->view('footer');
+                $this->redirectIndexAddPart2($profID,$ref_id);
+            }
+
+
+        }
+    }
+    public function indicatorEditpart4($profID,$ref_id)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $indicator_model = new indicator_model();
+        $this->validateAddIndicatorpart3();
+        $lguTypes = $indicator_model->getLGUtype($profID);
+        if (!$this->form_validation->run()){
+            $form_message = '';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('indicator_editpart4', array(
+                'fourthMotherIndicator' => $indicator_model->getFourthMotherIndicator(),
+                'fourthIndicators' => $indicator_model->getFourthIndicators(),
+                'fourthCategory' => $indicator_model->getCategoriesFromFourthI(),
+                'getLSWDO' => $indicator_model->getLSWDOdata($profID,$ref_id),
+                'profileID' => $profID,
+                'refID' => $ref_id,
+            ));
+            $this->load->view('footer');
+        } else {
+            foreach($indicator_model->getCategoriesFromTI($lguTypes->lgu_type_id) as $firstCatBronze):
+                if($firstCatBronze->indicator_checklist_id != '0') {
+                    $complianceBronze = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Bronze');
+                    $complianceSilver = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Silver');
+                    $complianceGold = $this->input->post('compliance' . $firstCatBronze->indicator_id . 'Gold');
+                    $profile = $this->input->post('profID');
+                    $indicator = $firstCatBronze->indicator_id;
+                    $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
+                    if($complianceBronze != ""){
+                        $updateResultBronze = $indicator_model->updateIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
+                    }
+                    if($complianceSilver != ""){
+                        $updateResultSilver = $indicator_model->updateIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
+                    }if($complianceGold != ""){
+                        $updateResultGold = $indicator_model->updateIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
+                    }
+
+
+                } else {
+                    continue;
+                }
+            endforeach;
+            foreach($indicator_model->getSecondCategoriesFromTI($lguTypes->lgu_type_id) as $secondCat):
+                if($secondCat->indicator_checklist_id != '0') {
+                    $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
+                    $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
+                    $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
+                    $profile = $this->input->post('profID');
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){

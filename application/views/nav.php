@@ -50,7 +50,7 @@
     <!-- Start Top Right -->
     <ul class="top-right">
         <li class="dropdown link">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><b><?php if ($this->session->userdata('user_data') <>'') echo $this->session->userdata('user_data') ?></b><span class="caret"></span></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><b><?php if ($this->session->userdata('fullName') <>'') echo $this->session->userdata('fullName') ?></b><span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
                 <li role="presentation" class="dropdown-header">Profile</li>
                 <li class="divider"></li>
@@ -60,7 +60,7 @@
 
                     document.querySelector('#button3').onclick = function(){
                         swal({
-                                title: "Hey <?php if ($this->session->userdata('user_data') <>'') echo $this->session->userdata('user_data') ?>!",
+                                title: "Hey <?php if ($this->session->userdata('fullName') <>'') echo $this->session->userdata('fullName') ?>!",
                                 text: "Goodbye!",
                                 type: "success"
                             },
