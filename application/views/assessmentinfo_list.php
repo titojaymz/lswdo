@@ -37,11 +37,11 @@
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
-                <th>SWDO Name</th>
+                <th>Name of SWDO Officer/Head</th>
                 <th>Status of Application</th>
                 <th>LSWDO Type</th>
 
-                <th>Total IRA</th>
+                <th>Total Internal Revenue Allotment</th>
                 <th>Total Budget LSWDO</th>
 
 

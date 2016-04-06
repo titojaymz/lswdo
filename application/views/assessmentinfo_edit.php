@@ -270,7 +270,7 @@ echo validation_errors();
                     </div>
 
                     <div class="form-group">
-                        <label for="swdo_name">SWDO Name:</label>
+                        <label for="swdo_name">Name of SWDO Officer/Head:</label>
                         <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="SWDO Name">
                     </div>
 
@@ -300,7 +300,7 @@ echo validation_errors();
                     </div>
 
                     <div class="form-group">
-                        <label for="total_ira">Total IRA:</label>
+                        <label for="total_ira">Total Internal Revenue Allotment:</label>
                         <input class="form-control" type="text" name="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total IRA">
                     </div>
 
