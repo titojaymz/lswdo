@@ -1,7 +1,67 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <!DOCTYPE HTML>
 <html>
-<?php error_reporting(0) ?>
+<script type="text/javascript">
+
+    function resetButton(indicator,checklist){
+        var bronze = parseInt(checklist);
+        var silver = parseInt(checklist) + 1;
+        var gold = parseInt(checklist) + 2;
+
+        var indicatorBronze = indicator+'-'+bronze;
+        var indicatorSilver = indicator+'-'+silver;
+        var indicatorGold = indicator+'-'+gold;
+
+        var bronzeIndi = document.getElementsByName('compliance'+indicatorBronze+'Bronze');
+        for (var a = 0; a < bronzeIndi.length; a++) {
+            if(bronzeIndi[a].checked) bronzeIndi[a].checked = false;
+        }
+        var silverIndi = document.getElementsByName('compliance'+indicatorSilver+'Silver');
+        for (var b = 0; b < silverIndi.length; b++) {
+            if(silverIndi[b].checked) silverIndi[b].checked = false;
+        }
+        var goldIndi = document.getElementsByName('compliance'+indicatorGold+'Gold');
+        for (var c = 0; c < goldIndi.length; c++) {
+            if(goldIndi[c].checked) goldIndi[c].checked = false;
+        }
+
+
+//        alert(indicatorGold);
+        return false;
+    }
+    function resetButton2(indicator,checklist){
+        var bronze = parseInt(checklist);
+        var silver = parseInt(checklist) + 1;
+        var gold = parseInt(checklist) + 2;
+
+        var indicatorBronze = indicator+'-'+bronze;
+        var indicatorSilver1 = indicator+'-'+silver+'1';
+        var indicatorSilver2 = indicator+'-'+silver+'2';
+        var indicatorGold = indicator+'-'+gold;
+
+        var bronzeIndi = document.getElementsByName('compliance'+indicatorBronze+'Bronze');
+        for (var a = 0; a < bronzeIndi.length; a++) {
+            if(bronzeIndi[a].checked) bronzeIndi[a].checked = false;
+        }
+        var silverIndi = document.getElementsByName('compliance'+indicatorSilver1+'Silver');
+        for (var b = 0; b < silverIndi.length; b++) {
+            if(silverIndi[b].checked) silverIndi[b].checked = false;
+        }
+        var silverIndi2 = document.getElementsByName('compliance'+indicatorSilver2+'Silver');
+        for (var d = 0; d < silverIndi2.length; d++) {
+            if(silverIndi2[d].checked) silverIndi2[d].checked = false;
+        }
+        var goldIndi = document.getElementsByName('compliance'+indicatorGold+'Gold');
+        for (var c = 0; c < goldIndi.length; c++) {
+            if(goldIndi[c].checked) goldIndi[c].checked = false;
+        }
+
+
+//        alert(indicatorGold);
+        return false;
+    }
+
+</script>
 <body>
 <div class="content">
 
@@ -138,6 +198,7 @@
                                                                                                                       <td colspan = "11"><b><?php echo $fourthItem[$number4]; ?></b></td>
 
                                                                                                              <?php } else { ?>
+                                                                                                             <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $d;?>','<?php echo $fourthItem[$checklist4];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                                                                                      <?php $counting4 = count($fourthItem); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                                                                                        <?php if($counting4 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                                                                            <td><?php echo $fourthItem[$number4]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
@@ -165,6 +226,7 @@
                                                               <?php $counting3 = count($iteeem); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                                <?php if($counting3 > 6){ ?>
                                                                <?php if($counting3 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
+                                                                   <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton2('<?php echo $c;?>','<?php echo $iteeem[$checklist3];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                                    <td><?php echo $iteeem[$number3]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
                                                                    <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "1" required/> Compliant</td>
                                                                    <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "2"/> Not Compliant</td>
@@ -206,6 +268,7 @@
                                                                        <?php } ?>
                                                                <?php } ?>
                                                                <?php } else { ?>
+                                                               <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $c;?>','<?php echo $iteeem[$checklist3];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                                <?php if($counting3 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                    <td><?php echo $iteeem[$number3]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
                                                                    <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "1" required/> Compliant</td>
@@ -233,6 +296,7 @@
 
 
                                                         <?php } else {?>
+                                                        <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $b;?>','<?php echo $secondItems[$checklist2];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                             <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                                <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                    <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
@@ -264,7 +328,7 @@
                                                 <?php } else { ?>
                                                     <?php $counting = count($iteem); ?>
                                                     <?php $int1 = intval(preg_replace('/[^0-9]+/', '', $a), 10); ?>
-<!--                                                    <td>--><?php //echo $int1 ?><!--</td>-->
+                                             <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $a;?>','<?php echo $iteem[$checklist];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                     <?php if($counting > 1){ ?>
                                                             <?php if($a.'-'.$iteem[$checklist] == "IID1-1") { ?>
                                                                <td><?php echo $iteem[$number]; ?></td>
@@ -304,6 +368,7 @@
                                                         <?php }?>
 
                                                             <?php } else {?>
+                                                            
                                                         <td><?php echo $iteem[$number]; ?></td>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required/> Compliant</td>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2"/> Not Compliant</td>

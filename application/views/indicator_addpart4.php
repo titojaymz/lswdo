@@ -1,7 +1,36 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <!DOCTYPE HTML>
 <html>
-<?php error_reporting(0) ?>
+<script type="text/javascript">
+
+    function resetButton(indicator,checklist){
+        var bronze = parseInt(checklist);
+        var silver = parseInt(checklist) + 1;
+        var gold = parseInt(checklist) + 2;
+
+        var indicatorBronze = indicator+'-'+bronze;
+        var indicatorSilver = indicator+'-'+silver;
+        var indicatorGold = indicator+'-'+gold;
+
+        var bronzeIndi = document.getElementsByName('compliance'+indicatorBronze+'Bronze');
+        for (var a = 0; a < bronzeIndi.length; a++) {
+            if(bronzeIndi[a].checked) bronzeIndi[a].checked = false;
+        }
+        var silverIndi = document.getElementsByName('compliance'+indicatorSilver+'Silver');
+        for (var b = 0; b < silverIndi.length; b++) {
+            if(silverIndi[b].checked) silverIndi[b].checked = false;
+        }
+        var goldIndi = document.getElementsByName('compliance'+indicatorGold+'Gold');
+        for (var c = 0; c < goldIndi.length; c++) {
+            if(goldIndi[c].checked) goldIndi[c].checked = false;
+        }
+
+
+//        alert(checklist);
+        return false;
+    }
+
+</script>
 <body>
 <?php
 //if(count($checkPart1) > 0 && count($checkPart2) > 0 && count($checkPart3) > 0){
@@ -81,6 +110,7 @@
                             <?php $arrs = explode("-", $fourthCat->indicator_id, 2);?>
                             <?php $seconds = $arrs[0];?>
                             <?php if($b == $seconds){ ?>
+                                <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $b;?>','<?php echo $secondItems[$checklist2];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                 <?php $counting2 = count($secondItems); ?>
                                 <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                     <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
@@ -123,6 +153,7 @@
                         <?php endforeach; ?>
                         </tr>
                         <?php } else { ?>
+                        <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $a;?>','<?php echo $iteem[$checklist];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                         <?php $counting = count($iteem); ?>
                         <?php if($counting > 1){ ?>
                         <td><?php echo $iteem[$number]; ?></td>
