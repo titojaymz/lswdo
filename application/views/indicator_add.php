@@ -1,7 +1,36 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <!DOCTYPE HTML>
 <html>
+<script type="text/javascript">
 
+    function resetButton(indicator,checklist){
+        var bronze = parseInt(checklist);
+        var silver = parseInt(checklist) + 1;
+        var gold = parseInt(checklist) + 2;
+
+        var indicatorBronze = indicator+'-'+bronze;
+        var indicatorSilver = indicator+'-'+silver;
+        var indicatorGold = indicator+'-'+gold;
+
+        var bronzeIndi = document.getElementsByName('compliance'+indicatorBronze+'Bronze');
+        for (var a = 0; a < bronzeIndi.length; a++) {
+            if(bronzeIndi[a].checked) bronzeIndi[a].checked = false;
+        }
+        var silverIndi = document.getElementsByName('compliance'+indicatorSilver+'Silver');
+        for (var b = 0; b < silverIndi.length; b++) {
+            if(silverIndi[b].checked) silverIndi[b].checked = false;
+        }
+        var goldIndi = document.getElementsByName('compliance'+indicatorGold+'Gold');
+        for (var c = 0; c < goldIndi.length; c++) {
+            if(goldIndi[c].checked) goldIndi[c].checked = false;
+        }
+
+
+//        alert(checklist);
+        return false;
+    }
+
+</script>
 <body>
 <style>
     label {
@@ -98,18 +127,18 @@
                                                         <?php if ($b == $seconds) { ?>
                                                             <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                             <?php $int2 = intval(preg_replace('/[^0-9]+/', '', $b), 10); ?>
-                                                            <td><?php echo $int2 ?></td>
+                                                            <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $b;?>','<?php echo $secondItems[$checklist2];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                                <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                                                    <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "1" required/> Compliant</td>
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2"/> Not Compliant</td>
                                                                        <?php if($counting2 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
                                                                        <td><?php echo $secondItems[$number2 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
-                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required/> Compliant</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" /> Compliant</td>
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2"/> Not Compliant</td>
                                                                        <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $secondItems[$number2 + 4]; ?></td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" /> Compliant</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
                                                                        <?php } else {  ?>
@@ -142,18 +171,18 @@
                                                 <?php } else { ?>
                                                     <?php $counting = count($iteem); ?>
                                                     <?php $int1 = intval(preg_replace('/[^0-9]+/', '', $a), 10); ?>
-                                                    <td><?php echo $int1 ?></td>
+                                                    <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $a;?>','<?php echo $iteem[$checklist];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                     <?php if($counting > 1){ ?>
                                                         <td><?php echo $iteem[$number]; ?></td>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required/> Compliant</td>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2"/> Not Compliant</td>
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required/> Compliant</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" required/> Not Compliant</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" /> Compliant</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" /> Not Compliant</td>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" /> Compliant</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                 <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
 
