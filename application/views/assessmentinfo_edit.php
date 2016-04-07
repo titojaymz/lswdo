@@ -3,7 +3,7 @@
  * Created by JOSEF FRIEDRICH S. BALDO
  * Date Time: 10/18/15 12:57 AM
  */
-if (!$this->session->userdata('user_i')){
+if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
 echo validation_errors();

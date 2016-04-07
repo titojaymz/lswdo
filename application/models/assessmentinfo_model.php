@@ -13,12 +13,10 @@ class assessmentinfo_model extends CI_Model {
     public function getAssessmentinfo()
     {
         $sql = 'select a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
-from tbl_lswdo a
-inner join lib_lgu_type b
-on a.lgu_type_id = b.lgu_type_id
-inner join lib_application_type c
-on a.application_type_id = c.application_type_id
-where a.deleted = 0 ';
+                from tbl_lswdo a
+                inner join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
+                inner join lib_application_type c on a.application_type_id = c.application_type_id
+                where a.deleted = 0';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
@@ -330,7 +328,7 @@ where a.deleted = 0 ';
         return $this->db->query($get_no_muni)->result();
     }
 
-    public function get_no_brgy() {
+    public function get_no_brgy($brgy_code) {
         $get_no_brgy = "
         SELECT
       lib_brgy.brgy_name,
@@ -344,7 +342,7 @@ count(lib_brgy.brgy_code) AS No_Brgy
           lib_brgy.brgy_name
            ";
 
-        return $this->db->query($get_no_brgy)->result();
+        return $this->db->query($get_no_brgy,$brgy_code)->result();
     }
 
 }
