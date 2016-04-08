@@ -25,7 +25,11 @@
                             <?php foreach($userslist as $user):?>
                                 <tr>
                                     <td><a class="btn btn-sm btn-primary"  href="<?php echo base_url('access_control/editUser'.'/'. $user->uid) ?>"><i class="fa fa-apple"></i>Edit</a></td>
+                                    <?php if($user->activated == 1){ ?>
                                     <td><a onclick="return confirm('Are you sure ?')" class="btn btn-sm btn-primary"  href="<?php echo base_url('access_control/delete_Userinfo'.'/'.$user->uid) ?>"><i class="fa fa-bullseye"></i>Deactivate</a></td>
+                                    <?php } else { ?>
+                                        <td><a onclick="return confirm('Are you sure ?')" class="btn btn-sm btn-primary"  href="<?php echo base_url('access_control/activate_Userinfo'.'/'.$user->uid) ?>"><i class="fa fa-bullseye"></i>Activate</a></td>
+                                    <?php } ?>
                                     <td><?php echo $user->username; ?></td>
                                     <td><?php echo $user->email; ?></td>
                                     <td><?php echo $user->firstname.' '.$user->middlename.' '.$user->surname.' '.$user->extensionname; ?></td>

@@ -166,6 +166,28 @@ class accesscontrol_model extends CI_Model
         }
         $this->db->close();
     }
+    public function activateUserinfo($uid)
+    {
+        $this->db->trans_begin();
+
+        $this->db->query('UPDATE tbl_user SET
+                              activated="1"
+                              WHERE
+                              uid = "'.$uid.'"
+                              ');
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
 
 
 }

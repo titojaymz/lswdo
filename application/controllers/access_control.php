@@ -137,6 +137,21 @@ class access_control extends CI_Controller {
             }
         }
     }
+    public function activate_Userinfo($uid)
+    {
+        $accesscontrol_model = new accesscontrol_model();
+        if ($uid > 0){
+            $deleteResult = $accesscontrol_model->activateUserinfo($uid);
+            if ($deleteResult){
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('users_list', array(
+                    'userslist' => $accesscontrol_model->get_users_list()));
+                $this->load->view('footer');
+            }
+        }
+    }
 
     protected function validateAddForm()
     {
