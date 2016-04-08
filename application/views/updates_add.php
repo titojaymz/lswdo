@@ -26,6 +26,35 @@
         xmlhttp.open("GET","<?php echo base_url('updates/clientsubcategorylist') ?>/"+str,true);
         xmlhttp.send();
     }
+
+
+    function load_lowerIndi(str)
+    {
+        document.getElementById("childIndicator").value = str;
+        if (str=="")
+        {
+            document.getElementById("div_lowerIndi").innerHTML="";
+            return;
+        }
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                document.getElementById("div_lowerIndi").innerHTML=xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET","<?php echo base_url('updates/clientsubcategorylist') ?>/"+str,true);
+        xmlhttp.send();
+    }
+
 </script>
 <div class="content">
     <div class="page-header">
@@ -76,6 +105,7 @@
                                 </td>
                             </tr>
                             <tr id="div_childIndi"></tr>
+                            <tr id="div_lowerIndi"></tr>
                         </table>
                     </div>
                 </div>
