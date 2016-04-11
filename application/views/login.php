@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 if (!$this->session->userdata('user_id')){
     echo validation_errors();
     ?><br><br>
@@ -19,7 +18,7 @@ if (!$this->session->userdata('user_id')){
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="group">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                     <i class="fa fa-key"></i>
                 </div>
                 <div class="checkbox checkbox-primary">

@@ -4,19 +4,15 @@
  * Date Time: 10/17/15 10:57 PM
  */
 class users extends CI_Controller {
-
     public function index()
     {
         redirect('/users/login','location');
     }
-
     public function superKey()
     {
         return $this->config->item('encryption_key');
-
         $this->load->library('encrypt');
     }
-
     public function register()
     {
         $this->load->model('Model_user');
@@ -24,13 +20,11 @@ class users extends CI_Controller {
         $this->init_rpmb_session();
         $rpmb['regionlist'] = $this->Model_form->get_regions();
         $userkey = $this->superKey();
-
         if (!$this->form_validation->run()){
             $form_message = '';
             $this->load->view('header');
             $this->load->view('register',array('rpmb'=>$rpmb,'form_message'=>$form_message));
             $this->load->view('footer');
-
         } else {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
@@ -41,8 +35,6 @@ class users extends CI_Controller {
             $email = $this->input->post('email');
             $regionlist = $this->input->post('regionlist');
             $superkey = $this->encrypt->sha1($userkey.$password);
-
-
             $Model_user = new Model_user($username,$superkey,$firstname,$middlename,$surname,$extensionname,$email,$regionlist);
             $regResult = $Model_user->registerUser();
             if ($regResult == 1){
@@ -59,7 +51,6 @@ class users extends CI_Controller {
             }
         }
     }
-
     public function login()
     {
         $this->load->model('Model_user');
@@ -75,28 +66,42 @@ class users extends CI_Controller {
             $password = $this->input->post('password');
             $newkey = $this->encrypt->sha1($userkey.$password);
             $Model_user = new Model_user($username,$newkey);
-            $ifUserExist = $Model_user->ifUserExist();
-            if ($ifUserExist > 0){
+            $ifUserExist = $Model_user->ifUserExist($newkey);
+            if ($ifUserExist === true) {
                 $this->session->set_userdata('user_id',$Model_user->retrieveUserData()->uid);
+                $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
                 $this->load->view('header');
-				$this->load->view('nav');
+                $this->load->view('nav');
                 $this->load->view('login');
                 $this->load->view('footer');
             } else {
-                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Incorrect Username/Password<a href="#" class="closed">&times;</a></div>';
-                $this->load->view('header');
-                $this->load->view('login',array('form_message'=>$form_message));
+                if ($ifUserExist === false) {
+                $data['form_message'] = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Incorrect Username/Password<a href="#" class="closed">&times;</a></div>';
+                $data['error_message'] = "The username or password you entered is incorrect";
+                $data['title'] = "Login Page";
+                $this->load->view('header', $data);
+                $this->load->view('login', $data);
                 $this->load->view('footer');
+            }   else if ($ifUserExist === 'locked') {
+                $data['error_message'] = "Your account has been locked <a href=" . base_url() . 'unlock_account' . "> Unlock your account</a>";
+                $data['disabled'] = "disabled";
+                $data['signin'] = anchor('logout', 'Sign in with a different name');
+                $data['title'] = "Login Page";
+                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Locked Status! Please Contact Us<a href="#" class="closed">&times;</a></div>';
+                $this->load->view('header');
+                $this->load->view('login', array('form_message' => $form_message));
+                $this->load->view('footer');
+                //$this->load->view('error_login',array('redirectIndex'=>$this->redirectIndex()));
+            }
             }
         }
     }
-
     public function logout()
     {
+        $this->session->unset_userdata('user_id');
         $this->session->sess_destroy();
         $this->load->view('logout');
     }
-
     protected function customvalidateRegForm()
     {
         $config = array(
@@ -136,10 +141,8 @@ class users extends CI_Controller {
                 'rules'   => 'required'
             )
         );
-
         return $this->form_validation->set_rules($config);
     }
-
     protected function validateLoginForm()
     {
         $config = array(
@@ -154,10 +157,8 @@ class users extends CI_Controller {
                 'rules'   => 'required'
             )
         );
-
         return $this->form_validation->set_rules($config);
     }
-
     public function redirectIndex()
     {
         $page = base_url();
@@ -175,5 +176,4 @@ class users extends CI_Controller {
             $_SESSION['region'] = $_POST['regionlist'];
         }
     }
-
 }
