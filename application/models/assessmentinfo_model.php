@@ -13,12 +13,10 @@ class assessmentinfo_model extends CI_Model {
     public function getAssessmentinfo()
     {
         $sql = 'select a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
-from tbl_lswdo a
-inner join lib_lgu_type b
-on a.lgu_type_id = b.lgu_type_id
-inner join lib_application_type c
-on a.application_type_id = c.application_type_id
-where a.deleted = 0 ';
+                from tbl_lswdo a
+                inner join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
+                inner join lib_application_type c on a.application_type_id = c.application_type_id
+                where a.deleted = 0';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
@@ -102,16 +100,16 @@ where a.deleted = 0 ';
         $this->db->close();
     }
 
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
         $this->db->query('UPDATE tbl_lswdo SET
                           application_type_id="'.$application_type_id.'",
                           lgu_type_id="'.$lgu_type_id.'",
-                          region_code="'.$region_code.'",
-                          prov_code="'.$prov_code.'",
-                          city_code="'.$city_code.'",
+                          region_code="'.$regionlist.'",
+                          prov_code="'.$provlist.'",
+                          city_code="'.$citylist.'",
                           office_address="'.$office_address.'",
                           swdo_name="'.$swdo_name.'",
                           designation="'.$designation.'",
@@ -119,8 +117,7 @@ where a.deleted = 0 ';
                           email="'.$email.'",
                           website="'.$website.'",
                           total_ira="'.$total_ira.'",
-                          total_budget_lswdo="'.$total_budget_lswdo.'",
-                          date_modified=Now()
+                          total_budget_lswdo="'.$total_budget_lswdo.'"
                           WHERE
                           profile_id = "'.$id.'"
                           ');
@@ -330,7 +327,7 @@ where a.deleted = 0 ';
         return $this->db->query($get_no_muni)->result();
     }
 
-    public function get_no_brgy() {
+    public function get_no_brgy($brgy_code) {
         $get_no_brgy = "
         SELECT
       lib_brgy.brgy_name,
@@ -344,7 +341,7 @@ count(lib_brgy.brgy_code) AS No_Brgy
           lib_brgy.brgy_name
            ";
 
-        return $this->db->query($get_no_brgy)->result();
+        return $this->db->query($get_no_brgy,$brgy_code)->result();
     }
 
 }

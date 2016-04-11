@@ -3,13 +3,12 @@
  * Created by JOSEF FRIEDRICH S. BALDO
  * Date Time: 10/18/15 12:57 AM
  */
-if (!$this->session->userdata('user_i')){
+if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
-echo validation_errors();
+//echo validation_errors();
 
 ?>
-<body>
 <script type="text/javascript">
     function askLGU() {
         var e = document.getElementById("lgu_type_id").value;
@@ -93,6 +92,12 @@ echo validation_errors();
     }
 
 </script>
+
+<?php if (validation_errors() <> '') { ?>
+    <div class="alert alert-danger">
+        <strong><?php echo validation_errors() ?></strong>
+    </div>
+<?php } ?>
 <body>
 <div class="content">
 
@@ -100,13 +105,15 @@ echo validation_errors();
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    <div class="form-group">
-                        <label for="geo_info" class="control-label">Geographic Information</label>
-                    </div>
+                    <form method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="geo_info" class="control-label">Geographic Information</label>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="identify_info" class="control-label">Edit Record: Identifying Information</label>
-                    </div>
+                        <div class="form-group">
+                            <label for="identify_info" class="control-label">Edit record: Identifying Information</label>
+                        </div>
+
                     <div class="form-group">
                         <label for="profile_id">Profile ID:</label>
                         <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
@@ -117,7 +124,7 @@ echo validation_errors();
                         <label for="application_type_id">Application Type: </label>
                         <select name="application_type_id" id="application_type_id" class="form-control"">
                         <option value="0">-Please select-</option>
-                        <?php foreach($application_type_id as $applications): ?>
+                        <?php foreach($application as $applications): ?>
                             <option value="<?php echo $applications->application_type_id; ?>"
                                 <?php if(isset($assessmentinfo_details->application_type_id)) {
                                     if($applications->application_type_id == $assessmentinfo_details->application_type_id) {
@@ -136,7 +143,7 @@ echo validation_errors();
 
                         <select name="lgu_type_id" id="lgu_type_id" class="form-control" onchange="askLGU();">
                             <option select value="0">-Please select-</option>
-                            <?php foreach($lgu_type_id as $lgus): ?>
+                            <?php foreach($lgu_type as $lgus): ?>
                                 <option value="<?php echo $lgus->lgu_type_id; ?>"
                                     <?php if(isset($assessmentinfo_details->lgu_type_id)) {
                                         if($lgus->lgu_type_id == $assessmentinfo_details->lgu_type_id) {
@@ -176,9 +183,6 @@ echo validation_errors();
                             </div>
                         </div>
 
-                        <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
-                        <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
-
                         <div id="groupLGUProvince">
                             <div class="form-group form-group-sm">
                                 <label for="provlist" class="col-lg-2 control-label">Province: </label>
@@ -207,7 +211,6 @@ echo validation_errors();
                                 </div>
                             </div>
                         </div>
-
 
 
                         <div id="groupLGUCity">
@@ -241,6 +244,9 @@ echo validation_errors();
 
                     </div>
 
+                    <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
+                    <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
+
                     <div class="form-group">
                         <label for="no_cities">No. of Cities:</label>
                         <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
@@ -270,8 +276,8 @@ echo validation_errors();
                     </div>
 
                     <div class="form-group">
-                        <label for="swdo_name">SWDO Name:</label>
-                        <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="SWDO Name">
+                        <label for="swdo_name">Name of SWDO Officer/Head:</label>
+                        <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head">
                     </div>
 
                     <div class="form-group">
@@ -300,7 +306,7 @@ echo validation_errors();
                     </div>
 
                     <div class="form-group">
-                        <label for="total_ira">Total IRA:</label>
+                        <label for="total_ira">Total Internal Revenue Allotment:</label>
                         <input class="form-control" type="text" name="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total IRA">
                     </div>
 
@@ -309,21 +315,19 @@ echo validation_errors();
                         <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO" readonly>
                     </div>
 
-
-
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                            <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
+                                <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                            </div>
                         </div>
-                        <div class="col-md-1"></div>
-                    </div>
-                    </form>
                 </div>
-                <div class="col-md-3"></div>
+                </form>
             </div>
+            <div class="col-md-3"></div>
         </div>
     </div>
+</div>
 </div>
 
 </div>

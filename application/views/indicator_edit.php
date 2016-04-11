@@ -166,7 +166,8 @@
                                                         <?php if($value->indicator_id == $a.'-'.$iteem[$checklist]){ ?>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "1" required  <?php if($value->compliance_indicator_id == 1){ echo "checked"; } ?>/> Compliance</td>
                                                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "2" <?php if($value->compliance_indicator_id == 2){ echo "checked"; } ?>/> Not Compliance</td>
-                                                        <?php endforeach ?>
+                                                        <?php } ?>
+                                                        <?php endforeach; ?>
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
                                                            <?php foreach($getLSWDO as $key=>$value): ?>
@@ -215,7 +216,7 @@
                                                 <?php } else { ?>
                                                 </tr>
                                                 <?php } ?>
-                                        <?php }?>
+                                        <?php } ?>
                                     <?php   endforeach;?>
                                 <?php  endforeach;?>
                             </tr>

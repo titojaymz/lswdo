@@ -13,37 +13,42 @@ class accesscontrol_model extends CI_Model
     }
 
 
-    public function get_users_list($user_region)
+    public function get_users_list()
     {
-        if ($user_region != 0) {
-            $sql = 'select t1.uid, t1.full_name, t1.username, t1.email, t2.region_name, t1.activated, t3.userlevelname from users t1 inner join userlevels t3 on t1.access_level = t3.userlevelid inner join lib_region t2 on t1.region_code = t2.region_code where t2.region_code = "'.$user_region.'"';
-        } else {
-            $sql = 'select t1.uid, t1.full_name, t1.username, t1.email, t2.region_name, t1.activated, t3.userlevelname from users t1 inner join userlevels t3 on t1.access_level = t3.userlevelid inner join lib_region t2 on t1.region_code = t2.region_code';
+        $sql = 'select a.uid,a.username, a.email, a.firstname, a.middlename,a.surname,a.extensionname, b.region_name, a.activated, a.user_level
+                from tbl_user a
+                INNer join lib_regions b
+                ON a.region_code = b.region_code';
 
-        }
+
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
 
     }
 
-    public function insertUserinfo($full_name,$email, $username,$pword,$userlevelid,$status,$regionlist)
+    public function insertUserinfo($firstname,$middlename,$surname,$extname, $position,$designation,$contact,$username,$password,$email,$userlevel,$region,$activate)
     {
         //from familyinfo/addfamilyinfo else
         $this->db->trans_begin();
         //insert the form data into database
 //            $this->db->insert('tbl_family_information');
-        $this->db->query('INSERT INTO users(full_name,username,email,passwd,region_code,activated,access_level,date_created)
+        $this->db->query('INSERT INTO tbl_user(firstname,middlename,surname,extensionname,position,designation,contact_no,username,password,email,user_level,region_code,activated)
                           VALUES
                           (
-                          "'.$full_name.'",
+                          "'.$firstname.'",
+						  "'.$middlename.'",
+						  "'.$surname.'",
+						  "'.$extname.'",
+						  "'.$position.'",
+						  "'.$designation.'",
+						  "'.$contact.'",
 						  "'.$username.'",
+						  "'.$password.'",
 						  "'.$email.'",
-						  "'.$pword.'",
-						  "'.$regionlist.'",
-						  "'.$status.'",
-						  "'.$userlevelid.'",
-						  now()
+						  "'.$userlevel.'",
+						  "'.$region.'",
+						  "'.$activate.'"
                           )');
 
         if ($this->db->trans_status() === FALSE)
@@ -63,7 +68,7 @@ class accesscontrol_model extends CI_Model
 
     public function getuserid($uid = 0)
     {
-        $query = $this->db->get_where('users',array('uid'=>$uid));
+        $query = $this->db->get_where('tbl_user',array('uid'=>$uid));
         if ($query->num_rows() > 0)
         {
             return $query->row();
@@ -75,19 +80,22 @@ class accesscontrol_model extends CI_Model
         $this->db->close();
     }
 
-    public function updateUserinfo($uid,$full_name,$email, $username,$pword,$userlevelid,$status,$regionlist,$myid)
+    public function updateUserinfo($firstname,$middlename,$surname,$extname, $position,$designation,$contact,$username,$email,$userlevel,$region,$activate,$uid)
     {
         $this->db->trans_begin();
-        $this->db->query('UPDATE users SET
-                              full_name="'.$full_name.'",
-							  username="'.$username.'",
-							  email="'.$email.'",
-							  passwd="'.$pword.'",
-                              region_code="'.$regionlist.'",
-                              activated="'.$status.'",
-                              access_level="'.$userlevelid.'",
-                              last_modified=now(),
-                              last_modified_by="'.$myid.'"
+        $this->db->query('UPDATE tbl_user SET
+                              firstname="'.$firstname.'",
+                              middlename="'.$middlename.'",
+                              surname="'.$surname.'",
+                              extensionname="'.$extname.'",
+                              position="'.$position.'",
+                              designation="'.$designation.'",
+                              contact_no="'.$contact.'",
+                              username="'.$username.'",
+                              email="'.$email.'",
+                              user_level="'.$userlevel.'",
+                              region_code="'.$region.'",
+                              activated="'.$activate.'"
 
                               WHERE
                               uid = "'.$uid.'"
@@ -126,7 +134,7 @@ class accesscontrol_model extends CI_Model
           region_code,
           region_name
         FROM
-          lib_region
+          lib_regions
         WHERE
           region_code <> '000000000'
         ORDER BY
@@ -136,12 +144,34 @@ class accesscontrol_model extends CI_Model
         return $this->db->query($get_regions)->result();
     }
 
-    public function deleteUserinfo($uid = 0)
+    public function deleteUserinfo($uid)
     {
         $this->db->trans_begin();
 
-        $this->db->query('UPDATE users SET
+        $this->db->query('UPDATE tbl_user SET
                               activated="0"
+                              WHERE
+                              uid = "'.$uid.'"
+                              ');
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+    public function activateUserinfo($uid)
+    {
+        $this->db->trans_begin();
+
+        $this->db->query('UPDATE tbl_user SET
+                              activated="1"
                               WHERE
                               uid = "'.$uid.'"
                               ');

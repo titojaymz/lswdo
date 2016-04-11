@@ -155,9 +155,9 @@
                                                                                                                                  <?php foreach($getLSWDO as $key=>$row): ?>
                                                                                                                                     <?php if($bronze4 == $row->indicator_id){ ?>
                                                                                                                                         <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                                                                            <td align="center"><b>Compliance</b></td>
+                                                                                                                                            <td align="center"><b>Compliant</b></td>
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                                                                            <td align="center"><b>Non-Compliance</b></td>
+                                                                                                                                            <td align="center"><b>Not Compliant</b></td>
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                                                                             <td align="center"><b>N/A</b></td>
                                                                                                                                         <?php } ?>
@@ -168,9 +168,9 @@
                                                                                                                                <?php foreach($getLSWDO as $key=>$row): ?>
                                                                                                                                     <?php if($silver4 == $row->indicator_id){ ?>
                                                                                                                                         <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                                                                            <td align="center"><b>Compliance</b></td>
+                                                                                                                                            <td align="center"><b>Compliant</b></td>
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                                                                            <td align="center"><b>Non-Compliance</b></td>
+                                                                                                                                            <td align="center"><b>Not Compliant</b></td>
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                                                                             <td align="center"><b>N/A</b></td>
                                                                                                                                         <?php } ?>
@@ -180,9 +180,9 @@
                                                                                                                                    <?php foreach($getLSWDO as $key=>$row): ?>
                                                                                                                                     <?php if($gold4 == $row->indicator_id){ ?>
                                                                                                                                         <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                                                                            <td align="center"><b>Compliance</b></td>
+                                                                                                                                            <td align="center"><b>Compliant</b></td>
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                                                                            <td align="center"><b>Non-Compliance</b></td>
+                                                                                                                                            <td align="center"><b>Not Compliant</b></td>
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                                                                             <td align="center"><b>N/A</b></td>
                                                                                                                                         <?php } ?>
@@ -207,9 +207,9 @@
                                                                    <?php foreach($getLSWDO as $key=>$row): ?>
                                                                         <?php if($bronze3 == $row->indicator_id){ ?>
                                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                <td align="center"><b>Compliance</b></td>
+                                                                                <td align="center"><b>Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                                <td align="center"><b>Not Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
@@ -220,9 +220,9 @@
                                                                         <?php foreach($getLSWDO as $key=>$row): ?>
                                                                         <?php if($silver3 == $row->indicator_id){ ?>
                                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                <td align="center"><b>Compliance</b></td>
+                                                                                <td align="center"><b>Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                                <td align="center"><b>Not Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
@@ -233,9 +233,9 @@
                                                                             <?php foreach($getLSWDO as $key=>$row): ?>
                                                                         <?php if($gold3 == $row->indicator_id){ ?>
                                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                <td align="center"><b>Compliance</b></td>
+                                                                                <td align="center"><b>Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                                <td align="center"><b>Not Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
@@ -287,9 +287,9 @@
                                                                    <?php foreach($getLSWDO as $key=>$row): ?>
                                                                         <?php if($bronze2 == $row->indicator_id){ ?>
                                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                <td align="center"><b>Compliance</b></td>
+                                                                                <td align="center"><b>Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                                <td align="center"><b>Not Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
@@ -300,9 +300,9 @@
                                                                      <?php foreach($getLSWDO as $key=>$row): ?>
                                                                         <?php if($silver2 == $row->indicator_id){ ?>
                                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                <td align="center"><b>Compliance</b></td>
+                                                                                <td align="center"><b>Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                                <td align="center"><b>Not Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
@@ -313,9 +313,9 @@
                                                                            <?php foreach($getLSWDO as $key=>$row): ?>
                                                                         <?php if($gold2 == $row->indicator_id){ ?>
                                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                                <td align="center"><b>Compliance</b></td>
+                                                                                <td align="center"><b>Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                                <td align="center"><b>Not Compliant</b></td>
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
@@ -368,9 +368,9 @@
                                                             <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($bronze == $row->indicator_id){ ?>
                                                                     <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                        <td align="center"><b>Compliance</b></td>
+                                                                        <td align="center"><b>Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                        <td align="center"><b>Non-Compliance</b></td>
+                                                                        <td align="center"><b>Not Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
@@ -381,9 +381,9 @@
                                                             <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($silver == $row->indicator_id){ ?>
                                                                    <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                        <td align="center"><b>Compliance</b></td>
+                                                                        <td align="center"><b>Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                        <td align="center"><b>Non-Compliance</b></td>
+                                                                        <td align="center"><b>Not Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
@@ -394,9 +394,9 @@
                                                                 <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($gold == $row->indicator_id){ ?>
                                                                   <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                        <td align="center"><b>Compliance</b></td>
+                                                                        <td align="center"><b>Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                        <td align="center"><b>Non-Compliance</b></td>
+                                                                        <td align="center"><b>Not Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>

@@ -271,7 +271,7 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="swdo_name">SWDO Name:</label>
+                            <label for="swdo_name">Name of SWDO Officer/Head:</label>
                             <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="SWDO Name">
                         </div>
 
@@ -306,7 +306,7 @@ if (!$this->session->userdata('user_id')){
                             <label for="budget" class="control-label">Budget Allocation and Utilization</label>
                         </div>
                         <div class="form-group">
-                            <label for="total_ira">Total IRA:</label>
+                            <label for="total_ira">Total Internal Revenue Allotment:</label>
                             <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
                         </div>
                         <div class="form-group">
@@ -314,7 +314,7 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
                         </div>
 
-                        <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
+                        <?php /*----------------------------Total Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
 
 
                         <div class="form-group">

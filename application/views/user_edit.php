@@ -1,155 +1,129 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-if (!$this->session->userdata('user_data')){
-    redirect('/users/login','location');
-//test0000000
-}
-$user_region = $this->session->userdata('uregion');
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <div class="content">
-
-    <!-- Start Page Header -->
     <div class="page-header">
-        <h1 class="title">User List</h1>
-        <ol class="breadcrumb">
-            <li><a href="<?php echo base_url('dashboardc/dashboard/'.$user_region.''); ?>">Home</a></li>
-            <li><a href="<?php echo base_url('access_control/users'); ?>">Users</a></li>
-            <li class="active">Edit User</li>
-        </ol>
-
-
+        <h1 class="title">Users List</h1>
     </div>
-    <!-- End Page Header 1-->
-
     <div class="container-padding">
-    <div class="row">
-
-        <!-- Start Panel -->
-        <div class="col-md-7">
-            <div class="panel panel-default">
-
-            <form name = "edituserinfoForm" method="post" class="form-horizontal">
-                <fieldset>
-                    <div class="form-group">
-                        <input class="form-control"  type="hidden" name="uid" value="<?php echo $user_details->uid ?>">
-                        <input class="form-control"  type="hidden" name="myid" value="<?php echo $this->session->userdata('uid')?>">
-                    </div>
-                    <div id="edit" class="col-lg-6">
-
-                    <div class="form-group">
-                        <label for="firstname">First Name:</label>
-                        <input class="form-control" type="text" name="firstname" value="<?php echo $user_details->firstname ?>" placeholder="First Name">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        Add User
                     </div>
 
-                        <div class="form-group">
-                        <label for="middlename">Middle Name:</label>
-                        <input class="form-control" type="text" name="middlename" value="<?php echo $user_details->middlename ?>" placeholder="Middle Name">
-                    </div>
-
-                        <div class="form-group">
-                        <label for="surname">Sur Name:</label>
-                        <input class="form-control" type="text" name="surname" value="<?php echo $user_details->surname ?>" placeholder="Sur Name">
-                    </div>
-
-                        <div class="form-group">
-                        <label for="extensionname">Extension Name:</label>
-                        <input class="form-control" type="text" name="extensionname" value="<?php echo $user_details->extensionname ?>" placeholder="Extension Name">
-                    </div>
-
-                        <div class="form-group">
-                        <label for="position">Position:</label>
-                        <input class="form-control" type="text" name="position" value="<?php echo $user_details->position ?>" placeholder="Position">
-                    </div>
-
-                        <div class="form-group">
-                        <label for="designation">Designation:</label>
-                        <input class="form-control" type="text" name="designation" value="<?php echo $user_details->designation ?>" placeholder="Designation">
-                    </div>
-
-                        <div class="form-group">
-                        <label for="contactno">Contact No:</label>
-                        <input class="form-control" type="text" name="contactno" value="<?php echo $user_details->contactno ?>" placeholder="Contact No">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input class="form-control" type="text" name="username" value="<?php echo $user_details->username ?>" placeholder="Username">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input class="form-control" type="password" name="password" value="<?php echo $user_details->passwd ?>" placeholder="Password">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input class="form-control" type="email" name="email" value="<?php echo $user_details->email ?>" placeholder="Email Address">
-                    </div>
-
-                    <div class="form-group form-group-sm">
-                        <label for="access_level" class="col-lg-3 control-label">Access Level:</label>
-                        <div id="div_access_level" class="col-lg-9">
-                            <select name="access_level" id="access_level" class="form-control"">
-                                <option value="0">Choose Region</option>
-                                <?php foreach($levellist as $levelselect): ?>
-                                    <option value="<?php echo $levelselect->userlevelid; ?>"
-                                        <?php if(isset($user_details->access_level )) {
-                                            if($levelselect->userlevelid == $levelselect->userlevelid) {
-                                                echo " selected";
-                                            }
-                                        } ?>
-                                    >
-                                        <?php echo $levelselect->userlevelname; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                    <div class="panel-body">
+                        <?php echo form_open('',array('class'=>'form-horizontal')) ?>
+                        <table class="table display table-bordered table-striped table-hover">
+                            <tr>
+                                <td><label for="firstname" class="control-label">First Name:</label></td>
+                                <td>
+                                    <input id="firstname" name="firstname" placeholder="First name" type="text" class="form-control"  value="<?php echo $user_details->firstname; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('firstname'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="middlename" class="control-label">Middle Name:</label></td>
+                                <td>
+                                    <input id="middlename" name="middlename" placeholder="Middle name" type="text" class="form-control"  value="<?php echo $user_details->middlename; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('middlename'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="surname" class="control-label">Last Name:</label></td>
+                                <td>
+                                    <input id="surname" name="surname" placeholder="Last name" type="text" class="form-control"  value="<?php echo $user_details->surname; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('surname'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="extensionname" class="control-label">Extension Name:</label></td>
+                                <td>
+                                    <input id="extensionname" name="extensionname" placeholder="Extension name" type="text" class="form-control"  value="<?php echo $user_details->extensionname; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('extensionname'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="position" class="control-label">Position:</label></td>
+                                <td>
+                                    <input id="position" name="position" placeholder="Position" type="text" class="form-control"  value="<?php echo $user_details->position; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('position'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="designation" class="control-label">Designation:</label></td>
+                                <td>
+                                    <input id="designation" name="designation" placeholder="Designation" type="text" class="form-control"  value="<?php echo $user_details->designation; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('designation'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="contactno" class="control-label">Contact No:</label></td>
+                                <td>
+                                    <input id="contactno" name="contactno" placeholder="Contact No" type="text" class="form-control"  value="<?php echo $user_details->contact_no; ?>" required autofocus/>
+                                    <span class="text-danger"><?php echo form_error('contactno'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="username" class="control-label">Username:</label></td>
+                                <td>
+                                    <input id="username" name="username" placeholder="Username" type="text" class="form-control"  value="<?php echo $user_details->username; ?>" required />
+                                    <span class="text-danger"><?php echo form_error('username'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="e_add" class="control-label">Email Address:</label></td>
+                                <td>
+                                    <input id="e_add" name="e_add" placeholder="Email Address" type="text" class="form-control"  value="<?php echo $user_details->email; ?>" required/>
+                                    <span class="text-danger"><?php echo form_error('e_add'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="userlevelid" class="control-label">User Level:</label></td>
+                                <td>
+                                    <select name="userlevelid" id="userlevelid" class="form-control"">
+                                    <option value="0">-Please select-</option>
+                                    <option value="-1" <?php if($user_details->user_level == -1){ echo "selected"; }  ?>>Administrator</option>
+                                    <option value="2" <?php if($user_details->user_level == 2){ echo "selected"; }  ?>>Staff</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="regionlist" class="control-label">Region:</label></td>
+                                <td>
+                                    <select name="regionlist" id="regionlist" class="form-control">
+                                        <option value="0">Choose Region</option>
+                                        <?php foreach($regionlist as $regionselect): ?>
+                                            <option value="<?php echo $regionselect->region_code; ?>"
+                                                <?php if(isset($user_details->region_code)) {
+                                                    if($regionselect->region_code == $user_details->region_code) {
+                                                        echo " selected";
+                                                    }
+                                                } ?>
+                                            >
+                                                <?php echo $regionselect->region_name; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="regionlist" class="control-label">Activated:</label></td>
+                                <td>
+                                    <select class="selectpicker" name="status" id = "status">
+                                        <option data-icon="fa fa-check" value="1" <?php if($user_details->activated == 1){ echo "selected"; }  ?>>Yes</option>
+                                        <option data-icon="fa fa-close" value="0" <?php if($user_details->activated == 0){ echo "selected"; }  ?>>No</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <div class="btn-group">
+                            <button type="submit" id = "submit" name="submit" value="submit" class="btn btn-lg btn-rounded btn-success" onclick = "return validation();"><i class="fa fa-check"></i> Save</button>
                         </div>
-
-                        <label for="regionlist" class="col-lg-3 control-label">Region:</label>
-                        <div id="div_regionlist" class="col-lg-9">
-                            <select name="regionlist" id="regionlist" class="form-control"">
-                                <option value="0">Choose Region</option>
-                                <?php foreach($regionlist as $regionselect): ?>
-                                    <option value="<?php echo $regionselect->region_code; ?>"
-                                        <?php if(isset($user_details->region_code )) {
-                                            if($regionselect->region_code == $regionselect->region_code) {
-                                                echo " selected";
-                                            }
-                                        } ?>
-                                    >
-                                        <?php echo $regionselect->region_name; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <label for="status" class="col-lg-3 control-label">Activated:</label>
-                        <div id="div_status" class="col-lg-9">
-                            <select name="status" id="status" class="form-control"">
-                                <option value="<?php echo $user_details->activated; ?>"
-                                ><?php echo ($user_details->activated ? 'Yes' : 'No') ; ?>
-                                </option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
-                        </div>
+                        <?php echo form_close() ?>
                     </div>
-
-                    <div class="btn-group">
-                        <?php /*  <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-            <a class="btn btn-warning btn-group" href="familyinfo"><i class="fa fa-refresh"></i> Cancel</a> */?>
-
-                        <input id="btn_succes" name="btn_success" type="submit" class="btn btn-primary" value="Update" />
-                        <input id="btn_cancel" name="btn_cancel" type="reset" class="btn btn-danger" value="Cancel" />
-                    </div>
-                    <div><br>
-                        <a class="btn btn-sm btn-warning" href="<?php echo base_url('access_control/users') ?>">Back</a>
-                    </div>
-                    <fieldset>
-
-
-                    </div>
-            </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-        </div>

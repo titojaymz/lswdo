@@ -24,6 +24,10 @@
                 <div class = "panel-body" style="display: block;">
                     <?php $countLS = count($checkPart4) ?>
                     <?php if($countLS > 0){ ?>
+                        <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>III. CASE MANAGEMENT</b></a>
+                        <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewAll/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i><b>View All</b></a><br><br>
+<!--                        <a class="btn btn-m btn-option3" href="--><?php //echo base_url('indicator/indicatorEditpart4/'.$profileID.'/'.$refID) ?><!--"><i class="fa fa-check-square"></i> Edit</a>-->
+                        <a class="btn btn-m btn-option4" href="<?php echo base_url('indicator/indicatordeletepart4/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
                         <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
@@ -90,9 +94,9 @@
                                                     <?php foreach($getLSWDO as $key=>$row): ?>
                                                         <?php if($bronze2 == $row->indicator_id){ ?>
                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                <td align="center"><b>Compliance</b></td>
+                                                                <td align="center"><b>Compliant</b></td>
                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                <td align="center"><b>Not Compliant</b></td>
                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                 <td align="center"><b>N/A</b></td>
                                                             <?php } ?>
@@ -103,9 +107,9 @@
                                                         <?php foreach($getLSWDO as $key=>$row): ?>
                                                             <?php if($silver2 == $row->indicator_id){ ?>
                                                                 <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                    <td align="center"><b>Compliance</b></td>
+                                                                    <td align="center"><b>Compliant</b></td>
                                                                 <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                    <td align="center"><b>Non-Compliance</b></td>
+                                                                    <td align="center"><b>Not Compliant</b></td>
                                                                 <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                     <td align="center"><b>N/A</b></td>
                                                                 <?php } ?>
@@ -116,9 +120,9 @@
                                                             <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($gold2 == $row->indicator_id){ ?>
                                                                     <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                        <td align="center"><b>Compliance</b></td>
+                                                                        <td align="center"><b>Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                        <td align="center"><b>Non-Compliance</b></td>
+                                                                        <td align="center"><b>Not Compliant</b></td>
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
@@ -168,9 +172,9 @@
                                             <?php foreach($getLSWDO as $key=>$row): ?>
                                                 <?php if($bronze == $row->indicator_id){ ?>
                                                     <?php if($row->compliance_indicator_id == 1){ ?>
-                                                        <td align="center"><b>Compliance</b></td>
+                                                        <td align="center"><b>Compliant</b></td>
                                                     <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                        <td align="center"><b>Non-Compliance</b></td>
+                                                        <td align="center"><b>Not Compliant</b></td>
                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                         <td align="center"><b>N/A</b></td>
                                                     <?php } ?>
@@ -181,9 +185,9 @@
                                                 <?php foreach($getLSWDO as $key=>$row): ?>
                                                     <?php if($silver == $row->indicator_id){ ?>
                                                         <?php if($row->compliance_indicator_id == 1){ ?>
-                                                            <td align="center"><b>Compliance</b></td>
+                                                            <td align="center"><b>Compliant</b></td>
                                                         <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                            <td align="center"><b>Non-Compliance</b></td>
+                                                            <td align="center"><b>Not Compliant</b></td>
                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                             <td align="center"><b>N/A</b></td>
                                                         <?php } ?>
@@ -194,9 +198,9 @@
                                                     <?php foreach($getLSWDO as $key=>$row): ?>
                                                         <?php if($gold == $row->indicator_id){ ?>
                                                             <?php if($row->compliance_indicator_id == 1){ ?>
-                                                                <td align="center"><b>Compliance</b></td>
+                                                                <td align="center"><b>Compliant</b></td>
                                                             <?php } elseif($row->compliance_indicator_id == 2){?>
-                                                                <td align="center"><b>Non-Compliance</b></td>
+                                                                <td align="center"><b>Not Compliant</b></td>
                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                 <td align="center"><b>N/A</b></td>
                                                             <?php } ?>
