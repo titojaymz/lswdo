@@ -57,8 +57,8 @@ class Model_user extends CI_Model {
         $this->email = $email;
         $this->regionlist = $regionlist;
         $this -> account_locked = 'locked';
-        $this -> locked = 'yes';
-        $this -> logged = "yes";
+        $this -> locked = 'Yes';
+        $this -> logged = "Yes";
     }
     public function registerUser()
     {
@@ -118,14 +118,14 @@ class Model_user extends CI_Model {
             // retrieve the userid, username , password, account status
             $account_status = $query['locked_status'];
             // check the account status
-            if ($account_status === 'yes') {
+            if ($account_status === 'Yes') {
                 return $this -> account_locked;
             }
             // fetch the user_id, username and password
-            $user_id = $query['uid'];
+            $uid = $query['uid'];
 
-            if (!$this -> session -> userdata('user_id')) {
-                $this -> session -> set_userdata('user_id', $user_id);
+            if (!$this -> session -> userdata('uid')) {
+                $this -> session -> set_userdata('uid', $uid);
             }
             $user_name = $query['username'];
             $user_password = $query['password'];
@@ -135,14 +135,14 @@ class Model_user extends CI_Model {
             if ($newkey != $user_password) {
                 //return ($this -> create_session($session_id, $user_id));
                 $session_id = $this -> session -> userdata('session_id');
-                return ($this -> update_ci_session($session_id, $user_id));
+                return ($this -> update_ci_session($session_id, $uid));
             }
             // check if passwords do match, then set session and log the user.
             else if (($newkey === $user_password)) {
-                $userdata = array('user_id' => $user_id, 'user_name' => $user_name);
+                $userdata = array('uid' => $uid, 'user_name' => $user_name);
                 $this -> session -> set_userdata($userdata);
-                $this -> update_users_activity($user_id, $this -> logged);
-                //$this->update_session_start($user_id,$session_id);
+                $this -> update_users_activity($uid, $this -> logged);
+//                $this->update_session_start($uid,$session_id);
                 return true;
             }
         } else {

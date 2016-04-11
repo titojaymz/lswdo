@@ -247,7 +247,7 @@ class CI_Session {
 		$this->CI->db->update($this->sess_table_name,
 				array(
 						'session_start' => $this->userdata['session_start'],
-						'user_id'        =>$this->userdata['user_id'],
+						'user_id'        =>$this->userdata['uid'],
 						'login_attempt'=> $this->userdata['login_attempt'],
 						'user_data' => $custom_userdata));
 		// Write the cookie.  Notice that we manually pass the cookie data array to the
