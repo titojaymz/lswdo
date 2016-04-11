@@ -49,6 +49,7 @@ class assessmentinfo extends CI_Controller {
 
     public function addAssessmentinfo()
     {
+
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
@@ -68,7 +69,7 @@ class assessmentinfo extends CI_Controller {
 
             $this->init_rpmb_session();
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
-            $rpmb['income_class'] = $income_class;
+           // $rpmb['income_class'] = $income_class;
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
             $rpmb['form_message'] = $form_message;
@@ -92,7 +93,7 @@ class assessmentinfo extends CI_Controller {
             $regionlist = $this->input->post('regionlist');
             $provlist = $this->input->post('provlist');
             $citylist = $this->input->post('citylist');
-            $income_class = $this->input->post('income_class');
+           // $income_class = $this->input->post('income_class');
             $office_address = $this->input->post('office_address');
             $swdo_name = $this->input->post('swdo_name');
             $designation = $this->input->post('designation');
@@ -101,9 +102,9 @@ class assessmentinfo extends CI_Controller {
             $website = $this->input->post('website');
             $total_ira = $this->input->post('total_ira');
             $total_budget_lswdo = $this->input->post('total_budget_lswdo');
-            $date_created = $this->input->post('date_created');
+            $date_created = 'NOW()';
 
-            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$date_created);
+            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created);
             if ($addResult){
 
                 //  $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
@@ -130,7 +131,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_add',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'income_class' => $income_class,
+                //    'income_class' => $income_class,
                     //  'region' => $region_name,
                     //   'province' => $prov_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
@@ -143,25 +144,116 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+/*
     public function editAssessmentinfo($id = 0)
     {
-        if ($id > 0){
+        if ($id > 0) {
+
             $assessmentinfo_model = new assessmentinfo_model();
+            $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
+            $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
 
             $this->validateEditForm();
 
-            if (!$this->form_validation->run()){
+            if (!$this->form_validation->run()) {
                 $form_message = '';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
 
-                $rpmb['application_type_id'] = $this->assessmentinfo_model->Lib_getAllApplicationtype();
-                $rpmb['lgu_type_id'] = $this->assessmentinfo_model->Lib_getLGUtype();
+                $this->init_rpmb_session();
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
-                $rpmb['assessmentinfo_details'] = $this->assessmentinfo_model->getAssessmentinfoByID($id);
-                $this->load->view('assessmentinfo_edit',$rpmb);
+                $rpmb['application'] = $application_type_name;
+                $rpmb['lgu_type'] = $lgu_type_name;
+                $rpmb['form_message'] = $form_message;
 
+                $rpmb['assessmentinfo_details'] = $this->assessmentinfo_model->getAssessmentinfoByID($id);
+                $this->load->view('assessmentinfo_edit', $rpmb);
+                $this->load->view('sidepanel');
+                $this->load->view('footer');
+
+            } else {
+
+                $application_type_id = $this->input->post('application_type_id');
+                $lgu_type_id = $this->input->post('lgu_type_id');
+                $regionlist = $this->input->post('regionlist');
+                $provlist = $this->input->post('provlist');
+                $citylist = $this->input->post('citylist');
+                // $income_class = $this->input->post('income_class');
+                $office_address = $this->input->post('office_address');
+                $swdo_name = $this->input->post('swdo_name');
+                $designation = $this->input->post('designation');
+                $contact_no = $this->input->post('contact_no');
+                $email = $this->input->post('email');
+                $website = $this->input->post('website');
+                $total_ira = $this->input->post('total_ira');
+                $total_budget_lswdo = $this->input->post('total_budget_lswdo');
+
+//                             $status = $this->input->post('status');
+//                             $region = $this->input->post('region');
+
+                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id, $application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo);
+                if ($updateResult) {
+
+                    $this->init_rpmb_session();
+                    $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+
+                    if (isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                        $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
+                    }
+                    if (isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                        $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
+                    }
+
+                    //call the model function to get the family info data
+
+                    $this->load->view('sidebar');
+
+                    $form_message = 'Add Success!';
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('footer');
+
+                    $this->load->view('assessmentinfo_add', array(
+                        'application' => $application_type_name,
+                        'lgu_type' => $lgu_type_name,
+                        //  'region' => $region_name,
+                        //   'province' => $prov_name,
+                        'assessmentinfo_data' => $assessmentinfo_model->getAssessmentinfo(),
+                        'list_fields' => $this->listFields(),
+                        'form_message' => $form_message,
+                    ));
+                    $this->load->view('footer');
+                }
+            }
+        }
+    }
+*/
+
+    public function editAssessmentinfo($id = 0)
+    {
+        if ($id > 0){
+            $assessmentinfo_model = new assessmentinfo_model();
+            $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
+            $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+
+            $this->validateEditForm();
+
+            if (!$this->form_validation->run()) {
+                $form_message = '';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+
+                $this->init_rpmb_session();
+                $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+                $rpmb['application'] = $application_type_name;
+                $rpmb['lgu_type'] = $lgu_type_name;
+                $rpmb['form_message'] = $form_message;
+
+                $rpmb['assessmentinfo_details'] = $this->assessmentinfo_model->getAssessmentinfoByID($id);
+                $this->load->view('assessmentinfo_edit', $rpmb);
+                $this->load->view('sidepanel');
                 $this->load->view('footer');
 
             } else {
@@ -183,43 +275,11 @@ class assessmentinfo extends CI_Controller {
 
                 $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$date_modified);
                 if ($updateResult){
-                    // $this->load->view('student_update_success',array('redirectIndex'=>$this->redirectIndex()));
-                    $this->load->library('pagination');
-                    $this->load->library('model');
-                    $config=array();
-                    $config['base_url'] = base_url().'assessmentinfo/index';
-                    $config['total_rows'] = $this->assessmentinfo_model->record_count();
-                    $config['per_page'] = 10;
-
-                    $config['full_tag_open'] = '<div class="pagination pagination-sm"><ul>';
-                    $config['full_tag_open'] = '<ul class="pagination pagination-sm">';
-                    $config['full_tag_close'] = '</ul>';
-                    $config['first_link'] = false;
-                    $config['last_link'] = false;
-                    $config['first_tag_open'] = '<li>';
-                    $config['first_tag_close'] = '</li>';
-                    $config['prev_link'] = '&laquo';
-                    $config['prev_tag_open'] = '<li class="prev">';
-                    $config['prev_tag_close'] = '</li>';
-                    $config['next_link'] = '&raquo';
-                    $config['next_tag_open'] = '<li>';
-                    $config['next_tag_close'] = '</li>';
-                    $config['last_tag_open'] = '<li>';
-                    $config['last_tag_close'] = '</li>';
-                    $config['cur_tag_open'] = '<li class="active"><a href="#">';
-                    $config['cur_tag_close'] = '</a></li>';
-                    $config['num_tag_open'] = '<li>';
-                    $config['num_tag_close'] = '</li>';
-                    $this->pagination->initialize($config);
-
-                    $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
 
                     $this->init_rpmb_session();
                     $rpmb['application_type_id'] = $this->assessmentinfo_model->Lib_getAllApplicationtype();
                     $rpmb['lgu_type_id'] = $this->assessmentinfo_model->Lib_getLGUtype();
                     $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
-
-                    $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
 
                     if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
                         $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
@@ -228,14 +288,15 @@ class assessmentinfo extends CI_Controller {
                         $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                     }
 
-                    $datarpmb = array_merge($data,$rpmb);
                     $form_message = 'Update Success';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('sidebar');
-                    $this->load->view('assessmentinfo_listview', $datarpmb);
-                    $this->load->view('sidepanel');
-                    $this->load->view('footer');
+                    $this->load->view('assessmentinfo_list',array(
+                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
+                        'list_fields'=>$this->listFields(),
+                        'form_message'=>$form_message
+                    ));
                 }
                 $this->redirectIndex();
             }

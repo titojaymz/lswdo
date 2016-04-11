@@ -314,7 +314,7 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
                         </div>
 
-                        <?php /*----------------------------Budget Allocation and UtilizationTotal Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
+                        <?php /*----------------------------Total Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
 
 
                         <div class="form-group">

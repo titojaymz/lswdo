@@ -100,16 +100,16 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
     {
         $this->db->trans_begin();
 
         $this->db->query('UPDATE tbl_lswdo SET
                           application_type_id="'.$application_type_id.'",
                           lgu_type_id="'.$lgu_type_id.'",
-                          region_code="'.$region_code.'",
-                          prov_code="'.$prov_code.'",
-                          city_code="'.$city_code.'",
+                          region_code="'.$regionlist.'",
+                          prov_code="'.$provlist.'",
+                          city_code="'.$citylist.'",
                           office_address="'.$office_address.'",
                           swdo_name="'.$swdo_name.'",
                           designation="'.$designation.'",
@@ -117,8 +117,7 @@ class assessmentinfo_model extends CI_Model {
                           email="'.$email.'",
                           website="'.$website.'",
                           total_ira="'.$total_ira.'",
-                          total_budget_lswdo="'.$total_budget_lswdo.'",
-                          date_modified=Now()
+                          total_budget_lswdo="'.$total_budget_lswdo.'"
                           WHERE
                           profile_id = "'.$id.'"
                           ');
