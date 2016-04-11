@@ -260,7 +260,7 @@ class CI_Session {
 	 * Create a new session
 	 *
 	 * @access	public
-	 * @return	void
+	 * @return	void sdfas
 	 */
 	function sess_create($user_id = null)
 	{
