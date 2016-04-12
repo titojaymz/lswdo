@@ -109,7 +109,7 @@ class Model_user extends CI_Model {
     }
     public function ifUserExist($newkey)
     {
-        // fetch the username record from the databse users.
+        // fetch the username record from the databse users.sdfsdfsdfsd
         $query = $this -> db -> get_where('tbl_user', array('username' => $this->getUsername(),'activated' => 1));
         // check if we have a record in the db
         if ($query -> num_rows() > 0) {
