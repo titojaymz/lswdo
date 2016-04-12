@@ -251,14 +251,17 @@ class assessmentinfo_model extends CI_Model {
     public function get_cities($prov_code) {
         $get_cities = "
         SELECT
-            city_code,
-            city_name
+            lib_cities.city_code as city_code,
+            lib_cities.city_name as city_name,
+            count(lib_cities.city_code) as no_cities
         FROM
           lib_cities
+        LEFT JOIN
+          lib_provinces on lib_cities.prov_code=lib_provinces.prov_code
         WHERE
-          prov_code = ?
+          lib_provinces.prov_code = ?
         ORDER BY
-          city_name
+          lib_cities.city_name
         ";
 
         return $this->db->query($get_cities,$prov_code)->result();
@@ -295,8 +298,8 @@ class assessmentinfo_model extends CI_Model {
 
         return $this->db->query($get_incomeclass)->result();
     }
-
-    public function get_no_cities() {
+/*
+    public function get_no_cities($prov_code) {
         $get_no_cities = "
         SELECT
         lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS No_Cities
@@ -309,9 +312,9 @@ class assessmentinfo_model extends CI_Model {
           lib_cities.city_name
            ";
 
-        return $this->db->query($get_no_cities)->result();
+        return $this->db->query($get_no_cities,$prov_code)->result();
     }
-
+*/
     public function get_no_muni() {
         $get_no_muni = "
         SELECT

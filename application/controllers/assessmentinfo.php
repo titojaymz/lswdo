@@ -81,7 +81,6 @@ class assessmentinfo extends CI_Controller {
                 $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
             }
 
-
             $this->load->view('assessmentinfo_add',$rpmb);
             $this->load->view('footer');
 
@@ -314,24 +313,25 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
+        $this->load->view('sidepanel');
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
         if ($AssessmentDetails){
             $form_message = $form_message;
             $data = array(
                 'profile_id'                 =>      $AssessmentDetails->profile_id,
-                'application_type_id'      =>      $AssessmentDetails->application_type_id,
-                'lgu_type_id'      =>      $AssessmentDetails->lgu_type_id,
-                'region_code'      =>      $AssessmentDetails->region_code,
-                'prov_code'      =>      $AssessmentDetails->prov_code,
-                'city_code'      =>      $AssessmentDetails->city_code,
-                'office_address'      =>      $AssessmentDetails->office_address,
-                'swdo_name'      =>      $AssessmentDetails->swdo_name,
-                'designation'      =>      $AssessmentDetails->designation,
-                'contact_no'      =>      $AssessmentDetails->contact_no,
-                'email'      =>      $AssessmentDetails->email,
-                'website'      =>      $AssessmentDetails->website,
-                'total_ira'      =>      $AssessmentDetails->total_ira,
-                'total_budget_lswdo'      =>      $AssessmentDetails->total_budget_lswdo
+                'application_type_id'        =>      $AssessmentDetails->application_type_id,
+                'lgu_type_id'                =>      $AssessmentDetails->lgu_type_id,
+                'region_code'                =>      $AssessmentDetails->region_code,
+                'prov_code'                  =>      $AssessmentDetails->prov_code,
+                'city_code'                  =>      $AssessmentDetails->city_code,
+                'office_address'             =>      $AssessmentDetails->office_address,
+                'swdo_name'                  =>      $AssessmentDetails->swdo_name,
+                'designation'                =>      $AssessmentDetails->designation,
+                'contact_no'                 =>      $AssessmentDetails->contact_no,
+                'email'                      =>      $AssessmentDetails->email,
+                'website'                    =>      $AssessmentDetails->website,
+                'total_ira'                  =>      $AssessmentDetails->total_ira,
+                'total_budget_lswdo'         =>      $AssessmentDetails->total_budget_lswdo
 
             );
         } else {
