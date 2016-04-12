@@ -3,7 +3,7 @@
  * Created by JOSEF FRIEDRICH S. BALDO
  * Date Time: 10/17/15 11:16 PM
  */
-echo validation_errors();
+error_reporting(0);
 ?><script type="text/javascript">
 
     /* client-side validation test
@@ -24,34 +24,38 @@ echo validation_errors();
         <div class="top">
             <h1>Register</h1>
         </div>
-        <?php echo $form_message;?>
-        <div class="form-area">
+
+        <div class="form-area"><?php echo $form_message;?><?php echo validation_errors() ?>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Username" name="username" required>
+                <input type="text" class="form-control" value="<?php echo htmlspecialchars($_POST['username']); ?>" placeholder="Username" name="username" required>
                 <i class="fa fa-user-secret"></i>
             </div>
             <div class="group">
-                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                <input type="password" class="form-control" placeholder="Password" name="password"  required>
                 <i class="fa fa-key"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="First Name" name="firstname" required>
+                <input type="password" class="form-control" placeholder="Confirm Password" name="password2" required>
+                <i class="fa fa-key"></i>
+            </div>
+            <div class="group">
+                <input type="text" class="form-control" placeholder="First Name" name="firstname"  value="<?php echo htmlspecialchars($_POST['firstname']); ?>" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Middle Name" name="middlename" required>
+                <input type="text" class="form-control" placeholder="Middle Name" name="middlename" value="<?php echo htmlspecialchars($_POST['middlename']); ?>" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Sur Name" name="surname" required>
+                <input type="text" class="form-control" placeholder="Sur Name" name="surname" value="<?php echo htmlspecialchars($_POST['surname']); ?>" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Extension Name" name="extensionname">
+                <input type="text" class="form-control" placeholder="Extension Name" name="extensionname" value="<?php echo htmlspecialchars($_POST['extensionname']); ?>">
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="email" class="form-control" placeholder="E-mail" name="email" required>
+                <input type="email" class="form-control" placeholder="E-mail" name="email" value="<?php echo htmlspecialchars($_POST['email']); ?>" required>
                 <i class="fa fa-envelope-o"></i>
             </div>
 

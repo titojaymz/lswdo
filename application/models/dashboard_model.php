@@ -10,8 +10,7 @@ class dashboard_model extends CI_Model
      */
     public function getFunctionalityScore()
     {
-        $sql = '
-SELECT
+        $sql = 'SELECT
 SUM(IF(a.level_function = \'Functional\',1,0)) \'Functional\',
 SUM(IF(a.level_function = \'Fully Functional\',1,0)) \'FullyFunctional\',
 SUM(IF(a.level_function = \'Partially Functional\',1,0)) \'PartiallyFunctional\'
@@ -21,6 +20,7 @@ INNER JOIN tbl_lswdo b
 ON b.profile_id = a.prof_id
 Inner Join lib_regions c
 ON b.region_code = c.region_code
+where b.deleted = 0
 GROUP BY c.region_name;';
         /*$sql = 'select c.region_name,b.profile_id,
                 case b.lgu_type_id

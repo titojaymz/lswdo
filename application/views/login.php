@@ -14,7 +14,7 @@ if (!$this->session->userdata('user_id')){
 
             <div class="form-area">
                 <div class="group">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username"  required autofocus>
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="group">
@@ -25,6 +25,7 @@ if (!$this->session->userdata('user_id')){
                     <input id="checkbox101" type="checkbox" checked>
                     <label for="checkbox101"> Remember Me</label>
                 </div>
+                <div class="g-recaptcha" data-sitekey="6LcMzRwTAAAAADzg5oggwcUaZGdPWZ4keM-bP7Fn"></div>
                 <button type="submit" type="submit" class="btn btn-default btn-block">LOGIN</button>
             </div>
         </form>

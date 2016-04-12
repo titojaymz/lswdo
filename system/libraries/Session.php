@@ -247,7 +247,7 @@ class CI_Session {
 		$this->CI->db->update($this->sess_table_name,
 				array(
 						'session_start' => $this->userdata['session_start'],
-						'user_id'        =>$this->userdata['uid'],
+						'user_id'        =>$this->userdata['user_id'],
 						'login_attempt'=> $this->userdata['login_attempt'],
 						'user_data' => $custom_userdata));
 		// Write the cookie.  Notice that we manually pass the cookie data array to the
@@ -260,7 +260,7 @@ class CI_Session {
 	 * Create a new session
 	 *
 	 * @access	public
-	 * @return	void sdfas
+	 * @return	void
 	 */
 	function sess_create($user_id = null)
 	{
@@ -334,7 +334,7 @@ class CI_Session {
 					array(
 							'session_start' => $this->now,
 							'session_id' => $new_sessid,
-							'user_id' => $this->userdata['uid'],
+							'user_id' => $this->userdata['user_id'],
 							'login_attempt' => $this->userdata['login_attempt'],
 					),
 					array('session_id' => $old_sessid)));
