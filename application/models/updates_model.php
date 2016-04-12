@@ -33,4 +33,42 @@ class updates_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    public function getLibCodes($motherIndicator)
+    {
+        $sql = 'select indicator_id, indicator_name from lib_indicator_codes where indicator_id = "'.$motherIndicator.'";';
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
+
+    public function getIndicatorUpdate($motherIndicator)
+    {
+        $sql = 'select indicator_id, profile_id,ref_id, oldValue, newValue from tbl_updates where indicator_id = "'.$motherIndicator.'";';
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
+
+    public function insertUpdates($indicatorID, $profID, $refID, $oldValue, $newValue,$date_updated){
+        $this->db->trans_begin();
+        $this->db->query('insert into tbl_updates (indicator_id, profile_id, ref_id, oldValue, newValue, date_updated)
+                          VALUES (
+                          "'.$indicatorID.'",
+                          "'.$profID.'",
+                          "'.$refID.'",
+                          "'.$oldValue.'",
+                          "'.$newValue.'",
+                          "'.$date_updated.'"
+                          )');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
 }

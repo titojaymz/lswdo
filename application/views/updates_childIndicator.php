@@ -8,10 +8,10 @@
 ?>
 
 
-<td>Child Indicator</td>
+<td>Indicator</td>
 <td>
     <select id="childIndicator" name = "childIndicator" class = "form-control-radius" style="width: 500px" onchange="load_lowerIndi(this.value)">
-        <option selected>Select Category</option>
+        <option selected>Select Indicators</option>
         <?php foreach($getChildIndicator as $childIndicator): ?>
             <option value = "<?php echo $childIndicator->indicator_id; ?>"><?php echo $childIndicator->indicator_name ?></option>
         <?php endforeach ?>

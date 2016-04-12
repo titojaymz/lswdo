@@ -334,7 +334,7 @@ class CI_Session {
 					array(
 							'session_start' => $this->now,
 							'session_id' => $new_sessid,
-							'user_id' => $this->userdata['user_id'],
+							'user_id' => $this->userdata['uid'],
 							'login_attempt' => $this->userdata['login_attempt'],
 					),
 					array('session_id' => $old_sessid)));

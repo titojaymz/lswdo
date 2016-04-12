@@ -38,7 +38,7 @@ $region = $this->session->userdata('uregion');
 
       document.querySelector('#button2').onclick = function(){
         swal({
-              title: "Hey <?php if ($this->session->userdata('user_data') <>'') echo $this->session->userdata('user_data') ?>!",
+              title: "Hey <?php if ($this->session->userdata('fullName') <>'') echo $this->session->userdata('fullName') ?>!",
               text: "Goodbye!",
               type: "success"
             },

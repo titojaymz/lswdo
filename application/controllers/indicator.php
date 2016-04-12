@@ -157,8 +157,9 @@ class indicator extends CI_Controller
         {
             redirect('/users/login','location');
         }
-
+        $date_today = date('Y-m-d');
         $indicator_model = new indicator_model();
+        $updates_model = new updates_model();
         $this->validateAddIndicator();
         $lguTypes = $indicator_model->getLGUtype($profID);
         if (!$this->form_validation->run()){
@@ -187,11 +188,14 @@ class indicator extends CI_Controller
                         $findings =  $this->input->post('textArea'. $firstCatBronze->indicator_id);
                         if($complianceBronze != ""){
                             $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
+                            $updatesResultBronze = $updates_model->insertUpdates($indicator,$profile,$ref_id , $complianceBronze, $complianceBronze,$date_today);
                         }
                         if($complianceSilver != ""){
                             $addResultSilver = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
+                            $updatesResultSilver = $updates_model->insertUpdates($indicator,$profile,$ref_id , $complianceSilver, $complianceSilver,$date_today);
                         }if($complianceGold != ""){
                             $addResultGold = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
+                            $updatesResultGold = $updates_model->insertUpdates($indicator,$profile,$ref_id , $complianceGold, $complianceGold,$date_today);
                         }
                     } else {
                         continue;
@@ -202,17 +206,20 @@ class indicator extends CI_Controller
                     $complianceBronze = $this->input->post('compliance' . $secondCat->indicator_id . 'Bronze');
                     $complianceSilver = $this->input->post('compliance' . $secondCat->indicator_id . 'Silver');
                     $complianceGold = $this->input->post('compliance' . $secondCat->indicator_id . 'Gold');
-                    $profile =$profile = $this->input->post('profID');
+                    $profile = $this->input->post('profID');
                     $indicator = $secondCat->indicator_id;
                     $findings = $this->input->post('textArea'. $secondCat->indicator_id);
                     if($complianceBronze != ""){
                         $addResultBronze = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceBronze, $findings,$ref_id);
+                        $updatesResultBronze = $updates_model->insertUpdates($indicator,$profile,$ref_id , $complianceBronze, $complianceBronze,$date_today);
                     }
                     if($complianceSilver != ""){
                         $addResultSilver = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceSilver, $findings,$ref_id);
+                        $updatesResultSilver = $updates_model->insertUpdates($indicator,$profile,$ref_id , $complianceSilver, $complianceSilver,$date_today);
                     } if($complianceGold != ""){
-                    $addResultGold = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
-                }
+                            $addResultGold = $indicator_model->insertFirstIndicator($profile, $indicator, $complianceGold, $findings,$ref_id);
+                            $updatesResultGold = $updates_model->insertUpdates($indicator,$profile,$ref_id , $complianceGold, $complianceGold,$date_today);
+                    }
                     } else {
                         continue;
                     }

@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Created by JOSEF FRIEDRICH S. BALDO
- * Date Time: 10/17/15 10:57 PM
+ * Date Time: 10/17/15 10:57 PMasdasdas
  */
 class users extends CI_Controller {
     public function index()
