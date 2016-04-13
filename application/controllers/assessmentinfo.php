@@ -407,7 +407,7 @@ class assessmentinfo extends CI_Controller {
             $prov_code = $_POST['prov_code'];
             $citylist = $this->assessmentinfo_model->get_cities($prov_code);
 
-            $city_list[''] = "Choose City";
+            $city_list[] = "Choose City";
             foreach($citylist as $tempcity) {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
@@ -471,6 +471,48 @@ class assessmentinfo extends CI_Controller {
                 'id'          => 'income_class',
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_pop()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $totalpop = $this->assessmentinfo_model->get_total_pop($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_pop',
+                'name'       => 'total_pop',
+                'value'   =>  $totalpop->total_pop,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_poor()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $totalpoor = $this->assessmentinfo_model->get_total_poor($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_poor',
+                'name'       => 'total_poor',
+                'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
                 'readonly' => true
             );

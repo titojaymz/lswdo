@@ -43,7 +43,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupCity").style.visibility = "hidden";
             document.getElementById("groupmuni").style.display = "none";
             document.getElementById("groupmuni").style.visibility = "hidden";
-
+            document.getElementById("groupbrgy").style.display = "block";
             document.getElementById("groupbrgy").style.visibility = "visible";
 
         }
@@ -95,8 +95,8 @@ if (!$this->session->userdata('user_id')){
                     $('#groupCity').html(data);
                     $('#groupmuni').html(data);
                 }
-            });
 
+            });
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
                 async: false,
@@ -105,6 +105,28 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_poor').html(data);
                 }
             });
 
@@ -265,26 +287,6 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                                 </div>
                             </div>
-                            <!--End City-->
-<!---->
-<!--                            --><?php
-//                            $result = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
-//                            $row = mysql_fetch_assoc($result);
-//                            $no_cities = $row['value_sum'];
-//
-//                            $result2 = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
-//                            $row2 = mysql_fetch_assoc($result2);
-//                            $no_muni = $row2['value_sum'];
-//
-//                            $result2 = mysql_query('SELECT lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS value_sum FROM lib_brgy inner join lib_cities on lib_brgy.city_code=lib_cities.city_code where lib_cities.city_name="san carlos city"');
-//                            $row2 = mysql_fetch_assoc($result2);
-//                            $no_brgy = $row2['value_sum'];
-//
-//                            $result3 = mysql_query('SELECT lib_cities.income_class as income_class FROM lib_cities Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code');
-//                            $row3 = mysql_fetch_assoc($result3);
-//                            $income_class = $row3['income_class'];
-//
-//                            ?>
 
                                 <label for="nocitylist"> No. of Cities:</label>
                             <div id="groupCity">
@@ -294,7 +296,6 @@ if (!$this->session->userdata('user_id')){
                                         </div>
                                     </div>
                             </div>
-
 
                                 <label for="no_muni_code">No. of Municipalities:</label>
                             <div id="groupmuni">
@@ -330,12 +331,24 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="total_pop">Total Population:</label>
+                            <div id="total_pop">
+                                <div class="control-group">
+                                    <div class="controls">
                             <input class="form-control" type="text" name="total_pop" placeholder="Total Population" readonly>
+                        </div>
+                        </div>
+                        </div>
                         </div>
 
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
+                            <div id="total_poor">
+                                <div class="control-group">
+                                    <div class="controls">
                             <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
+                        </div>
+                        </div>
+                        </div>
                         </div>
 
                         <div class="form-group">

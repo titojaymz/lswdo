@@ -335,6 +335,36 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_incomeclass,$prov_code)->row();
     }
 */
+    public function get_total_pop($prov_code) {
+        $get_total_pop = "
+         SELECT
+         lib_provinces.income_class as total_pop
+        FROM
+          lib_provinces
+        WHERE
+          lib_provinces.prov_code = ?
+        ORDER BY
+          lib_provinces.prov_code
+        ";
+
+        return $this->db->query($get_total_pop,$prov_code)->row();
+    }
+
+    public function get_total_poor($prov_code) {
+        $get_total_poor = "
+         SELECT
+         lib_provinces.income_class as total_poor
+        FROM
+          lib_provinces
+        WHERE
+          lib_provinces.prov_code = ?
+        ORDER BY
+          lib_provinces.prov_code
+        ";
+
+        return $this->db->query($get_total_poor,$prov_code)->row();
+    }
+
     public function getExistingRecords($lgu_type) {
         $get_records = "
         SELECT
