@@ -282,6 +282,19 @@ class assessmentinfo_model extends CI_Model {
 
         return $this->db->query($get_brgy,$city_code)->result();
     }
+    public function get_count_city($prov_code) {
+        $get_countcity = "
+        SELECT
+         city_name,
+          count(city_code) AS value_sum
+        FROM
+          lib_cities
+        WHERE
+          prov_code = ?
+        ";
+
+        return $this->db->query($get_countcity,$prov_code)->row();
+    }
 
     public function get_incomeclass(){
         $get_incomeclass = "

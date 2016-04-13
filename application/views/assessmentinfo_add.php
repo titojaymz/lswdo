@@ -49,6 +49,7 @@ if (!$this->session->userdata('user_id')){
         }
     }
 
+
     function get_provinces() {
         var region_code = $('#regionlist').val();
         $('#citylist option:gt(0)').remove().end();
@@ -82,6 +83,17 @@ if (!$this->session->userdata('user_id')){
                     $('#div_citylist').html(data);
                 }
             });
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupCity').html(data);
+                }
+            });
+
         } else {
             $('#citylist option:gt(0)').remove().end();
         }
@@ -222,32 +234,30 @@ if (!$this->session->userdata('user_id')){
                                 </div>
                             </div>
                             <!--End City-->
-                             <pre>
-                                <?php echo $cityselect->no_cities; ?>
-                         </pre>
-                            <?php
-                            $result = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
-                            $row = mysql_fetch_assoc($result);
-                            $no_cities = $row['value_sum'];
-
-                            $result2 = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
-                            $row2 = mysql_fetch_assoc($result2);
-                            $no_muni = $row2['value_sum'];
-
-                            $result2 = mysql_query('SELECT lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS value_sum FROM lib_brgy inner join lib_cities on lib_brgy.city_code=lib_cities.city_code where lib_cities.city_name="san carlos city"');
-                            $row2 = mysql_fetch_assoc($result2);
-                            $no_brgy = $row2['value_sum'];
-
-                            $result3 = mysql_query('SELECT lib_cities.income_class as income_class FROM lib_cities Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code');
-                            $row3 = mysql_fetch_assoc($result3);
-                            $income_class = $row3['income_class'];
-
-                            ?>
+<!---->
+<!--                            --><?php
+//                            $result = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
+//                            $row = mysql_fetch_assoc($result);
+//                            $no_cities = $row['value_sum'];
+//
+//                            $result2 = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
+//                            $row2 = mysql_fetch_assoc($result2);
+//                            $no_muni = $row2['value_sum'];
+//
+//                            $result2 = mysql_query('SELECT lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS value_sum FROM lib_brgy inner join lib_cities on lib_brgy.city_code=lib_cities.city_code where lib_cities.city_name="san carlos city"');
+//                            $row2 = mysql_fetch_assoc($result2);
+//                            $no_brgy = $row2['value_sum'];
+//
+//                            $result3 = mysql_query('SELECT lib_cities.income_class as income_class FROM lib_cities Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code');
+//                            $row3 = mysql_fetch_assoc($result3);
+//                            $income_class = $row3['income_class'];
+//
+//                            ?>
                             <div id="groupCity">
                                 <label for="nocitylist"> No. of Cities:</label>
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class="form-control" type="text" name="no_cities" value="<?php echo $no_cities ?>" placeholder="No. of Cities" readonly>
+                                            <input class="form-control" type="text" name="no_cities" placeholder="No. of Cities" readonly>
                                         </div>
                                     </div>
                             </div>
@@ -256,7 +266,7 @@ if (!$this->session->userdata('user_id')){
                                 <label for="no_muni_code">No. of Municipalities:</label>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="div_nomunilist" value="<?php echo $no_muni ?>" placeholder="No. of Municipalities" readonly>
+                                        <input class="form-control" type="text" name="div_nomunilist" placeholder="No. of Municipalities" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +275,7 @@ if (!$this->session->userdata('user_id')){
                                 <div class="form-group form-group-sm">
                                     <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
                                     <div id="div_nobrgylist" class="col-lg-8">
-                                        <input class="form-control" type="text" name="no_brgy_code" value="<?php echo $no_brgy ?>" placeholder="No. of Barangays" readonly>
+                                        <input class="form-control" type="text" name="no_brgy_code" placeholder="No. of Barangays" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -276,12 +286,12 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="income_class">Income Class:</label>
-                            <input class="form-control" type="text" name="income_class" value="<?php echo $income_class ?>" placeholder="Income Class" readonly>
+                            <input class="form-control" type="text" name="income_class"  placeholder="Income Class" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="total_pop">Total Population:</label>
-                            <input class="form-control" type="text" name="total_pop" value="<?php echo $no_cities ?>" placeholder="Total Population" readonly>
+                            <input class="form-control" type="text" name="total_pop" placeholder="Total Population" readonly>
                         </div>
 
                         <div class="form-group">
