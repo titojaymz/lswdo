@@ -397,7 +397,26 @@ class assessmentinfo extends CI_Controller {
             echo form_dropdown('provlist', $province_list, '', $provlist_prop);
         }
     }
+    public function populate_countcity()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $numberofcities = $this->assessmentinfo_model->get_count_city($prov_code);
 
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'no_cities',
+                'name'       => 'no_cities',
+                'value'   =>  $numberofcities->value_sum,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
     public function populate_cities() {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
             $prov_code = $_POST['prov_code'];
