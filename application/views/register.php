@@ -27,11 +27,11 @@ error_reporting(0);
 
         <div class="form-area"><?php echo $form_message;?><?php echo validation_errors() ?>
             <div class="group">
-                <input type="text" class="form-control" value="<?php echo htmlspecialchars($_POST['username']); ?>" placeholder="Username" name="username" required>
+                <input type="text" class="form-control"  maxlength="30"  value="<?php echo htmlspecialchars($_POST['username']); ?>" placeholder="Username" name="username" required>
                 <i class="fa fa-user-secret"></i>
             </div>
             <div class="group">
-                <input type="password" class="form-control" placeholder="Password" name="password"  required>
+                <input type="password" class="form-control" placeholder="Password" name="password"  maxlength="30"   required>
                 <i class="fa fa-key"></i>
             </div>
             <div class="group">
