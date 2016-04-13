@@ -316,14 +316,16 @@ if (!$this->session->userdata('user_id')){
                             </div>
 
                         </div>  <!--End Select-->
-
+                        <div class="form-group">
                             <label for="income_class">Income Class:</label>
                         <div id="income_class">
                             <div class="control-group">
                                 <div class="controls">
+
                             <input class="form-control" type="text" name="income_class"  placeholder="Income Class" readonly>
                                 </div>
                             </div>
+                        </div>
                         </div>
 
                         <div class="form-group">
