@@ -273,9 +273,10 @@ class assessmentinfo extends CI_Controller {
                 $website = $this->input->post('website');
                 $total_ira = $this->input->post('total_ira');
                 $total_budget_lswdo = $this->input->post('total_budget_lswdo');
-                $date_modified = $this->input->post('date_modified');
+                $modified_by= $this->session->userdata('user_id');
+                $date_modified = 'NOW()';
 
-                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$date_modified);
+                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified);
                 if ($updateResult){
 
                     $this->init_rpmb_session();

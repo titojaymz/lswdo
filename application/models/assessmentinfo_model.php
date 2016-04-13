@@ -103,7 +103,7 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified)
     {
         $this->db->trans_begin();
 
@@ -121,6 +121,8 @@ class assessmentinfo_model extends CI_Model {
                           website="'.$website.'",
                           total_ira="'.$total_ira.'",
                           total_budget_lswdo="'.$total_budget_lswdo.'"
+                          modified_by="'.$modified_by.'"
+                          date_modified="'.$date_modified.'"
                           WHERE
                           profile_id = "'.$id.'"
                           ');
