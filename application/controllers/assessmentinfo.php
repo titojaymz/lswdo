@@ -407,7 +407,7 @@ class assessmentinfo extends CI_Controller {
             $prov_code = $_POST['prov_code'];
             $citylist = $this->assessmentinfo_model->get_cities($prov_code);
 
-            $city_list[] = "Choose City";
+            $city_list[''] = "Choose City";
             foreach($citylist as $tempcity) {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }

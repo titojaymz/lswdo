@@ -43,7 +43,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupCity").style.visibility = "hidden";
             document.getElementById("groupmuni").style.display = "none";
             document.getElementById("groupmuni").style.visibility = "hidden";
-            document.getElementById("groupbrgy").style.display = "block";
+
             document.getElementById("groupbrgy").style.visibility = "visible";
 
         }
@@ -241,7 +241,7 @@ if (!$this->session->userdata('user_id')){
                                 <div class="form-group form-group-sm">
                                     <label for="citylist" class="col-lg-2 control-label">City</label>
                                     <div id="div_citylist" class="col-lg-8">
-                                        <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
+                                        <select id="citylist" name="citylist" class="form-control">
                                             <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                 ?>
                                                 <option value="0">Choose City</option>

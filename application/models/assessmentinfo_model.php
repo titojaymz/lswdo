@@ -39,7 +39,7 @@ class assessmentinfo_model extends CI_Model {
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created, modified_by, date_modified)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created,modified_by,date_modified)
                           VALUES
                           (
                           "'.$application_type_id.'",
@@ -55,8 +55,8 @@ class assessmentinfo_model extends CI_Model {
                           "'.$website.'",
                           "'.$total_ira.'",
                           "'.$total_budget_lswdo.'",
-                           "'.$created_by.'",
-                          '.$date_created.',
+                          "'.$created_by.'",
+                          "'.$date_created.'",
                           "'.$modified_by.'",
                           "'.$date_modified.'"
                           )');
@@ -120,8 +120,8 @@ class assessmentinfo_model extends CI_Model {
                           email="'.$email.'",
                           website="'.$website.'",
                           total_ira="'.$total_ira.'",
-                          total_budget_lswdo="'.$total_budget_lswdo.'"
-                          modified_by="'.$modified_by.'"
+                          total_budget_lswdo="'.$total_budget_lswdo.'",
+                          modified_by="'.$modified_by.'",
                           date_modified="'.$date_modified.'"
                           WHERE
                           profile_id = "'.$id.'"
