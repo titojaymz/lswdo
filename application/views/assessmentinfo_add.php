@@ -69,6 +69,7 @@ if (!$this->session->userdata('user_id')){
             $('#provlist option:gt(0)').remove().end();
         }
     }
+
     function get_cities() {
         var prov_code = $('#provlist').val();
         $('#brgylist option:gt(0)').remove().end();
@@ -83,6 +84,7 @@ if (!$this->session->userdata('user_id')){
                     $('#div_citylist').html(data);
                 }
             });
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
                 async: false,
@@ -91,6 +93,36 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
+                    $('#groupmuni').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+        } else {
+            $('#citylist option:gt(0)').remove().end();
+        }
+    }
+    function get_brgy() {
+        var city_code = $('#citylist').val();
+            if(city_code > 0) {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupbrgy').html(data);
                 }
             });
 
@@ -253,8 +285,9 @@ if (!$this->session->userdata('user_id')){
 //                            $income_class = $row3['income_class'];
 //
 //                            ?>
-                            <div id="groupCity">
+
                                 <label for="nocitylist"> No. of Cities:</label>
+                            <div id="groupCity">
                                     <div class="control-group">
                                         <div class="controls">
                                             <input class="form-control" type="text" name="no_cities" placeholder="No. of Cities" readonly>
@@ -262,31 +295,35 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                             </div>
 
-                            <div id="groupmuni">
+
                                 <label for="no_muni_code">No. of Municipalities:</label>
+                            <div id="groupmuni">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="div_nomunilist" placeholder="No. of Municipalities" readonly>
+                                        <input class="form-control" type="text" name="no_muni" placeholder="No. of Municipalities" readonly>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="groupbrgy">
-                                <div class="form-group form-group-sm">
-                                    <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
-                                    <div id="div_nobrgylist" class="col-lg-8">
-                                        <input class="form-control" type="text" name="no_brgy_code" placeholder="No. of Barangays" readonly>
+
+                            <label for="no_brgy" class="col-lg-2 control-label">No. of Barangays:</label>
+                                    <div id="groupbrgy">
+                                        <div class="control-group">
+                                            <div class="controls">
+                                        <input class="form-control" type="text" name="no_brgy" placeholder="No. of Barangays" readonly>
                                     </div>
                                 </div>
                             </div>
 
                         </div>  <!--End Select-->
 
-
-
-                        <div class="form-group">
                             <label for="income_class">Income Class:</label>
+                        <div id="income_class">
+                            <div class="control-group">
+                                <div class="controls">
                             <input class="form-control" type="text" name="income_class"  placeholder="Income Class" readonly>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">

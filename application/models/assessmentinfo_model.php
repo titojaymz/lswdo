@@ -35,11 +35,11 @@ class assessmentinfo_model extends CI_Model {
     }
 
 
-    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created,$modified_by,$date_modified)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created, modified_by, date_modified)
                           VALUES
                           (
                           "'.$application_type_id.'",
@@ -55,7 +55,10 @@ class assessmentinfo_model extends CI_Model {
                           "'.$website.'",
                           "'.$total_ira.'",
                           "'.$total_budget_lswdo.'",
-                          Now()
+                           "'.$created_by.'",
+                          '.$date_created.',
+                          "'.$modified_by.'",
+                          "'.$date_modified.'"
                           )');
 
         if ($this->db->trans_status() === FALSE)
@@ -251,17 +254,14 @@ class assessmentinfo_model extends CI_Model {
     public function get_cities($prov_code) {
         $get_cities = "
         SELECT
-            lib_cities.city_code as city_code,
-            lib_cities.city_name as city_name,
-            count(lib_cities.city_code) as no_cities
+         city_code,
+         city_name
         FROM
           lib_cities
-        LEFT JOIN
-          lib_provinces on lib_cities.prov_code=lib_provinces.prov_code
         WHERE
-          lib_provinces.prov_code = ?
+          prov_code = ?
         ORDER BY
-          lib_cities.city_name
+          city_name
         ";
 
         return $this->db->query($get_cities,$prov_code)->result();
@@ -282,6 +282,7 @@ class assessmentinfo_model extends CI_Model {
 
         return $this->db->query($get_brgy,$city_code)->result();
     }
+
     public function get_count_city($prov_code) {
         $get_countcity = "
         SELECT
@@ -296,7 +297,24 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_countcity,$prov_code)->row();
     }
 
-    public function get_incomeclass(){
+    public function get_count_brgy($city_code) {
+        $get_countbrgy = "
+        SELECT
+         lib_cities.city_name,
+         lib_brgy.brgy_name,
+         count(lib_brgy.brgy_code) AS no_brgy
+        FROM
+          lib_brgy
+        INNER JOIN
+         lib_cities on lib_brgy.city_code=lib_cities.city_code
+        WHERE
+         lib_cities.city_code = ?
+        ";
+
+        return $this->db->query($get_countbrgy,$city_code)->row();
+    }
+
+    public function get_incomeclass($prov_code){
         $get_incomeclass = "
         SELECT
          city_code,
@@ -304,30 +322,13 @@ class assessmentinfo_model extends CI_Model {
         FROM
           lib_cities
         WHERE
-          prov_code > '0'
+          prov_code = ?
         ORDER BY
           city_code
         ";
-
-        return $this->db->query($get_incomeclass)->result();
+        return $this->db->query($get_incomeclass,$prov_code)->row();
     }
-/*
-    public function get_no_cities($prov_code) {
-        $get_no_cities = "
-        SELECT
-        lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS No_Cities
-        FROM
-          lib_cities
-          left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code
-        WHERE
-          lib_provinces.prov_code = ?
-        ORDER BY
-          lib_cities.city_name
-           ";
 
-        return $this->db->query($get_no_cities,$prov_code)->result();
-    }
-*/
     public function get_no_muni() {
         $get_no_muni = "
         SELECT
@@ -340,14 +341,14 @@ class assessmentinfo_model extends CI_Model {
         ORDER BY
           lib_cities.city_name
            ";
-        return $this->db->query($get_no_muni)->result();
+        return $this->db->query($get_no_muni)->row();
     }
 
     public function get_no_brgy($brgy_code) {
         $get_no_brgy = "
         SELECT
-      lib_brgy.brgy_name,
-count(lib_brgy.brgy_code) AS No_Brgy
+        lib_brgy.brgy_name,
+        count(lib_brgy.brgy_code) AS No_Brgy
         FROM
           tbl_lswdo
          Inner Join lib_brgy ON tbl_lswdo.brgy_code = lib_brgy.brgy_code
@@ -358,6 +359,35 @@ count(lib_brgy.brgy_code) AS No_Brgy
            ";
 
         return $this->db->query($get_no_brgy,$brgy_code)->result();
+    }
+
+    public function getExistingRecords($lgu_type) {
+        $get_records = "
+        SELECT
+        lib_application_type.application_type_name,
+        lib_lgu_type.lgu_type_name,
+        tbl_lswdo.region_code,
+        tbl_lswdo.prov_code,
+        tbl_lswdo.city_code,
+        tbl_lswdo.office_address,
+        tbl_lswdo.swdo_name,
+        tbl_lswdo.designation,
+        tbl_lswdo.contact_no,
+        tbl_lswdo.email,
+        tbl_lswdo.website,
+        tbl_lswdo.total_ira,
+        tbl_lswdo.total_budget_lswdo
+        FROM
+        tbl_lswdo
+        Inner Join lib_application_type ON tbl_lswdo.application_type_id = lib_application_type.application_type_id
+        Inner Join lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
+        WHERE
+        lib_lgu_type.lgu_type_id = ?
+        ORDER BY
+        lib_lgu_type.lgu_type_name
+        ";
+
+        return $this->db->query($get_records,$lgu_type)->result();
     }
 
 }

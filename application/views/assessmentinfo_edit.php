@@ -247,32 +247,51 @@ if (!$this->session->userdata('user_id')){
                     <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
                     <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
 
+                        <?php
+                        $result = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
+                        $row = mysql_fetch_assoc($result);
+                        $no_cities = $row['value_sum'];
+
+                        $result2 = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
+                        $row2 = mysql_fetch_assoc($result2);
+                        $no_muni = $row2['value_sum'];
+
+                        $result2 = mysql_query('SELECT lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS value_sum FROM lib_brgy inner join lib_cities on lib_brgy.city_code=lib_cities.city_code where lib_cities.city_name="san carlos city"');
+                        $row2 = mysql_fetch_assoc($result2);
+                        $no_brgy = $row2['value_sum'];
+
+                        $result3 = mysql_query('SELECT lib_cities.income_class as income_class FROM lib_cities Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code');
+                        $row3 = mysql_fetch_assoc($result3);
+                        $income_class = $row3['income_class'];
+
+                        ?>
+
                     <div class="form-group">
                         <label for="no_cities">No. of Cities:</label>
-                        <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
+                        <input class="form-control" type="text" name="no_city_code" value="<?php echo $no_cities ?>" placeholder="No. of Cities" readonly>
                     </div>
                     <div class="form-group">
                         <label for="no_municipalities">No. of Municipalities:</label>
-                        <input class="form-control" type="text" name="no_muni_code" value="" placeholder="No. of Municipalities" readonly>
+                        <input class="form-control" type="text" name="no_muni_code" value="<?php echo $no_muni ?>" placeholder="No. of Municipalities" readonly>
                     </div>
                     <div class="form-group">
                         <label for="no_brgy_code">No. of Barangays:</label>
-                        <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays" readonly>
+                        <input class="form-control" type="text" name="no_brgy_code" value="<?php echo $no_brgy ?>" placeholder="No. of Barangays" readonly>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="income_class">Income Class:</label>
+                         <input class="form-control" type="text" name="income_class" value="<?php echo $income_class ?>" placeholder="Income Class" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="total_pop">Total Population:</label>
-                        <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="income_class">Income Class:</label>
-                        <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
+                        <input class="form-control" type="text" name="total_pop" value="<?php echo $no_cities ?>" placeholder="Total Population" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="total_poor">Total No. of Poor Families:</label>
-                        <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
+                        <input class="form-control" type="text" name="total_poor" value="<?php echo $no_cities ?>" placeholder="Total No. of Poor Families" readonly>
                     </div>
 
                     <div class="form-group">
