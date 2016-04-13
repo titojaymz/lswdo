@@ -27,7 +27,7 @@
                             </tr>
                         </table>
                     <br>
-                    <a class="btn btn-m btn-option3" href="<?php echo base_url('indicator/indicatorEditpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Edit</a>
+<!--                    <a class="btn btn-m btn-option3" href="--><?php //echo base_url('indicator/indicatorEditpart2/'.$profileID.'/'.$refID) ?><!--"><i class="fa fa-check-square"></i> Edit</a>-->
                     <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorDeletepart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                     <?php $unformat = ""; ?>

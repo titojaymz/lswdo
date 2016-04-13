@@ -47,18 +47,54 @@ class updates_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->row();
     }
-
-    public function insertUpdates($indicatorID, $profID, $refID, $oldValue, $newValue,$date_updated){
+    public function getIndicatorList()
+    {
+        $sql = 'select b.indicator_name, a.date_updated,a.newValue
+                from tbl_updates a
+                INNER JOIN lib_indicator_codes b
+                ON a.indicator_id = b.indicator_id
+                where is_updated = 1;';
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function insertUpdates($indicatorID, $profID, $refID, $oldValue, $newValue,$date_updated,$is_updated){
         $this->db->trans_begin();
-        $this->db->query('insert into tbl_updates (indicator_id, profile_id, ref_id, oldValue, newValue, date_updated)
+        $this->db->query('insert into tbl_updates (indicator_id, profile_id, ref_id, oldValue, newValue, date_updated,is_updated)
                           VALUES (
                           "'.$indicatorID.'",
                           "'.$profID.'",
                           "'.$refID.'",
                           "'.$oldValue.'",
                           "'.$newValue.'",
-                          "'.$date_updated.'"
+                          "'.$date_updated.'",
+                          "'.$is_updated.'"
+
                           )');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+
+    public function updateUpdates($indicatorID,$profID,$refID, $newValue,$date_updated){
+        $this->db->trans_begin();
+        $this->db->query('UPDATE tbl_updates SET
+                          oldValue = newValue,
+                          newValue = "'.$newValue.'",
+                          date_updated = "'.$date_updated.'",
+                          is_updated = 1
+                          Where
+                          indicator_id = "'.$indicatorID.'" AND
+                          profile_id = "'.$profID.'" AND
+                          ref_id = "'.$refID.'";
+        ');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
