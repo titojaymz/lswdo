@@ -287,7 +287,8 @@ class assessmentinfo_model extends CI_Model {
         $get_countcity = "
         SELECT
          city_name,
-          count(city_code) AS value_sum
+          count(city_code) AS value_sum,
+          income_class
         FROM
           lib_cities
         WHERE
@@ -313,54 +314,25 @@ class assessmentinfo_model extends CI_Model {
 
         return $this->db->query($get_countbrgy,$city_code)->row();
     }
-
+/*
     public function get_incomeclass($prov_code){
         $get_incomeclass = "
         SELECT
-         city_code,
-          income_class
+         lib_cities.income_class as income_class,
+        lib_provinces.prov_code as prov_code
         FROM
           lib_cities
+        INNER JOIN
+        lib_provinces
+        ON lib_cities.prov_code = lib_provinces.prov_code
         WHERE
-          prov_code = ?
+          lib_provinces.prov_code = ?
         ORDER BY
-          city_code
+          lib_cities.city_code
         ";
         return $this->db->query($get_incomeclass,$prov_code)->row();
     }
-
-    public function get_no_muni() {
-        $get_no_muni = "
-        SELECT
-        lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS No_Muni
-        FROM
-          lib_cities
-         left join lib_cities on lib_brgy.city_code=lib_cities.city_code
-        WHERE
-          lib_cities.city_code = ?
-        ORDER BY
-          lib_cities.city_name
-           ";
-        return $this->db->query($get_no_muni)->row();
-    }
-
-    public function get_no_brgy($brgy_code) {
-        $get_no_brgy = "
-        SELECT
-        lib_brgy.brgy_name,
-        count(lib_brgy.brgy_code) AS No_Brgy
-        FROM
-          tbl_lswdo
-         Inner Join lib_brgy ON tbl_lswdo.brgy_code = lib_brgy.brgy_code
-        WHERE
-          lib_brgy.brgy_code = ?
-        ORDER BY
-          lib_brgy.brgy_name
-           ";
-
-        return $this->db->query($get_no_brgy,$brgy_code)->result();
-    }
-
+*/
     public function getExistingRecords($lgu_type) {
         $get_records = "
         SELECT

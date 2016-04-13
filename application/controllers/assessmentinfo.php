@@ -53,7 +53,7 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-        $income_class = $assessmentinfo_model->get_incomeclass();
+       // $income_class = $assessmentinfo_model->get_incomeclass();
 
         // $region_name = $assessmentinfo_model->Lib_getRegion();
         //$prov_name = $assessmentinfo_model->Lib_getProvince();
@@ -463,7 +463,7 @@ class assessmentinfo extends CI_Controller {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
         {
             $prov_code = $_POST['prov_code'];
-            $incomeclass = $this->assessmentinfo_model->get_incomeclass($prov_code);
+            $incomeclass = $this->assessmentinfo_model->get_count_city($prov_code);
 
             $data = array(
                 'type'        => 'text',
