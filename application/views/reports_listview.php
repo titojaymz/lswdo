@@ -20,8 +20,10 @@
                     </div>
                     <div class="panel-body table-responsive">
                         <table class="table display table-bordered table-striped table-hover" width="100%">
-                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/pswdo_score') ?>"><i class="fa fa-plus-circle"></i>PSWDO Reports</a>
-                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/cmswdo_score') ?>"><i class="fa fa-plus-circle"></i>C/MSWDO Reports</a>
+                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/pswdo_score') ?>"><i class="fa fa-plus-circle"></i>PSWDO Baseline Reports</a>
+                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/pswdo_newscore') ?>"><i class="fa fa-plus-circle"></i>PSWDO Updated Reports</a>
+                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/cmswdo_score') ?>"><i class="fa fa-plus-circle"></i>C/MSWDO Baseline Reports</a>
+                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/cmswdo_newscore') ?>"><i class="fa fa-plus-circle"></i>C/MSWDO Updated Reports</a>
                         </table>
                     </div>
                 </div>
