@@ -84,12 +84,74 @@ if (!$this->session->userdata('user_id')){
                     $('#citylist').val(cityCode);
                 }
             });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupCity').html(data);
+                    $('#groupmuni').html(data);
+                }
+
+            });
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_poor').html(data);
+                }
+            });
+
         } else {
             $('#citylist option:gt(0)').remove().end();
         }
-
-
     }
+        function get_brgy() {
+            var city_code = $('#citylist').val();
+            if(city_code > 0) {
+                $.ajax({
+                    url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
+                    async: false,
+                    type: "POST",
+                    data: "city_code="+city_code,
+                    dataType: "html",
+                    success: function(data) {
+                        $('#groupbrgy').html(data);
+                    }
+                });
+
+            } else {
+                $('#citylist option:gt(0)').remove().end();
+            }
+        }
 
 </script>
 
@@ -247,32 +309,69 @@ if (!$this->session->userdata('user_id')){
                     <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
                     <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
 
+
                     <div class="form-group">
                         <label for="no_cities">No. of Cities:</label>
+                        <div id="groupCity">
+                            <div class="control-group">
+                                <div class="controls">
                         <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
+                    </div>
+                    </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label for="no_municipalities">No. of Municipalities:</label>
+                        <div id="groupmuni">
+                            <div class="control-group">
+                                <div class="controls">
                         <input class="form-control" type="text" name="no_muni_code" value="" placeholder="No. of Municipalities" readonly>
+                    </div>
+                    </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label for="no_brgy_code">No. of Barangays:</label>
+                        <div id="groupbrgy">
+                            <div class="control-group">
+                                <div class="controls">
                         <input class="form-control" type="text" name="no_brgy_code" value="" placeholder="No. of Barangays" readonly>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="income_class">Income Class:</label>
+                        <div id="income_class">
+                            <div class="control-group">
+                                <div class="controls">
+                         <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
+                    </div>
+                    </div>
+                    </div>
                     </div>
 
                     <div class="form-group">
                         <label for="total_pop">Total Population:</label>
+                        <div id="total_pop">
+                            <div class="control-group">
+                                <div class="controls">
                         <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
                     </div>
-
-                    <div class="form-group">
-                        <label for="income_class">Income Class:</label>
-                        <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
+                    </div>
+                    </div>
                     </div>
 
                     <div class="form-group">
                         <label for="total_poor">Total No. of Poor Families:</label>
+                        <div id="total_poor">
+                            <div class="control-group">
+                                <div class="controls">
                         <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
+                    </div>
+                    </div>
+                    </div>
                     </div>
 
                     <div class="form-group">

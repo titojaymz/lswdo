@@ -69,6 +69,7 @@ if (!$this->session->userdata('user_id')){
             $('#provlist option:gt(0)').remove().end();
         }
     }
+
     function get_cities() {
         var prov_code = $('#provlist').val();
         $('#brgylist option:gt(0)').remove().end();
@@ -83,6 +84,7 @@ if (!$this->session->userdata('user_id')){
                     $('#div_citylist').html(data);
                 }
             });
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
                 async: false,
@@ -91,6 +93,58 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
+                    $('#groupmuni').html(data);
+                }
+
+            });
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_poor').html(data);
+                }
+            });
+
+        } else {
+            $('#citylist option:gt(0)').remove().end();
+        }
+    }
+    function get_brgy() {
+        var city_code = $('#citylist').val();
+            if(city_code > 0) {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupbrgy').html(data);
                 }
             });
 
@@ -209,7 +263,7 @@ if (!$this->session->userdata('user_id')){
                                 <div class="form-group form-group-sm">
                                     <label for="citylist" class="col-lg-2 control-label">City</label>
                                     <div id="div_citylist" class="col-lg-8">
-                                        <select id="citylist" name="citylist" onchange="get_brgy();" class="form-control">
+                                        <select id="citylist" name="citylist" class="form-control">
                                             <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                 ?>
                                                 <option value="0">Choose City</option>
@@ -233,28 +287,9 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                                 </div>
                             </div>
-                            <!--End City-->
-<!---->
-<!--                            --><?php
-//                            $result = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
-//                            $row = mysql_fetch_assoc($result);
-//                            $no_cities = $row['value_sum'];
-//
-//                            $result2 = mysql_query('SELECT lib_provinces.prov_name, lib_cities.city_name, count(lib_cities.city_code) AS value_sum FROM lib_cities left join lib_provinces on lib_cities.prov_code=lib_provinces.prov_code where lib_provinces.prov_name="pangasinan"');
-//                            $row2 = mysql_fetch_assoc($result2);
-//                            $no_muni = $row2['value_sum'];
-//
-//                            $result2 = mysql_query('SELECT lib_cities.city_name, lib_brgy.brgy_name, count(lib_brgy.brgy_code) AS value_sum FROM lib_brgy inner join lib_cities on lib_brgy.city_code=lib_cities.city_code where lib_cities.city_name="san carlos city"');
-//                            $row2 = mysql_fetch_assoc($result2);
-//                            $no_brgy = $row2['value_sum'];
-//
-//                            $result3 = mysql_query('SELECT lib_cities.income_class as income_class FROM lib_cities Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code');
-//                            $row3 = mysql_fetch_assoc($result3);
-//                            $income_class = $row3['income_class'];
-//
-//                            ?>
-                            <div id="groupCity">
+
                                 <label for="nocitylist"> No. of Cities:</label>
+                            <div id="groupCity">
                                     <div class="control-group">
                                         <div class="controls">
                                             <input class="form-control" type="text" name="no_cities" placeholder="No. of Cities" readonly>
@@ -262,41 +297,58 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                             </div>
 
-                            <div id="groupmuni">
                                 <label for="no_muni_code">No. of Municipalities:</label>
+                            <div id="groupmuni">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="div_nomunilist" placeholder="No. of Municipalities" readonly>
+                                        <input class="form-control" type="text" name="no_muni" placeholder="No. of Municipalities" readonly>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="groupbrgy">
-                                <div class="form-group form-group-sm">
-                                    <label for="no_brgy_code" class="col-lg-2 control-label">No. of Barangays:</label>
-                                    <div id="div_nobrgylist" class="col-lg-8">
-                                        <input class="form-control" type="text" name="no_brgy_code" placeholder="No. of Barangays" readonly>
+
+                            <label for="no_brgy" class="col-lg-2 control-label">No. of Barangays:</label>
+                                    <div id="groupbrgy">
+                                        <div class="control-group">
+                                            <div class="controls">
+                                        <input class="form-control" type="text" name="no_brgy" placeholder="No. of Barangays" readonly>
                                     </div>
                                 </div>
                             </div>
 
                         </div>  <!--End Select-->
-
-
-
                         <div class="form-group">
                             <label for="income_class">Income Class:</label>
+                        <div id="income_class">
+                            <div class="control-group">
+                                <div class="controls">
+
                             <input class="form-control" type="text" name="income_class"  placeholder="Income Class" readonly>
+                                </div>
+                            </div>
+                        </div>
                         </div>
 
                         <div class="form-group">
                             <label for="total_pop">Total Population:</label>
+                            <div id="total_pop">
+                                <div class="control-group">
+                                    <div class="controls">
                             <input class="form-control" type="text" name="total_pop" placeholder="Total Population" readonly>
+                        </div>
+                        </div>
+                        </div>
                         </div>
 
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
+                            <div id="total_poor">
+                                <div class="control-group">
+                                    <div class="controls">
                             <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
+                        </div>
+                        </div>
+                        </div>
                         </div>
 
                         <div class="form-group">

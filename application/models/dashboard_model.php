@@ -11,9 +11,9 @@ class dashboard_model extends CI_Model
     public function getFunctionalityScore()
     {
         $sql = 'SELECT
-SUM(IF(a.level_function = \'Functional\',1,0)) \'Functional\',
-SUM(IF(a.level_function = \'Fully Functional\',1,0)) \'FullyFunctional\',
-SUM(IF(a.level_function = \'Partially Functional\',1,0)) \'PartiallyFunctional\'
+SUM(IF(a.level_function_baseline = \'Functional\',1,0)) \'Functional\',
+SUM(IF(a.level_function_baseline = \'Fully Functional\',1,0)) \'FullyFunctional\',
+SUM(IF(a.level_function_baseline = \'Partially Functional\',1,0)) \'PartiallyFunctional\'
 ,c.region_name,a.prof_id,ref_id
 FROM `tbl_functionality` a
 INNER JOIN tbl_lswdo b

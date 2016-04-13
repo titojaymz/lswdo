@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','form_validation','session','encrypt','my_phpmailer');
+$autoload['libraries'] = array('database','form_validation','session','encrypt','my_phpmailer','Excel');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Model_user','Model_form','accesscontrol_model','assessmentinfo_model','indicator_model','Monitoring_Model','Certification_Model','Validity_Model','Visit_Model','budgetallocation_model','dashboard_model','updates_model');
+$autoload['model'] = array('Model_user','Model_form','accesscontrol_model','assessmentinfo_model','indicator_model','Monitoring_Model','Certification_Model','Validity_Model','Visit_Model','budgetallocation_model','dashboard_model','updates_model','reports_model');
 
 
 /* End of file autoload.php */

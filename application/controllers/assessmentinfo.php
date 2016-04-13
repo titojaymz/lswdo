@@ -53,7 +53,7 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-        $income_class = $assessmentinfo_model->get_incomeclass();
+       // $income_class = $assessmentinfo_model->get_incomeclass();
 
         // $region_name = $assessmentinfo_model->Lib_getRegion();
         //$prov_name = $assessmentinfo_model->Lib_getProvince();
@@ -101,9 +101,12 @@ class assessmentinfo extends CI_Controller {
             $website = $this->input->post('website');
             $total_ira = $this->input->post('total_ira');
             $total_budget_lswdo = $this->input->post('total_budget_lswdo');
+            $created_by = $this->session->userdata('user_id');
             $date_created = 'NOW()';
+            $modified_by= $this->session->userdata('user_id');
+            $date_modified = 'NOW()';
 
-            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created);
+            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created,$modified_by,$date_modified);
             if ($addResult){
 
                 //  $data['tbl_lswdo'] = $this->assessmentinfo_model->fetch_assessmentinfo($config['per_page'], $this->uri->segment(3));
@@ -136,9 +139,10 @@ class assessmentinfo extends CI_Controller {
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
-                    $this->redirectIndex()
+
                 ));
                 $this->load->view('footer');
+                $this->redirectIndex();
             }
         }
     }
@@ -270,9 +274,10 @@ class assessmentinfo extends CI_Controller {
                 $website = $this->input->post('website');
                 $total_ira = $this->input->post('total_ira');
                 $total_budget_lswdo = $this->input->post('total_budget_lswdo');
-                $date_modified = $this->input->post('date_modified');
+                $modified_by= $this->session->userdata('user_id');
+                $date_modified = 'NOW()';
 
-                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$date_modified);
+                $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified);
                 if ($updateResult){
 
                     $this->init_rpmb_session();
@@ -397,6 +402,22 @@ class assessmentinfo extends CI_Controller {
             echo form_dropdown('provlist', $province_list, '', $provlist_prop);
         }
     }
+
+    public function populate_cities() {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
+            $prov_code = $_POST['prov_code'];
+            $citylist = $this->assessmentinfo_model->get_cities($prov_code);
+
+            $city_list[] = "Choose City";
+            foreach($citylist as $tempcity) {
+                $city_list[$tempcity->city_code] = $tempcity->city_name;
+            }
+
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
+            echo form_dropdown('citylist', $city_list,'',$citylist_prop);
+        }
+    }
+
     public function populate_countcity()
     {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
@@ -417,18 +438,88 @@ class assessmentinfo extends CI_Controller {
 
         }
     }
-    public function populate_cities() {
-        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
+
+    public function populate_countbrgy()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $numberofbrgy = $this->assessmentinfo_model->get_count_brgy($city_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'no_brgy',
+                'name'       => 'no_brgy',
+                'value'   =>  $numberofbrgy->no_brgy,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_incomeclass()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
             $prov_code = $_POST['prov_code'];
-            $citylist = $this->assessmentinfo_model->get_cities($prov_code);
+            $incomeclass = $this->assessmentinfo_model->get_count_city($prov_code);
 
-            $city_list[] = "Choose City";
-            foreach($citylist as $tempcity) {
-                $city_list[$tempcity->city_code] = $tempcity->city_name;
-            }
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'income_class',
+                'name'       => 'income_class',
+                'value'   =>  $incomeclass->income_class,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
-            echo form_dropdown('citylist', $city_list,'',$citylist_prop);
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_pop()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $totalpop = $this->assessmentinfo_model->get_total_pop($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_pop',
+                'name'       => 'total_pop',
+                'value'   =>  $totalpop->total_pop,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_poor()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $totalpoor = $this->assessmentinfo_model->get_total_poor($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_poor',
+                'name'       => 'total_poor',
+                'value'   =>  $totalpoor->total_poor,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
         }
     }
 
