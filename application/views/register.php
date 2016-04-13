@@ -75,6 +75,9 @@ error_reporting(0);
                     <?php endforeach; ?>
                 </select>
             </div>
+            <div class="group">
+                <div class="g-recaptcha" data-sitekey="6LcMzRwTAAAAADzg5oggwcUaZGdPWZ4keM-bP7Fn"></div>
+            </div>
             <button type="submit" class="btn btn-default btn-block">REGISTER</button>
         </div>
     </form>

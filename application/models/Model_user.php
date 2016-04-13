@@ -86,12 +86,50 @@ class Model_user extends CI_Model {
         }
         return $queryResult;
     }
+    public function userActivated($email){
+        $query = $this->db->get_where('tbl_user', array('email' => $email,'activated' => 1));
+        return $query->num_rows();
+    }
+    public function forgotPassword($email,$superkey)
+    {
+        $this->db->trans_begin();
 
+        $this->db->query('UPDATE tbl_user SET
+                          password="'.$superkey.'"
+                          WHERE
+                          email = "'.$email.'"
+                          ');
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+    public function getuserpass($uid = 0)
+    {
+        $query = $this->db->query('SELECT password from tbl_user where uid = "'.$uid.'"');
+        if ($query->num_rows() > 0)
+        {
+            return $query->row();
+        }
+        else
+        {
+            return FALSE;
+        }
+        $this->db->close();
+    }
     public function changePassword($id,$password)
     {
         $this->db->trans_begin();
         $this->db->query('UPDATE tbl_user SET
-                          passwd="'.$password.'"
+                          password="'.$password.'"
                           WHERE
                           uid = "'.$id.'"
                           ');

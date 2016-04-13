@@ -20,10 +20,10 @@ class users extends CI_Controller {
         $this->init_rpmb_session();
         $rpmb['regionlist'] = $this->Model_form->get_regions();
         $userkey = $this->superKey();
-        if (!$this->form_validation->run()){
+        if (!$this->form_validation->run()) {
             $form_message = '';
             $this->load->view('header');
-            $this->load->view('register',array('rpmb'=>$rpmb,'form_message'=>$form_message));
+            $this->load->view('register', array('rpmb' => $rpmb, 'form_message' => $form_message));
             $this->load->view('footer');
         } else {
             $username = $this->input->post('username');
@@ -34,24 +34,42 @@ class users extends CI_Controller {
             $extensionname = $this->input->post('extensionname');
             $email = $this->input->post('email');
             $regionlist = $this->input->post('regionlist');
-            $superkey = $this->encrypt->sha1($userkey.$password);
-            $Model_user = new Model_user($username,$superkey,$firstname,$middlename,$surname,$extensionname,$email,$regionlist);
-            $regResult = $Model_user->registerUser();
-            if ($regResult == 1){
-                $registerSendResult = $this->registration_sendmail($email,$username,$firstname,$middlename,$surname,$extensionname,$regionlist,$password);
-                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i>'.$registerSendResult.'<a href="#" class="closed">&times;</a></div>';
+            $superkey = $this->encrypt->sha1($userkey . $password);
+            $captcha = $this->input->post('g-recaptcha-response');
+            if (!$captcha) {
+                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Please check the captcha form!.<a href="#" class="closed">&times;</a></div>';
                 $this->load->view('header');
-                $this->load->view('login',array($rpmb,'form_message'=>$form_message));
+                $this->load->view('register', array($rpmb, 'form_message' => $form_message));
                 $this->load->view('footer');
-                $this->redirectIndexLogin();
             } else {
-                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Registration Failed!<a href="#" class="closed">&times;</a></div>';
-                $this->load->view('header');
-                $this->load->view('register',array($rpmb,'form_message'=>$form_message));
-                $this->load->view('footer');
+                $secretKey = "6LcMzRwTAAAAAMj1ENuYhur5H67mc8dXSfa_cFIy";
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
+                $responseKeys = json_decode($response, true);
+                if (intval($responseKeys["success"]) !== 1) {
+                    echo '<h2></h2>';
+                } else {
+                    echo '<h2></h2>';
+                }
+                $Model_user = new Model_user($username, $superkey, $firstname, $middlename, $surname, $extensionname, $email, $regionlist);
+                $regResult = $Model_user->registerUser();
+                if ($regResult == 1) {
+                    $registerSendResult = $this->registration_sendmail($email, $username, $firstname, $middlename, $surname, $extensionname, $regionlist, $password);
+                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i>' . $registerSendResult . '<a href="#" class="closed">&times;</a></div>';
+                    $this->load->view('header');
+                    $this->load->view('login', array($rpmb, 'form_message' => $form_message));
+                    $this->load->view('footer');
+                    $this->redirectIndexLogin();
+                } else {
+                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Registration Failed!<a href="#" class="closed">&times;</a></div>';
+                    $this->load->view('header');
+                    $this->load->view('register', array($rpmb, 'form_message' => $form_message));
+                    $this->load->view('footer');
+                }
             }
         }
     }
+
     public function registration_sendmail($email,$username,$firstname,$middlename,$surname,$extensionname,$regionlist) {
         $mail = new PHPMailer;
 
@@ -65,7 +83,7 @@ class users extends CI_Controller {
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;                                    // TCP port to connect to
 
-        $mail->setFrom('pspis-noreply@dswd.gov.ph', 'msflswdo-noreply@dswd.gov.ph');
+        $mail->setFrom('msflswdo-noreply@dswd.gov.ph', 'msflswdo-noreply@dswd.gov.ph');
         $mail->addAddress($email);     // Add a recipient
         $mail->isHTML(true);                                  // Set email format to HTML
 
@@ -103,6 +121,22 @@ class users extends CI_Controller {
         } else {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
+            $captcha = $this->input->post('g-recaptcha-response');
+            if(!$captcha) {
+                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Please check the captcha form!.<a href="#" class="closed">&times;</a></div>';
+                $this->load->view('header');
+                $this->load->view('login', array('form_message' => $form_message));
+                $this->load->view('footer');
+            } else {
+                $secretKey = "6LcMzRwTAAAAAMj1ENuYhur5H67mc8dXSfa_cFIy";
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
+                $responseKeys = json_decode($response, true);
+                if (intval($responseKeys["success"]) !== 1) {
+                    echo '<h2></h2>';
+                } else {
+                    echo '<h2></h2>';
+                }
             $newkey = $this->encrypt->sha1($userkey.$password);
             $Model_user = new Model_user($username,$newkey);
             $ifUserExist = $Model_user->ifUserExist($newkey);
@@ -134,12 +168,202 @@ class users extends CI_Controller {
                 }
             }
         }
+        }
     }
+
     public function logout()
     {
         $this->session->unset_userdata('user_id');
         $this->session->sess_destroy();
         $this->load->view('logout');
+    }
+    public function change_password($uid =0)
+    {
+        if ($uid > 0)
+        {
+            $Model_user = new Model_user();
+            $this->validateChangePassword();
+            $userkey = $this->superKey();
+
+            if (!$this->form_validation->run()){
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('change_password',array('passworddetails' => $Model_user->getuserpass($uid)));
+                $this->load->view('footer');
+            } else {
+                $id = $this->input->post('id');
+                $password = $this->input->post('password');
+                $newkey = $this->encrypt->sha1($userkey.$password);
+                $updateResult = $Model_user->changePassword($id, $newkey);
+                if ($updateResult){
+                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i>Update Success!<a href="#" class="closed">&times;</a></div>';
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('sidebar');
+                    $this->load->view('change_password',array('passworddetails' => $Model_user->getuserpass($uid),'form_message'=>$form_message));
+                    $this->load->view('footer');
+                } else {
+                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Fail!<a href="#" class="closed">&times;</a></div>';
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('sidebar');
+                    $this->load->view('change_password',array('passworddetails' => $Model_user->getuserpass($uid),'form_message'=>$form_message));
+                    $this->load->view('footer');
+                }
+            }
+        } else {
+            echo "1234";
+        }
+    }
+
+    protected function validateChangePassword()
+    {
+        $config = array(
+            array(
+                'field'   => 'id',
+                'label'   => 'id',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'password2',
+                'label'   => 'Confirm Password',
+                'rules'   => 'trim|required|matches[password]'
+            ),array(
+                'field'   => 'oldpassword',
+                'label'   => 'Old Password',
+                'rules'   => 'trim|required|callback_oldpassword_check'
+            ),
+            array(
+                'field'   => 'password',
+                'label'   => 'Password',
+                'rules'   => 'trim|required'
+            )
+        );
+
+        return $this->form_validation->set_rules($config);
+    }
+
+    public function oldpassword_check($oldpassword){
+        $Model_user = new Model_user();
+        $userkey = $this->superKey();
+        $myid = $this->session->userdata('uid');
+        $old_password_hash = sha1($userkey.$oldpassword);
+        $old_password_db_hash = $Model_user->getuserpass($myid);
+        $error = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Old password not match!<a href="#" class="closed">&times;</a></div>';
+        if($old_password_hash != $old_password_db_hash->password)
+        {
+            $this->form_validation->set_message('oldpassword_check', ''.$error.'');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    public function forgot_password()
+    {
+        $Model_user = new Model_user();
+        $this->customvalidateForgotForm();
+
+        $userkey = $this->superKey();
+
+        if (!$this->form_validation->run()){
+            $this->load->view('header');
+            $this->load->view('forgot_password');
+            $this->load->view('footer');
+
+
+        } else {
+            $email = $this->input->post('email');
+            $password = random_string('alnum', 16);
+            $superkey = $this->encrypt->sha1($userkey.$password);
+            $ifUserActivated = $Model_user->userActivated($email);
+            $captcha = $this->input->post('g-recaptcha-response');
+            if(!$captcha) {
+                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Please check the captcha form!.<a href="#" class="closed">&times;</a></div>';
+                $this->load->view('header');
+                $this->load->view('forgot_password', array('form_message' => $form_message));
+                $this->load->view('footer');
+            } else {
+                $secretKey = "6LcMzRwTAAAAAMj1ENuYhur5H67mc8dXSfa_cFIy";
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
+                $responseKeys = json_decode($response, true);
+                if (intval($responseKeys["success"]) !== 1) {
+                    echo '<h2></h2>';
+                } else {
+                    echo '<h2></h2>';
+                }
+                if ($ifUserActivated > 0) {
+                    $regResult = $Model_user->forgotPassword($email, $superkey);
+                    if ($regResult == 1) {
+                        $resultSend = $this->forgotpassword_sendmail($email, $password);
+                        $form_message = ' <div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i>' . $resultSend . '<a href="#" class="closed">&times;</a></div>';
+                        $this->load->view('header');
+                        $this->load->view('forgot_password', array('form_message' => $form_message));
+                        $this->load->view('footer');
+                    } else {
+                        $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Fail!<a href="#" class="closed">&times;</a></div>';
+                        $this->load->view('header');
+                        $this->load->view('forgot_password', array('form_message' => $form_message));
+                        $this->load->view('footer');
+                    }
+                } else {
+                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Invalid Account/The account is not yet activated.!<a href="#" class="closed">&times;</a></div>';
+                    $this->load->view('header');
+                    $this->load->view('forgot_password', array('form_message' => $form_message));
+                    $this->load->view('footer');
+                }
+            }
+        }
+
+    }
+    public function forgotpassword_sendmail($email,$password)
+    {
+        $this->load->library('My_PHPMailer');
+        $mail = new PHPMailer;
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'ssl://smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'itsm-desk@dswd.gov.ph';                 // SMTP username
+        $mail->Password = 'm21l3rm0d3r@t0r123';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 465;                                    // TCP port to connect to
+
+        $mail->setFrom('msflswdo-noreply@dswd.gov.ph', 'msflswdo-noreply@dswd.gov.ph');
+        $mail->addAddress($email);     // Add a recipient
+        $mail->isHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = 'Password Reset';
+        $mail->Body = 'Dear Sir/Madam, <br><br>
+                   Please see below for the requested information: <br><br>
+                   Email Address: ' . $email . '<br>
+                   Password: ' . $password . '<br><br>
+                   Please feel free to contact us in case of further queries.
+                   <br>
+                   Best Regards,
+                   Support';
+        $mail->AltBody = 'Forgot Password';
+
+        if (!$mail->send()) {
+            $sendMessage = 'Error Sending';
+        } else {
+            $sendMessage = 'Succeeded. An email has been sent to your email address.!';
+        }
+        return $sendMessage;
+    }
+    protected function customvalidateForgotForm()
+    {
+        $config = array(
+            array(
+                'field'   => 'email',
+                'label'   => 'email',
+                'rules'   => 'required'
+            )
+        );
+
+        return $this->form_validation->set_rules($config);
     }
     protected function customvalidateRegForm()
     {

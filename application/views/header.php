@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </style>
     <title>MSFLSWDO</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 
