@@ -115,7 +115,7 @@
                                         echo "<a class='btn btn-sm btn-primary' href= '../../indicator/indicatorView/$profile_id/$ref_id/'>
                                             <i class=\"fa fa-edit\"></i>View Indicators </a>";
                                         echo " </b></td>"; echo "<td align=\"center\"><b>";
-                                        echo "<a class='btn btn-sm btn-primary' href= '../../updates/update_add/$profile_id/$ref_id/'>
+                                        echo "<a class='btn btn-sm btn-primary' href= '../../updates/update_view/$profile_id/$ref_id/'>
                                             <i class=\"fa fa-edit\"></i>View Updates</a>";
                                         echo " </b></td>";
 

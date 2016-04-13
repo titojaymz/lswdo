@@ -206,11 +206,11 @@
                                                                                                                            <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4] ?>Bronze" value = "2"/> Not Compliant</td>
                                                                                                                                <?php if($counting4 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
                                                                                                                                <td><?php echo $fourthItem[$number4 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
-                                                                                                                               <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "1" required/> Compliant</td>
+                                                                                                                               <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "1" /> Compliant</td>
                                                                                                                                <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+2] ?>Silver" value = "2"/> Not Compliant</td>
                                                                                                                                <?php if($counting4 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                                                                                    <td><?php echo $fourthItem[$number4 + 4]; ?></td>
-                                                                                                                                   <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                                                                                   <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "1" /> Compliant</td>
                                                                                                                                    <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                                                                                    <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"></textarea></td>
                                                                                                                                <?php } ?>
@@ -243,10 +243,10 @@
                                                                     <td>
                                                                     <table>
                                                                            <tr>
-                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" value = "1" required/> Compliant</td><!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" value = "1" /> Compliant</td><!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
                                                                            </tr>
                                                                            <tr>
-                                                                           <td><br><br><br><br><br><br><br><br><br><br><br><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" value = "1" required/> Compliant</td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                           <td><br><br><br><br><br><br><br><br><br><br><br><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" value = "1" /> Compliant</td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
                                                                           </tr>
                                                                         </table>
                                                                     </td>
@@ -256,13 +256,13 @@
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>1Silver" value = "2"/> Not Compliant</td><!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
                                                                            </tr>
                                                                            <tr>
-                                                                           <td><br><br><br><br><br><br><br><br><br><br><br><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" value = "1" required/> Not Compliant</td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
+                                                                           <td><br><br><br><br><br><br><br><br><br><br><br><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>2Silver" value = "1" /> Not Compliant</td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
                                                                           </tr>
                                                                         </table>
                                                                     </td>
                                                                     <?php if($counting3 > 6){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $iteeem[$number3 + 6]; ?></td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "1" required/> Compliant</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "1" /> Compliant</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"></textarea></td>
                                                                        <?php } ?>
@@ -275,11 +275,11 @@
                                                                    <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3] ?>Bronze" value = "2"/> Not Compliant</td>
                                                                        <?php if($counting3 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
                                                                        <td><?php echo $iteeem[$number3 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
-                                                                       <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" value = "1" required/> Compliant</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" value = "1" /> Compliant</td>
                                                                        <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+2] ?>Silver" value = "2"/> Not Compliant</td>
                                                                        <?php if($counting3 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $iteeem[$number3 + 4]; ?></td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "1" /> Compliant</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"></textarea></td>
                                                                        <?php } ?>
@@ -304,11 +304,11 @@
                                                                    <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2] ?>Bronze" value = "2"/> Not Compliant</td>
                                                                        <?php if($counting2 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
                                                                        <td><?php echo $secondItems[$number2 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
-                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" required/> Compliant</td>
+                                                                       <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "1" /> Compliant</td>
                                                                        <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+2] ?>Silver" value = "2"/> Not Compliant</td>
                                                                        <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $secondItems[$number2 + 4]; ?></td>
-                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                           <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "1" /> Compliant</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
 
@@ -338,12 +338,12 @@
 
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required/> Compliant</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" required/> Not Compliant</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" /> Compliant</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" /> Not Compliant</td>
                                                             <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3"/> N/A</td>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" /> Compliant</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze" value = "3"/> N/A</td>
                                                                 <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
@@ -375,11 +375,11 @@
 
                                                         <?php if($counting > 3){?>
                                                             <td><?php echo $iteem[$number + 2]; ?></td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" required/> Compliant</td>
-                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" required/> Not Compliant</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "1" /> Compliant</td>
+                                                            <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" name = "compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver" value = "2" /> Not Compliant</td>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
-                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" required/> Compliant</td>
+                                                                <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1" /> Compliant</td>
                                                                 <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                 <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
                                                             <?php } else {  ?>

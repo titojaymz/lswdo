@@ -231,10 +231,6 @@
                     </div>
 <!--                    <a class="btn btn-sm btn-primary"  href="--><?php //echo base_url('access_control/addUser') ?><!--"><i class="fa fa-plus"></i>Add New User</a><br><br>-->
                     <div class="panel-body table-responsive">
-                        <pre>
-                            <?php print_r($getDetail);  ?>
-                        </pre>
-                        <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <table class="table table-hover" border = "1">
                             <tr>
                                 <td>LGU Type:</td>
@@ -254,6 +250,7 @@
                             </tr>
                         </table>
                         <hr>
+                        <?php echo form_open('',array('class'=>'form-horizontal')) ?>
                         <table class="table display table-bordered table-striped table-hover">
                             <tr>
                                 <td>Category</td>
@@ -274,6 +271,10 @@
 
                         <div id="showIndicators"></div>
 
+                        <hr>
+                        <div class="btn-group">
+                            <button type="submit" id = "submit" name="submit" value="submit" class="btn btn-lg btn-rounded btn-success" ><i class="fa fa-check"></i> Update</button>
+                        </div>
                         <?php echo form_close() ?>
                     </div>
                 </div>
