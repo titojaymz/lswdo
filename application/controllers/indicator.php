@@ -144,7 +144,15 @@ class indicator extends CI_Controller
             'checkPart2' => $indicator_model->getCheckPart2($profID,$ref_id),
             'checkPart3' => $indicator_model->getCheckPart3($profID,$ref_id),
             'checkPart4' => $indicator_model->getCheckPart4($profID,$ref_id),
-            'scoreProf' => $indicator_model->getScorePerProf($profID,$ref_id),
+            'scoreProf' => $indicator_model->getBaselineScorePerProf($profID,$ref_id),
+            'getTotalIndicatorsPart1'=>$indicator_model->getTotalIndicatorsPart1($lguTypes->lgu_type_id),
+            'getTotalIndicatorsPart2'=>$indicator_model->getTotalIndicatorsPart2($lguTypes->lgu_type_id),
+            'getTotalIndicatorsPart3'=>$indicator_model->getTotalIndicatorsPart3($lguTypes->lgu_type_id),
+            'getTotalIndicatorsPart4'=>$indicator_model->getTotalIndicatorsPart4($lguTypes->lgu_type_id),
+            'getBaselineTotalScoreIndicatorsPart1' => $indicator_model->getBaselineTotalScoreIndicatorsPart1($lguTypes->lgu_type_id,$profID,$ref_id),
+            'getBaselineTotalScoreIndicatorsPart2' => $indicator_model->getBaselineTotalScoreIndicatorsPart2($lguTypes->lgu_type_id,$profID,$ref_id),
+            'getBaselineTotalScoreIndicatorsPart3' => $indicator_model->getBaselineTotalScoreIndicatorsPart3($lguTypes->lgu_type_id,$profID,$ref_id),
+            'getBaselineTotalScoreIndicatorsPart4' => $indicator_model->getBaselineTotalScoreIndicatorsPart4($lguTypes->lgu_type_id,$profID,$ref_id),
             'profileID' => $profID,
             'refID' => $ref_id,
         ));
@@ -577,10 +585,11 @@ class indicator extends CI_Controller
                     'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
                 ));
                 $this->load->view('footer');
-                $this->redirectIndexAddPart4($profID,$ref_id);
+
 
                 $scoreProf = $indicator_model->getScorePerProf($profID, $ref_id);
                 $getPerc = $scoreProf->FinalScore;
+                $totalScore = $scoreProf->TotalScore;
                 if($getPerc == 100){
                     $level = 'Fully Functional';
                 } elseif($getPerc > 50 && $getPerc < 100){
@@ -588,8 +597,9 @@ class indicator extends CI_Controller
                 } elseif($getPerc < 51) {
                     $level = 'Partially Functional';
                 }
-                $addFunction = $indicator_model->insertFunctionality($profID, $ref_id,$level,'');
-                $this->redirectIndexViewAll($profID,$ref_id);
+                $addFunction = $indicator_model->insertFunctionality($profID, $ref_id,$level,$totalScore);
+                $this->redirectIndexAddPart4($profID,$ref_id);
+//                $this->redirectIndexViewAll($profID,$ref_id);
 
             }
 

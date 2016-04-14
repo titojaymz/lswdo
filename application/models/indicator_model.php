@@ -7,7 +7,26 @@ class indicator_model extends CI_Model
         $query = $this->db->get_where('tbl_lswdo_standard_indicators', array('profile_id' => $profID , 'DELETED' => 0, 'ref_id' => $ref_id));
         return $query->result();
     }
+    //Updates
     public function getScorePerProf($profID,$ref_id){
+        $sql = 'select  b.lgu_type_id, SUM(IF(a.newValue = 1, 1, 0)) as TotalScore,
+                case b.lgu_type_id
+                when 1 then (SUM(IF(a.newValue = 1, 1, 0)) / 78) * 100
+                when 2 then (SUM(IF(a.newValue = 1, 1, 0)) / 91) * 100
+                when 3 then (SUM(IF(a.newValue = 1, 1, 0)) / 91) * 100
+                end as FinalScore
+                FROM tbl_updates a
+                INNER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                where a.indicator_id LIKE "%-1%"  and b.profile_id ='.$profID.' and a.ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return  $query->row();
+
+
+
+    }
+    //Baseline
+    public function getBaselineScorePerProf($profID,$ref_id){
         $sql = 'select  b.lgu_type_id, SUM(IF(a.compliance_indicator_id = 1, 1, 0)) as TotalScore,
                 case b.lgu_type_id
                 when 1 then (SUM(IF(a.compliance_indicator_id = 1, 1, 0)) / 78) * 100
@@ -17,7 +36,7 @@ class indicator_model extends CI_Model
                 FROM tbl_lswdo_standard_indicators a
                 INNER JOIN tbl_lswdo b
                 ON a.profile_id = b.profile_id
-                where a.deleted = 0 and a.indicator_id LIKE "%-1%"  and b.profile_id ='.$profID.' and a.ref_id = '.$ref_id.';';
+                where a.deleted =0 and a.indicator_id LIKE "%-1%"  and b.profile_id ='.$profID.' and a.ref_id = '.$ref_id.';';
         $query = $this->db->query($sql);
         return  $query->row();
 
@@ -48,6 +67,389 @@ class indicator_model extends CI_Model
         $this->db->select('lgu_type_id');
         $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $profID));
         return $query->row();
+    }
+
+    //Updates
+    public function getTotalScoreIndicatorsPart1($lguType,$profID,$ref_id){
+        $unformat3 = "";
+        foreach($this->getFirstIndicators() as $firstIndicators):
+            $unformat3 .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromFI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat = "";
+        foreach($this->getSecondCategoriesFromFI($lguType) as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(newValue = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(newValue = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(newValue = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_updates`)
+                WHERE `indicator_id` IN ('.$format3.','.$format2.','.$format.')';
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getTotalScoreIndicatorsPart2($lguType,$profID,$ref_id){
+        $unformat = "";
+        foreach($this->getSecondIndicators() as $secondIndicators):
+            $unformat .= "'".$secondIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromSI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat3 = "";
+        foreach($this->getSecondCategoriesFromSI($lguType) as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat4 = "";
+        foreach($this->getSecondCategoriesLowerFromSI($lguType) as $secondCat):
+            $unformat4 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format4 = substr($unformat4,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(newValue = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(newValue = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(newValue = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_updates`)
+                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.')';
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getTotalScoreIndicatorsPart3($lguType,$profID,$ref_id){
+        $unformat = "";
+        foreach($this->getThirdIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+        $unformat2 = "";
+        foreach($this->getCategoriesFromTI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+        $unformat3 = "";
+        foreach($this->getSecondCategoriesFromTI($lguType) as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(newValue = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(newValue = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(newValue = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_updates`)
+                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.')';
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getTotalScoreIndicatorsPart4($lguType,$profID,$ref_id){
+
+        $fourth = $this->getFourthMotherIndicator()->indicator_id;
+        $unformat = "";
+        foreach($this->getFourthIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+        $unformat2 = "";
+        foreach($this->getCategoriesFromFourthI() as $firstIndicators):
+            $unformat2 .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(newValue = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(newValue = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(newValue = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_updates`)
+                WHERE `indicator_id`IN ('.$format.','.$format2.',"'.$fourth.'")';
+        $query = $this->db->query($sql);
+        return  $query->row();
+//        return  $sql;
+    }
+
+    //Baseline
+    public function getBaselineTotalScoreIndicatorsPart1($lguType,$profID,$ref_id){
+        $unformat3 = "";
+        foreach($this->getFirstIndicators() as $firstIndicators):
+            $unformat3 .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromFI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat = "";
+        foreach($this->getSecondCategoriesFromFI($lguType) as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(compliance_indicator_id = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_lswdo_standard_indicators`)
+                WHERE `indicator_id` IN ('.$format3.','.$format2.','.$format.') and profile_id = '.$profID.' and ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getBaselineTotalScoreIndicatorsPart2($lguType,$profID,$ref_id){
+        $unformat = "";
+        foreach($this->getSecondIndicators() as $secondIndicators):
+            $unformat .= "'".$secondIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromSI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat3 = "";
+        foreach($this->getSecondCategoriesFromSI($lguType) as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat4 = "";
+        foreach($this->getSecondCategoriesLowerFromSI($lguType) as $secondCat):
+            $unformat4 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format4 = substr($unformat4,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(compliance_indicator_id = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_lswdo_standard_indicators`)
+                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.') and profile_id = '.$profID.' and ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getBaselineTotalScoreIndicatorsPart3($lguType,$profID,$ref_id){
+        $unformat = "";
+        foreach($this->getThirdIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+        $unformat2 = "";
+        foreach($this->getCategoriesFromTI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+        $unformat3 = "";
+        foreach($this->getSecondCategoriesFromTI($lguType) as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(compliance_indicator_id = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_lswdo_standard_indicators`)
+                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.') and profile_id = '.$profID.' and ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getBaselineTotalScoreIndicatorsPart4($lguType,$profID,$ref_id){
+
+        $fourth = $this->getFourthMotherIndicator()->indicator_id;
+        $unformat = "";
+        foreach($this->getFourthIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+        $unformat2 = "";
+        foreach($this->getCategoriesFromFourthI() as $firstIndicators):
+            $unformat2 .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(compliance_indicator_id = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_lswdo_standard_indicators`)
+                WHERE `indicator_id` IN  ('.$format.','.$format2.',"'.$fourth.'")and profile_id = '.$profID.' and ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return  $query->row();
+//        return  $sql;
+    }
+
+    public function getTotalIndicatorsPart1($lguType){
+    $unformat3 = "";
+    foreach($this->getFirstIndicators() as $firstIndicators):
+        $unformat3 .= "'".$firstIndicators->indicator_id."',";
+    endforeach;
+    $format3 = substr($unformat3,0,-1);
+
+    $unformat2 = "";
+    foreach($this->getCategoriesFromFI($lguType) as $secondCat):
+        $unformat2 .= "'".$secondCat->indicator_id."',";
+    endforeach;
+    $format2 = substr($unformat2,0,-1);
+
+    $unformat = "";
+    foreach($this->getSecondCategoriesFromFI($lguType) as $firstIndicators):
+        $unformat .= "'".$firstIndicators->indicator_id."',";
+    endforeach;
+    $format = substr($unformat,0,-1);
+
+
+    if($lguType == 1){
+        $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+    } else {
+        $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+    }
+    $sql = 'select Sum(if(indicator_checklist_id = 1, 1,0)) as Bronze,
+                         Sum(if(indicator_checklist_id = 2, 1,0)) as Silver,
+                         Sum(if(indicator_checklist_id = 3, 1,0)) as Gold
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format3.','.$format2.') and '.$where2;
+    $query = $this->db->query($sql);
+    return  $query->row();
+}
+    public function getTotalIndicatorsPart2($lguType){
+        $unformat = "";
+        foreach($this->getSecondIndicators() as $secondIndicators):
+            $unformat .= "'".$secondIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromSI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat3 = "";
+        foreach($this->getSecondCategoriesFromSI($lguType) as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat4 = "";
+        foreach($this->getSecondCategoriesLowerFromSI($lguType) as $secondCat):
+            $unformat4 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format4 = substr($unformat4,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select Sum(if(indicator_checklist_id = 1, 1,0)) as Bronze,
+                         Sum(if(indicator_checklist_id = 2, 1,0)) as Silver,
+                         Sum(if(indicator_checklist_id = 3, 1,0)) as Gold
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.') and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getTotalIndicatorsPart3($lguType){
+        $unformat = "";
+        foreach($this->getThirdIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+        $unformat2 = "";
+        foreach($this->getCategoriesFromTI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select Sum(if(indicator_checklist_id = 1, 1,0)) as Bronze,
+                 Sum(if(indicator_checklist_id = 2, 1,0)) as Silver,
+                 Sum(if(indicator_checklist_id = 3, 1,0)) as Gold
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.','.$format2.') and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->row();
+    }
+    public function getTotalIndicatorsPart4($lguType){
+
+        $fourth = $this->getFourthMotherIndicator()->indicator_id;
+        $unformat = "";
+        foreach($this->getFourthIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
+        }
+        $sql = 'select Sum(if(indicator_checklist_id = 1, 1,0)) as Bronze,
+                         Sum(if(indicator_checklist_id = 2, 1,0)) as Silver,
+                         Sum(if(indicator_checklist_id = 3, 1,0)) as Gold
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.',"'.$fourth.'") and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->row();
+//        return  $sql;
     }
 
     public function getFirstMotherIndicator(){
@@ -81,7 +483,6 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
-
     public function getSecondCategoriesFromFI($lguType){
         $unformat = "";
         foreach($this->getCategoriesFromFI($lguType) as $secondCat):
@@ -100,6 +501,7 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
+
     public function getSecondMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');
@@ -256,14 +658,16 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
 
-    public function insertFunctionality($profileID,$ref_id, $level_function, $region_code){
+    public function insertFunctionality($profileID,$ref_id, $level_function, $score){
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_functionality(prof_id,ref_id,level_function,region_code)
+        $this->db->query('Insert into tbl_functionality(prof_id,ref_id,level_function_baseline,baseline_score,new_score,level_function_new)
                           VALUES(
                           "'.$profileID.'",
                           "'.$ref_id.'",
                           "'.$level_function.'",
-                          "'.$region_code.'"
+                          "'.$score.'",
+                          "'.$score.'",
+                          "'.$level_function.'"
                           )');
         if ($this->db->trans_status() === FALSE)
         {
@@ -277,6 +681,28 @@ class indicator_model extends CI_Model
         }
         $this->db->close();
     }
+    public function updateFunctionality($profileID,$ref_id, $level_function, $score){
+        $this->db->trans_begin();
+        $this->db->query('update tbl_functionality SET
+                          new_score = '.$score.',
+                          level_function_new = "'.$level_function.'"
+                          Where
+                          prof_id = '.$profileID.' and ref_id = '.$ref_id.'
+        ');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+
+
     public function insertFirstIndicator($profileID,$indicator_id, $compliance, $findings,$refID){
         $this->db->trans_begin();
         $this->db->query('Insert into tbl_lswdo_standard_indicators(profile_id, indicator_id, compliance_indicator_id,findings_recom,ref_id,DELETED)

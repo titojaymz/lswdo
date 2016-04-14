@@ -49,7 +49,7 @@ class updates_model extends CI_Model
     }
     public function getIndicatorList()
     {
-        $sql = 'select b.indicator_name, a.date_updated,a.newValue
+        $sql = 'select b.indicator_name, a.date_updated,a.newValue,a.oldValue
                 from tbl_updates a
                 INNER JOIN lib_indicator_codes b
                 ON a.indicator_id = b.indicator_id

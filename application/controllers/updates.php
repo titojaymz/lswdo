@@ -10,6 +10,8 @@ class updates extends CI_Controller {
     public function update_view($profID,$refID)
     {
         $updates_model = new updates_model();
+        $indicator_model = new indicator_model();
+        $lguType = $indicator_model->getLGUtype($profID);
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
@@ -17,6 +19,15 @@ class updates extends CI_Controller {
             'getDetail'=>$updates_model->getDetails($profID,$refID),
             'getMotherIndicator'=>$updates_model->getMotherIndicator(),
             'getIndicatorList'=>$updates_model->getIndicatorList(),
+            'getTotalIndicatorsPart1'=>$indicator_model->getTotalIndicatorsPart1($lguType->lgu_type_id),
+            'getTotalIndicatorsPart2'=>$indicator_model->getTotalIndicatorsPart2($lguType->lgu_type_id),
+            'getTotalIndicatorsPart3'=>$indicator_model->getTotalIndicatorsPart3($lguType->lgu_type_id),
+            'getTotalIndicatorsPart4'=>$indicator_model->getTotalIndicatorsPart4($lguType->lgu_type_id),
+            'getTotalScoreIndicatorsPart1'=>$indicator_model->getTotalScoreIndicatorsPart1($lguType->lgu_type_id,$profID,$refID),
+            'getTotalScoreIndicatorsPart2'=>$indicator_model->getTotalScoreIndicatorsPart2($lguType->lgu_type_id,$profID,$refID),
+            'getTotalScoreIndicatorsPart3'=>$indicator_model->getTotalScoreIndicatorsPart3($lguType->lgu_type_id,$profID,$refID),
+            'getTotalScoreIndicatorsPart4'=>$indicator_model->getTotalScoreIndicatorsPart4($lguType->lgu_type_id,$profID,$refID),
+            'getScorePerProf'=>$indicator_model->getScorePerProf($profID,$refID),
             'profID'=>$profID,
             'refID'=>$refID,
         ));
@@ -58,6 +69,7 @@ class updates extends CI_Controller {
         }
         $date_today = date('Y-m-d');
         $updates_model = new updates_model();
+        $indicator_model = new indicator_model();
         $this->validateUpdatesIndicator();
 
         if (!$this->form_validation->run()) {
@@ -92,6 +104,17 @@ class updates extends CI_Controller {
                     'getMotherIndicator'=>$updates_model->getMotherIndicator(),
                 ));
                 $this->load->view('footer');
+                $scoreProf = $indicator_model->getScorePerProf($profID, $refID);
+                $getPerc = $scoreProf->FinalScore;
+                $totalScore = $scoreProf->TotalScore;
+                if($getPerc == 100){
+                    $level = 'Fully Functional';
+                } elseif($getPerc > 50 && $getPerc < 100){
+                    $level = 'Functional';
+                } elseif($getPerc < 51) {
+                    $level = 'Partially Functional';
+                }
+                $addFunction = $indicator_model->updateFunctionality($profID, $refID,$level,$totalScore);
                 $this->redirectIndex($profID,$refID);
             }
         }
