@@ -73,5 +73,50 @@ order	by a.new_score desc;
         $result = $query->result();
         return $result;
     }
+    public function get_noofCities()
+    {
+        $sql = 'select a.prov_name,count(b.city_code) as numCity from lib_provinces a
+inner join lib_cities b
+on a.prov_code = b.prov_code
+inner join tbl_lswdo c
+on c.prov_code = a.prov_code
+inner join tbl_functionality d
+on d.prof_id = c.profile_id
+where a.region_code = 010000000 and c.DELETED = 0
+GROUP BY a.prov_code
+ORDER BY a.prov_code
+' ;
+
+   /*     select a.prov_name,count(b.city_code) as numCity from lib_provinces a
+inner join lib_cities b
+on a.prov_code = b.prov_code
+inner join tbl_lswdo c
+on c.prov_code = a.prov_code
+inner join tbl_functionality d
+on d.prof_id = c.profile_id
+where a.region_code = 010000000 and c.DELETED = 0
+GROUP BY a.prov_code
+ORDER BY a.prov_code*/
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+
+public function get_noofFunctional()
+{
+    $sql = 'SELECT c.prov_name,d.city_name,count(b.city_code) as numFunc FROM `tbl_functionality` a
+inner join tbl_lswdo b
+on a.prof_id = b.profile_id
+inner join lib_provinces c
+on b.prov_code = c.prov_code
+inner join lib_cities d
+on b.city_code = d.city_code
+where b.deleted = 0 and b.lgu_type_id in (\'2\',\'3\') and a.level_function_baseline = "Functional"
+group by prov_name
+' ;
+    $query = $this->db->query($sql);
+    $result = $query->result();
+    return $result;
+}
 
 }

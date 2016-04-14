@@ -24,6 +24,8 @@
                             <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/pswdo_newscore') ?>"><i class="fa fa-plus-circle"></i>PSWDO Updated Reports</a>
                             <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/cmswdo_score') ?>"><i class="fa fa-plus-circle"></i>C/MSWDO Baseline Reports</a>
                             <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/cmswdo_newscore') ?>"><i class="fa fa-plus-circle"></i>C/MSWDO Updated Reports</a>
+                            <br>
+                            <a class="btn btn-sm btn-success" href="<?php echo base_url('reports/noOffunctional') ?>"><i class="fa fa-plus-circle"></i>noOffunctional</a>
                         </table>
                     </div>
                 </div>
