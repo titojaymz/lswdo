@@ -23,11 +23,12 @@ class budgetallocation extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function addBudgetAllocation()
+    public function addBudgetAllocation($profile_id)
     {
 
         $budgetallocation_model = new budgetallocation_model();
         $sector_id = $budgetallocation_model->get_sector();
+        $profile_id = $budgetallocation_model->getLSWDOprofile($profile_id);
 
         $this->validateAddForm();
 
@@ -45,6 +46,8 @@ class budgetallocation extends CI_Controller {
 
         } else {
             $budgetallocation_model = new budgetallocation_model();
+
+          //  $profile_id = $this->input->post('profile_id');//mglv
             $sector_id = $this->input->post('sector_id');
             $year_indicated = $this->input->post('year_indicated');
             $budget_present_year = $this->input->post('budget_present_year');
@@ -52,7 +55,7 @@ class budgetallocation extends CI_Controller {
             $no_bene_served = $this->input->post('no_bene_served');
             $no_target_bene = $this->input->post('no_target_bene');
 
-            $addResult = $budgetallocation_model->insertBudgetAllocation($sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
+            $addResult = $budgetallocation_model->insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
 
             if ($addResult){
                 $form_message = 'Add Success!';
@@ -61,11 +64,14 @@ class budgetallocation extends CI_Controller {
                 $this->load->view('budgetallocation_add',array(
                     'sector_id' => $sector_id,
                     'budgetallocation_data'=>$budgetallocation_model->getBudgetAllocation(),
+                    //'getSecondCategory' => $budgetallocation_model->getSecondCategoriesFromFI($lguTypes->lgu_type_id),
+                    'profile_id' => $profile_id,
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
-                    $this->redirectIndex()
+
                 ));
                 $this->load->view('footer');
+                $this->redirectIndex();
             }
         }
     }

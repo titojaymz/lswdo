@@ -68,7 +68,7 @@ class monitoring extends CI_Controller
             $monitoring_model = new Monitoring_Model();*/
 
             //$profile_id ='9';
-            $profile_id =$this->input->post('profile_id');
+            $profile_id = $this->input->post('profile_id'); //mglv
             $ref_cert_id = '0';
             $visit_count = $this->input->post('visit_count');
 
