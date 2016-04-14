@@ -533,11 +533,11 @@ class reports extends CI_Controller {
 
         $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'No. of Functional');
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'No. of Partially Functional');
         $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'No. of Fully Functional');
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'No. of Functional');
         $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -581,12 +581,10 @@ class reports extends CI_Controller {
                 $row4++;
                 if ($prevRegion == $province)
                 {
-                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFunc);$col3++;
-                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFFunc);$col3++;
-                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numPFunc);$col3++;
-
+                    $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numPFunc);$col3++;
+                    $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFFunc);$col3++;
+                    $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFunc);$col3++;
                    break;
-    //
                 }
                 else
                 {
