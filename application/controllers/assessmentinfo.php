@@ -87,6 +87,7 @@ class assessmentinfo extends CI_Controller {
         } else {
             $assessmentinfo_model = new assessmentinfo_model();
 
+            $profile_id =$this->input->post('profile_id');
             $application_type_id = $this->input->post('application_type_id');
             $lgu_type_id = $this->input->post('lgu_type_id');
             $regionlist = $this->input->post('regionlist');
@@ -139,11 +140,20 @@ class assessmentinfo extends CI_Controller {
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
-                    $this->redirectIndex()
+
                 ));
                 $this->load->view('footer');
+
+                $this->redirectIndex($profile_id,$addResult);
             }
         }
+    }
+
+    public function redirectIndex($profile_id,$addResult)
+    {
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$profile_id.'/'.$addResult);
+//        $sec = "1";
+        header("Location: $page");
     }
 
 /*
@@ -578,14 +588,14 @@ class assessmentinfo extends CI_Controller {
         $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
-
+/*
     public function redirectIndex()
     {
         $page = base_url();
         $sec = "1";
         header("Refresh: $sec; url=$page");
     }
-
+*/
     public function refreshCurPage()
     {
         $page = current_url();
@@ -598,4 +608,5 @@ class assessmentinfo extends CI_Controller {
         $page = base_url('assessmentinfo/index/' . $id . '.html');
         header("Refresh: $sec; url=$page");
     }
+
 }

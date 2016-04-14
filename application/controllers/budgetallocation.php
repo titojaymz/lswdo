@@ -8,6 +8,9 @@ class budgetallocation extends CI_Controller {
     public function index()
     {
 
+        $indicator_model = new indicator_model();
+        $profile_id = $budgetallocation_model->getLSWDOprofile($profile_id);
+
         $user_region = $this->session->userdata('uregion');
         $budgetallocation_model = new budgetallocation_model();
         $form_message = '';
@@ -18,6 +21,7 @@ class budgetallocation extends CI_Controller {
         $this->load->view('budgetallocation_list',array(
             'budgetallocation_data'=>$budgetallocation_model->getBudgetAllocation(),
             'list_fields'=>$this->listFields(),
+            'profile_id' => $profile_id,
             'form_message'=>$form_message
         ));
         $this->load->view('footer');

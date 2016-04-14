@@ -56,9 +56,9 @@ class assessmentinfo_model extends CI_Model {
                           "'.$total_ira.'",
                           "'.$total_budget_lswdo.'",
                           "'.$created_by.'",
-                          "'.$date_created.'",
+                          Now(),
                           "'.$modified_by.'",
-                          "'.$date_modified.'"
+                          Now()
                           )');
 
         if ($this->db->trans_status() === FALSE)
@@ -73,6 +73,8 @@ class assessmentinfo_model extends CI_Model {
         }
         $this->db->close();
     }
+
+
 
     public function insertBudgetAllocation($sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
     {
@@ -122,7 +124,7 @@ class assessmentinfo_model extends CI_Model {
                           total_ira="'.$total_ira.'",
                           total_budget_lswdo="'.$total_budget_lswdo.'",
                           modified_by="'.$modified_by.'",
-                          date_modified="'.$date_modified.'"
+                          date_modified=Now()
                           WHERE
                           profile_id = "'.$id.'"
                           ');
