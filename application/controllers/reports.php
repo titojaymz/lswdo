@@ -488,6 +488,7 @@ class reports extends CI_Controller {
 
         $noofcities = $this->reports_model->get_noofCities();
         $nooffunctional = $this->reports_model->get_noofFunctional();
+        $noofprov = $this->reports_model->get_noofProvince();
 
 
 // Create new PHPExcel object
@@ -558,28 +559,34 @@ class reports extends CI_Controller {
         $col3 = 'C';
         $row3 = 7;
 
-
         $col4 = 'A';
         $row4 = 7;
+
+
 
 //functional
        foreach ($nooffunctional as $functionaldata):
             $province = $functionaldata->prov_name;
             $numFunc = $functionaldata->numFunc;
 
-           $prevRegion = $objPHPExcel->getActiveSheet()->getCell($col4.$row4)->getValue(); $row4++;
-
-            if ($prevRegion == $province)
+            for ($counter = 1; $counter <= $noofprov->numProv; $counter++ )
             {
-                $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFunc);$row3++;
-//                if($col3 == 'D'){$col3 = 'C';}
-            }
-           else
-           {
-               $row3++;
-               $row4++;
-           }
+                $prevRegion = $objPHPExcel->getActiveSheet()->getCell($col4.$row4)->getValue();
+                $row4++;
+                if ($prevRegion == $province)
+                {
+                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFunc);
+                   break;
+    //                if($col3 == 'D'){$col3 = 'C';}
+                }
+                else
+                {
+                    $row3++;
+                }
 
+            }
+           $row3 = 7;
+           $row4 = 7;
         endforeach;
 //    //border
         $objPHPExcel->getActiveSheet()->getStyle(

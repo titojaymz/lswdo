@@ -75,16 +75,12 @@ order	by a.new_score desc;
     }
     public function get_noofCities()
     {
-        $sql = 'select a.prov_name,count(b.city_code) as numCity from lib_provinces a
+        $sql = 'select count(a.prov_code) as numProv,a.prov_name,count(b.city_code) as numCity from lib_provinces a
 inner join lib_cities b
 on a.prov_code = b.prov_code
-inner join tbl_lswdo c
-on c.prov_code = a.prov_code
-inner join tbl_functionality d
-on d.prof_id = c.profile_id
-where a.region_code = 010000000 and c.DELETED = 0
+where a.region_code = 010000000
 GROUP BY a.prov_code
-ORDER BY a.prov_code
+ORDER BY a.prov_code;
 ' ;
 
    /*     select a.prov_name,count(b.city_code) as numCity from lib_provinces a
@@ -101,7 +97,16 @@ ORDER BY a.prov_code*/
         $result = $query->result();
         return $result;
     }
+    public function get_noofProvince()
+    {
+        $sql = 'select count(prov_code) as numProv from lib_provinces
+                where region_code = 010000000;
+' ;
 
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
 public function get_noofFunctional()
 {
     $sql = 'SELECT c.prov_name,d.city_name,count(b.city_code) as numFunc FROM `tbl_functionality` a
