@@ -23,12 +23,12 @@ class budgetallocation extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function addBudgetAllocation($profile_id)
+    public function addBudgetAllocation($id=0)
     {
 
         $budgetallocation_model = new budgetallocation_model();
         $sector_id = $budgetallocation_model->get_sector();
-        $profile_id = $budgetallocation_model->getLSWDOprofile($profile_id);
+        $profile_id = $budgetallocation_model->getLSWDOprofile($id);
 
         $this->validateAddForm();
 
