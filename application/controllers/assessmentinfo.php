@@ -8,24 +8,14 @@ class assessmentinfo extends CI_Controller {
     public function index()
     {
 
-        $user_region = $this->session->userdata('uregion');
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+        //$user_region = $this->session->userdata('uregion');
 
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
-
-
-
-        $this->init_rpmb_session();
-        //  $rpmb['lgu_typelist'] = $this->assessmentinfo_model->get_lgu_type();
-        $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
-
-
-        if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
-            $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
-        }
-        if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
-            $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
-        }
 
         $this->load->view('header');
         $this->load->view('nav');
@@ -40,6 +30,11 @@ class assessmentinfo extends CI_Controller {
 
     public function addAssessmentinfo()
     {
+
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
 
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
@@ -126,6 +121,11 @@ class assessmentinfo extends CI_Controller {
 
     public function editAssessmentinfo($id = 0)
     {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
         if ($id > 0){
             $assessmentinfo_model = new assessmentinfo_model();
             $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
@@ -205,6 +205,11 @@ class assessmentinfo extends CI_Controller {
 
     public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
         $assessmentinfo_model = new assessmentinfo_model();
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
         if ($AssessmentDetails){
@@ -241,6 +246,12 @@ class assessmentinfo extends CI_Controller {
 
     public function delete_assessmentinfo($id = 0)
     {
+
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteassessmentinfo($id);

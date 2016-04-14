@@ -191,7 +191,7 @@ class assessmentinfo_model extends CI_Model {
 
         public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
             $region_access = $user_region;
-            $this->db->select('t1.profile_id, t2.application_type_id, t1.street_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
+            $this->db->select('t1.profile_id, t2.application_type_id, t1.office_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
             $this->db->from('tbl_lswdo AS t1');
             $this->db->join('lib_application_type t2','t1.application_type_id = t2.application_type_id','inner');
             if ($user_region != 0) {
