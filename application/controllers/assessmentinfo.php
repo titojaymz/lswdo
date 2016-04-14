@@ -105,7 +105,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('nav');
 
 
-                $this->load->view('assessmentinfo_add',array(
+                $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
