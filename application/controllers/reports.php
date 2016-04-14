@@ -537,7 +537,11 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('e4', 'Rank');
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'No. of Fully Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'No. of Fully Functional');
         $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('e4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -567,7 +571,9 @@ class reports extends CI_Controller {
 //functional
        foreach ($nooffunctional as $functionaldata):
             $province = $functionaldata->prov_name;
-            $numFunc = $functionaldata->numFunc;
+            $numFunc = $functionaldata->Functional;
+            $numFFunc = $functionaldata->FullyFunctional;
+            $numPFunc = $functionaldata->PartiallyFunctional;
 
             for ($counter = 1; $counter <= $noofprov->numProv; $counter++ )
             {
@@ -575,9 +581,12 @@ class reports extends CI_Controller {
                 $row4++;
                 if ($prevRegion == $province)
                 {
-                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFunc);
+                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFunc);$col3++;
+                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numFFunc);$col3++;
+                   $objPHPExcel->getActiveSheet()->setCellValue($col3.$row3, $numPFunc);$col3++;
+
                    break;
-    //                if($col3 == 'D'){$col3 = 'C';}
+    //
                 }
                 else
                 {
@@ -585,6 +594,7 @@ class reports extends CI_Controller {
                 }
 
             }
+           if($col3 == 'F'){$col3 = 'C';}
            $row3 = 7;
            $row4 = 7;
         endforeach;
