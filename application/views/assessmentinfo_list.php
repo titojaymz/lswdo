@@ -6,6 +6,11 @@
 
 ?>
 <body>
+<?php if ($form_message <> ''){ ?>
+    <div class="alert alert-success">
+        <?php echo $form_message ?>
+    </div>
+<?php } ?>
 <div class="content">
 
     <div class = "row">

@@ -50,7 +50,6 @@ class assessmentinfo extends CI_Controller {
 
             $this->init_rpmb_session();
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
-           // $rpmb['income_class'] = $income_class;
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
             $rpmb['form_message'] = $form_message;
@@ -103,7 +102,6 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('sidebar');
                 $this->load->view('header');
                 $this->load->view('nav');
-
 
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
@@ -269,24 +267,7 @@ class assessmentinfo extends CI_Controller {
             }
         }
     }
-    /*
-        public function populate_region() {
-            if($_POST['lgu_type_id'] > 0 and isset($_POST) and isset($_POST['lgu_type_id'])) {
 
-                $lgu_type_id = $_POST['lgu_type_id'];
-                $regionlist = $this->assessmentinfo_model->get_regions($lgu_type_id);
-
-                $region_list[] = "Choose Type of LSWDO";
-                foreach($regionlist as $tempregion) {
-                    $region_list[$tempregion->region_code] = $tempregion->region_name;
-                }
-
-                $regionlist_prop = 'id="regionlist" name="regionlist" class="form-control" onChange="get_prov();"';
-
-                echo form_dropdown('regionlist', $region_list, '', $regionlist_prop);
-            }
-        }
-    */
     public function populate_prov() {
         if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
 
