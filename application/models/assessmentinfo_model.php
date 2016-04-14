@@ -12,11 +12,11 @@ class assessmentinfo_model extends CI_Model {
 
     public function getAssessmentinfo()
     {
-        $sql = 'select a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
-                from tbl_lswdo a
-                inner join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
-                inner join lib_application_type c on a.application_type_id = c.application_type_id
-                where a.deleted = 0';
+        $sql = 'SELECT a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
+                FROM tbl_lswdo a
+                INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
+                INNER join lib_application_type c on a.application_type_id = c.application_type_id
+                WHERE a.deleted = 0';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
@@ -25,13 +25,16 @@ class assessmentinfo_model extends CI_Model {
 
     public function getAssessmentinfoByID($id = 0)
     {
-        $query = $this->db->get_where('tbl_lswdo',array('profile_id'=>$id,'DELETED'=>0));
+
+       $query = $this->db->get_where('tbl_lswdo',array('profile_id'=>$id,'DELETED'=>0));
         if ($query->num_rows() > 0){
             return $query->row();
         } else {
             return FALSE;
         }
         $this->db->close();
+
+
     }
 
 
@@ -188,7 +191,7 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-
+/*
         public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
             $region_access = $user_region;
             $this->db->select('t1.profile_id, t2.application_type_id, t1.office_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
@@ -207,7 +210,7 @@ class assessmentinfo_model extends CI_Model {
                 return $query->result();
             }
         }
-
+*/
     public function get_lgutype() {
         $get_lgutype = "
         SELECT

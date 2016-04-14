@@ -117,6 +117,14 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function redirectIndex($id,$addResult)
+    {
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$id.'/'.$addResult);
+//        $sec = "1";
+        header("Location: $page");
+    }
+
+
     public function editAssessmentinfo($id = 0)
     {
         if (!$this->session->userdata('user_id'))
@@ -461,14 +469,14 @@ class assessmentinfo extends CI_Controller {
         $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
-
+/*
     public function redirectIndex()
     {
         $page = base_url();
         $sec = "1";
         header("Refresh: $sec; url=$page");
     }
-
+*/
     public function refreshCurPage()
     {
         $page = current_url();

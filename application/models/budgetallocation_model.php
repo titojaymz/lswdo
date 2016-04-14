@@ -43,7 +43,7 @@ class budgetallocation_model extends CI_Model {
         $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
                           VALUES
                           (
-                          "'.$profile_id.'",
+                          1,
                           "'.$sector_id.'",
                           "'.$year_indicated.'",
                           "'.$budget_present_year.'",
@@ -66,9 +66,9 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
-    public function getLSWDOprofile($profile_id){
+    public function getLSWDOprofile($id){
         $this->db->select('profile_id');
-        $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $profile_id));
+        $query = $this->db->get_where('tbl_lswdo', array('profile_id' => $id));
         return $query->row();
     }
 
