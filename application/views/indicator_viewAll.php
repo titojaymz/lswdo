@@ -1220,19 +1220,70 @@
         </tr>
             <!-- Part 1 -->
             <tr>
-                <td>I. Administration and Organization</td>
+                <td colspan="2">I. Administration and Organization</td>
+                <td align="center"><?php echo $getTotalIndicatorsPart1->Bronze; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart1->BronzeScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart1->Silver; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart1->SilverScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart1->Gold; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart1->GoldScoreCompliant; ?></td>
             </tr>
             <!-- Part 2 -->
             <tr>
-                <td>II. Program Management</td>
+                <td colspan="2">II. Program Management</td>
+                <td align="center"><?php echo $getTotalIndicatorsPart2->Bronze; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart2->BronzeScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart2->Silver; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart2->SilverScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart2->Gold; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart2->GoldScoreCompliant; ?></td>
             </tr>
             <!-- Part 3 -->
             <tr>
-                <td>III. Case Management</td>
+                <td colspan="2">III. Case Management</td>
+                <td align="center"><?php echo $getTotalIndicatorsPart3->Bronze; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart3->BronzeScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart3->Silver; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart3->SilverScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart3->Gold; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart3->GoldScoreCompliant; ?></td>
             </tr>
             <!-- Part 4 -->
             <tr>
-                <td>IV. Physical Structures and Safety</td>
+                <td colspan="2">IV. Physical Structures and Safety</td>
+                <td align="center"><?php echo $getTotalIndicatorsPart4->Bronze; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart4->BronzeScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart4->Silver; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart4->SilverScoreCompliant; ?></td>
+                <td align="center"><?php echo $getTotalIndicatorsPart4->Gold; ?></td>
+                <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart4->GoldScoreCompliant; ?></td>
+            </tr>
+            <?php
+            $bronzeTotal = $getBaselineTotalScoreIndicatorsPart1->BronzeScoreCompliant + $getBaselineTotalScoreIndicatorsPart2->BronzeScoreCompliant + $getBaselineTotalScoreIndicatorsPart3->BronzeScoreCompliant + $getBaselineTotalScoreIndicatorsPart4->BronzeScoreCompliant;
+            $silverTotal = $getBaselineTotalScoreIndicatorsPart1->SilverScoreCompliant + $getBaselineTotalScoreIndicatorsPart2->SilverScoreCompliant + $getBaselineTotalScoreIndicatorsPart3->SilverScoreCompliant + $getBaselineTotalScoreIndicatorsPart4->SilverScoreCompliant;
+            $goldTotal = $getBaselineTotalScoreIndicatorsPart1->GoldScoreCompliant + $getBaselineTotalScoreIndicatorsPart2->GoldScoreCompliant + $getBaselineTotalScoreIndicatorsPart3->GoldScoreCompliant + $getBaselineTotalScoreIndicatorsPart4->GoldScoreCompliant;
+            $getPercBronze = $scoreProf->FinalScore;
+
+            if($getPercBronze == 100){
+                $levelBronze = 'Fully Functional';
+            } elseif($getPercBronze > 50 && $getPercBronze < 100){
+                $levelBronze = 'Functional';
+            } elseif($getPercBronze < 51) {
+                $levelBronze = 'Partially Functional';
+            }
+
+            ?>
+            <tr>
+                <td colspan = "2">Total</td>
+                <td colspan = "2" align="center"><b><?php echo $bronzeTotal; ?></b></td>
+                <td colspan = "2" align="center"><b><?php echo $silverTotal; ?></b></td>
+                <td colspan = "2" align="center"><b><?php echo $goldTotal; ?></b></td>
+            </tr>
+            <tr>
+                <td colspan = "2">Level of Functionality</td>
+                <td colspan = "2" align="center"><b><?php echo $levelBronze; ?></b></td>
+                <td colspan = "2" align="center"><b><?php echo ''; ?></b></td>
+                <td colspan = "2" align="center"><b><?php echo ''; ?></b></td>
             </tr>
     </table>
                 </div>

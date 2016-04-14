@@ -54,9 +54,7 @@
             </div>
         </div>
     </div>
-<pre>
-    <?php print_r($getScorePerProf); ?>
-</pre>
+
     <!--Score-->
     <div class = "row">
         <div class="col-md-12">
@@ -65,7 +63,6 @@
                     Score
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
-                        <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
                     </ul>
                 </div>
                 <div class = "panel-body" style="display: block;">
