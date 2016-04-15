@@ -1184,4 +1184,24 @@ class reports extends CI_Controller {
             $_SESSION['city'] = $_POST['citylist'];
         }
     }
+    public function tableView($lguType)
+    {
+        $indicator_model = new indicator_model();
+        $this->load->view('header');
+        $this->load->view('nav');
+        $this->load->view('sidebar');
+        $this->load->view('reports_tableview',array(
+            'getFirstMotherIndicator'=>$indicator_model->getFirstMotherIndicator(),
+            'getSecondMotherIndicator'=>$indicator_model->getSecondMotherIndicator(),
+            'getThirdMotherIndicator'=>$indicator_model->getThirdMotherIndicator(),
+            'getFourthMotherIndicator'=>$indicator_model->getFourthMotherIndicator(),
+            'getPart1'=>$indicator_model->getPart1($lguType),
+            'getPart2'=>$indicator_model->getPart2($lguType),
+            'getPart3'=>$indicator_model->getPart3($lguType),
+            'getPart4'=>$indicator_model->getPart4($lguType),
+            'getScorePart1'=>$indicator_model->getScorePart1(),
+        ));
+        $this->load->view('footer');
+
+    }
 }
