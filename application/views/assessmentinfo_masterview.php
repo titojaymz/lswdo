@@ -72,10 +72,13 @@ if (!$this->session->userdata('user_id')){
             <th>Year Indicated:</th><td><?php echo $year_indicated ?></td>
         </tr>
         <tr>
+            <th>Utilization:</th><td><?php echo $utilization ?></td>
+        </tr>
+        <tr>
             <th>Number of Beneficiaries Served:</th><td><?php echo $no_bene_served ?></td>
         </tr>
         <tr>
-            <th>Utilization:</th><td><?php echo $utilization ?></td>
+            <th>Budget for the Present Year:</th><td><?php echo $budget_present_year ?></td>
         </tr>
         <tr>
             <th>Number of Target Beneficiaries:</th><td><?php echo $no_target_bene ?></td>
