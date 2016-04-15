@@ -9,6 +9,11 @@ class budgetallocation extends CI_Controller {
     public function index()
     {
 
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
         $user_region = $this->session->userdata('uregion');
         $budgetallocation_model = new budgetallocation_model();
         $form_message = '';
@@ -27,6 +32,11 @@ class budgetallocation extends CI_Controller {
     public function addBudgetAllocation($id=0)
     {
 
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
         $budgetallocation_model = new budgetallocation_model();
         $sector_id = $budgetallocation_model->get_sector();
         $profile_id = $budgetallocation_model->getLSWDOprofile($id);
@@ -38,7 +48,6 @@ class budgetallocation extends CI_Controller {
             $this->load->view('header');
             $this->load->view('nav');
             $this->load->view('sidebar');
-            $this->load->view('sidepanel');
 
             $rpmb['sector_id'] = $sector_id;
 
