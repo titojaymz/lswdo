@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by JOSEF FRIEDRICH S. BALDO
- * Date Time: 10/18/15 1:26 PM
+ * Created by PhpStorm
+ * User: mglveniegas
+ *
  */
 if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');

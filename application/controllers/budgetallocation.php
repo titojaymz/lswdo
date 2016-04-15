@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Created by PhpStorm
- * Date Time: 10/18/15 12:31 AM
+ * User: mglveniegas
+ *
  */
 class budgetallocation extends CI_Controller {
 
@@ -107,7 +108,7 @@ class budgetallocation extends CI_Controller {
 
                 $updateResult = $budgetallocation_model->updateBudgetAllocation($id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
                 if ($updateResult){
-//                    $this->load->view('student_update_success',array('redirectIndex'=>$this->redirectIndex()));
+
                     $form_message = 'Update Success';
                     $this->load->view('header');
                     $this->load->view('nav');
