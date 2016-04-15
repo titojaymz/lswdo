@@ -180,11 +180,7 @@ if (!$this->session->userdata('user_id')){
                 <div class="panel-title">
                     <form method="post" class="form-horizontal">
                         <div class="form-group">
-                            <label for="geo_info" class="control-label">Geographic Information</label>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="identify_info" class="control-label">Edit record: Identifying Information</label>
+                            <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
 
                     <div class="form-group">
