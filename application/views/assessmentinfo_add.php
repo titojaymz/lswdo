@@ -155,12 +155,6 @@ if (!$this->session->userdata('user_id')){
     }
 
 </script>
-
-<?php if ($form_message <> '') { ?>
-    <div class="alert alert-success">
-        <strong><?php echo $form_message ?></strong>
-    </div>
-<?php } ?>
 <?php if (validation_errors() <> '') { ?>
     <div class="alert alert-danger">
         <strong><?php echo validation_errors() ?></strong>
@@ -405,9 +399,6 @@ if (!$this->session->userdata('user_id')){
                             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
                             <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
                         </div>
-
-                        <?php /*----------------------------Total Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
-
 
                         <div class="form-group">
                             <div class="btn-group">
