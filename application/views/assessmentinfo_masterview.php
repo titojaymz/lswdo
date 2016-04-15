@@ -83,7 +83,7 @@ if (!$this->session->userdata('user_id')){
         <tr>
             <th>Number of Target Beneficiaries:</th><td><?php echo $no_target_bene ?></td>
         </tr>
-
+//
     </table>
 
 </div>

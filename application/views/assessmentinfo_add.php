@@ -78,6 +78,20 @@ if (!$this->session->userdata('user_id')){
         }
     }
 
+    function getSwdo() {
+        var e = document.getElementById("swdo_name").value;
+        if (e == 0)
+        {
+
+            document.getElementById("lgu_type_id").style.display = "block";
+            document.getElementById("lgu_type_id").style.visibility = "visible";
+
+        }
+        else {
+
+
+        }
+    }
 
     function get_provinces() {
         var region_code = $('#regionlist').val();
@@ -423,18 +437,27 @@ if (!$this->session->userdata('user_id')){
 
 </div>
 <div id="group_renewal">
-
         <label for="swdo_name">Name of SWDO Officer/Head:</label>
-        <select class="form-control" name="application_type_id" id="application_type_id">
+        <select class="form-control" name="swdo_name" id="swdo_name" onChange="getSwdo()">
             <option select value="">Please select</option>
-            <?php foreach($application as $applications): ?>
-                <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
+            <?php foreach($swdo_name as $applications): ?>
+                <option value="<?php echo $applications->swdo_name ?>"><?php echo $applications->swdo_name ?></option>
             <?php endforeach ?>
         </select>
 
+    <div id="swdo_name">
+        <label class="control-label">Type of LSWDO</label>
+        <!--Select-->
+        <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
+            <option select value="">Please select</option>
+            <?php foreach($lgu_type as $lgus): ?>
+                <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
+            <?php endforeach ?>
+        </select>
+        </div>
 
 
-    </div>
+</div>
                         </div>
                         <div class="form-group">
                             <div class="btn-group">

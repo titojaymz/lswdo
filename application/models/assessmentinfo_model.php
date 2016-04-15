@@ -410,7 +410,7 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
         tbl_lswdo.prov_code,
         tbl_lswdo.city_code,
         tbl_lswdo.office_address,
-        tbl_lswdo.swdo_name,
+        tbl_lswdo.swdo_name as swdo_name,
         tbl_lswdo.designation,
         tbl_lswdo.contact_no,
         tbl_lswdo.email,
@@ -422,9 +422,9 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
         Inner Join lib_application_type ON tbl_lswdo.application_type_id = lib_application_type.application_type_id
         Inner Join lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
         WHERE
-        tbl_lswdo.swdo_name = ?
+        swdo_name = ?
         ORDER BY
-        tbl_lswdo.swdo_name
+        swdo_name
         ";
 
         return $this->db->query($get_records,$swdo_name)->result();
