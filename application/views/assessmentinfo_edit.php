@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by JOSEF FRIEDRICH S. BALDO
- * Date Time: 10/18/15 12:57 AM
+ * Created by PhpStorm
+ * User: mglveniegas
+ *
  */
 if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
@@ -162,6 +163,16 @@ if (!$this->session->userdata('user_id')){
 <?php } ?>
 <body>
 <div class="content">
+
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li class="active">Assessment Information</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
 
     <div class = "row">
         <div class="col-md-12">

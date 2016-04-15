@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by JOSEF FRIEDRICH S. BALDO
- * Date Time: 10/17/15 11:56 PM
+ * Created by PhpStorm
+ * User: mglveniegas
+ *
  */
 class assessmentinfo_model extends CI_Model {
 

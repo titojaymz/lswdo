@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by JOSEF FRIEDRICH S. BALDO
- * Date Time: 10/18/15 12:57 AM
+ * Created by PhpStorm
+ * User: mglveniegas
+ *
  */
 if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
@@ -88,7 +89,6 @@ if (!$this->session->userdata('user_id')){
     }
 
 </script>
-
 <?php if (validation_errors() <> '') { ?>
     <div class="alert alert-danger">
         <strong><?php echo validation_errors() ?></strong>
@@ -97,11 +97,22 @@ if (!$this->session->userdata('user_id')){
 <body>
 <div class="content">
 
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li class="active">Assessment Information</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
+
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
                     <form method="post" class="form-horizontal">
+                        <?php /*----------------------------Total Budget Allocated to Programs and Services per Sector -------------------------------------------------*/?>
                         <div class="form-group">
                             <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                         </div>
