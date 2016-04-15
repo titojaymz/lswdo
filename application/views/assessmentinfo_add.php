@@ -455,10 +455,8 @@ if (!$this->session->userdata('user_id')){
             <?php endforeach ?>
         </select>
         </div>
-
-
 </div>
-                        </div>
+ </div>
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
