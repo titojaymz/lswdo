@@ -41,8 +41,6 @@
                         <thead>
                         <tr>
                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
                            <!-- <th>&nbsp;</th>-->
                             <th>Name of SWDO Officer/Head</th>
                             <th>Status of Application</th>
@@ -59,14 +57,15 @@
                             <tr>
                                 <td>
                                     <div class="btn-group">
+                                        <a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-search"></i> View </a>
                                         <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
-
+                                        <a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-list"></i> Indicators </a>
                                     </div>
 
                                 </td>
-                                <td><a class="btn btn-xs btn-success" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-list"></i> View </a></td>
+
                                 <!--<td><a class="btn btn-xs btn-success" href=sss"<?php /*echo base_url('indicator/indicatorView/' . $assessmentinfoData->profile_id) */?>"><i class="fa fa-list"></i> Indicators </a></td>-->
-                                <td><a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-list"></i> Indicators </a></td>
+
                                 <!-- <td> <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-trash"></i> </a></td>-->
                                 <td><?php echo $assessmentinfoData->swdo_name ?></td>
                                 <td><?php echo $assessmentinfoData->application_type_name ?></td>
