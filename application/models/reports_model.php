@@ -244,21 +244,21 @@ order	by a.new_score desc;
         $result = $query->row();
         return $result;
     }
-    public function get_noofFunctional()
+    public function get_distributionCMSWDOall()
 {
     $sql = 'SELECT c.prov_name,d.city_name,c.prov_code,
-sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
-sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
-sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
-FROM `tbl_functionality` a
-inner join tbl_lswdo b
-on a.prof_id = b.profile_id
-inner join lib_provinces c
-on b.prov_code = c.prov_code
-inner join lib_cities d
-on b.city_code = d.city_code
-where b.deleted = 0 and b.lgu_type_id in (\'2\',\'3\')
-group by c.prov_name;
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+            inner join lib_provinces c
+            on b.prov_code = c.prov_code
+            inner join lib_cities d
+            on b.city_code = d.city_code
+            where b.deleted = 0 and b.lgu_type_id in (\'2\',\'3\')
+            group by c.prov_name;
 ' ;
     $query = $this->db->query($sql);
     $result = $query->result();

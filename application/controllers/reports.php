@@ -1001,10 +1001,10 @@ class reports extends CI_Controller {
         $objWriter->save('php://output');
     }
 
-    public function noOffunctional($regionlist){
+    public function distributionCMSWDOall($regionlist){
 
         $noofcities = $this->reports_model->get_noofCities($regionlist);
-        $nooffunctional = $this->reports_model->get_noofFunctional();
+        $distributionCMSWDOall = $this->reports_model->get_distributionCMSWDOall();
         $noofprov = $this->reports_model->get_noofProvince($regionlist);
 
 
@@ -1086,11 +1086,11 @@ class reports extends CI_Controller {
 
 
 //functional
-       foreach ($nooffunctional as $functionaldata):
-            $province = $functionaldata->prov_name;
-            $numFunc = $functionaldata->Functional;
-            $numFFunc = $functionaldata->FullyFunctional;
-            $numPFunc = $functionaldata->PartiallyFunctional;
+       foreach ($distributionCMSWDOall as $distributionCMSWDOalldata):
+            $province = $distributionCMSWDOalldata->prov_name;
+            $numFunc = $distributionCMSWDOalldata->Functional;
+            $numFFunc = $distributionCMSWDOalldata->FullyFunctional;
+            $numPFunc = $distributionCMSWDOalldata->PartiallyFunctional;
 
             for ($counter = 1; $counter <= $noofprov->numProv; $counter++ )
             {
@@ -1141,6 +1141,7 @@ class reports extends CI_Controller {
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output');
     }
+
     public function populate_prov() {
         if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
 

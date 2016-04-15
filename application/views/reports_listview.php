@@ -198,7 +198,7 @@
 
                             <tr>
                                 <td>
-                                <a class="btn btn-light" href="<?php echo base_url('reports/noOffunctional/'.$regionlist2.'') ?>">Level of functionality</a>
+                                <a class="btn btn-light" href="<?php echo base_url('reports/distributionCMSWDOall/'.$regionlist2.'') ?>">Distribution of CMSWDO ALL(assessed and not assessed)</a>
                                 </td>
                             </tr>
                         </table>
