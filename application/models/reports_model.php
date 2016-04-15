@@ -245,7 +245,7 @@ order	by a.new_score desc;
         return $result;
     }
     public function get_distributionCMSWDOall()
-{
+    {
     $sql = 'SELECT c.prov_name,d.city_name,c.prov_code,
             sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
             sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
@@ -263,6 +263,108 @@ order	by a.new_score desc;
     $query = $this->db->query($sql);
     $result = $query->result();
     return $result;
-}
-
+    }
+    public function get_distributionCSWDOall()
+    {
+        $sql = 'SELECT c.prov_name,d.city_name,c.prov_code,
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+            inner join lib_provinces c
+            on b.prov_code = c.prov_code
+            inner join lib_cities d
+            on b.city_code = d.city_code
+            where b.deleted = 0 and b.lgu_type_id = 2
+            group by c.prov_name;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionMSWDOall()
+    {
+        $sql = 'SELECT c.prov_name,d.city_name,c.prov_code,
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+            inner join lib_provinces c
+            on b.prov_code = c.prov_code
+            inner join lib_cities d
+            on b.city_code = d.city_code
+            where b.deleted = 0 and b.lgu_type_id = 3
+            group by c.prov_name;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionLSWDObyregion()
+    {
+        $sql = 'SELECT region_name,PSWDO,CSWDO,MSWDO,(PSWDO+CSWDO+MSWDO) as Total
+                FROM (select b.region_name,
+                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
+                sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
+                sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
+                from tbl_lswdo a
+                inner join lib_regions b
+                on a.region_code = b.region_code
+                where a.deleted = 0
+                group by a.region_code
+                ) as c;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionPSWDObyregion()
+    {
+        $sql = 'SELECT region_name,PSWDO
+                FROM (select b.region_name,
+                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO
+                from tbl_lswdo a
+                inner join lib_regions b
+                on a.region_code = b.region_code
+                where a.deleted = 0
+                group by a.region_code
+                ) as c
+                ;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionCSWDObyregion()
+    {
+        $sql = 'SELECT region_name,CSWDO
+                FROM (select b.region_name,
+                 sum(if(a.lgu_type_id = 2,1,0)) as CSWDO
+                from tbl_lswdo a
+                inner join lib_regions b
+                on a.region_code = b.region_code
+                where a.deleted = 0
+                group by a.region_code
+                ) as c
+                ;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionMSWDObyregion()
+    {
+        $sql = 'SELECT region_name,MSWDO
+                FROM (select b.region_name,
+                 sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
+                from tbl_lswdo a
+                inner join lib_regions b
+                on a.region_code = b.region_code
+                where a.deleted = 0
+                group by a.region_code
+                ) as c
+                ;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
 }
