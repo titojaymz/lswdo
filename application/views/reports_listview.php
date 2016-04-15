@@ -200,7 +200,28 @@
                                 <td>
                                 <a class="btn btn-light" href="<?php echo base_url('reports/distributionCMSWDOall/'.$regionlist2.'') ?>">Distribution of CMSWDO ALL(assessed and not assessed)</a>
                                 </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionCSWDOall/'.$regionlist2.'') ?>">Distribution of CSWDO ALL(assessed and not assessed)</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionMSWDOall/'.$regionlist2.'') ?>">Distribution of MSWDO ALL(assessed and not assessed)</a>
+                                </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionLSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution LSWDO by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionPSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution PSWDO by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionCSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution CSWDO by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionMSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution CSWDO by Region</a>
+                                </td>
+                            </tr>
+
                         </table>
                         <table class="table display table-bordered table-striped table-hover" width="100%">
                             <tr>
