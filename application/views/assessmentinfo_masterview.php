@@ -33,16 +33,16 @@ if (!$this->session->userdata('user_id')){
             <th>LGU Type:</th><td><?php echo $lgu_type_id ?></td>
         </tr>
         <tr>
-            <th>Region Code:</th><td><?php echo $region_code ?></td>
+            <th>Region:</th><td><?php echo $region_code ?></td>
         </tr>
         <tr>
-            <th>Province Code:</th><td><?php echo $prov_code ?></td>
+            <th>Province</th><td><?php echo $prov_code ?></td>
         </tr>
         <tr>
-            <th>City Code:</th><td><?php echo $city_code ?></td>
+            <th>City:</th><td><?php echo $city_code ?></td>
         </tr>
         <tr>
-            <th>SWDO Name:</th><td><?php echo $swdo_name ?></td>
+            <th>Name of SWDO Officer/Head:</th><td><?php echo $swdo_name ?></td>
         </tr>
         <tr>
             <th>Designation:</th><td><?php echo $designation ?></td>
@@ -51,16 +51,34 @@ if (!$this->session->userdata('user_id')){
             <th>Office Address:</th><td><?php echo $office_address ?></td>
         </tr>
         <tr>
+            <th>Contact Number:</th><td><?php echo $contact_no ?></td>
+        </tr>
+        <tr>
             <th>Email:</th><td><?php echo $email ?></td>
         </tr>
         <tr>
-            <th>Contact No:</th><td><?php echo $contact_no ?></td>
+            <th>Website:</th><td><?php echo $website ?></td>
         </tr>
         <tr>
-            <th>Total IRA:</th><td><?php echo $total_ira ?></td>
+            <th>Total Internal Revenue Allotment:</th><td><?php echo $total_ira ?></td>
         </tr>
         <tr>
             <th>Total Budget LSWDO:</th><td><?php echo $total_budget_lswdo ?></td>
+        </tr>
+        <tr>
+            <th>Sector:</th><td><?php echo $sector_id ?></td>
+        </tr>
+        <tr>
+            <th>Year Indicated:</th><td><?php echo $year_indicated ?></td>
+        </tr>
+        <tr>
+            <th>Number of Beneficiaries Served:</th><td><?php echo $no_bene_served ?></td>
+        </tr>
+        <tr>
+            <th>Utilization:</th><td><?php echo $utilization ?></td>
+        </tr>
+        <tr>
+            <th>Number of Target Beneficiaries:</th><td><?php echo $no_target_bene ?></td>
         </tr>
 
     </table>

@@ -40,6 +40,7 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+        $swdo_name = $assessmentinfo_model->getExistingRecords();
 
         $this->validateAddForm();
 
@@ -223,11 +224,11 @@ class assessmentinfo extends CI_Controller {
             $form_message = $form_message;
             $data = array(
                 'profile_id'                 =>      $AssessmentDetails->profile_id,
-                'application_type_id'        =>      $AssessmentDetails->application_type_id,
-                'lgu_type_id'                =>      $AssessmentDetails->lgu_type_id,
-                'region_code'                =>      $AssessmentDetails->region_code,
-                'prov_code'                  =>      $AssessmentDetails->prov_code,
-                'city_code'                  =>      $AssessmentDetails->city_code,
+                'application_type_id'        =>      $AssessmentDetails->application_type_name,
+                'lgu_type_id'                =>      $AssessmentDetails->lgu_type_name,
+                'region_code'                =>      $AssessmentDetails->region_name,
+                'prov_code'                  =>      $AssessmentDetails->prov_name,
+                'city_code'                  =>      $AssessmentDetails->city_name,
                 'office_address'             =>      $AssessmentDetails->office_address,
                 'swdo_name'                  =>      $AssessmentDetails->swdo_name,
                 'designation'                =>      $AssessmentDetails->designation,
@@ -235,7 +236,13 @@ class assessmentinfo extends CI_Controller {
                 'email'                      =>      $AssessmentDetails->email,
                 'website'                    =>      $AssessmentDetails->website,
                 'total_ira'                  =>      $AssessmentDetails->total_ira,
-                'total_budget_lswdo'         =>      $AssessmentDetails->total_budget_lswdo
+                'total_budget_lswdo'         =>      $AssessmentDetails->total_budget_lswdo,
+                'sector_id'                  =>      $AssessmentDetails->sector_name,
+                'year_indicated'              =>      $AssessmentDetails->year_indicated,
+                'budget_present_year'         =>      $AssessmentDetails->budget_present_year,
+                'utilization'                 =>      $AssessmentDetails->utilization,
+                'no_bene_served'            =>      $AssessmentDetails->no_bene_served,
+                'no_target_bene'            =>      $AssessmentDetails->no_target_bene
 
             );
         } else {
