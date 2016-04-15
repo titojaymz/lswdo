@@ -50,6 +50,34 @@ if (!$this->session->userdata('user_id')){
         }
     }
 
+    function GroupStatus() {
+        var e = document.getElementById("application_type_id").value;
+        if (e == 0)
+        {
+            document.getElementById("group_new").style.display = "none";
+            document.getElementById("group_new").style.visibility = "hidden";
+            document.getElementById("group_renewal").style.display = "none";
+            document.getElementById("group_renewal").style.visibility = "hidden";
+
+        }
+        else if (e==1)
+        {
+            document.getElementById("group_new").style.display = "block";
+            document.getElementById("group_new").style.visibility = "visible";
+            document.getElementById("group_renewal").style.display = "none";
+            document.getElementById("group_renewal").style.visibility = "hidden";
+
+
+        }
+        else {
+            document.getElementById("group_new").style.display = "none";
+            document.getElementById("group_new").style.visibility = "hidden";
+            document.getElementById("group_renewal").style.display = "block";
+            document.getElementById("group_renewal").style.visibility = "visible";
+
+        }
+    }
+
 
     function get_provinces() {
         var region_code = $('#regionlist').val();
@@ -179,23 +207,20 @@ if (!$this->session->userdata('user_id')){
                 <div class="panel-title">
                     <form method="post" class="form-horizontal">
                         <div class="form-group">
-                            <label for="geo_info" class="control-label">Geographic Information</label>
+                            <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
 
                         <div class="form-group">
-                            <label for="identify_info" class="control-label">Identifying Information</label>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="application_type_id">Status of Application:</label>
-                            <select class="form-control" name="application_type_id" id="application_type_id">
-                                <option select value="">Please select</option>
+                            <label class="control-label">Status of Application:</label>
+                            <select class="form-control" name="application_type_id" id="application_type_id" onChange="GroupStatus();">
+                                <option select value="0">Please select</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
                             </select>
-                        </div>
-                        <div class="form-group">
+
+<div id="group_new">
+
                             <label class="control-label">Type of LSWDO</label>
                             <!--Select-->
                             <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
@@ -291,7 +316,7 @@ if (!$this->session->userdata('user_id')){
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+
 
                                 <label for="nocitylist"> No. of Cities:</label>
                             <div id="groupCity">
@@ -312,7 +337,7 @@ if (!$this->session->userdata('user_id')){
                             </div>
 
 
-                            <label for="no_brgy" class="col-lg-2 control-label">No. of Barangays:</label>
+                            <label for="no_brgy">No. of Barangays:</label>
                                     <div id="groupbrgy">
                                         <div class="control-group">
                                             <div class="controls">
@@ -322,7 +347,7 @@ if (!$this->session->userdata('user_id')){
                             </div>
 
                         </div>  <!--End Select-->
-                        <div class="form-group">
+
                             <label for="income_class">Income Class:</label>
                         <div id="income_class">
                             <div class="control-group">
@@ -332,9 +357,8 @@ if (!$this->session->userdata('user_id')){
                                 </div>
                             </div>
                         </div>
-                        </div>
 
-                        <div class="form-group">
+
                             <label for="total_pop">Total Population:</label>
                             <div id="total_pop">
                                 <div class="control-group">
@@ -343,9 +367,9 @@ if (!$this->session->userdata('user_id')){
                         </div>
                         </div>
                         </div>
-                        </div>
 
-                        <div class="form-group">
+
+
                             <label for="total_poor">Total No. of Poor Families:</label>
                             <div id="total_poor">
                                 <div class="control-group">
@@ -354,52 +378,64 @@ if (!$this->session->userdata('user_id')){
                         </div>
                         </div>
                         </div>
-                        </div>
 
-                        <div class="form-group">
                             <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="SWDO Name">
-                        </div>
+                            <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="Name of SWDO Officer/Head">
 
-                        <div class="form-group">
+
+
                             <label for="designation">Designation:</label>
                             <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation">
-                        </div>
 
-                        <div class="form-group">
+
+
                             <label for="office_address">Office Address:</label>
                             <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address">
-                        </div>
 
-                        <div class="form-group">
+
+
                             <label for="contact_no">Contact No:</label>
                             <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No">
-                        </div>
 
-                        <div class="form-group">
+
+
                             <label for="email">Email:</label>
                             <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email">
-                        </div>
 
-                        <div class="form-group">
+
+
                             <label for="website">Website:</label>
                             <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website">
-                        </div>
 
+</br>
                         <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
 
-                        <div class="form-group">
+
                             <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-                        </div>
-                        <div class="form-group">
+
+
                             <label for="total_ira">Total Internal Revenue Allotment:</label>
                             <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
-                        </div>
-                        <div class="form-group">
+
+
                             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
                             <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
-                        </div>
 
+</div>
+<div id="group_renewal">
+
+        <label for="swdo_name">Name of SWDO Officer/Head:</label>
+        <select class="form-control" name="application_type_id" id="application_type_id">
+            <option select value="">Please select</option>
+            <?php foreach($application as $applications): ?>
+                <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
+            <?php endforeach ?>
+        </select>
+
+
+
+    </div>
+                        </div>
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>

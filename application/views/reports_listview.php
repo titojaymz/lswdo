@@ -223,6 +223,11 @@
                             </tr>
 
                         </table>
+                        <table class="table display table-bordered table-striped table-hover" width="100%">
+                            <tr>
+                                <td><a class="btn btn-sm btn-success" href="<?php echo base_url('reports/tableView/1') ?>"><i class="fa fa-plus-circle"></i>TableView</a></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

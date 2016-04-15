@@ -27,13 +27,42 @@ class assessmentinfo_model extends CI_Model {
     public function getAssessmentinfoByID($id = 0)
     {
 
-       $query = $this->db->get_where('tbl_lswdo',array('profile_id'=>$id,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            return $query->row();
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
+        $sql = 'SELECT
+a.profile_id,
+a.swdo_name,
+c.application_type_name,
+b.lgu_type_name,
+a.total_ira,
+a.total_budget_lswdo,
+lib_regions.region_name,
+lib_provinces.prov_name,
+lib_cities.city_name,
+a.designation,
+a.office_address,
+a.contact_no,
+a.email,
+a.website,
+a.total_ira,
+a.total_budget_lswdo,
+lib_sector.sector_name,
+tbl_lswdo_budget.year_indicated,
+tbl_lswdo_budget.budget_present_year,
+tbl_lswdo_budget.utilization,
+tbl_lswdo_budget.no_bene_served,
+tbl_lswdo_budget.no_target_bene
+FROM
+tbl_lswdo AS a
+Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
+Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
+Inner Join lib_regions ON a.region_code = lib_regions.region_code
+Inner Join lib_provinces ON a.prov_code = lib_provinces.prov_code
+Inner Join lib_cities ON a.city_code = lib_cities.city_code
+Inner Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
+Inner Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
+WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
 
 
     }
@@ -372,7 +401,7 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_total_poor,$prov_code)->row();
     }
 
-    public function getExistingRecords($lgu_type) {
+    public function getExistingRecords($swdo_name) {
         $get_records = "
         SELECT
         lib_application_type.application_type_name,
@@ -393,12 +422,12 @@ class assessmentinfo_model extends CI_Model {
         Inner Join lib_application_type ON tbl_lswdo.application_type_id = lib_application_type.application_type_id
         Inner Join lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
         WHERE
-        lib_lgu_type.lgu_type_id = ?
+        tbl_lswdo.swdo_name = ?
         ORDER BY
-        lib_lgu_type.lgu_type_name
+        tbl_lswdo.swdo_name
         ";
 
-        return $this->db->query($get_records,$lgu_type)->result();
+        return $this->db->query($get_records,$swdo_name)->result();
     }
 
 }
