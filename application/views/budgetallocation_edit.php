@@ -108,12 +108,6 @@ echo validation_errors();
 
                     <div class="form-group">
                         <label for="sector_id">Sector:</label>
-                        <select class="form-control" name="sector_id" id="sector_id">
-                            <option select value="">Please select</option>
-                            <?php foreach($sector_id as $sectors): ?>
-                                <option value="<?php echo $sectors->sector_id ?>"><?php echo $sectors->sector_name ?></option>
-                            <?php endforeach ?>
-                        </select>
                         <select name="sector_id" id="sector_id" class="form-control"">
                         <option value="0">-Please select-</option>
                         <?php foreach($sector_id as $sectors): ?>
