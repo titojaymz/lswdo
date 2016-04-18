@@ -51,7 +51,83 @@ class reports_model extends CI_Model
 
         return $this->db->query($get_cities,$prov_code)->result();
     }
+    public function get_distributionofPSWDOFunctionalityregion()
+    {
+        $sql = 'SELECT e.region_name,
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+			inner join lib_regions e
+			on b.region_code = e.region_code
+            where b.deleted = 0 and b.lgu_type_id = 1
+            group by e.region_name;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionofCSWDOFunctionalityregion()
+    {
+        $sql = 'SELECT e.region_name,
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+			inner join lib_regions e
+			on b.region_code = e.region_code
+            where b.deleted = 0 and b.lgu_type_id = 2
+            group by e.region_name;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_distributionofMSWDOFunctionalityregion()
+    {
+        $sql = 'SELECT e.region_name,
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+			inner join lib_regions e
+			on b.region_code = e.region_code
+            where b.deleted = 0 and b.lgu_type_id = 3
+            group by e.region_name;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
 
+    public function get_distributionofCMSWDOFunctionalityprovince($regionlist,$provlist)
+    {
+        $sql = 'SELECT c.prov_name,
+            sum(if(a.level_function_baseline = "Functional",1,0)) as "Functional",
+            sum(if(a.level_function_baseline = "Fully Functional",1,0)) as "FullyFunctional",
+            sum(if(a.level_function_baseline = "Partially Functional",1,0)) as "PartiallyFunctional"
+            FROM `tbl_functionality` a
+            inner join tbl_lswdo b
+            on a.prof_id = b.profile_id
+			inner join lib_provinces c
+			on b.prov_code = c.prov_code
+			inner join lib_regions e
+			on b.region_code = e.region_code
+            where b.deleted = 0 and b.lgu_type_id in (2,3)
+			and b.region_code = '.$regionlist.'
+			and b.prov_code = '.$provlist.'
+            group by e.region_name;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
 //ranking pswdo score = baseline ; new score = updated
     public function get_pswdoscore($regionlist)
     {

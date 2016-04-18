@@ -209,19 +209,36 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionLSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution LSWDO by Region</a>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionLSWDObyregion') ?>"></i>Distribution LSWDO by Region</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionPSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution PSWDO by Region</a>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionPSWDObyregion') ?>"></i>Distribution PSWDO by Region</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionCSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution CSWDO by Region</a>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionCSWDObyregion') ?>"></i>Distribution CSWDO by Region</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionMSWDObyregion/'.$regionlist2.'') ?>"></i>Distribution CSWDO by Region</a>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionMSWDObyregion') ?>"></i>Distribution CSWDO by Region</a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionofPSWDOFunctionalityregion/') ?>"></i>Distribution PSWDO Functionality by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionofCSWDOFunctionalityregion/') ?>"></i>Distribution CSWDO Functionality by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionofMSWDOFunctionalityregion/') ?>"></i>Distribution MSWDO Functionality by Region</a>
+                                </td>
 
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/distributionofCMSWDOFunctionalityprovince/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Distribution C/MSWDO Functionality by Province</a>
+                                </td>
+
+                            </tr>
                         </table>
                         <table class="table display table-bordered table-striped table-hover" width="100%">
                             <tr>

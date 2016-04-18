@@ -1422,6 +1422,427 @@ class reports extends CI_Controller {
         $objWriter->save('php://output');
     }
 
+    public function distributionofPSWDOFunctionalityregion(){
+
+        $distributionofPSWDOFunctionalityregion = $this->reports_model->get_distributionofPSWDOFunctionalityregion();
+
+
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+// Add some data
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1','Distribution of PSWDO Functionality  by Region');
+        //autosize column
+
+//        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:D1');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Region');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of PSWDO Functionality by Region');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:D2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:D5');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Partially Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Fully Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row2 = 7;
+        $col2 = 'A';
+//province list
+        foreach ($distributionofPSWDOFunctionalityregion as $distributionofPSWDOFunctionalityregiondata):
+            $region = $distributionofPSWDOFunctionalityregiondata->region_name;
+            $PF = $distributionofPSWDOFunctionalityregiondata->PartiallyFunctional;
+            $F = $distributionofPSWDOFunctionalityregiondata->Functional;
+            $FF = $distributionofPSWDOFunctionalityregiondata->FullyFunctional;
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PF);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $F);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $FF);
+
+
+            if($col2 == 'D'){$col2 = 'A';}
+            $row2++;
+        endforeach;
+
+
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->getActiveSheet()->setTitle('DistributionPSWDObyRegion');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Distribution of PSWDO Functionality by Region.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+    public function distributionofCSWDOFunctionalityregion(){
+
+        $distributionofCSWDOFunctionalityregion = $this->reports_model->get_distributionofCSWDOFunctionalityregion();
+
+
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+// Add some data
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1','Distribution of CSWDO Functionality  by Region');
+        //autosize column
+
+//        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:D1');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Region');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of CSWDO Functionality by Region');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:D2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:D5');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Partially Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Fully Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row2 = 7;
+        $col2 = 'A';
+//province list
+        foreach ($distributionofCSWDOFunctionalityregion as $distributionofCSWDOFunctionalityregiondata):
+            $region = $distributionofCSWDOFunctionalityregiondata->region_name;
+            $PF = $distributionofCSWDOFunctionalityregiondata->PartiallyFunctional;
+            $F = $distributionofCSWDOFunctionalityregiondata->Functional;
+            $FF = $distributionofCSWDOFunctionalityregiondata->FullyFunctional;
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PF);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $F);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $FF);
+
+
+            if($col2 == 'D'){$col2 = 'A';}
+            $row2++;
+        endforeach;
+
+
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->getActiveSheet()->setTitle('DistributionCSWDObyRegion');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Distribution of CSWDO Functionality by Region.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+    public function distributionofMSWDOFunctionalityregion(){
+
+        $distributionofMSWDOFunctionalityregion = $this->reports_model->get_distributionofMSWDOFunctionalityregion();
+
+
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+// Add some data
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1','Distribution of MSWDO Functionality  by Region');
+        //autosize column
+
+//        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:D1');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Region');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of MSWDO Functionality by Region');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:D2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:D5');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Partially Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Fully Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row2 = 7;
+        $col2 = 'A';
+//province list
+        foreach ($distributionofMSWDOFunctionalityregion as $distributionofMSWDOFunctionalityregiondata):
+            $region = $distributionofMSWDOFunctionalityregiondata->region_name;
+            $PF = $distributionofMSWDOFunctionalityregiondata->PartiallyFunctional;
+            $F = $distributionofMSWDOFunctionalityregiondata->Functional;
+            $FF = $distributionofMSWDOFunctionalityregiondata->FullyFunctional;
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PF);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $F);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $FF);
+
+
+            if($col2 == 'D'){$col2 = 'A';}
+            $row2++;
+        endforeach;
+
+
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->getActiveSheet()->setTitle('DistributionMSWDObyRegion');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Distribution of MSWDO Functionality by Region.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+
+    public function distributionofCMSWDOFunctionalityprovince($regionlist,$provlist){
+
+        $distributionofCMSWDOFunctionalityprovince = $this->reports_model->get_distributionofCMSWDOFunctionalityprovince($regionlist,$provlist);
+
+
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+// Add some data
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1','Distribution of CMSWDO Functionality  by Province');
+        //autosize column
+
+//        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:D1');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Province');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of CMSWDO Functionality by Province');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:D2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:D5');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Partially Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Fully Functional');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row2 = 7;
+        $col2 = 'A';
+//province list
+        foreach ($distributionofCMSWDOFunctionalityprovince as $distributionofCMSWDOFunctionalityprovincedata):
+            $province = $distributionofCMSWDOFunctionalityprovincedata->prov_name;
+            $PF = $distributionofCMSWDOFunctionalityprovincedata->PartiallyFunctional;
+            $F = $distributionofCMSWDOFunctionalityprovincedata->Functional;
+            $FF = $distributionofCMSWDOFunctionalityprovincedata->FullyFunctional;
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $province);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PF);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $F);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $FF);
+
+
+            if($col2 == 'D'){$col2 = 'A';}
+            $row2++;
+        endforeach;
+
+
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->getActiveSheet()->setTitle('DistributionCMSWDObyProvincec');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Distribution of CMSWDO Functionality by Province.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
 
     public function distributionLSWDObyregion(){
 
@@ -1443,7 +1864,7 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
-        $objPHPExcel->getActiveSheet()->mergeCells('B1:E1');
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:F1');
 
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
@@ -1453,7 +1874,9 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution LSWDO by Region');
         $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-        $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:F3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:F2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:F5');
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -1480,6 +1903,10 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('e4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Percent');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('F4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
 //province list
@@ -1500,11 +1927,32 @@ class reports extends CI_Controller {
             if($col2 == 'E'){$col2 = 'A';}
             $row2++;
         endforeach;
+        $col3 = $col2;
+        $row3 = $row2 -1;
+        $counter = $row2 - 7;
+        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
+        $col3++;
+        $col3++;
+        $col3++;
+        $col3++;
+        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
+        $percrow = 7;
+        $perccol = 'F';
+        $totrow = 7;
+        $totcol = 'E';
+        for ($headcount = 0;$headcount < $counter;$headcount++)
+        {
+            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
+            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
+                ->getNumberFormat()->applyFromArray(
+                    array(
+                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                    )
+                );
+            $percrow++;
+            $totrow++;
+        }
 
-
-
-
-//functional
 
 //    //border
         $objPHPExcel->getActiveSheet()->getStyle(
@@ -1554,6 +2002,7 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getFont()->setBold(true);
 
         $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
@@ -1563,7 +2012,9 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution PSWDO by Region');
         $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-//        $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:C3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:C2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:C5');
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -1578,6 +2029,9 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->setCellValue('B4', 'TOTAL');
         $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Percentage');
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
 //province list
@@ -1588,13 +2042,31 @@ class reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PSWDO);
 
-
             if($col2 == 'B'){$col2 = 'A';}
             $row2++;
         endforeach;
-
-
-
+        $col3 = $col2;
+        $row3 = $row2 -1;
+        $counter = $row2 - 7;
+        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
+        $col3++;
+        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
+        $percrow = 7;
+        $perccol = 'C';
+        $totrow = 7;
+        $totcol = 'B';
+        for ($headcount = 0;$headcount < $counter;$headcount++)
+        {
+            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
+            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
+                ->getNumberFormat()->applyFromArray(
+                    array(
+                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                    )
+                );
+            $percrow++;
+            $totrow++;
+        }
 
 //functional
 
@@ -1646,6 +2118,7 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getFont()->setBold(true);
 
         $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
@@ -1655,7 +2128,9 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution CSWDO by Region');
         $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-//        $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:C3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:C2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:C5');
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -1669,6 +2144,9 @@ class reports extends CI_Controller {
         //Header
         $objPHPExcel->getActiveSheet()->setCellValue('B4', 'TOTAL');
         $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Percentage');
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
@@ -1685,7 +2163,28 @@ class reports extends CI_Controller {
             $row2++;
         endforeach;
 
-
+        $col3 = $col2;
+        $row3 = $row2 -1;
+        $counter = $row2 - 7;
+        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
+        $col3++;
+        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
+        $percrow = 7;
+        $perccol = 'C';
+        $totrow = 7;
+        $totcol = 'B';
+        for ($headcount = 0;$headcount < $counter;$headcount++)
+        {
+            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
+            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
+                ->getNumberFormat()->applyFromArray(
+                    array(
+                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                    )
+                );
+            $percrow++;
+            $totrow++;
+        }
 
 
 //functional
