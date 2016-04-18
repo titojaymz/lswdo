@@ -40,7 +40,6 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-        //$swdo_name = $assessmentinfo_model->getExistingRecords();
 
         $this->validateAddForm();
 
@@ -54,7 +53,6 @@ class assessmentinfo extends CI_Controller {
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
-          //  $rpmb['swdo_name'] = $swdo_name;
             $rpmb['form_message'] = $form_message;
 
             if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -109,16 +107,22 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'swdo_name' => $swdo_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex();
+                $this->redirectIndex($id,$addResult);
             }
         }
+    }
+
+    public function redirectIndex($id,$addResult)
+    {
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$id.'/'.$addResult);
+//        $sec = "1";
+        header("Location: $page");
     }
 
 
@@ -203,15 +207,9 @@ class assessmentinfo extends CI_Controller {
         {
 
         }
-
     }
 
-    public function redirectIndex($id,$updateResult)
-    {
-        $page = base_url('budgetallocation/addBudgetAllocation/'.$id.'/'.$updateResult);
-//        $sec = "1";
-        header("Location: $page");
-    }
+
 
     public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
@@ -479,14 +477,14 @@ class assessmentinfo extends CI_Controller {
         $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
-/*
-    public function redirectIndex()
-    {
-        $page = base_url();
-        $sec = "1";
-        header("Refresh: $sec; url=$page");
-    }
-*/
+    /*
+        public function redirectIndex()
+        {
+            $page = base_url();
+            $sec = "1";
+            header("Refresh: $sec; url=$page");
+        }
+    */
     public function refreshCurPage()
     {
         $page = current_url();

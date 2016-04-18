@@ -221,26 +221,26 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
         $this->db->close();
     }
 
-/*
-        public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
-            $region_access = $user_region;
-            $this->db->select('t1.profile_id, t2.application_type_id, t1.office_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
-            $this->db->from('tbl_lswdo AS t1');
-            $this->db->join('lib_application_type t2','t1.application_type_id = t2.application_type_id','inner');
-            if ($user_region != 0) {
-                $this->db->where('t1.DELETED ="0" and t1.region ="' . $region_access . '"');
-            } else {
-                $this->db->where('t1.DELETED ="0"');
-            }
-            $query = $this->db->get();
+    /*
+            public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
+                $region_access = $user_region;
+                $this->db->select('t1.profile_id, t2.application_type_id, t1.office_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
+                $this->db->from('tbl_lswdo AS t1');
+                $this->db->join('lib_application_type t2','t1.application_type_id = t2.application_type_id','inner');
+                if ($user_region != 0) {
+                    $this->db->where('t1.DELETED ="0" and t1.region ="' . $region_access . '"');
+                } else {
+                    $this->db->where('t1.DELETED ="0"');
+                }
+                $query = $this->db->get();
 
-            if ($query->num_rows() > 0) {
-                return $query->result();
-            }else{
-                return $query->result();
+                if ($query->num_rows() > 0) {
+                    return $query->result();
+                }else{
+                    return $query->result();
+                }
             }
-        }
-*/
+    */
     public function get_lgutype() {
         $get_lgutype = "
         SELECT
@@ -352,25 +352,25 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
 
         return $this->db->query($get_countbrgy,$city_code)->row();
     }
-/*
-    public function get_incomeclass($prov_code){
-        $get_incomeclass = "
-        SELECT
-         lib_cities.income_class as income_class,
-        lib_provinces.prov_code as prov_code
-        FROM
-          lib_cities
-        INNER JOIN
-        lib_provinces
-        ON lib_cities.prov_code = lib_provinces.prov_code
-        WHERE
-          lib_provinces.prov_code = ?
-        ORDER BY
-          lib_cities.city_code
-        ";
-        return $this->db->query($get_incomeclass,$prov_code)->row();
-    }
-*/
+    /*
+        public function get_incomeclass($prov_code){
+            $get_incomeclass = "
+            SELECT
+             lib_cities.income_class as income_class,
+            lib_provinces.prov_code as prov_code
+            FROM
+              lib_cities
+            INNER JOIN
+            lib_provinces
+            ON lib_cities.prov_code = lib_provinces.prov_code
+            WHERE
+              lib_provinces.prov_code = ?
+            ORDER BY
+              lib_cities.city_code
+            ";
+            return $this->db->query($get_incomeclass,$prov_code)->row();
+        }
+    */
     public function get_total_pop($prov_code) {
         $get_total_pop = "
          SELECT
@@ -410,7 +410,7 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
         tbl_lswdo.prov_code,
         tbl_lswdo.city_code,
         tbl_lswdo.office_address,
-        tbl_lswdo.swdo_name as swdo_name,
+        tbl_lswdo.swdo_name,
         tbl_lswdo.designation,
         tbl_lswdo.contact_no,
         tbl_lswdo.email,
@@ -422,9 +422,9 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
         Inner Join lib_application_type ON tbl_lswdo.application_type_id = lib_application_type.application_type_id
         Inner Join lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
         WHERE
-        swdo_name = ?
+        tbl_lswdo.swdo_name = ?
         ORDER BY
-        swdo_name
+        tbl_lswdo.swdo_name
         ";
 
         return $this->db->query($get_records,$swdo_name)->result();

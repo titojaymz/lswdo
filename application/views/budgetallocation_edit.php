@@ -114,31 +114,45 @@ echo validation_errors();
                                 <option value="<?php echo $sectors->sector_id ?>"><?php echo $sectors->sector_name ?></option>
                             <?php endforeach ?>
                         </select>
+                        <select name="sector_id" id="sector_id" class="form-control"">
+                        <option value="0">-Please select-</option>
+                        <?php foreach($sector_id as $sectors): ?>
+                            <option value="<?php echo $sectors->sector_id; ?>"
+                                <?php if(isset($budgetallocation_details->sector_id)) {
+                                    if($sectors->sector_id == $budgetallocation_details->sector_id) {
+                                        echo " selected";
+                                    }
+                                } ?>
+                                >
+                                <?php echo $sectors->sector_name; ?>
+                            </option>
+                        <?php endforeach; ?>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="year_indicated">Year Indicated:</label>
-                        <input class="form-control" type="text" name="year_indicated" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
+                        <input class="form-control" type="text" name="year_indicated" value="<?php echo $budgetallocation_details->year_indicated ?>" placeholder="Year Indicated">
                     </div>
 
                     <div class="form-group">
                         <label for="utilization">Utilization:</label>
-                        <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
+                        <input class="form-control" type="text" name="utilization" value="<?php echo $budgetallocation_details->utilization ?>" placeholder="Utilization">
                     </div>
 
                     <div class="form-group">
                         <label for="budget_present_year">Budget for the Present Year:</label>
-                        <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
+                        <input class="form-control" type="text" name="budget_present_year" value="<?php echo $budgetallocation_details->budget_present_year ?>" placeholder="Budget for the Present Year">
                     </div>
 
                     <div class="form-group">
                         <label for="no_bene_served">Number of Beneficiaries Served:</label>
-                        <input class="form-control" type="text" name="no_bene_served" value="<?php echo set_value('no_bene_served') ?>" placeholder="Number of Beneficiaries Served">
+                        <input class="form-control" type="text" name="no_bene_served" value="<?php echo $budgetallocation_details->no_bene_served ?>" placeholder="Number of Beneficiaries Served">
                     </div>
 
                     <div class="form-group">
                         <label for="no_target_bene">Number of Target Beneficiaries:</label>
-                        <input class="form-control" type="text" name="no_target_bene" value="<?php echo set_value('no_target_bene') ?>" placeholder="Number of Target Beneficiaries">
+                        <input class="form-control" type="text" name="no_target_bene" value="<?php echo $budgetallocation_details->no_target_bene ?>" placeholder="Number of Target Beneficiaries">
                     </div>
 
                     <div class="form-group">
