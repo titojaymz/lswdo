@@ -163,6 +163,67 @@ order	by a.new_score desc;
         $result = $query->result();
         return $result;
     }
+    public function get_pswdoscoreLadder($regionlist)
+    {
+        $sql = 'SELECT c.region_name,d.prov_name,
+                Sum(if(indicator_id LIKE "%-1%",1,0)) as Bronze,
+                Sum(if(indicator_id LIKE "%-2%",1,0)) as Silver,
+                Sum(if(indicator_id LIKE "%-3%",1,0)) as Gold
+                FROM `tbl_lswdo_standard_indicators` a
+                INNER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+                where a.deleted = 0 and b.region_code = '.$regionlist.' and b.lgu_type_id = 1
+                group by d.prov_name;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_cswdoscoreLadder($regionlist,$provlist)
+    {
+        $sql = 'SELECT d.prov_name, e.city_name,
+                Sum(if(indicator_id LIKE "%-1%",1,0)) as Bronze,
+                Sum(if(indicator_id LIKE "%-2%",1,0)) as Silver,
+                Sum(if(indicator_id LIKE "%-3%",1,0)) as Gold
+                FROM `tbl_lswdo_standard_indicators` a
+                INNER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+				inner join lib_cities e
+				on b.city_code = e.city_code
+                where a.deleted = 0 and b.region_code = '.$regionlist.' and b.prov_code = '.$provlist.' and b.lgu_type_id = 2
+                group by e.city_name;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_mswdoscoreLadder($regionlist,$provlist)
+    {
+        $sql = 'SELECT d.prov_name, e.city_name,
+                Sum(if(indicator_id LIKE "%-1%",1,0)) as Bronze,
+                Sum(if(indicator_id LIKE "%-2%",1,0)) as Silver,
+                Sum(if(indicator_id LIKE "%-3%",1,0)) as Gold
+                FROM `tbl_lswdo_standard_indicators` a
+                INNER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+				inner join lib_cities e
+				on b.city_code = e.city_code
+                where a.deleted = 0 and b.region_code = '.$regionlist.' and b.prov_code = '.$provlist.' and b.lgu_type_id = 3
+                group by e.city_name;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
 //ranking cmswdo score = baseline ; new score = updated
     public function get_cmswdoscore($regionlist,$provlist)
     {
