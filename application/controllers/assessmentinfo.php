@@ -113,7 +113,7 @@ class assessmentinfo extends CI_Controller {
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex($id,$addResult);
+                $this->redirectIndex();
             }
         }
     }
@@ -207,9 +207,8 @@ class assessmentinfo extends CI_Controller {
         {
 
         }
+
     }
-
-
 
     public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
@@ -311,7 +310,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
