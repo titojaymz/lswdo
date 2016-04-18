@@ -302,7 +302,6 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
          city_name
         FROM
           lib_cities
-
         WHERE
           prov_code = ?
           and city_class = ''
@@ -451,7 +450,15 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
         tbl_lswdo.swdo_name
         ";
 
-        return $this->db->query($get_records,$swdo_name)->result();
+ public function get_AssessmentRecord()
+{
+    $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
+    if ($query->num_rows() > 0){
+        return $query->result();
+    } else {
+        return FALSE;
     }
-*/
+    $this->db->close();
+}
+
 }

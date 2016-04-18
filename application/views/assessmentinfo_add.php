@@ -49,7 +49,7 @@ if (!$this->session->userdata('user_id')){
 
         }
     }
-/*
+
     function GroupStatus() {
         var e = document.getElementById("application_type_id").value;
         if (e == 0)
@@ -77,7 +77,7 @@ if (!$this->session->userdata('user_id')){
 
         }
     }
-*/
+
 
     function get_provinces() {
         var region_code = $('#regionlist').val();
@@ -226,15 +226,15 @@ else
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    <form method="post" action="" class="form-horizontal">
+                    <form method="post" class="form-horizontal">
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label">Status of Application:</label>
-                            <select class="form-control" name="application_type_id" id="application_type_id">
-                                <option value="0">Please select</option>
+                            <select class="form-control" name="application_type_id" id="application_type_id" onChange="GroupStatus();">
+                                <option select value="0">Please select</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
@@ -245,7 +245,7 @@ else
                                 <label class="control-label">Type of LSWDO</label>
                                 <!--Select-->
                                 <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
-                                    <option value="">Please select</option>
+                                    <option select value="">Please select</option>
                                     <?php foreach($lgu_type as $lgus): ?>
                                         <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
                                     <?php endforeach ?>
@@ -253,7 +253,7 @@ else
                                 <!--Region-->
                                 <div id="groupLGUregion">
                                     <div class="form-group form-group-sm">
-                                        <label for="regionlist" class="col-lg-2 control-label">Region</label>
+                                        <label for="regionlist" class="col-lg-2 control-label">Region:</label>
                                         <div id="div_regionlist" class="col-lg-8">
                                             <fieldset>
                                                 <div class="control-group">
@@ -282,7 +282,7 @@ else
                                 <!--Province-->
                                 <div id="groupLGUProvince">
                                     <div class="form-group form-group-sm">
-                                        <label for="provlist" class="col-lg-2 control-label">Province</label>
+                                        <label for="provlist" class="col-lg-2 control-label">Province:</label>
                                         <div id="div_provlist" class="col-lg-8">
                                             <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
                                                 <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -312,7 +312,7 @@ else
                                 <!--City-->
                                 <div id="groupLGUCity">
                                     <div class="form-group form-group-sm">
-                                        <label for="citylist" class="col-lg-2 control-label">City</label>
+                                        <label for="citylist" class="col-lg-2 control-label">City/Municipalities:</label>
                                         <div id="div_citylist" class="col-lg-8">
                                             <select id="citylist" name="citylist" class="form-control">
                                                 <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
@@ -446,10 +446,10 @@ else
                             <div id="group_renewal">
 
                                 <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <select class="form-control" name="swdo_name2" id="swdo_name2">
+                                <select class="form-control" name="swdo_name" id="swdo_name">
                                     <option select value="">Please select</option>
-                                    <?php foreach($application as $applications): ?>
-                                        <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
+                                    <?php foreach($swdo_name as $swdos): ?>
+                                        <option value="<?php echo $swdos->swdo_name ?>"><?php echo $swdos->swdo_name ?></option>
                                     <?php endforeach ?>
                                 </select>
 
@@ -463,7 +463,7 @@ else
                                 <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
-                   </div>
+                </div>
                 </form>
             </div>
             <div class="col-md-3"></div>
