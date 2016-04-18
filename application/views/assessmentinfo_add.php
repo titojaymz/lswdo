@@ -146,12 +146,12 @@ if (!$this->session->userdata('user_id')){
                 type: "POST",
                 data: "prov_code="+prov_code,
                 dataType: "html",
+
+                $.ajax({
                 success: function(data) {
                     $('#income_class').html(data);
                 }
             });
-
-            $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
                 async: false,
                 type: "POST",

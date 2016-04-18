@@ -400,7 +400,7 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
 
         return $this->db->query($get_total_poor,$prov_code)->row();
     }
-
+/*
     public function getExistingRecords($swdo_name) {
         $get_records = "
         SELECT
@@ -429,5 +429,5 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
 
         return $this->db->query($get_records,$swdo_name)->result();
     }
-
+*/
 }

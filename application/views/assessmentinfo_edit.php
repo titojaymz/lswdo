@@ -281,6 +281,8 @@ if (!$this->session->userdata('user_id')){
                             </div>
                         </div>
 
+                        <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
+                        <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
 
                         <div id="groupLGUCity">
                             <div class="form-group form-group-sm">
@@ -313,8 +315,7 @@ if (!$this->session->userdata('user_id')){
 
                     </div>
 
-                    <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
-                    <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
+
 
 
                     <div class="form-group">

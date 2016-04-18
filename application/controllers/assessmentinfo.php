@@ -40,7 +40,7 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-        $swdo_name = $assessmentinfo_model->getExistingRecords();
+        //$swdo_name = $assessmentinfo_model->getExistingRecords();
 
         $this->validateAddForm();
 
@@ -54,7 +54,7 @@ class assessmentinfo extends CI_Controller {
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
-            $rpmb['swdo_name'] = $swdo_name;
+          //  $rpmb['swdo_name'] = $swdo_name;
             $rpmb['form_message'] = $form_message;
 
             if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -119,13 +119,6 @@ class assessmentinfo extends CI_Controller {
                 $this->redirectIndex();
             }
         }
-    }
-
-    public function redirectIndex($id,$addResult)
-    {
-        $page = base_url('budgetallocation/addBudgetAllocation/'.$id.'/'.$addResult);
-//        $sec = "1";
-        header("Location: $page");
     }
 
 
@@ -211,6 +204,13 @@ class assessmentinfo extends CI_Controller {
 
         }
 
+    }
+
+    public function redirectIndex($id,$updateResult)
+    {
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$id.'/'.$updateResult);
+//        $sec = "1";
+        header("Location: $page");
     }
 
     public function assessmentinfo_masterview($id = 0,$form_message = '')
