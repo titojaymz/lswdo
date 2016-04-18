@@ -102,9 +102,9 @@ class assessmentinfo extends CI_Controller {
                 }
 
                 $form_message = 'Add Success!';
-                $this->load->view('sidebar');
                 $this->load->view('header');
                 $this->load->view('nav');
+                $this->load->view('sidebar');
 
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
@@ -157,7 +157,6 @@ class assessmentinfo extends CI_Controller {
 
                 $rpmb['assessmentinfo_details'] = $this->assessmentinfo_model->getAssessmentinfoByID($id);
                 $this->load->view('assessmentinfo_edit', $rpmb);
-                $this->load->view('sidepanel');
                 $this->load->view('footer');
 
             } else {
@@ -210,7 +209,6 @@ class assessmentinfo extends CI_Controller {
         {
 
         }
-
     }
 
     public function assessmentinfo_masterview($id = 0,$form_message = '')
@@ -240,11 +238,11 @@ class assessmentinfo extends CI_Controller {
                 'total_ira'                  =>      $AssessmentDetails->total_ira,
                 'total_budget_lswdo'         =>      $AssessmentDetails->total_budget_lswdo,
                 'sector_id'                  =>      $AssessmentDetails->sector_name,
-                'year_indicated'              =>      $AssessmentDetails->year_indicated,
-                'budget_present_year'         =>      $AssessmentDetails->budget_present_year,
-                'utilization'                 =>      $AssessmentDetails->utilization,
-                'no_bene_served'            =>      $AssessmentDetails->no_bene_served,
-                'no_target_bene'            =>      $AssessmentDetails->no_target_bene
+                'year_indicated'             =>      $AssessmentDetails->year_indicated,
+                'budget_present_year'        =>      $AssessmentDetails->budget_present_year,
+                'utilization'                =>      $AssessmentDetails->utilization,
+                'no_bene_served'             =>      $AssessmentDetails->no_bene_served,
+                'no_target_bene'             =>      $AssessmentDetails->no_target_bene
 
             );
         } else {
