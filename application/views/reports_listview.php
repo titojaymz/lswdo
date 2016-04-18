@@ -296,6 +296,17 @@
                                 </td>
 
                             </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/pswdo_scoreladderized/'.$regionlist2.'') ?>"></i>Score of PSWDO, by ladderized scaling by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/cswdo_scoreladderized/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Score of CSWDO, by ladderized scaling by Region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/mswdo_scoreladderized/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Score of MSWDO, by ladderized scaling by Region</a>
+                                </td>
+                            </tr>
                         </table>
                         <table class="table display table-bordered table-striped table-hover" width="100%">
                             <tr>
