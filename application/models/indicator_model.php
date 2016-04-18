@@ -565,7 +565,49 @@ class indicator_model extends CI_Model
         return  $query->result();
 //        return  $sql;
     }
-    public function getScorePart1(){
+
+    public function getScorePart1($regCode,$provCode,$lguType){
+
+        if($lguType != 0) {
+            if ($regCode != 0) {
+                if ($provCode != 0) {
+                    $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"
+                    and b.prov_code = "' . $provCode . '"';
+
+                } else {
+                    $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                }
+            } else {
+                $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+            }
+        } else {
+            if ($regCode != 0) {
+                if ($provCode != 0) {
+                    $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and b.prov_code = "' . $provCode . '"';
+
+                } else {
+                    $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                }
+            } else {
+                $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+            }
+        }
 
         $sql = 'select
         a.indicator_id,
@@ -575,9 +617,7 @@ class indicator_model extends CI_Model
         tbl_lswdo_standard_indicators a
         INNER JOIN tbl_lswdo b
         ON a.profile_id = b.profile_id
-        where a.indicator_id LIKE "%-1%"
-        and b.lgu_type_id = 1
-        and b.region_code = "010000000"
+        '.$where2.'
         group by a.indicator_id';
         $query = $this->db->query($sql);
         return  $query->result();

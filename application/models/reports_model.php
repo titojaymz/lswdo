@@ -443,4 +443,42 @@ order	by a.new_score desc;
         $result = $query->result();
         return $result;
     }
+
+
+    //get total of assessed by region or province
+    public function get_totalAssess($regCode,$provCode,$lguType)
+    {
+        if($regCode != 0){
+            if($provCode != 0){
+                if($lguType != 0){
+                    $where2 = 'where
+                    deleted = 0
+                    and lgu_type_id = '.$lguType.'
+                    and region_code = "'.$regCode.'"
+                    and prov_code = "'.$provCode.'"';
+                }
+            } else {
+                $where2 = 'where deleted = 0
+                    and region_code = "'.$regCode.'"';
+            }
+        } else {
+            $where2 = 'where deleted = 0
+            and region_code = "'.$regCode.'"';
+        }
+        $sql = 'select count(*) as totalAssess from tbl_lswdo '.$where2;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+
+    //get All Regions
+    public function get_AllRegion()
+    {
+
+        $sql = 'select region_code, region_name,region_nick from lib_regions';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+
 }

@@ -47,8 +47,43 @@
             $('#citylist option:gt(0)').remove().end();
         }
     }
+    function get_nameofCity() {
+        var prov_code = $('#provlist').val();
+        var city_code = $('#citylist').val();
+        if(prov_code > 0) {
 
+                    $('#city_pass').val(city_code);
+
+        } else {
+            $('#citylist option:gt(0)').remove().end();
+        }
+    }
+
+
+    function get_lguType(lguType){
+
+        if(lguType == 1){
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUProvince").style.display = "none";
+            document.getElementById("groupLGUCity").style.display = "none";
+
+        } else if(lguType == 2 || lguType == 3){
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUCity").style.display = "none";
+        } else if(lguType == 4) {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUCity").style.display = "block";
+        } else {
+            document.getElementById("groupLGUregion").style.display = "none";
+            document.getElementById("groupLGUProvince").style.display = "none";
+            document.getElementById("groupLGUCity").style.display = "none";
+        }
+
+    }
 </script>
+
 <div class="content">
     <div class="page-header">
         <h1 class="title">Reports List</h1>
@@ -64,7 +99,22 @@
                         <table class="table display table-bordered table-striped table-hover" width="100%">
 
                             <?php echo form_open('reports/viewTable',array('class'=>'form-horizontal')) ?>
-                            <div id="groupLGUregion">
+                            <!--LGU Type-->
+                            <div id="groupLGUType">
+                                <div class="form-group form-group-sm">
+                                    <label for="lgulist" class="col-lg-2 control-label">LGU Type</label>
+                                    <div id="div_lgulist" class="col-lg-8">
+                                        <select id="LGUtype" name = "LGUtype" class="form-control" onchange = "get_lguType(this.value);">
+                                            <option value = "0">Please Select</option>
+                                            <option value = "1">PSWDO</option>
+                                            <option value = "2">CSWDO</option>
+                                            <option value = "3">MSWDO</option>
+                                            <option value = "4">LSWDO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="groupLGUregion" style = "display: none;">
                                 <div class="form-group form-group-sm">
                                     <label for="regionlist" class="col-lg-2 control-label">Region</label>
                                     <div id="div_regionlist" class="col-lg-8">
@@ -91,9 +141,8 @@
                                 </div>
                             </div>
                             <!--END Region-->
-
                             <!--Province-->
-                            <div id="groupLGUProvince">
+                            <div id="groupLGUProvince"  style = "display: none;">
                                 <div class="form-group form-group-sm">
                                     <label for="provlist" class="col-lg-2 control-label">Province</label>
                                     <div id="div_provlist" class="col-lg-8">
@@ -114,7 +163,7 @@
                                                 }
                                             } else {
                                                 ?>
-                                                <option>Select Region First</option>
+                                                <option value = "0">Select Region First</option>
                                                 <?php
                                             } ?>
                                         </select>
@@ -123,11 +172,11 @@
                             </div>
                             <!--End Province-->
                             <!--City-->
-                            <div id="groupLGUCity">
+                            <div id="groupLGUCity"  style = "display: none;">
                                 <div class="form-group form-group-sm">
                                     <label for="citylist" class="col-lg-2 control-label">City</label>
                                     <div id="div_citylist" class="col-lg-8">
-                                        <select id="citylist" name="citylist" class="form-control">
+                                        <select id="citylist" name="citylist" class="form-control" onChange="get_nameofCity();">
                                             <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                 ?>
                                                 <option value="0">Choose City</option>
@@ -144,23 +193,31 @@
                                                 }
                                             } else {
                                                 ?>
-                                                <option>Select Province First</option>
+                                                <option value = "0">Select Province First</option>
                                                 <?php
                                             } ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            <!--End City-->
+
                             <input type = 'hidden' id ='prov_pass' name = 'prov_pass' class="form-control">
+                            <input type = 'hidden' id ='city_pass' name = 'city_pass' class="form-control">
                             <div class="btn-group">
                                 <button type="submit" name="submit" value="submit" class="btn btn-sm btn-success">Generate</button>
                             </div>
 
                             <?php echo form_close() ?>
-<!--                            <pre>-->
-<!--                            --><?php //echo $regionlist2; ?>
-<!--                            --><?php //echo $provlist2; ?>
-<!--                            </pre>-->
+                            </table>
+                        <?php if(isset($submit)){ ?>
+                        <table class="table display table-bordered table-striped table-hover" width="100%">
+<!--                            <pre>
+                            <?php /*echo $regionlist2; */?>
+                            <?php /*echo $provlist2; */?>
+                            <?php /*echo $citylist2; */?>
+                            <?php /*echo $LGUtype2; */?>
+                            </pre>-->
                             <tr>
                                 <td>
                                     <a class="btn btn-light" href="<?php echo base_url('reports/pswdo_score/'.$regionlist2.'') ?>"></input>PSWDO Baseline Reports</a>
@@ -242,9 +299,13 @@
                         </table>
                         <table class="table display table-bordered table-striped table-hover" width="100%">
                             <tr>
-                                <td><a class="btn btn-sm btn-success" href="<?php echo base_url('reports/tableView/1') ?>"><i class="fa fa-plus-circle"></i>TableView</a></td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/nonCompliantPSWDO/'.$regionlist2.'/'.$provlist2.'/'.$LGUtype2.'') ?>">PSWDO - Non-Compliant Indicator</a>
+                                </td>
                             </tr>
+
                         </table>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
