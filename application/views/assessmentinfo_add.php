@@ -101,10 +101,14 @@ if (!$this->session->userdata('user_id')){
 
     function get_cities() {
         var prov_code = $('#provlist').val();
+        var lgu_type = $('#lgu_type_id').val();
         $('#brgylist option:gt(0)').remove().end();
-        if(prov_code > 0) {
+
+
+
+        if(lgu_type == 2 && prov_code > 0) {
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
                 async: false,
                 type: "POST",
                 data: "prov_code="+prov_code,
@@ -159,9 +163,26 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-        } else {
+        }
+        else if (lgu_type == 3 && prov_code > 0)
+        {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#div_citylist').html(data);
+                }
+            });
+//
+        }
+else
+        {
             $('#citylist option:gt(0)').remove().end();
         }
+
     }
     function get_brgy() {
         var city_code = $('#citylist').val();

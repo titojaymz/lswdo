@@ -302,8 +302,26 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
          city_name
         FROM
           lib_cities
+
         WHERE
           prov_code = ?
+          and city_class = ''
+        ORDER BY
+          city_name
+        ";
+
+        return $this->db->query($get_cities,$prov_code)->result();
+    }
+    public function get_cities1($prov_code) {
+        $get_cities = "
+        SELECT
+         city_code,
+         city_name
+        FROM
+          lib_cities
+        WHERE
+          prov_code = ?
+          and city_class = 'CC'
         ORDER BY
           city_name
         ";

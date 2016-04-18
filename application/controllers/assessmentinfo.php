@@ -314,6 +314,20 @@ class assessmentinfo extends CI_Controller {
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
+    public function populate_cities1() {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
+            $prov_code = $_POST['prov_code'];
+            $citylist = $this->assessmentinfo_model->get_cities1($prov_code);
+
+            $city_list[] = "Choose City";
+            foreach($citylist as $tempcity) {
+                $city_list[$tempcity->city_code] = $tempcity->city_name;
+            }
+
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
+            echo form_dropdown('citylist', $city_list,'',$citylist_prop);
+        }
+    }
 
     public function populate_countcity()
     {
