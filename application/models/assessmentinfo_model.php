@@ -70,6 +70,12 @@ WHERE a.deleted = 0 and a.profile_id="'.$id.'"';
 
     public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created,$modified_by,$date_modified)
     {
+        if($provlist==0){
+            $provlist=null;
+        }
+        if($citylist==0){
+            $citylist=null;
+         }
         $this->db->trans_begin();
 
         $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created,modified_by,date_modified)

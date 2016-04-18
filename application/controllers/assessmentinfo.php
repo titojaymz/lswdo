@@ -458,14 +458,10 @@ class assessmentinfo extends CI_Controller {
 
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'lgu_type_id',
-                'label'   => 'lgu_type_id',
+                'label'   => 'status_application_type',
                 'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);

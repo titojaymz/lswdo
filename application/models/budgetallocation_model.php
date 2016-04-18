@@ -100,6 +100,7 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
+
     public function deleteBudgetAllocation($id = 0)
     {
         $this->db->trans_begin();

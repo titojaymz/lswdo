@@ -49,7 +49,7 @@ if (!$this->session->userdata('user_id')){
 
         }
     }
-
+/*
     function GroupStatus() {
         var e = document.getElementById("application_type_id").value;
         if (e == 0)
@@ -77,7 +77,7 @@ if (!$this->session->userdata('user_id')){
 
         }
     }
-
+*/
 
     function get_provinces() {
         var region_code = $('#regionlist').val();
@@ -205,15 +205,15 @@ if (!$this->session->userdata('user_id')){
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    <form method="post" class="form-horizontal">
+                    <form method="post" action="" class="form-horizontal">
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label">Status of Application:</label>
-                            <select class="form-control" name="application_type_id" id="application_type_id" onChange="GroupStatus();">
-                                <option select value="0">Please select</option>
+                            <select class="form-control" name="application_type_id" id="application_type_id">
+                                <option value="0">Please select</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
@@ -224,7 +224,7 @@ if (!$this->session->userdata('user_id')){
                                 <label class="control-label">Type of LSWDO</label>
                                 <!--Select-->
                                 <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
-                                    <option select value="">Please select</option>
+                                    <option value="">Please select</option>
                                     <?php foreach($lgu_type as $lgus): ?>
                                         <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
                                     <?php endforeach ?>
@@ -425,7 +425,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="group_renewal">
 
                                 <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <select class="form-control" name="application_type_id" id="application_type_id">
+                                <select class="form-control" name="swdo_name2" id="swdo_name2">
                                     <option select value="">Please select</option>
                                     <?php foreach($application as $applications): ?>
                                         <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
@@ -442,7 +442,7 @@ if (!$this->session->userdata('user_id')){
                                 <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
-                </div>
+                   </div>
                 </form>
             </div>
             <div class="col-md-3"></div>
