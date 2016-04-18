@@ -90,8 +90,6 @@ class budgetallocation extends CI_Controller {
     {
         if ($id > 0){
             $budgetallocation_model = new budgetallocation_model();
-            $sector_id = $budgetallocation_model->get_sector();
-
 
             $this->validateEditForm();
 
@@ -102,8 +100,6 @@ class budgetallocation extends CI_Controller {
                 $this->load->view('sidebar');
                 $this->load->view('sidepanel');
 
-                $this->init_rpmb_session();
-                $rpmb['sector_id'] = $sector_id;
                 $this->load->view('budgetallocation_edit',array(
                     'budgetallocation_details'=>$budgetallocation_model->getBudgetAllocationByID($id),
                     'listFields'=>$this->listFields(),
@@ -122,14 +118,9 @@ class budgetallocation extends CI_Controller {
                 $updateResult = $budgetallocation_model->updateBudgetAllocation($id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
                 if ($updateResult){
 
-                    $this->init_rpmb_session();
-                    $rpmb['sector_id'] = $this->budgetallocation_model->get_sector();
-
-
                     $form_message = 'Update Success';
                     $this->load->view('header');
                     $this->load->view('nav');
-                    $this->load->view('sidebar');
                     $this->load->view('budgetallocation_list',array(
                         'budgetallocation_data'=>$budgetallocation_model->get_sector(),
                         'list_fields'=>$this->listFields(),
