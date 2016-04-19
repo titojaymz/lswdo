@@ -347,6 +347,36 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         SELECT
          city_name,
           count(city_code) AS value_sum,
+        FROM
+          lib_cities
+        WHERE
+         prov_code = ?
+          and city_class = 'CC'
+        ";
+
+        return $this->db->query($get_countcity, $prov_code)->row();
+    }
+
+    public function get_count_muni($prov_code)
+    {
+        $get_count_muni = "
+        SELECT
+         city_name,
+          count(city_code) AS value_sum,
+        FROM
+          lib_cities
+        WHERE
+          prov_code = ?
+          and city_class = ''
+        ";
+
+        return $this->db->query($get_count_muni, $prov_code)->row();
+    }
+
+    public function get_incomeclass($prov_code)
+    {
+        $get_incomeclass = "
+        SELECT
           income_class
         FROM
           lib_cities
@@ -354,7 +384,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
           prov_code = ?
         ";
 
-        return $this->db->query($get_countcity, $prov_code)->row();
+        return $this->db->query($get_incomeclass, $prov_code)->row();
     }
 
     public function get_count_brgy($city_code)
@@ -425,7 +455,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
         return $this->db->query($get_total_poor, $prov_code)->row();
     }
-}
+
 /*
     public function getExistingRecords($swdo_name) {
         $get_records = "
@@ -452,7 +482,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         ORDER BY
         tbl_lswdo.swdo_name
         ";
-
+*/
  public function get_AssessmentRecord()
 {
     $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
