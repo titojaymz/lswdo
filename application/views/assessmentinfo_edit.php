@@ -313,8 +313,8 @@ if (!$this->session->userdata('user_id')){
 
                         </div>
 
-                        <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
-                        <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
+                        <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_name ?>" >
+                        <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_name ?>" >
 
 
                         <div class="form-group">
@@ -322,7 +322,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="groupCity">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="no_city_code" value="" placeholder="No. of Cities" readonly>
+                                        <input class="form-control" type="text" id="no_cities" name="no_cities" value="" placeholder="No. of Cities" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -332,7 +332,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="groupmuni">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="no_muni_code" value="" placeholder="No. of Municipalities" readonly>
+                                        <input class="form-control" type="text" id="no_muni" name="no_muni" value="" placeholder="No. of Municipalities" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -427,13 +427,13 @@ if (!$this->session->userdata('user_id')){
                                 <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
+                      </div>
+                    </form>
                 </div>
-                </form>
+                <div class="col-md-3"></div>
             </div>
-            <div class="col-md-3"></div>
         </div>
     </div>
-</div>
 </div>
 
 </div>

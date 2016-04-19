@@ -113,19 +113,21 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     }
 
 
-    public function insertBudgetAllocation($sector_id, $year_indicated, $budget_present_year, $utilization, $no_bene_served, $no_target_bene)
+    public function insertBudgetAllocation($sector_id, $year_indicated,$budget_present_year, $utilization, $budget_previous_year, $no_bene_served, $no_target_bene, $created_by, $date_created)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_present_year,utilization,budget_previous_year,no_bene_served,no_target_bene,created_by,date_created)
                           VALUES
                           (
                           "' . $sector_id . '",
                           "' . $year_indicated . '",
                           "' . $budget_present_year . '",
                           "' . $utilization . '",
+                          "'.$budget_previous_year.'",
                           "' . $no_bene_served . '",
                           "' . $no_target_bene . '",
+                           "' . $created_by . '",
                           Now()
                           )');
 
@@ -217,7 +219,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $this->db->close();
     }
 
-    /*
+      /*
             public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
                 $region_access = $user_region;
                 $this->db->select('t1.profile_id, t2.application_type_id, t1.office_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
@@ -428,7 +430,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     {
         $get_total_pop = "
          SELECT
-         lib_provinces.income_class as total_pop
+         lib_provinces.total_pop as total_pop
         FROM
           lib_provinces
         WHERE
