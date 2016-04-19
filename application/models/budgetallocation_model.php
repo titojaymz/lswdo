@@ -40,6 +40,7 @@ class budgetallocation_model extends CI_Model {
 
     public function insertBudgetAllocation($profile_id,$sector_id,$year_indicated,$budget_previous_year,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
     {
+
         $this->db->trans_begin();
 
         $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene,date_created)
@@ -143,6 +144,24 @@ class budgetallocation_model extends CI_Model {
 
         return $this->db->query($get_Sector)->result();
     }
-
+    public function checkDuplicate($profID,$sectorID)
+    {
+        $sql = 'select count(profile_id) as countProf
+                From tbl_lswdo_budget
+                where profile_id = '.$profID.'
+                and sector_id = '.$sectorID;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function sectorName($sectorID)
+    {
+        $sql = 'select sector_name
+                From lib_sector
+                where sector_id = '.$sectorID;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
 
 }
