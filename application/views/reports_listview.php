@@ -342,7 +342,25 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a class="btn btn-light" href="<?php echo base_url('reports/LSWDObudgetbyregionbysector/'.$sectorType2.'') ?>"></i>LSWDO budget allocation previous year per sector by region</a>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/LSWDObudgetpreviousbyregionbysector/'.$sectorType2.'') ?>"></i>LSWDO budget allocation previous year per sector by region</a>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/avePSWDObudgetpreyearbyregion/') ?>"></i>Average PSWDO budget allocation (present year) per sector,by region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/aveCSWDObudgetpreyearbyregion/') ?>"></i>Average CSWDO budget allocation (present year) per sector,by region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetpreyearbyregion/') ?>"></i>Average MSWDO budget allocation (present year) per sector,by region</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/LSWDObudgetpresentbyregionbysector/'.$sectorType2.'') ?>"></i>LSWDO budget allocation present year per sector by region</a>
                                 </td>
 
                             </tr>
