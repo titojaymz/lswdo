@@ -2630,460 +2630,2241 @@ class reports extends CI_Controller {
         $objWriter->save('php://output');
     }
 
-    public function nonCompliantPSWDO($regCode,$provCode,$lguType){
+    /*public function nonCompliantPSWDO($regCode,$provCode,$lguType){
 
 
         $indicator_model = new indicator_model();
         $reports_model = new reports_model();
         $get_AllRegion = $reports_model->get_AllRegion();
+        $get_AllProvByReg = $reports_model->get_AllProvByReg($regCode);
+        $get_AllCityByProv = $reports_model->get_AllCityByProv($provCode);
+        $get_AllMuniByProv = $reports_model->get_AllMuniByProv($provCode);
 
 // Create new PHPExcel object
         $objPHPExcel = new PHPExcel();
 
         $sheet = 0;
-        foreach($get_AllRegion as $region):
+        if($lguType == 0 || $lguType == 4) {
+            foreach ($get_AllRegion as $region):
 
-            $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
-            $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
-            $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
-            $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+                $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+                $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+                $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+                $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
 
-            $getScorePart1 = $indicator_model->getScorePart1($region->region_code,$provCode,$lguType);
-            $getPart1 = $indicator_model->getPart1($lguType);
-            $getPart2 = $indicator_model->getPart2($lguType);
-            $getPart3 = $indicator_model->getPart3($lguType);
-            $getPart4 = $indicator_model->getPart4($lguType);
-            $get_totalAssess = $reports_model->get_totalAssess($region->region_code,$provCode,$lguType);
-            if($sheet > 0) {
-                $objWorksheet = new PHPExcel_Worksheet($objPHPExcel);
-                $objPHPExcel->addSheet($objWorksheet);
+                $getScorePart1 = $indicator_model->getScorePart1($region->region_code, $provCode, $lguType);
+                $getPart1 = $indicator_model->getPart1($lguType);
+                $getPart2 = $indicator_model->getPart2($lguType);
+                $getPart3 = $indicator_model->getPart3($lguType);
+                $getPart4 = $indicator_model->getPart4($lguType);
+                $get_totalAssess = $reports_model->get_totalAssess($region->region_code, $provCode, $lguType);
+                if ($sheet > 0) {
+                    $objWorksheet = new PHPExcel_Worksheet($objPHPExcel);
+                    $objPHPExcel->addSheet($objWorksheet);
 
 // Add some data
 
-                $objWorksheet->setCellValue('B1', 'Sample Title');
+                    $objWorksheet->setCellValue('B1', 'Sample Title');
 
-                //autosize column
+                    //autosize column
 
-                $objWorksheet->getColumnDimension('B')->setAutoSize(true);
-                $objWorksheet->getColumnDimension('A')->setAutoSize(true);
-                $objWorksheet->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+                    $objWorksheet->getColumnDimension('B')->setAutoSize(true);
+                    $objWorksheet->getColumnDimension('A')->setAutoSize(true);
+                    $objWorksheet->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
 //        $objWorksheet->getDefaultRowDimension()->setRowHeight(-1);a
-                $objWorksheet->getRowDimension(1)->setRowHeight(-1);
-                $objWorksheet->getStyle('B1')->getFont()->setBold(true);
-                $objWorksheet->getStyle('B1')->getFont()->setSize(20);
-                $objWorksheet->mergeCells('B1:E2');
+                    $objWorksheet->getRowDimension(1)->setRowHeight(-1);
+                    $objWorksheet->getStyle('B1')->getFont()->setBold(true);
+                    $objWorksheet->getStyle('B1')->getFont()->setSize(20);
+                    $objWorksheet->mergeCells('B1:E2');
 
-                //Center text merge columns
-                $objWorksheet->getStyle('B1')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 //    $col = 'A';
 //        $row = 5;
-                $objWorksheet->setCellValue('A3', 'Areas');
-                $objWorksheet->getStyle('A3')->getFont()->setBold(true);
-                $objWorksheet->setCellValue('B3', 'Distribution of functional by Province -Sample title');
-                $objWorksheet->mergeCells('A3:A5');
-                $objWorksheet->mergeCells('B3:E3');
-                //Center text merge columns
-                $objWorksheet->getStyle('B3')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-                $objWorksheet->getStyle('A3')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('A3', 'Areas');
+                    $objWorksheet->getStyle('A3')->getFont()->setBold(true);
+                    $objWorksheet->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objWorksheet->mergeCells('A3:A5');
+                    $objWorksheet->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 
-                $objWorksheet->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                    $objWorksheet->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-                $objWorksheet->mergeCells('B6:e6');
-                $objWorksheet->freezePane('B6');
-                //Header
-                $objWorksheet->setCellValue('B4', 'Indicators');
+                    $objWorksheet->mergeCells('B6:e6');
+                    $objWorksheet->freezePane('B6');
+                    //Header
+                    $objWorksheet->setCellValue('B4', 'Indicators');
 
-                $objWorksheet->getStyle('B4')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-                $objWorksheet->setCellValue('C4', 'Non-Compliant');
-                $objWorksheet->getColumnDimension('C')->setAutoSize(true);
-                $objWorksheet->getStyle('C4')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-                $objWorksheet->setCellValue('D4', 'Percent');
-                $objWorksheet->getColumnDimension('D')->setAutoSize(true);
-                $objWorksheet->getStyle('D4')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('C4', 'Non-Compliant');
+                    $objWorksheet->getColumnDimension('C')->setAutoSize(true);
+                    $objWorksheet->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('D4', 'Percent');
+                    $objWorksheet->getColumnDimension('D')->setAutoSize(true);
+                    $objWorksheet->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 
 
 //Start Editing
-                //Part1
-                $row2 = 7;
-                $col2 = 'A';
-                $objWorksheet->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart1 as $firstPartIndicator):
-                    if ($firstPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $firstPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
 
-                                $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $percent);
-                                $objWorksheet->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
-                //Part2
-                $col2 = 'A';
-                $objWorksheet->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart2 as $secondPartIndicator):
-                    if ($secondPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $secondPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
-                                $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $percent);
-                                $objWorksheet->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
-                //Part3
-                $col2 = 'A';
-                $objWorksheet->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart3 as $thirdPartIndicator):
-                    if ($thirdPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $thirdPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
-                                $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $percent);
-                                $objWorksheet->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
-                //Part4
-                $col2 = 'A';
-                $objWorksheet->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart4 as $fourthPartIndicator):
-                    if ($fourthPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $fourthPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
-                                $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objWorksheet->setCellValue($col2 . $row2, $percent);
-                                $objWorksheet->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
+                            endforeach;
+                        }
+                    endforeach;
 
 //End Editing
 
 //    //border
-                $objWorksheet->getStyle(
-                    'A1:' .
-                    $objWorksheet->getHighestColumn() .
-                    $objWorksheet->getHighestRow()
-                )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+                    $objWorksheet->getStyle(
+                        'A1:' .
+                        $objWorksheet->getHighestColumn() .
+                        $objWorksheet->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 // Rename worksheet (worksheet, not filename)
-                $objWorksheet->setTitle('Non-Compliant');
-                // Add new sheet
+                    $objWorksheet->setTitle('Non-Compliant');
+                    // Add new sheet
 
-                $objWorksheet->setTitle($region->region_nick);
-            } else {
+                    $objWorksheet->setTitle($region->region_nick);
+                } else {
 // Add some data
 
-                $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
+                    $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
 
-                //autosize column
+                    //autosize column
 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-                $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-                $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
 //        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
-                $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
-                $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
-                $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+                    $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+                    $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
 
-                //Center text merge columns
-                $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 //    $col = 'A';
 //        $row = 5;
-                $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
-                $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
-                $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
-                $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-                $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
-                //Center text merge columns
-                $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-                $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+                    $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 
-                $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-                $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
-                $objPHPExcel->getActiveSheet()->freezePane('B6');
-                //Header
-                $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+                    $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+                    $objPHPExcel->getActiveSheet()->freezePane('B6');
+                    //Header
+                    $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
 
-                $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-                $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
-                $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-                $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-                $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
-                $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-                $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
-                    array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 
 
 //Start Editing
-                //Part1
-                $row2 = 7;
-                $col2 = 'A';
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart1 as $firstPartIndicator):
-                    if ($firstPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $firstPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
 
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
-                                $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
-                //Part2
-                $col2 = 'A';
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart2 as $secondPartIndicator):
-                    if ($secondPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $secondPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
-                                $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
-                //Part3
-                $col2 = 'A';
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart3 as $thirdPartIndicator):
-                    if ($thirdPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $thirdPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
-                                $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
-                //Part4
-                $col2 = 'A';
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
-                $col2++;
-                $row2++;
-                foreach ($getPart4 as $fourthPartIndicator):
-                    if ($fourthPartIndicator->indicator_checklist_id == 1) {
-                        $arr = explode("-", $fourthPartIndicator->indicator_id);
-                        $indicatorID = $arr[0];
-                        foreach ($getScorePart1 as $scorePart1):
-                            if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
-                                $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
-                                $totalNonCompliance = $scorePart1->TotalNonCompliance;
-                                $totalAssess = $get_totalAssess->totalAssess;
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
 
-                                $percent = ($totalNonCompliance / $totalAssess);
+                                    $percent = ($totalNonCompliance / $totalAssess);
 
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
-                                $col2++;
-                                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
-                                $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
-                                    ->getNumberFormat()->applyFromArray(
-                                        array(
-                                            'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                                        )
-                                    );
-                                if ($col2 == 'D') {
-                                    $col2 = 'B';
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
                                 }
-                                $row2++;
-                            }
-                        endforeach;
-                    }
-                endforeach;
+                            endforeach;
+                        }
+                    endforeach;
 
 //End Editing
 
 //    //border
-                $objPHPExcel->getActiveSheet()->getStyle(
-                    'A1:' .
-                    $objPHPExcel->getActiveSheet()->getHighestColumn() .
-                    $objPHPExcel->getActiveSheet()->getHighestRow()
-                )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+                    $objPHPExcel->getActiveSheet()->getStyle(
+                        'A1:' .
+                        $objPHPExcel->getActiveSheet()->getHighestColumn() .
+                        $objPHPExcel->getActiveSheet()->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 // Rename worksheet (worksheet, not filename)
-                $objPHPExcel->setActiveSheetIndex(0)->setTitle($region->region_nick);
-                // Add new sheet
+                    $objPHPExcel->setActiveSheetIndex(0)->setTitle($region->region_nick);
+                    // Add new sheet
 
+                }
+                $row6++;
+                $sheet++;
+            endforeach;
+        } elseif($lguType == 1){
+            foreach ($get_AllProvByReg as $region):
+
+                $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+                $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+                $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+                $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+
+                $getScorePart1 = $indicator_model->getScorePart1($regCode, $region->prov_code, $lguType);
+                $getPart1 = $indicator_model->getPart1($lguType);
+                $getPart2 = $indicator_model->getPart2($lguType);
+                $getPart3 = $indicator_model->getPart3($lguType);
+                $getPart4 = $indicator_model->getPart4($lguType);
+                $get_totalAssess = $reports_model->get_totalAssess($regCode, $region->prov_code, $lguType);
+                if ($sheet > 0) {
+                    $objWorksheet = new PHPExcel_Worksheet($objPHPExcel);
+                    $objPHPExcel->addSheet($objWorksheet);
+
+// Add some data
+
+                    $objWorksheet->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objWorksheet->getColumnDimension('B')->setAutoSize(true);
+                    $objWorksheet->getColumnDimension('A')->setAutoSize(true);
+                    $objWorksheet->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objWorksheet->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objWorksheet->getRowDimension(1)->setRowHeight(-1);
+                    $objWorksheet->getStyle('B1')->getFont()->setBold(true);
+                    $objWorksheet->getStyle('B1')->getFont()->setSize(20);
+                    $objWorksheet->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objWorksheet->setCellValue('A3', 'Areas');
+                    $objWorksheet->getStyle('A3')->getFont()->setBold(true);
+                    $objWorksheet->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objWorksheet->mergeCells('A3:A5');
+                    $objWorksheet->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objWorksheet->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objWorksheet->mergeCells('B6:e6');
+                    $objWorksheet->freezePane('B6');
+                    //Header
+                    $objWorksheet->setCellValue('B4', 'Indicators');
+
+                    $objWorksheet->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('C4', 'Non-Compliant');
+                    $objWorksheet->getColumnDimension('C')->setAutoSize(true);
+                    $objWorksheet->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('D4', 'Percent');
+                    $objWorksheet->getColumnDimension('D')->setAutoSize(true);
+                    $objWorksheet->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objWorksheet->getStyle(
+                        'A1:' .
+                        $objWorksheet->getHighestColumn() .
+                        $objWorksheet->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    // Add new sheet
+
+                    $objWorksheet->setTitle($region->prov_name);
+                } else {
+// Add some data
+
+                    $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+                    $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+                    $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+                    $objPHPExcel->getActiveSheet()->freezePane('B6');
+                    //Header
+                    $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+
+                    $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objPHPExcel->getActiveSheet()->getStyle(
+                        'A1:' .
+                        $objPHPExcel->getActiveSheet()->getHighestColumn() .
+                        $objPHPExcel->getActiveSheet()->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    $objPHPExcel->setActiveSheetIndex(0)->setTitle($region->prov_name);
+                    // Add new sheet
+
+                }
+                $sheet++;
+            endforeach;
+        } elseif($lguType == 2){
+            foreach ($get_AllCityByProv as $region):
+
+                $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+                $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+                $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+                $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+
+                $getScorePart1 = $indicator_model->getScorePart1($regCode, $provCode, $lguType);
+                $getPart1 = $indicator_model->getPart1($lguType);
+                $getPart2 = $indicator_model->getPart2($lguType);
+                $getPart3 = $indicator_model->getPart3($lguType);
+                $getPart4 = $indicator_model->getPart4($lguType);
+                $get_totalAssess = $reports_model->get_totalAssess($regCode, $provCode, $lguType);
+                if ($sheet > 0) {
+                    $objWorksheet = new PHPExcel_Worksheet($objPHPExcel);
+                    $objPHPExcel->addSheet($objWorksheet);
+
+// Add some data
+
+                    $objWorksheet->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objWorksheet->getColumnDimension('B')->setAutoSize(true);
+                    $objWorksheet->getColumnDimension('A')->setAutoSize(true);
+                    $objWorksheet->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objWorksheet->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objWorksheet->getRowDimension(1)->setRowHeight(-1);
+                    $objWorksheet->getStyle('B1')->getFont()->setBold(true);
+                    $objWorksheet->getStyle('B1')->getFont()->setSize(20);
+                    $objWorksheet->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objWorksheet->setCellValue('A3', 'Areas');
+                    $objWorksheet->getStyle('A3')->getFont()->setBold(true);
+                    $objWorksheet->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objWorksheet->mergeCells('A3:A5');
+                    $objWorksheet->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objWorksheet->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objWorksheet->mergeCells('B6:e6');
+                    $objWorksheet->freezePane('B6');
+                    //Header
+                    $objWorksheet->setCellValue('B4', 'Indicators');
+
+                    $objWorksheet->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('C4', 'Non-Compliant');
+                    $objWorksheet->getColumnDimension('C')->setAutoSize(true);
+                    $objWorksheet->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('D4', 'Percent');
+                    $objWorksheet->getColumnDimension('D')->setAutoSize(true);
+                    $objWorksheet->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objWorksheet->getStyle(
+                        'A1:' .
+                        $objWorksheet->getHighestColumn() .
+                        $objWorksheet->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    // Add new sheet
+
+                    $objWorksheet->setTitle($region->city_name);
+                } else {
+// Add some data
+
+                    $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+                    $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+                    $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+                    $objPHPExcel->getActiveSheet()->freezePane('B6');
+                    //Header
+                    $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+
+                    $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objPHPExcel->getActiveSheet()->getStyle(
+                        'A1:' .
+                        $objPHPExcel->getActiveSheet()->getHighestColumn() .
+                        $objPHPExcel->getActiveSheet()->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    $objPHPExcel->setActiveSheetIndex(0)->setTitle($region->city_name);
+                    // Add new sheet
+
+                }
+                $sheet++;
+            endforeach;
+        } elseif($lguType == 3){
+            foreach ($get_AllMuniByProv as $region):
+
+                $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+                $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+                $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+                $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+
+                $getScorePart1 = $indicator_model->getScorePart1($regCode, $provCode, $lguType);
+                $getPart1 = $indicator_model->getPart1($lguType);
+                $getPart2 = $indicator_model->getPart2($lguType);
+                $getPart3 = $indicator_model->getPart3($lguType);
+                $getPart4 = $indicator_model->getPart4($lguType);
+                $get_totalAssess = $reports_model->get_totalAssess($regCode, $provCode, $lguType);
+                if ($sheet > 0) {
+                    $objWorksheet = new PHPExcel_Worksheet($objPHPExcel);
+                    $objPHPExcel->addSheet($objWorksheet);
+
+// Add some data
+
+                    $objWorksheet->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objWorksheet->getColumnDimension('B')->setAutoSize(true);
+                    $objWorksheet->getColumnDimension('A')->setAutoSize(true);
+                    $objWorksheet->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objWorksheet->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objWorksheet->getRowDimension(1)->setRowHeight(-1);
+                    $objWorksheet->getStyle('B1')->getFont()->setBold(true);
+                    $objWorksheet->getStyle('B1')->getFont()->setSize(20);
+                    $objWorksheet->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objWorksheet->setCellValue('A3', 'Areas');
+                    $objWorksheet->getStyle('A3')->getFont()->setBold(true);
+                    $objWorksheet->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objWorksheet->mergeCells('A3:A5');
+                    $objWorksheet->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objWorksheet->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objWorksheet->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objWorksheet->mergeCells('B6:e6');
+                    $objWorksheet->freezePane('B6');
+                    //Header
+                    $objWorksheet->setCellValue('B4', 'Indicators');
+
+                    $objWorksheet->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('C4', 'Non-Compliant');
+                    $objWorksheet->getColumnDimension('C')->setAutoSize(true);
+                    $objWorksheet->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objWorksheet->setCellValue('D4', 'Percent');
+                    $objWorksheet->getColumnDimension('D')->setAutoSize(true);
+                    $objWorksheet->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objWorksheet->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objWorksheet->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objWorksheet->setCellValue($col2 . $row2, $percent);
+                                    $objWorksheet->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objWorksheet->getStyle(
+                        'A1:' .
+                        $objWorksheet->getHighestColumn() .
+                        $objWorksheet->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    // Add new sheet
+
+                    $objWorksheet->setTitle($region->city_name);
+                } else {
+// Add some data
+
+                    $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+                    $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+                    $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+                    $objPHPExcel->getActiveSheet()->freezePane('B6');
+                    //Header
+                    $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+
+                    $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objPHPExcel->getActiveSheet()->getStyle(
+                        'A1:' .
+                        $objPHPExcel->getActiveSheet()->getHighestColumn() .
+                        $objPHPExcel->getActiveSheet()->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    $objPHPExcel->setActiveSheetIndex(0)->setTitle($region->city_name);
+                    // Add new sheet
+
+                }
+                $sheet++;
+            endforeach;
+        }
+
+// Add some data
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Non-CompliantIndicator.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }*/ //nonCompliantPSWDOREAL
+    public function nonCompliantPSWDO($regCode,$provCode,$lguType){
+
+
+        $indicator_model = new indicator_model();
+        $reports_model = new reports_model();
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+
+
+                $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+                $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+                $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+                $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+
+                $getScorePart1 = $indicator_model->getScorePart1($regCode, $provCode, $lguType);
+                $getPart1 = $indicator_model->getPart1($lguType);
+                $getPart2 = $indicator_model->getPart2($lguType);
+                $getPart3 = $indicator_model->getPart3($lguType);
+                $getPart4 = $indicator_model->getPart4($lguType);
+                $get_totalAssess = $reports_model->get_totalAssess($regCode, $provCode, $lguType);
+
+
+                    $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
+
+                    //autosize column
+
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+                    $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+                    $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+                    $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+                    $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+                    $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+                    $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+                    //Center text merge columns
+                    $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+                    $objPHPExcel->getActiveSheet()->freezePane('B6');
+                    //Header
+                    $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+
+                    $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+                    $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
+                    $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+                    $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+                        array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+                    //Part1
+                    $row2 = 7;
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart1 as $firstPartIndicator):
+                        if ($firstPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $firstPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $firstPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part2
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart2 as $secondPartIndicator):
+                        if ($secondPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $secondPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $secondPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part3
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart3 as $thirdPartIndicator):
+                        if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $thirdPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $thirdPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    //Part4
+                    $col2 = 'A';
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+                    $col2++;
+                    $row2++;
+                    foreach ($getPart4 as $fourthPartIndicator):
+                        if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                            $arr = explode("-", $fourthPartIndicator->indicator_id);
+                            $indicatorID = $arr[0];
+                            foreach ($getScorePart1 as $scorePart1):
+                                if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                                    $indicator_name = $indicatorID . '.' . $fourthPartIndicator->indicator_name;
+                                    $totalNonCompliance = $scorePart1->TotalNonCompliance;
+                                    $totalAssess = $get_totalAssess->totalAssess;
+
+                                    $percent = ($totalNonCompliance / $totalAssess);
+
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_name);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $totalNonCompliance);
+                                    $col2++;
+                                    $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $percent);
+                                    $objPHPExcel->getActiveSheet()->getStyle($col2 . $row2)
+                                        ->getNumberFormat()->applyFromArray(
+                                            array(
+                                                'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+                                            )
+                                        );
+                                    if ($col2 == 'D') {
+                                        $col2 = 'B';
+                                    }
+                                    $row2++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+
+//End Editing
+
+//    //border
+                    $objPHPExcel->getActiveSheet()->getStyle(
+                        'A1:' .
+                        $objPHPExcel->getActiveSheet()->getHighestColumn() .
+                        $objPHPExcel->getActiveSheet()->getHighestRow()
+                    )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+                    $objPHPExcel->setActiveSheetIndex(0)->setTitle('Non-Compliant Indicator');
+                    // Add new sheet
+
+
+
+// Add some data
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Non-CompliantIndicator.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+    public function nonCompliantLSWDO($regCode,$provCode,$cityCode,$lguType){
+
+
+        $indicator_model = new indicator_model();
+        $reports_model = new reports_model();
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+
+
+        $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+        $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+        $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+        $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+
+        $getScorePart1 = $indicator_model->getNCperLSWDO($regCode, $provCode, $cityCode);
+        $getPart1 = $indicator_model->getPart1($lguType);
+        $getPart2 = $indicator_model->getPart2($lguType);
+        $getPart3 = $indicator_model->getPart3($lguType);
+        $getPart4 = $indicator_model->getPart4($lguType);
+        $get_totalAssess = $reports_model->get_totalAssess($regCode, $provCode, $lguType);
+
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Sample Title');
+
+        //autosize column
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+//Start Editing
+        //Part1
+        $row2 = 7;
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart1 as $firstPartIndicator):
+            if ($firstPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $firstPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                        $indicator_id = $firstPartIndicator->indicator_id;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
             }
-        $row6++;
-        $sheet++;
         endforeach;
+        //Part2
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart2 as $secondPartIndicator):
+            if ($secondPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $secondPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                        $indicator_id = $secondPartIndicator->indicator_id;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+        //Part3
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart3 as $thirdPartIndicator):
+            if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $thirdPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                        $indicator_id = $thirdPartIndicator->indicator_id;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+        //Part4
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart4 as $fourthPartIndicator):
+            if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $fourthPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                        $indicator_id = $fourthPartIndicator->indicator_id;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+
+//End Editing
+
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->setActiveSheetIndex(0)->setTitle('Non-Compliant Indicator');
+        // Add new sheet
+
 
 
 // Add some data
@@ -3151,24 +4932,5 @@ class reports extends CI_Controller {
             $_SESSION['city'] = $_POST['citylist'];
         }
     }
-    public function tableView($lguType)
-    {
-        $indicator_model = new indicator_model();
-        $this->load->view('header');
-        $this->load->view('nav');
-        $this->load->view('sidebar');
-        $this->load->view('reports_tableview',array(
-            'getFirstMotherIndicator'=>$indicator_model->getFirstMotherIndicator(),
-            'getSecondMotherIndicator'=>$indicator_model->getSecondMotherIndicator(),
-            'getThirdMotherIndicator'=>$indicator_model->getThirdMotherIndicator(),
-            'getFourthMotherIndicator'=>$indicator_model->getFourthMotherIndicator(),
-            'getPart1'=>$indicator_model->getPart1($lguType),
-            'getPart2'=>$indicator_model->getPart2($lguType),
-            'getPart3'=>$indicator_model->getPart3($lguType),
-            'getPart4'=>$indicator_model->getPart4($lguType),
-            'getScorePart1'=>$indicator_model->getScorePart1(),
-        ));
-        $this->load->view('footer');
 
-    }
 }

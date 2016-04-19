@@ -88,6 +88,7 @@ class assessmentinfo extends CI_Controller {
             $modified_by= $this->session->userdata('user_id');
             $date_modified = 'NOW()';
 
+
             $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created,$modified_by,$date_modified);
             if ($addResult){
 
@@ -116,14 +117,14 @@ class assessmentinfo extends CI_Controller {
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex();
+                $this->redirectIndex($addResult);
             }
         }
     }
 
-    public function redirectIndex($id,$addResult)
+    public function redirectIndex($addResult)
     {
-        $page = base_url('budgetallocation/addBudgetAllocation/'.$id.'/'.$addResult);
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$addResult);
 //        $sec = "1";
         header("Location: $page");
     }

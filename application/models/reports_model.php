@@ -535,8 +535,32 @@ order	by a.new_score desc;
     //get All Regions
     public function get_AllRegion()
     {
-
         $sql = 'select region_code, region_name,region_nick from lib_regions';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+
+    //get All Prov by Reg
+    public function get_AllProvByReg($regCode)
+    {
+        $sql = 'select prov_code, prov_name from lib_provinces where region_code = "'.$regCode.'"';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    //get All Prov by Reg
+    public function get_AllCityByProv($provCode)
+    {
+        $sql = 'select city_code, city_name from lib_cities where city_class = "CC" and prov_code = "'.$provCode.'"';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    //get All Prov by Reg
+    public function get_AllMuniByProv($provCode)
+    {
+        $sql = 'select city_code, city_name from lib_cities where city_class = "" and prov_code = "'.$provCode.'"';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
