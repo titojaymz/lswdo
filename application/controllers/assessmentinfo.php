@@ -31,7 +31,6 @@ class assessmentinfo extends CI_Controller {
 
     public function addAssessmentinfo()
     {
-
         if (!$this->session->userdata('user_id'))
         {
             redirect('/users/login','location');
