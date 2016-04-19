@@ -33,13 +33,13 @@ if (!$this->session->userdata('user_id')){
             <th>LGU Type:</th><td><?php echo $lgu_type_id ?></td>
         </tr>
         <tr>
-            <th>Region:</th><td><?php echo $region_code ?></td>
+            <th>Region:</th><td><?php echo $region_name ?></td>
         </tr>
         <tr>
-            <th>Province</th><td><?php echo $prov_code ?></td>
+            <th>Province</th><td><?php echo $prov_name ?></td>
         </tr>
         <tr>
-            <th>City:</th><td><?php echo $city_code ?></td>
+            <th>City:</th><td><?php echo $city_name ?></td>
         </tr>
         <tr>
             <th>Name of SWDO Officer/Head:</th><td><?php echo $swdo_name ?></td>
@@ -65,24 +65,7 @@ if (!$this->session->userdata('user_id')){
         <tr>
             <th>Total Budget LSWDO:</th><td><?php echo $total_budget_lswdo ?></td>
         </tr>
-        <tr>
-            <th>Sector:</th><td><?php echo $sector_id ?></td>
-        </tr>
-        <tr>
-            <th>Year Indicated:</th><td><?php echo $year_indicated ?></td>
-        </tr>
-        <tr>
-            <th>Utilization:</th><td><?php echo $utilization ?></td>
-        </tr>
-        <tr>
-            <th>Number of Beneficiaries Served:</th><td><?php echo $no_bene_served ?></td>
-        </tr>
-        <tr>
-            <th>Budget for the Present Year:</th><td><?php echo $budget_present_year ?></td>
-        </tr>
-        <tr>
-            <th>Number of Target Beneficiaries:</th><td><?php echo $no_target_bene ?></td>
-        </tr>
+
     </table>
 
 </div>
