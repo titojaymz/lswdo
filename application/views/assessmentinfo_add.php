@@ -458,10 +458,10 @@ else
                             </div>
                             <div id="group_renewal">
 
-                                <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <select class="form-control" name="swdo_name" id="swdo_name">
+                                <label for="swdo_nameRenew">Name of SWDO Officer/Head:</label>
+                                <select class="form-control" name="swdo_nameRenew" id="swdo_nameRenew">
                                     <option select value="">Please select</option>
-                                    <?php foreach($swdo_name as $swdos): ?>
+                                    <?php foreach($swdo_nameRenew as $swdos): ?>
                                         <option value="<?php echo $swdos->swdo_name ?>"><?php echo $swdos->swdo_name ?></option>
                                     <?php endforeach ?>
                                 </select>
