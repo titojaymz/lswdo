@@ -82,7 +82,7 @@
                         //echo form_open("indicator/indicatorView/$profile_id", $attributes);
                         echo form_open("", $attributes);
 
-                        echo "<input type=\"text\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
+                        echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
 
                         //echo $this->input->post('profile_id');
                         //profile_id

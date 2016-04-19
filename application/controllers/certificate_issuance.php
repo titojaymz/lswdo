@@ -10,6 +10,7 @@ class certificate_issuance extends CI_Controller
 
     public function certificate_issuance_list()
     {
+        $profile_id = $this->input->post('profile_id'); //cma
 
         $monitoring_model = new Monitoring_Model();
         $certification_model = new Certification_Model();
@@ -20,7 +21,7 @@ class certificate_issuance extends CI_Controller
         $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('certificate_issuance_list', array(
-            'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+            //'getDataByProfileID' => $monitoring_model->getDataByProfileID($profile_id),
             'getVisitCount'=>$visit_model->getVisitCount(),
             'getValidity' => $validity_model->getValidity(),
             'monitoring_model'=>$monitoring_model,
@@ -49,17 +50,19 @@ class certificate_issuance extends CI_Controller
             $this->load->view('nav');
             $this->load->view('sidebar');
             $this->load->view('certificate_issuance_add', array(
-                'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+                //'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
                /* 'getVisitCount' => $monitoring_model->getVisitCount(),*/
                 'getValidity' => $validity_model->getValidity(),
             ));
             $this->load->view('footer');
+
+
         } else {
             $certfication_model = new Certification_Model();
             $validity_model = new Validity_model();
             $visit_model = new Visit_model();
 
-            $profile_id = 9;
+            $profile_id = $this->input->post('profile_id');
             $visit_count = $this->input->post('visit_count');
             //date
             $strVisitDate = $this->input->post('visit_date');
@@ -67,9 +70,9 @@ class certificate_issuance extends CI_Controller
             $visit_date = date_format($visitDateToDate, "Y-m-d");
             //date
             $remarks = $this->input->post('remarks');
-            $created_by =104;
+            $created_by =$this->session->userdata('user_id');
             $date_created = 'NOW()';
-            $modified_by = 104;
+            $modified_by = $this->session->userdata('user_id');
             $date_modified = '0000-00-00';
             $deleted = '0';
 
@@ -105,7 +108,7 @@ class certificate_issuance extends CI_Controller
                    $DELETED);
 
             if ($addCert) {
-                $form_message = 'Add Success!';
+               /* $form_message = 'Add Success!';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
@@ -117,11 +120,61 @@ class certificate_issuance extends CI_Controller
                     //'getFirstCategory' => $indicator_model->getCategoriesFromFI(),
                     //'getSecondCategory' => $indicator_model->getSecondCategoriesFromFI(),
                 ));
+                $this->load->view('footer');*/
+/*
+                $monitoring_model = new Monitoring_Model();
+                $certification_model = new Certification_Model();
+                $validity_model = new Validity_model();
+                $visit_model = new Visit_model();
+                $indi_model = new indicator_model();
+
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('monitoring_list', array(
+                    //'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+                    'getVisitCount'=>$visit_model->getVisitCount(),
+                    'getValidity' => $validity_model->getValidity(),
+                    'monitoring_model' => $monitoring_model,
+                    'certification_model' => $certification_model,
+                    'visit_model' => $visit_model,
+                    'validity_model' => $validity_model,
+                ));
+                $this->load->view('footer');*/
+
+
+                $monitoring_model = new Monitoring_Model();
+                $certification_model = new Certification_Model();
+                $validity_model = new Validity_model();
+                $visit_model = new Visit_model();
+                $indi_model = new indicator_model();
+                //$profile_id = $this->input->post('profile_id'); //cma
+
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('monitoring_list', array(
+                    //'getDataByProfileID' => $monitoring_model->getDataByProfileID($profile_id),
+                    /*'getVisitCount'=>$visit_model->getVisitCount(),
+                    'getValidity' => $validity_model->getValidity(),*/
+                    'monitoring_model' => $monitoring_model,
+                    'certification_model' => $certification_model,
+                    'visit_model' => $visit_model,
+                    'validity_model' => $validity_model,
+                ));
                 $this->load->view('footer');
 
+                $this->redirectIndex($profile_id);
 
             }
         }
+    }
+
+    public function redirectIndex($profile_id)
+    {
+        $page = base_url('monitoring/monitoring_list/'.$profile_id);
+//        $sec = "1";
+        header("Location: $page");
     }
 
     public function certificate_issuance_edit($ref_id)
@@ -192,7 +245,7 @@ class certificate_issuance extends CI_Controller
                 $this->load->view('nav');
                 $this->load->view('sidebar');
                 $this->load->view('certificate_issuance_list', array(
-                    'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+                    //'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
                     'getVisitCount'=>$visit_model->getVisitCount(),
                     'getValidity' => $validity_model->getValidity(),
                     'monitoring_model'=>$monitoring_model,

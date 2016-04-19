@@ -15,12 +15,13 @@ class monitoring extends CI_Controller
         $validity_model = new Validity_model();
         $visit_model = new Visit_model();
         $indi_model = new indicator_model();
+        $profile_id = $this->input->post('profile_id'); //cma
 
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('monitoring_list', array(
-            'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+            //'getDataByProfileID' => $monitoring_model->getDataByProfileID($profile_id),
             'getVisitCount'=>$visit_model->getVisitCount(),
             'getValidity' => $validity_model->getValidity(),
             'monitoring_model' => $monitoring_model,
@@ -53,7 +54,7 @@ class monitoring extends CI_Controller
             $this->load->view('nav');
             $this->load->view('sidebar');
             $this->load->view('monitoring_add', array(
-                'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+                //'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
                 'getVisitCount' => $visit_model->getVisitCount(),
                 'getValidity' => $validity_model->getValidity(),
                 'monitoring_model' => $monitoring_model,
@@ -198,7 +199,7 @@ class monitoring extends CI_Controller
                 $this->load->view('nav');
                 $this->load->view('sidebar');
                 $this->load->view('monitoring_edit', array(
-                    'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
+                    //'getDataByProfileID' => $monitoring_model->getDataByProfileID(),
                     'getVisitCount'=>$visit_model->getVisitCount(),
                     'getValidity' => $validity_model->getValidity(),
                     'monitoring_model' => $monitoring_model,

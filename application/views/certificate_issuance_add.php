@@ -59,33 +59,31 @@
                     </ul>
                 </div>
                 <div class = "panel-body" style="display: block;">
-                    <div class="btn-group">
 
-                        <?php
-                        $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
-
-                        ?>
-                                 <input id="btn_back" name="btn_back" type="submit" class="btn btn-primary" value="Back To List"/>
-                                 <br/><br/>
-                        <?php
-                            echo form_close();
-                        ?>
-
-                    </div>
                     <?php
                         $attributes = array("class" => "form-horizontal", "id" => "certificate_issuanceForm", "name" => "certificate_issuanceForm");
                         echo form_open("certificate_issuance/certificate_issuance_add", $attributes);
 
 
                         //profile_id
-                        $profile_id = $getDataByProfileID->profile_id;
+                       // $profile_id = $getDataByProfileID->profile_id;
+                        $profile_id = $this->uri->segment('3');
                         echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
                     ?>
+                    <div class="btn-group">
+
+                        <?php
+
+                        echo "<a id ='btn_addCert' class='btn btn-lrg btn-primary' href= '../certificate_issuance_list/$profile_id'> Back to List </a>";
+
+                        ?>
+
+                    </div>
+
                         <!-- date Valid-->
-                        <input type="text" id="month_valid" name="month_valid" class="form-control" placeholder="month_valid" />
-                        <input type="text" id="day_valid" name="day_valid" class="form-control" placeholder="day_valid" />
-                        <input type="text" id="year_valid" name="year_valid" class="form-control" placeholder="year_valid" />
+                        <input type="hidden" id="month_valid" name="month_valid" class="form-control" placeholder="month_valid" />
+                        <input type="hidden" id="day_valid" name="day_valid" class="form-control" placeholder="day_valid" />
+                        <input type="hidden" id="year_valid" name="year_valid" class="form-control" placeholder="year_valid" />
                         <!-- date Valid-->
 
                     <h4>Certification Details</h4>
@@ -123,40 +121,7 @@
 
                     </table>
 
-                    <!--
-                    <br/></br>
-                    <h4>Status of Monitoring/Date</h4>
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <td><b>Visit Count</b></td>
-                            <td align="center">
-                            <?php
-/*                                //print_r($getVisitCount);
-                                echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
-                                foreach ($getVisitCount as $key=>$val)
-                                {
-                                    echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'>";
-                                    echo $val['visit_count'];
-                                    echo "</option>";
-                                }
-                                 echo "</select>";
-                            */?>
-                            </td>
-                        </tr>
-                        </tr>
-                            <td><b>Visit Date</b></td>
-                            <td align="center">
-                                <input type="text" id="visit_date" name="visit_date" class="form-control" placeholder = 'Enter Visit Date' />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Remarks</b></td>
-                            <td>
-                                <textarea class="form-control" rows="3" id="remarks" name="remarks" placeholder="Type your message..."></textarea>
-                            </td>
-                        </tr>
 
-                    </table>-->
 
                     <?php
                     //$profile_id ='9';

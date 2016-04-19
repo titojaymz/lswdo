@@ -2,14 +2,15 @@
 
 class Certification_Model extends CI_Model
 {
-    public function getCertList(){
+    public function getCertList($profile_id){
         /*$this->db->select('profile_id,certificate_no,date_issued,validity,month_valid, day_valid, year_valid');
         $this->db->order_by('profile_id','ASC');
         $query = $this->db->get_where('tbl_lswdo_certificate', array('profile_id' => '9'));*/
         /*return $query->result();*/
         $sql = 'SELECT ref_id, profile_id,certificate_no,date_issued,validity,month_valid, day_valid, year_valid
                 FROM `tbl_lswdo_certificate`
-                WHERE profile_id = 9;';
+                WHERE profile_id = '.$profile_id.';';
+                //and ref_id = '.$ref_id_cert.';';
         $query = $this->db->query($sql);
         return $query->result_array();
     }

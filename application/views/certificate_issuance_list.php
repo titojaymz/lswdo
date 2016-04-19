@@ -56,7 +56,7 @@
                     <?php
                    // error_reporting(1);
 
-                    ini_set('display_errors', 1);
+                   // ini_set('display_errors', 1);
 
                     //echo $updateResult;
                     ?>
@@ -68,12 +68,17 @@
                 <div class = "panel-body" style="display: block;">
 
                     <?php
-                    //$profile_id = $getDataByProfileID->profile_id;
+                    $profile_id = $this->uri->segment('3');
+                    $ref_id_cert = $this->uri->segment('4');
                     //$ref_id =
-                    //echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
-                    $getCertList = $certification_model->getCertList();
+                    echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
+                    //echo "<input type=\"text\" id=\"ref_id_cert\" name=\"ref_id_cert\" class=\"form-control\" value ='".$ref_id_cert."'/>";
+                    $getCertList = $certification_model->getCertList($profile_id);
 
-                    echo "<a id ='btn_addCert' class='btn btn-lrg btn-primary' href= 'certificate_issuance_add'> Add Cert </a>";
+                    echo "<a id ='btn_addCert' class='btn btn-lrg btn-primary' href= '../certificate_issuance_add/$profile_id'> Add Cert </a>";
+                    echo "<br/>";
+
+                    echo "<a id ='btn_addMonitoring' class='btn btn-lrg btn-primary' href= '../../../monitoring/monitoring_list/$profile_id'> Back to Monitoring List </a>";
 
                     ?>
 
@@ -135,8 +140,13 @@
                                     $strValidUntil = $val['day_valid'] . "-" . $val['month_valid'] . "-" . $val['year_valid'];
                                     $validUntilToDate = date_create($strValidUntil);
                                     $date_valid_val = date_format($validUntilToDate, "F d, Y");
-
+                                    if($strValidUntil == "")
+                                    {
+                                        echo "NULL value";
+                                    }else
+                                    {
                                     echo "<td align=\"center\"><b>".$date_valid_val." </b></td>";
+                                    }
 
                                     /*$getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($ref_id_cert);
 

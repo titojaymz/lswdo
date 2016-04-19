@@ -117,6 +117,9 @@ class indicator extends CI_Controller
             redirect('/users/login','location');
         }
         $indicator_model = new indicator_model();
+        $PSBRider_Model = new PSBRider_Model();
+
+
         $lguTypes = $indicator_model->getLGUtype($profID);
         $this->load->view('header');
         $this->load->view('nav');
@@ -155,6 +158,7 @@ class indicator extends CI_Controller
             'getBaselineTotalScoreIndicatorsPart4' => $indicator_model->getBaselineTotalScoreIndicatorsPart4($lguTypes->lgu_type_id,$profID,$ref_id),
             'profileID' => $profID,
             'refID' => $ref_id,
+            'PSBRider_Model' => $PSBRider_Model,
         ));
         $this->load->view('footer');
     }

@@ -87,6 +87,8 @@
                             <td align="center"><b>&nbsp;</b></td>
                             <td align="center"><b>&nbsp;</b></td>
                             <td align="center"><b>&nbsp;</b></td>
+                            <td align="center"><b>&nbsp;</b></td>
+
                             <!--<td align="center"><b>Certificate No</b></td>
                             <td align="center"><b>Date Issued</b></td>
                             <td align="center"><b>Validity In Years</b></td>
@@ -102,6 +104,8 @@
                             <?php
                                     //$getMonitoringList = $monitoring_model->getMonitoringList();
                                     $getMonitoringList = $monitoring_model->getMonitoringListByRefID($profile_id);
+                            //print_r($getMonitoringList);
+
 
                                     foreach($getMonitoringList as $keyMonitoring => $valMonitoring)
                                     {
@@ -114,7 +118,14 @@
                                         echo "<td align=\"center\"><b>";
                                         echo "<a class='btn btn-sm btn-primary' href= '../../indicator/indicatorView/$profile_id/$ref_id/'>
                                             <i class=\"fa fa-edit\"></i>View Indicators </a>";
-                                        echo " </b></td>"; echo "<td align=\"center\"><b>";
+                                        echo " </b></td>";
+
+                                        echo "<td align=\"center\"><b>";
+                                        echo "<a class='btn btn-sm btn-default' href= '../../certificate_issuance/certificate_issuance_list/$profile_id/'>
+                                            <i class=\" fa fa-newspaper-o\"></i>Certification Details </a>";
+                                        echo " </b></td>";
+
+                                        echo "<td align=\"center\"><b>";
                                         echo "<a class='btn btn-sm btn-primary' href= '../../updates/update_view/$profile_id/$ref_id/'>
                                             <i class=\"fa fa-edit\"></i>View Updates</a>";
                                         echo " </b></td>";

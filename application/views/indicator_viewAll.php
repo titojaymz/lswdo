@@ -1180,6 +1180,88 @@
             </div>
         </div>
     </div>
+
+    <!--carla psbriders-->
+
+    <div class = "row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    PSB Rider Questions
+                    <ul class="panel-tools">
+                        <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                        <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                    </ul>
+                </div>
+                <div class = "panel-body" style="display: none;">
+                    <?php
+                    //carla
+                    $profile_id = $this->uri->segment('3');
+                    $ref_id = $this->uri->segment('4');
+
+                    $getPSBRiderAnswer = $PSBRider_Model->getPSBRiderAnswer($profile_id,$ref_id);
+
+                    $getPSBMainCategory = $PSBRider_Model->getPSBMainCategory();
+
+                       // print_r($getPSBRiderAnswer);
+                    ?>
+
+                    <table class = "table table-hover">
+                        <tr>
+                            <?php
+                                foreach($getPSBMainCategory as $key => $val)
+                                {
+                                    echo "<td colspan = 3>";
+                                    echo "<center><b>";
+                                    echo $val["psbrider_main_category_title"];
+                                    echo "</b></center>";
+                                    echo "</td>";
+                                    echo "</tr>";
+
+                                    $answer = "";
+                                    foreach($getPSBRiderAnswer as $keyAns => $valAns) {
+
+                                        if ($val["psbrider_main_category_id"] == $valAns["psbrider_main_category_id"]) {
+                                            echo "<tr>";
+
+                                            echo "<td>";
+                                            echo $valAns["psbrider_sub_category_title"];
+                                            echo "</td>";
+
+                                            echo "<td>";
+                                            if($valAns["psbrider_answer"] == 1)
+                                            {
+                                                $answer = "YES";
+                                                echo $answer;
+                                            }else
+                                            {
+                                                $answer = "NO";
+                                                echo $answer;
+
+                                            }
+
+                                            echo "<td>";
+                                            echo $valAns["psbrider_indicative_reason"];
+                                            echo "</td>";
+
+
+                                            echo "</td>";
+
+
+                                            echo "</tr>";
+                                        }
+                                    }
+                                }
+                            ?>
+
+                        </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--carla psbriders-->
     <?php
         $getPerc = number_format($scoreProf->FinalScore,2);
         if($getPerc == 100){
