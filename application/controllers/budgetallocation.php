@@ -60,33 +60,34 @@ class budgetallocation extends CI_Controller {
           //  $profile_id = $this->input->post('profile_id');//mglv
             $sector_id = $this->input->post('sector_id');
             $year_indicated = $this->input->post('year_indicated');
+            $budget_previous_year = $this->input->post('budget_previous_year');
             $budget_present_year = $this->input->post('budget_present_year');
             $utilization = $this->input->post('utilization');
             $no_bene_served = $this->input->post('no_bene_served');
             $no_target_bene = $this->input->post('no_target_bene');
 
-            $addResult = $budgetallocation_model->insertBudgetAllocation($id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene);
+            try {
+                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated,$budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene);
 
-            if ($addResult){
-                $form_message = 'Add Success!';
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('budgetallocation_add',array(
-                    'sector_id' => $sector_id,
-                    'budgetallocation_data'=>$budgetallocation_model->getBudgetAllocation($id),
-                    'profile_id' => $id,
-                    'list_fields'=>$this->listFields(),
-                    'form_message'=>$form_message,
+                if ($addResult) {
+                    $form_message = 'Add Success!';
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('budgetallocation_add', array(
+                        'sector_id' => $sector_id,
+                        'budgetallocation_data' => $budgetallocation_model->getBudgetAllocation($id),
+                        'profile_id' => $id,
+                        'list_fields' => $this->listFields(),
+                        'form_message' => $form_message,
 
-                ));
-                $this->load->view('footer');
-                $this->redirectIndex();
-            } else {
-                $form_message = ' <div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i>hehe<a href="#" class="closed">&times;</a></div>';
-                $this->load->view('header');
-                $this->load->view('budgetallocation_add', array('form_message' => $form_message));
-                $this->load->view('footer');
-                $this->redirectIndex();
+                    ));
+                    $this->load->view('footer');
+                    $this->redirectIndex();
+                } else {
+                    throw new Exception('no data returned');
+                }
+            } catch(Exception $e){
+                var_dump($e->getMessage());
             }
         }
     }
