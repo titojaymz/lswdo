@@ -376,7 +376,21 @@
                                     <a class="btn btn-light" href="<?php echo base_url('reports/nonCompliantLSWDO/'.$regionlist2.'/'.$provlist2.'/'.$citylist2.'/'.$LGUtype2.'') ?>">LSWDO - Non-Compliant Indicator</a>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/budgetUtilization/'.$sectorType2.'') ?>">Budget Utilization (Previous Year)</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/budgetAllocation/'.$sectorType2.'') ?>">Budget Allocation (Present Year)</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/LCPC/'.$regionlist2.'/'.$provlist2.'/'.$LGUtype2.'') ?>">Local Council for the Protection of Children</a>
+                                </td>
+                            </tr>
                         </table>
                         <?php } ?>
                     </div>

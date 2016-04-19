@@ -65,10 +65,11 @@ class budgetallocation extends CI_Controller {
             $utilization = $this->input->post('utilization');
             $no_bene_served = $this->input->post('no_bene_served');
             $no_target_bene = $this->input->post('no_target_bene');
+            $created_by = $this->session->userdata('user_id');
 
             $checkDupli = $budgetallocation_model->checkDuplicate($id, $sector_id);
             if($checkDupli->countProf == 0) {
-                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene);
+                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene,$created_by);
                 if ($addResult) {
                     $form_message = 'Add Success!';
                     $this->load->view('header');

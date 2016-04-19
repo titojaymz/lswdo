@@ -688,6 +688,102 @@ order	by a.new_score desc;
         return $result;
     }
 
+    public function getBudgetUtil($sectorID)
+    {
+        $sql = 'select
+                c.region_name,
+                sum(if(b.lgu_type_id = 1,utilization,0)) / sum(if(b.lgu_type_id = 1,1,0))  as AverageUtilizationP,
+                sum(if(b.lgu_type_id = 1,no_bene_served,0)) / sum(if(b.lgu_type_id = 1,1,0))  as BeneServedP,
+                sum(if(b.lgu_type_id = 2,utilization,0)) / sum(if(b.lgu_type_id = 2,1,0)) as AverageUtilizationC,
+                sum(if(b.lgu_type_id = 2,no_bene_served,0)) / sum(if(b.lgu_type_id = 2,1,0)) as BeneServedC,
+                sum(if(b.lgu_type_id = 3,utilization,0)) / sum(if(b.lgu_type_id = 3,1,0)) as AverageUtilizationM,
+                sum(if(b.lgu_type_id = 3,no_bene_served,0)) / sum(if(b.lgu_type_id = 3,1,0)) as BeneServedM
+                from tbl_lswdo_budget a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                INNER JOIN lib_regions c
+                on b.region_code = c.region_code
+                where a.sector_id = '.$sectorID.'
+                group by b.region_code;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function getBudgetAlloc($sectorID)
+    {
+        $sql = 'select
+                c.region_name,
+                sum(if(b.lgu_type_id = 1,budget_present_year,0)) / sum(if(b.lgu_type_id = 1,1,0))  as BudgetPresentP,
+                sum(if(b.lgu_type_id = 1,no_target_bene,0)) / sum(if(b.lgu_type_id = 1,1,0))  as BeneTargetP,
+                sum(if(b.lgu_type_id = 2,budget_present_year,0)) / sum(if(b.lgu_type_id = 2,1,0)) as BudgetPresentC,
+                sum(if(b.lgu_type_id = 2,no_target_bene,0)) / sum(if(b.lgu_type_id = 2,1,0)) as BeneTargetC,
+                sum(if(b.lgu_type_id = 3,budget_present_year,0)) / sum(if(b.lgu_type_id = 3,1,0)) as BudgetPresentM,
+                sum(if(b.lgu_type_id = 3,no_target_bene,0)) / sum(if(b.lgu_type_id = 3,1,0)) as BeneTargetM
+                from tbl_lswdo_budget a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                INNER JOIN lib_regions c
+                on b.region_code = c.region_code
+                where a.sector_id = '.$sectorID.'
+                group by b.region_code;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function getLCPC($regCode,$provCode,$lguType)
+    {
+            if($lguType == 1){
+                $sql = 'select c.prov_name,
+                    SUM(IF(a.compliance_indicator_id = 1,1,0)) as ScoreIndicator
+                    from tbl_lswdo_standard_indicators a
+                    INNER JOIN tbl_lswdo b
+                    ON a.profile_id = b.profile_id
+                    INNER JOIN lib_provinces c
+                    ON b.prov_code = c.prov_code
+                    where indicator_id LIKE "%IIE%"
+                    AND indicator_id LIKE "%-1%"
+                    AND b.region_code = '.$regCode.'
+                    AND b.lgu_type_id = 1
+                    Group by b.prov_code;';
+            } elseif($lguType == 2){
+                $sql = 'select d.city_name,
+                    SUM(IF(a.compliance_indicator_id = 1,1,0)) as ScoreIndicator
+                    from tbl_lswdo_standard_indicators a
+                    INNER JOIN tbl_lswdo b
+                    ON a.profile_id = b.profile_id
+                    INNER JOIN lib_provinces c
+                    ON b.prov_code = c.prov_code
+                    INNER JOIN lib_cities d
+                    ON b.city_code = d.city_code
+                    where indicator_id LIKE "%IIE%"
+                    AND indicator_id LIKE "%-1%"
+                    AND b.region_code = '.$regCode.'
+                    AND b.prov_code = '.$provCode.'
+                    AND d.city_class = "CC"
+                    AND b.lgu_type_id = 1
+                    Group by b.prov_code;';
+            } elseif($lguType == 3){
+                $sql = 'select d.city_name,
+                    SUM(IF(a.compliance_indicator_id = 1,1,0)) as ScoreIndicator
+                    from tbl_lswdo_standard_indicators a
+                    INNER JOIN tbl_lswdo b
+                    ON a.profile_id = b.profile_id
+                    INNER JOIN lib_provinces c
+                    ON b.prov_code = c.prov_code
+                    INNER JOIN lib_cities d
+                    ON b.city_code = d.city_code
+                    where indicator_id LIKE "%IIE%"
+                    AND indicator_id LIKE "%-1%"
+                    AND b.region_code = '.$regCode.'
+                    AND b.prov_code = '.$provCode.'
+                    AND d.city_class = ""
+                    AND b.lgu_type_id = 1
+                    Group by b.prov_code;';
+            }
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
 
     //get total of assessed by region or province
     public function get_totalAssess($regCode,$provCode,$lguType)

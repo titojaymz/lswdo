@@ -5952,6 +5952,399 @@ class reports extends CI_Controller {
         $objWriter->save('php://output');
     }
 
+    public function LCPC($regCode,$provCode,$lguType){
+
+        $reports_model = new reports_model();
+        $objPHPExcel = new PHPExcel();
+
+
+// Create new PHPExcel object
+        if($lguType == 1) { // PSWDO LERI BOY
+
+            $getLCPC = $reports_model->getLCPC($regCode, $provCode, $lguType);
+
+
+            $objPHPExcel->getActiveSheet()->setCellValue('B1', 'a PSWDO Functionality for Local Council for the Protection of Children');
+
+            //autosize column
+
+            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+            $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+            $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+            $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+            $objPHPExcel->getActiveSheet()->mergeCells('B1:C2');
+
+            //Center text merge columns
+            $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+            $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Province');
+            $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->setCellValue('B3','Sample Title');
+            $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+            $objPHPExcel->getActiveSheet()->mergeCells('B3:C3');
+            //Center text merge columns
+            $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+            $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+            $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+            $objPHPExcel->getActiveSheet()->mergeCells('B6:C6');
+            $objPHPExcel->getActiveSheet()->freezePane('B6');
+            //Header
+
+            $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Score');
+            $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+            $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Rank');
+            $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+
+
+//Start Editing
+            //Part1
+            $row2 = 7;
+            $col2 = 'A';
+            foreach ($getLCPC as $lcpc):
+
+                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $lcpc->prov_name);
+                $col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $lcpc->ScoreIndicator);
+                if ($col2 == 'B') {
+                    $col2 = 'A';
+                }
+                $row2++;
+
+            endforeach;
+
+//End Editing
+//    //border
+            $objPHPExcel->getActiveSheet()->getStyle(
+                'A1:' .
+                $objPHPExcel->getActiveSheet()->getHighestColumn() .
+                $objPHPExcel->getActiveSheet()->getHighestRow()
+            )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+            $objPHPExcel->setActiveSheetIndex(0)->setTitle('LCPCPSWDO');
+            // Add new sheet
+        }
+
+// Add some data
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+            $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+            ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+            $filename = 'LCPCPSWDO.xlsx';
+            header('Content-type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename=' . $filename);
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save('php://output');
+
+    }
+
+    //Budget Utilization! :D
+    public function budgetUtilization($sectorID){
+
+
+
+        $reports_model = new reports_model();
+        $budgetallocation_model = new budgetallocation_model();
+
+        $sectorName = $budgetallocation_model->sectorName($sectorID);
+        $sName = $sectorName->sector_name;
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+        $getBudgetUtil = $reports_model->getBudgetUtil($sectorID);
+
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Table 5.a Average LSWDO budget utilization (previous year) in '.$sName.' sector, by region, Philippines ');
+
+        //autosize column
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:G2');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Region');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', $sName. ' Sector');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:G3');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Average PSWDO Utilization');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Average No. of Beneficiaries Served');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Average CSWDO Utilization');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Average No. of Beneficiaries Served');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Average MSWDO Utilization');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'Average No. of Beneficiaries Served');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+
+//Start Editing
+        //Part1
+        $row2 = 7;
+        $col2 = 'A';
+        foreach ($getBudgetUtil as $budgetUtil):
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->region_name);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->AverageUtilizationP);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BeneServedP);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->AverageUtilizationC);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BeneServedC);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->AverageUtilizationM);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BeneServedM);
+            if ($col2 == 'G') {
+                $col2 = 'A';
+            }
+            $row2++;
+
+        endforeach;
+        $col3 = 'B';
+        $row3 = $row2 -1;
+        $objPHPExcel->getActiveSheet()->setCellValue('A'.$row2, 'Total');
+        for($i = 0; $i < 6; $i++) {
+            $objPHPExcel->getActiveSheet()->setCellValue($col3 . $row2, '=SUM(' . $col3 . '7:' . $col3 . $row3 . ')');
+            $col3++;
+        }
+//End Editing
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->setActiveSheetIndex(0)->setTitle('Budget Utilization (Previous Year)');
+        // Add new sheet
+
+
+
+// Add some data
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Non-CompliantIndicator.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+    public function budgetAllocation($sectorID){
+
+
+
+        $reports_model = new reports_model();
+        $budgetallocation_model = new budgetallocation_model();
+
+        $sectorName = $budgetallocation_model->sectorName($sectorID);
+        $sName = $sectorName->sector_name;
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+        $getBudgetAllocation = $reports_model->getBudgetAlloc($sectorID);
+
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Distribution of LSWDO with budget allocation (present year) in '.$sName.' sector, by region, Philippines');
+
+        //autosize column
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:G2');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Region');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', $sName. ' Sector');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:G3');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Average PSWDO Allocation');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Average No. of Target Beneficiaries');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Average CSWDO Allocation');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Average No. of Target Beneficiaries');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Average MSWDO Allocation');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'Average No. of Target Beneficiaries');
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+
+//Start Editing
+        //Part1
+        $row2 = 7;
+        $col2 = 'A';
+        foreach ($getBudgetAllocation as $budgetUtil):
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->region_name);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BudgetPresentP);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BeneTargetP);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BudgetPresentC);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BeneTargetC);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BudgetPresentM);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $budgetUtil->BeneTargetM);
+            if ($col2 == 'G') {
+                $col2 = 'A';
+            }
+            $row2++;
+
+        endforeach;
+        $col3 = 'B';
+        $row3 = $row2 -1;
+        $objPHPExcel->getActiveSheet()->setCellValue('A'.$row2, 'Total');
+        for($i = 0; $i < 6; $i++) {
+            $objPHPExcel->getActiveSheet()->setCellValue($col3 . $row2, '=SUM(' . $col3 . '7:' . $col3 . $row3 . ')');
+            $col3++;
+        }
+//End Editing
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->setActiveSheetIndex(0)->setTitle('Budget Allocation)');
+        // Add new sheet
+
+
+
+// Add some data
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Non-CompliantIndicator.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
 
     //cmalvarez
 
