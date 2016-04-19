@@ -126,10 +126,23 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
+
+                }
+
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countmuni'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
                     $('#groupmuni').html(data);
                 }
 
             });
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
                 async: false,
@@ -445,10 +458,10 @@ else
                             </div>
                             <div id="group_renewal">
 
-                                <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <select class="form-control" name="swdo_name" id="swdo_name">
+                                <label for="swdo_nameRenew">Name of SWDO Officer/Head:</label>
+                                <select class="form-control" name="swdo_nameRenew" id="swdo_nameRenew">
                                     <option select value="">Please select</option>
-                                    <?php foreach($swdo_name as $swdos): ?>
+                                    <?php foreach($swdo_nameRenew as $swdos): ?>
                                         <option value="<?php echo $swdos->swdo_name ?>"><?php echo $swdos->swdo_name ?></option>
                                     <?php endforeach ?>
                                 </select>

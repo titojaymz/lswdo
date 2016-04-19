@@ -133,7 +133,7 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="budget_previous_year">Budget for the Present Year:</label>
+                            <label for="budget_previous_year">Budget for the Previous Year:</label>
                             <input class="form-control" type="text" name="budget_previous_year" value="<?php echo set_value('budget_previous_year') ?>" placeholder="Budget for the Previous Year">
                         </div>
 

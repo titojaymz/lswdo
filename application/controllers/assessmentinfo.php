@@ -39,7 +39,7 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-        $swdo_name = $assessmentinfo_model->get_AssessmentRecord();
+        $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
 
         $this->validateAddForm();
 
@@ -53,7 +53,7 @@ class assessmentinfo extends CI_Controller {
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
-            $rpmb['swdo_name'] = $swdo_name;
+            $rpmb['swdo_nameRenew'] = $swdo_nameRenew;
             $rpmb['form_message'] = $form_message;
 
             if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -109,7 +109,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'swdo_name' => $swdo_name,
+                    'swdo_nameRenew' => $swdo_nameRenew,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
@@ -351,6 +351,27 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function populate_countmuni()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $numberofmuni = $this->assessmentinfo_model->get_count_muni($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'no_muni',
+                'name'       => 'no_muni',
+                'value'   =>  $numberofmuni->value_sum,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
     public function populate_countbrgy()
     {
         if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
@@ -377,7 +398,7 @@ class assessmentinfo extends CI_Controller {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
         {
             $prov_code = $_POST['prov_code'];
-            $incomeclass = $this->assessmentinfo_model->get_count_city($prov_code);
+            $incomeclass = $this->assessmentinfo_model->get_incomeclass($prov_code);
 
             $data = array(
                 'type'        => 'text',
