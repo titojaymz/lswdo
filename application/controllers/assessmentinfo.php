@@ -351,6 +351,27 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function populate_countmuni()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $numberofmuni = $this->assessmentinfo_model->get_count_muni($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'no_muni',
+                'name'       => 'no_muni',
+                'value'   =>  $numberofmuni->value_sum,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
     public function populate_countbrgy()
     {
         if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
@@ -377,7 +398,7 @@ class assessmentinfo extends CI_Controller {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
         {
             $prov_code = $_POST['prov_code'];
-            $incomeclass = $this->assessmentinfo_model->get_count_city($prov_code);
+            $incomeclass = $this->assessmentinfo_model->get_incomeclass($prov_code);
 
             $data = array(
                 'type'        => 'text',

@@ -126,10 +126,23 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
+
+                }
+
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countmuni'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
                     $('#groupmuni').html(data);
                 }
 
             });
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
                 async: false,
