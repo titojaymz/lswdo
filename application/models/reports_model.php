@@ -157,6 +157,27 @@ class reports_model extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    public function get_LSWDObudgetprevyearbyregionpersector($sector)
+    {
+        $sql = 'SELECT region_name,PSWDO,CSWDO,MSWDO,(PSWDO+CSWDO+MSWDO) as Total
+                FROM (select b.region_name,
+                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
+                sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
+                sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
+                from tbl_lswdo a
+                inner join lib_regions b
+                on a.region_code = b.region_code
+				inner join tbl_lswdo_budget d
+				on d.profile_id = a.profile_id
+                where a.deleted = 0 and d.sector_id = '.$sector.'
+                group by a.region_code
+                ) as c;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
     public function get_distributionofMSWDOFunctionalityregion()
     {
         $sql = 'SELECT e.region_name,

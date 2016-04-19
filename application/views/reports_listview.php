@@ -340,6 +340,12 @@
                                     <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetprevyearbyregion/') ?>"></i>Average MSWDO budget allocation (previous year) per sector,by region</a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/LSWDObudgetbyregionbysector/'.$sectorType2.'') ?>"></i>LSWDO budget allocation previous year per sector by region</a>
+                                </td>
+
+                            </tr>
                         </table>
                         <table class="table display table-bordered table-striped table-hover" width="100%">
                             <tr>
