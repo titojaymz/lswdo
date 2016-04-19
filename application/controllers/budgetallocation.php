@@ -38,7 +38,7 @@ class budgetallocation extends CI_Controller {
         }
 
         $budgetallocation_model = new budgetallocation_model();
-        $sector_id = $budgetallocation_model->get_sector();
+        $sectorDropDown = $budgetallocation_model->get_sector();
         $profile_id = $budgetallocation_model->getLSWDOprofile($id);
 
         $this->validateAddForm();
@@ -49,7 +49,7 @@ class budgetallocation extends CI_Controller {
             $this->load->view('nav');
             $this->load->view('sidebar');
 
-            $rpmb['sector_id'] = $sector_id;
+            $rpmb['sector_id'] = $sectorDropDown;
             $rpmb['form_message'] = $form_message;
             $this->load->view('budgetallocation_add',$rpmb);
             $this->load->view('footer');
@@ -66,13 +66,14 @@ class budgetallocation extends CI_Controller {
             $no_bene_served = $this->input->post('no_bene_served');
             $no_target_bene = $this->input->post('no_target_bene');
 
-            try {
-                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated,$budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene);
-
+            $checkDupli = $budgetallocation_model->checkDuplicate($id, $sector_id);
+            if($checkDupli->countProf == 0) {
+                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene);
                 if ($addResult) {
                     $form_message = 'Add Success!';
                     $this->load->view('header');
                     $this->load->view('nav');
+                    $this->load->view('sidebar');
                     $this->load->view('budgetallocation_add', array(
                         'sector_id' => $sector_id,
                         'budgetallocation_data' => $budgetallocation_model->getBudgetAllocation($id),
@@ -83,11 +84,17 @@ class budgetallocation extends CI_Controller {
                     ));
                     $this->load->view('footer');
                     $this->redirectIndex();
-                } else {
-                    throw new Exception('no data returned');
                 }
-            } catch(Exception $e){
-                var_dump($e->getMessage());
+            } else {
+                $sectorName = $budgetallocation_model->sectorName($sector_id);
+                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>'.$sectorName->sector_name.' already exist<a href="#" class="closed">&times;</a></div>';
+                $rpmb['sector_id'] = $sectorDropDown;
+                $rpmb['form_message'] = $form_message;
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+                $this->load->view('budgetallocation_add', $rpmb);
+                $this->load->view('footer');
             }
         }
     }
