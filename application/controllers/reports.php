@@ -5953,6 +5953,114 @@ class reports extends CI_Controller {
     }
 
 
+    //cmalvarez
+
+    public function pswdo_psb_rider($regionlist){
+
+        $pswdoscoreladder = $this->reports_model->get_pswdoscoreLadder($regionlist);
+
+
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+// Add some data
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Score of PSWDO, by ladderized scaling');
+        //autosize column
+
+
+        $objPHPExcel->getActiveSheet()->getStyle('A1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12);
+        $objPHPExcel->getActiveSheet()->mergeCells('A1:D2');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Province');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Score');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Bronze');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Silver');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Gold');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row2 = 7;
+        $col2 = 'A';
+        $previousvalue = '';
+        $rank = 0;
+        foreach ($pswdoscoreladder as $pswdoscoreladderdata):
+            $province = $pswdoscoreladderdata->prov_name;
+            $bronze = $pswdoscoreladderdata->Bronze;
+            $silver = $pswdoscoreladderdata->Silver;
+            $gold = $pswdoscoreladderdata->Gold;
+
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $province);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $bronze);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $silver);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $gold);
+
+            if($col2 == 'D'){$col2 = 'A';}
+            $row2++;
+        endforeach;
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->getActiveSheet()->setTitle('Score of PSWDO ladderized');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Score of PSWDO ladderized.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+
+    //cmalvarez
+
     public function populate_prov() {
         if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
 
@@ -5995,5 +6103,8 @@ class reports extends CI_Controller {
             $_SESSION['city'] = $_POST['citylist'];
         }
     }
+
+
+
 
 }

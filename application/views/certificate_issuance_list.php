@@ -75,7 +75,7 @@
                     //echo "<input type=\"text\" id=\"ref_id_cert\" name=\"ref_id_cert\" class=\"form-control\" value ='".$ref_id_cert."'/>";
                     $getCertList = $certification_model->getCertList($profile_id);
 
-                    echo "<a id ='btn_addCert' class='btn btn-lrg btn-primary' href= '../certificate_issuance_add/$profile_id'> Add Cert </a>";
+                    echo "<a id ='btn_addCert' class='btn btn-lrg btn-primary' href= '../../certificate_issuance_add/$profile_id'> Add Cert </a>";
                     echo "<br/>";
 
                     echo "<a id ='btn_addMonitoring' class='btn btn-lrg btn-primary' href= '../../../monitoring/monitoring_list/$profile_id'> Back to Monitoring List </a>";
@@ -118,7 +118,7 @@
                                     //echo $ref_id;
                                     //echo "monitoring_edit/".$ref_id.'/'.$profile_id;
 
-                                    echo "<a class='btn btn-sm btn-primary' href= 'certificate_issuance_edit/$ref_id_cert/'>
+                                    echo "<a class='btn btn-sm btn-primary' href= '../../certificate_issuance_edit/$ref_id_cert/'>
                                             <i class=\"fa fa-edit\"></i>Edit </a>";
                                     echo " </b></td>";
 
