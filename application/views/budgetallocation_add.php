@@ -116,7 +116,7 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                         </div>
-
+                        <?php echo $form_message; ?>
                         <div class="form-group">
                             <label for="sector_id">Sector:</label>
                             <select class="form-control" name="sector_id" id="sector_id">

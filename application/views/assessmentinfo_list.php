@@ -67,9 +67,15 @@
                             <tr>
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-xs btn-info" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id) ?>"><i class="plus"></i> View </a>
-                                        <a class="btn btn-sm btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i> </a>
-                                      ,<!--  <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/budgetallocation_add/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-tasks"></i> Budget Allocation </a>-->
+                                        <a class="btn btn-xs btn-info" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-plus"></i> View </a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a class="btn btn-xs btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i>Edit </a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/index/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-money"></i> Budget Allocation </a>
+                                    </div>
+                                    <div class="btn-group">
                                         <a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-tasks"></i> Indicators </a>
                                     </div>
 

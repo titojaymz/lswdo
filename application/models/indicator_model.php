@@ -452,7 +452,7 @@ class indicator_model extends CI_Model
         return  $query->row();
 //        return  $sql;
     }
-
+    //PSWDO, CSWDO,MSWDO
     public function getPart1($lguType){
         $unformat3 = "";
         foreach($this->getFirstIndicators() as $firstIndicators):
@@ -566,6 +566,120 @@ class indicator_model extends CI_Model
 //        return  $sql;
     }
 
+    //LSWDO
+    public function getPart1LSWDO($lguType){
+        $unformat3 = "";
+        foreach($this->getFirstIndicators() as $firstIndicators):
+            $unformat3 .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromFI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat = "";
+        foreach($this->getSecondCategoriesFromFI($lguType) as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id = 1';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id = 1';
+        }
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format3.','.$format2.') and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getPart2LSWDO($lguType){
+        $unformat = "";
+        foreach($this->getSecondIndicators() as $secondIndicators):
+            $unformat .= "'".$secondIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+        $unformat2 = "";
+        foreach($this->getCategoriesFromSI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        $unformat3 = "";
+        foreach($this->getSecondCategoriesFromSI($lguType) as $secondCat):
+            $unformat3 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format3 = substr($unformat3,0,-1);
+
+        $unformat4 = "";
+        foreach($this->getSecondCategoriesLowerFromSI($lguType) as $secondCat):
+            $unformat4 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format4 = substr($unformat4,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id = 1';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id = 1';
+        }
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.') and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getPart3LSWDO($lguType){
+        $unformat = "";
+        foreach($this->getThirdIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+        $unformat2 = "";
+        foreach($this->getCategoriesFromTI($lguType) as $secondCat):
+            $unformat2 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format2 = substr($unformat2,0,-1);
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id = 1';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id = 1';
+        }
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.','.$format2.') and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
+    public function getPart4LSWDO($lguType){
+
+        $fourth = $this->getFourthMotherIndicator()->indicator_id;
+        $unformat = "";
+        foreach($this->getFourthIndicators() as $firstIndicators):
+            $unformat .= "'".$firstIndicators->indicator_id."',";
+        endforeach;
+        $format = substr($unformat,0,-1);
+
+
+        if($lguType == 1){
+            $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id = 1';
+        } else {
+            $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id = 1';
+        }
+        $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
+                FROM (`lib_indicator_codes`)
+                WHERE `mother_indicator_id` IN ('.$format.',"'.$fourth.'") and '.$where2;
+        $query = $this->db->query($sql);
+        return  $query->result();
+//        return  $sql;
+    }
+
     public function getScorePart1($regCode,$provCode,$lguType){
 
         if($lguType != 0) {
@@ -622,6 +736,42 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
+    public function getNCperLSWDO($regCode,$provCode,$cityCode){
+
+            if ($regCode != 0) {
+                if ($provCode != 0) {
+                    $where2 = 'where  a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and b.prov_code = "' . $provCode . '"
+                    and b.city_code = "' . $cityCode . '"
+                    and a.compliance_indicator_id = 2';
+
+                } else {
+                    $where2 = 'where  a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and a.compliance_indicator_id = 2';
+                }
+            } else {
+                $where2 = 'where  a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and a.compliance_indicator_id = 2';
+            }
+
+
+        $sql = 'select
+        a.profile_id,a.indicator_id
+        from
+        tbl_lswdo_standard_indicators a
+        INNER JOIN tbl_lswdo b
+        ON a.profile_id = b.profile_id
+        '.$where2.'
+        group by a.indicator_id';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
 
     public function getFirstMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
@@ -644,7 +794,9 @@ class indicator_model extends CI_Model
 
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
 
@@ -663,7 +815,9 @@ class indicator_model extends CI_Model
 
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
@@ -694,7 +848,9 @@ class indicator_model extends CI_Model
 
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
 
@@ -712,7 +868,9 @@ class indicator_model extends CI_Model
         $format = substr($unformat,0,-1);
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
@@ -729,7 +887,9 @@ class indicator_model extends CI_Model
         $format = substr($unformat,0,-1);
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
@@ -746,7 +906,9 @@ class indicator_model extends CI_Model
         $format = substr($unformat,0,-1);
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
@@ -776,7 +938,9 @@ class indicator_model extends CI_Model
         $format = substr($unformat,0,-1);
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
@@ -793,7 +957,9 @@ class indicator_model extends CI_Model
         $format = substr($unformat,0,-1);
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1)';
-        } else {
+        } elseif($lguType == 4){
+            $where2 = 'lgu_type_id IN (0,1,2)';
+        } else  {
             $where2 = 'lgu_type_id IN (0,2)';
         }
         $sql = 'SELECT `indicator_id`, `mother_indicator_id`, `indicator_name`, indicator_checklist_id
