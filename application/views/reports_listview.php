@@ -307,6 +307,17 @@
                                     <a class="btn btn-light" href="<?php echo base_url('reports/mswdo_scoreladderized/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Score of MSWDO, by ladderized scaling by Region</a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/avePSWDObudgetprevyearbyregion/') ?>"></i>Average PSWDO budget allocation (previous year) per sector,by region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/aveCSWDObudgetprevyearbyregion/') ?>"></i>Average CSWDO budget allocation (previous year) per sector,by region</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetprevyearbyregion/') ?>"></i>Average MSWDO budget allocation (previous year) per sector,by region</a>
+                                </td>
+                            </tr>
                         </table>
                         <table class="table display table-bordered table-striped table-hover" width="100%">
                             <tr>

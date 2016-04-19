@@ -87,6 +87,76 @@ class reports_model extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    public function get_avePSWDObudgetprevyearbyregion()
+    {
+        $sql = 'select
+                c.region_name,
+                sum(if(sector_id = 1,budget_previous_year,0)) / sum(if(sector_id = 1,1,0)) as Children,
+                sum(if(sector_id = 2,a.budget_previous_year,0)) / sum(if(sector_id = 2,1,0)) as Youth,
+                sum(if(sector_id = 3,a.budget_previous_year,0)) / sum(if(sector_id = 3,1,0)) as Women,
+                sum(if(sector_id = 4,a.budget_previous_year,0)) / sum(if(sector_id = 4,1,0)) as FamilyandCommunity,
+                sum(if(sector_id = 5,a.budget_previous_year,0)) / sum(if(sector_id = 5,1,0))as SeniorCitizen,
+                sum(if(sector_id = 6,a.budget_previous_year,0)) / sum(if(sector_id = 6,1,0))as PWD,
+                sum(if(sector_id = 7,a.budget_previous_year,0)) / sum(if(sector_id = 7,1,0))as IDP
+                from tbl_lswdo_budget a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                INNER JOIN lib_regions c
+                on b.region_code = c.region_code
+                where b.lgu_type_id = 1 and b.deleted = 0
+                group by b.region_code;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_aveCSWDObudgetprevyearbyregion()
+    {
+        $sql = 'select
+                c.region_name,
+                sum(if(sector_id = 1,budget_previous_year,0)) / sum(if(sector_id = 1,1,0)) as Children,
+                sum(if(sector_id = 2,a.budget_previous_year,0)) / sum(if(sector_id = 2,1,0)) as Youth,
+                sum(if(sector_id = 3,a.budget_previous_year,0)) / sum(if(sector_id = 3,1,0)) as Women,
+                sum(if(sector_id = 4,a.budget_previous_year,0)) / sum(if(sector_id = 4,1,0)) as FamilyandCommunity,
+                sum(if(sector_id = 5,a.budget_previous_year,0)) / sum(if(sector_id = 5,1,0))as SeniorCitizen,
+                sum(if(sector_id = 6,a.budget_previous_year,0)) / sum(if(sector_id = 6,1,0))as PWD,
+                sum(if(sector_id = 7,a.budget_previous_year,0)) / sum(if(sector_id = 7,1,0))as IDP
+                from tbl_lswdo_budget a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                INNER JOIN lib_regions c
+                on b.region_code = c.region_code
+                where b.lgu_type_id = 2 and b.deleted = 0
+                group by b.region_code;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_aveMSWDObudgetprevyearbyregion()
+    {
+        $sql = 'select
+                c.region_name,
+                sum(if(sector_id = 1,budget_previous_year,0)) / sum(if(sector_id = 1,1,0)) as Children,
+                sum(if(sector_id = 2,a.budget_previous_year,0)) / sum(if(sector_id = 2,1,0)) as Youth,
+                sum(if(sector_id = 3,a.budget_previous_year,0)) / sum(if(sector_id = 3,1,0)) as Women,
+                sum(if(sector_id = 4,a.budget_previous_year,0)) / sum(if(sector_id = 4,1,0)) as FamilyandCommunity,
+                sum(if(sector_id = 5,a.budget_previous_year,0)) / sum(if(sector_id = 5,1,0))as SeniorCitizen,
+                sum(if(sector_id = 6,a.budget_previous_year,0)) / sum(if(sector_id = 6,1,0))as PWD,
+                sum(if(sector_id = 7,a.budget_previous_year,0)) / sum(if(sector_id = 7,1,0))as IDP
+                from tbl_lswdo_budget a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                INNER JOIN lib_regions c
+                on b.region_code = c.region_code
+                where b.lgu_type_id = 3 and b.deleted = 0
+                group by b.region_code;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
     public function get_distributionofMSWDOFunctionalityregion()
     {
         $sql = 'SELECT e.region_name,
