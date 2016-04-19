@@ -52,7 +52,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    Monitoring Details
+                    Certification Details
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
                         <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
@@ -63,12 +63,13 @@
 
                         <?php
 
-                        $ref_id = $this->uri->segment('3'); //ref_id for tbl_lswdo_certificate; ref_cert_id for lswdo_monitoring
+                        $ref_id = $this->uri->segment('4'); //ref_id for tbl_lswdo_certificate; ref_cert_id for lswdo_monitoring
+                        $profile_id = $this->uri->segment('3'); //profile_id
                         //$ref_id = $this->uri->segment('4'); //$_GET['ref_cert_id']
-                        echo "<input type =\"text\" id=\"ref_cert_id\" name=\"ref_cert_id\" type=\"text\" value=\"$ref_id\"/>";
+                        echo "<input type =\"hidden\" id=\"ref_cert_id\" name=\"ref_cert_id\" type=\"text\" value=\"$ref_id\"/>";
 
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                        echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
+                        echo form_open("certificate_issuance/certificate_issuance_list/$ref_id/", $attributes);
 
                         ?>
                         <input id="btn_back" name="btn_back" type="submit" class="btn btn-primary" value="Back To List"/>
@@ -80,7 +81,7 @@
                     </div>
                     <?php
                     $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
-                    echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
+                    echo form_open("certificate_issuance/certificate_issuance_list/$ref_id/", $attributes);
                     //echo form_open("certificate_issuance/certificate_issuance_list", $attributes);
 
 
@@ -92,11 +93,11 @@
                         //$getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($ref_id);
                         //$getCertListByID = $certification_model->getCertListByID($ref_id);
                         //print_r($getCertListByID);
-                        echo $certListByID->ref_id;
+                        //echo $certListByID->ref_id;
 
-                        echo "<input type=\"text\" id=\"month_valid\" name=\"month_valid\" class=\"form-control\" value = '".$certListByID->month_valid."' placeholder=\"month_valid\" />";
-                        echo "<input type=\"text\" id=\"day_valid\" name=\"day_valid\" class=\"form-control\" value = '".$certListByID->day_valid."' placeholder=\"day_valid\" />";
-                        echo "<input type=\"text\" id=\"year_valid\" name=\"year_valid\" class=\"form-control\" value = '".$certListByID->year_valid."' placeholder=\"year_valid\" />";
+                        echo "<input type=\"hidden\" id=\"month_valid\" name=\"month_valid\" class=\"form-control\" value = '".$certListByID->month_valid."' placeholder=\"month_valid\" />";
+                        echo "<input type=\"hidden\" id=\"day_valid\" name=\"day_valid\" class=\"form-control\" value = '".$certListByID->day_valid."' placeholder=\"day_valid\" />";
+                        echo "<input type=\"hidden\" id=\"year_valid\" name=\"year_valid\" class=\"form-control\" value = '".$certListByID->year_valid."' placeholder=\"year_valid\" />";
 
                         echo "<tr>";
                         echo "<td align=\"center\"><b>Certificate No</b></td>";
@@ -244,7 +245,7 @@
 					WHERE
 					ref_id = "'.$ref_id.'"
 				    ';
-                         echo $sql;
+                         //echo $sql;
 
 
                         ?>

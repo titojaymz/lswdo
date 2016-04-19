@@ -118,7 +118,7 @@
                                     //echo $ref_id;
                                     //echo "monitoring_edit/".$ref_id.'/'.$profile_id;
 
-                                    echo "<a class='btn btn-sm btn-primary' href= '../../certificate_issuance_edit/$ref_id_cert/'>
+                                    echo "<a class='btn btn-sm btn-primary' href= '../../certificate_issuance_edit/$ref_id_cert/$profile_id/'>
                                             <i class=\"fa fa-edit\"></i>Edit </a>";
                                     echo " </b></td>";
 
