@@ -21,8 +21,14 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "none";
             document.getElementById("groupLGUCity").style.visibility = "hidden";
-            //    document.getElementById("groupLGUBrgy").style.display = "none";
-            //     document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+            document.getElementById("groupLGUBrgy").style.display = "none";
+            document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+            document.getElementById("groupCity").style.display = "block";
+            document.getElementById("groupCity").style.visibility = "visible";
+            document.getElementById("groupmuni").style.display = "block";
+            document.getElementById("groupmuni").style.visibility = "visible";
+            document.getElementById("groupbrgy").style.display = "none";
+            document.getElementById("groupbrgy").style.visibility = "hidden";
         }
         else
         {
@@ -32,8 +38,43 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "block";
             document.getElementById("groupLGUCity").style.visibility = "visible";
-            //    document.getElementById("groupLGUBrgy").style.display = "block";
-            //    document.getElementById("groupLGUBrgy").style.visibility = "visible";
+            document.getElementById("groupLGUBrgy").style.display = "block";
+            document.getElementById("groupLGUBrgy").style.visibility = "visible";
+            document.getElementById("groupCity").style.display = "none";
+            document.getElementById("groupCity").style.visibility = "hidden";
+            document.getElementById("groupmuni").style.display = "none";
+            document.getElementById("groupmuni").style.visibility = "hidden";
+            document.getElementById("groupbrgy").style.display = "block";
+            document.getElementById("groupbrgy").style.visibility = "visible";
+        }
+    }
+
+
+    function GroupStatus() {
+        var e = document.getElementById("application_type_id").value;
+        if (e == 0)
+        {
+            document.getElementById("group_new").style.display = "none";
+            document.getElementById("group_new").style.visibility = "hidden";
+            document.getElementById("group_renewal").style.display = "none";
+            document.getElementById("group_renewal").style.visibility = "hidden";
+
+        }
+        else if (e==1)
+        {
+            document.getElementById("group_new").style.display = "block";
+            document.getElementById("group_new").style.visibility = "visible";
+            document.getElementById("group_renewal").style.display = "none";
+            document.getElementById("group_renewal").style.visibility = "hidden";
+
+
+        }
+        else {
+            document.getElementById("group_new").style.display = "none";
+            document.getElementById("group_new").style.visibility = "hidden";
+            document.getElementById("group_renewal").style.display = "block";
+            document.getElementById("group_renewal").style.visibility = "visible";
+
         }
     }
 
@@ -69,22 +110,22 @@ if (!$this->session->userdata('user_id')){
 
     }
 
+
     function get_cities() {
         var prov_code = $('#provlist').val();
+        var lgu_type = $('#lgu_type_id').val();
         var cityCode = $('#city_pass').val();
 
-        if(prov_code > 0) {
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#div_citylist').html(data);
-                    $('#citylist').val(cityCode);
-                }
-            });
+        if(lgu_type == 2 && prov_code > 0) { $.ajax({
+            url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
+            async: false,
+            type: "POST",
+            data: "prov_code="+prov_code,
+            dataType: "html",
+            success: function(data) {
+                $('#div_citylist').html(data);
+            }
+        });
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
@@ -94,10 +135,23 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
+
+                }
+
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countmuni'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
                     $('#groupmuni').html(data);
                 }
 
             });
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
                 async: false,
@@ -131,10 +185,28 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-        } else {
+        }
+        else if (lgu_type == 3 && prov_code > 0)
+        {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#div_citylist').html(data);
+                }
+            });
+//
+        }
+        else
+        {
             $('#citylist option:gt(0)').remove().end();
         }
+
     }
+
     function get_brgy() {
         var city_code = $('#citylist').val();
         if(city_code > 0) {
@@ -153,6 +225,7 @@ if (!$this->session->userdata('user_id')){
             $('#citylist option:gt(0)').remove().end();
         }
     }
+
 
 </script>
 
@@ -190,8 +263,8 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="application_type_id">Application Type: </label>
-                            <select name="application_type_id" id="application_type_id" class="form-control"">
+                            <label for="application_type_id">Status of Application: </label>
+                            <select name="application_type_id" id="application_type_id" class="form-control" onChange="GroupStatus();">
                             <option value="0">-Please select-</option>
                             <?php foreach($application as $applications): ?>
                                 <option value="<?php echo $applications->application_type_id; ?>"
@@ -207,8 +280,10 @@ if (!$this->session->userdata('user_id')){
                             </select>
                         </div>
 
+                        <div id="group_new">
+
                         <div class="form-group">
-                            <label class="control-label">LSWDO Type: </label>
+                            <label class="control-label">Type of LSWDO: </label>
 
                             <select name="lgu_type_id" id="lgu_type_id" class="form-control" onchange="askLGU();">
                                 <option select value="0">-Please select-</option>
@@ -286,13 +361,13 @@ if (!$this->session->userdata('user_id')){
                                 <div class="form-group form-group-sm">
                                     <label for="citylist" class="col-lg-2 control-label">City: </label>
                                     <div id="div_citylist" class="col-lg-8">
-                                        <select id="citylist" name="citylist" class="form-control">
+                                        <select id="citylist" name="citylist" class="form-control" onchange="get_brgy();">
                                             <?php if($assessmentinfo_details->city_code or $assessmentinfo_details->prov_code) {
                                                 ?>
                                                 <option value="0">Choose City</option>
                                                 <?php
                                                 foreach ($citylist as $cityselect) { ?>
-                                                    <option value="<?php echo $cityselect->city_name; ?>"
+                                                    <option value="<?php echo $cityselect->city_code; ?>"
                                                         <?php
                                                         if ($cityselect->city_code == $assessmentinfo_details->city_code ) {
                                                             echo " selected";
@@ -316,8 +391,7 @@ if (!$this->session->userdata('user_id')){
                         <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_name ?>" >
                         <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_name ?>" >
 
-
-                        <div class="form-group">
+                            <div class="form-group">
                             <label for="no_cities">No. of Cities:</label>
                             <div id="groupCity">
                                 <div class="control-group">
@@ -342,7 +416,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="groupbrgy">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="no_brgy" value="" placeholder="No. of Barangays" readonly>
+                                        <input class="form-control" type="text" id="no_brgy" name="no_brgy" value="" placeholder="No. of Barangays" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +427,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="income_class">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="income_class" value="" placeholder="Income Class" readonly>
+                                        <input class="form-control" type="text" id="income_class" name="income_class" value="" placeholder="Income Class" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -364,7 +438,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="total_pop">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="total_pop" value="" placeholder="Total Population" readonly>
+                                        <input class="form-control" type="text" id="total_pop" name="total_pop" value="" placeholder="Total Population" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -375,7 +449,7 @@ if (!$this->session->userdata('user_id')){
                             <div id="total_poor">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
+                                        <input class="form-control" type="text" id="total_poor" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -421,6 +495,13 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO" readonly>
                         </div>
 
+                        </div>
+                        <div id="group_renewal">
+
+
+
+                        </div>
+                </div>
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
