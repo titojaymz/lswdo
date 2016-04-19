@@ -346,7 +346,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $get_countcity = "
         SELECT
          city_name,
-          count(city_code) AS value_sum,
+          count(city_code) AS value_sum
         FROM
           lib_cities
         WHERE
@@ -362,7 +362,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $get_count_muni = "
         SELECT
          city_name,
-          count(city_code) AS value_sum,
+          count(city_code) AS value_sum
         FROM
           lib_cities
         WHERE
