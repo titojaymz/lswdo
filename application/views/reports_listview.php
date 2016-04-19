@@ -66,19 +66,23 @@
             document.getElementById("groupLGUregion").style.display = "block";
             document.getElementById("groupLGUProvince").style.display = "none";
             document.getElementById("groupLGUCity").style.display = "none";
+            document.getElementById("groupSectorType").style.display = "none";
 
         } else if(lguType == 2 || lguType == 3){
             document.getElementById("groupLGUregion").style.display = "block";
             document.getElementById("groupLGUProvince").style.display = "block";
             document.getElementById("groupLGUCity").style.display = "none";
+            document.getElementById("groupSectorType").style.display = "none";
         } else if(lguType == 4) {
             document.getElementById("groupLGUregion").style.display = "block";
             document.getElementById("groupLGUProvince").style.display = "block";
             document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupSectorType").style.display = "block";
         } else {
             document.getElementById("groupLGUregion").style.display = "none";
             document.getElementById("groupLGUProvince").style.display = "none";
             document.getElementById("groupLGUCity").style.display = "none";
+            document.getElementById("groupSectorType").style.display = "none";
         }
 
     }
@@ -201,6 +205,24 @@
                                 </div>
                             </div>
                             <!--End City-->
+                            <!--Start Sector-->
+                            <div id="groupSectorType" style="display: none">
+                                <div class="form-group form-group-sm">
+                                    <label for="sectorlist" class="col-lg-2 control-label">Sector</label>
+                                    <div id="div_sectorlist" class="col-lg-8">
+                                        <select id="sectorType" name = "sectorType" class="form-control"">
+                                            <option value = "0">Please Select</option>
+                                            <option value = "1">Childred</option>
+                                            <option value = "2">Youth</option>
+                                            <option value = "3">Women</option>
+                                            <option value = "4">Family and Community</option>
+                                            <option value = "5">Senior Citizen</option>
+                                            <option value = "6">PWD</option>
+                                            <option value = "7">IDP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
                             <input type = 'hidden' id ='prov_pass' name = 'prov_pass' class="form-control">
                             <input type = 'hidden' id ='city_pass' name = 'city_pass' class="form-control">

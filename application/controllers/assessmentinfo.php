@@ -311,7 +311,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }

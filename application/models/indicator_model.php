@@ -762,11 +762,13 @@ class indicator_model extends CI_Model
 
 
         $sql = 'select
-        a.profile_id,a.indicator_id
+        a.profile_id,a.indicator_id,c.indicator_name
         from
         tbl_lswdo_standard_indicators a
         INNER JOIN tbl_lswdo b
         ON a.profile_id = b.profile_id
+        INNER JOIN lib_indicator_codes c
+        ON a.indicator_id = c.indicator_id
         '.$where2.'
         group by a.indicator_id';
         $query = $this->db->query($sql);

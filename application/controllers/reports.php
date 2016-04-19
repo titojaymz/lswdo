@@ -4752,14 +4752,7 @@ class reports extends CI_Controller {
 
         $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Non-Compliant');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
-            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Percent');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
-            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
 
 
 //Start Editing
@@ -4775,7 +4768,7 @@ class reports extends CI_Controller {
                 $indicatorID = $arr[0];
                 foreach ($getScorePart1 as $scorePart1):
                     if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
-                        $indicator_id = $firstPartIndicator->indicator_id;
+                        $indicator_id = $firstPartIndicator->indicator_name;
 
                         $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
                         if ($col2 == 'B') {
@@ -4797,7 +4790,7 @@ class reports extends CI_Controller {
                 $indicatorID = $arr[0];
                 foreach ($getScorePart1 as $scorePart1):
                     if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
-                        $indicator_id = $secondPartIndicator->indicator_id;
+                        $indicator_id = $secondPartIndicator->indicator_name;
 
                         $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
                         if ($col2 == 'B') {
@@ -4819,7 +4812,7 @@ class reports extends CI_Controller {
                 $indicatorID = $arr[0];
                 foreach ($getScorePart1 as $scorePart1):
                     if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
-                        $indicator_id = $thirdPartIndicator->indicator_id;
+                        $indicator_id = $thirdPartIndicator->indicator_name;
 
                         $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
                         if ($col2 == 'B') {
@@ -4841,7 +4834,7 @@ class reports extends CI_Controller {
                 $indicatorID = $arr[0];
                 foreach ($getScorePart1 as $scorePart1):
                     if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
-                        $indicator_id = $fourthPartIndicator->indicator_id;
+                        $indicator_id = $fourthPartIndicator->indicator_name;
 
                         $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
                         if ($col2 == 'B') {
@@ -4862,7 +4855,7 @@ class reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getHighestRow()
         )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 // Rename worksheet (worksheet, not filename)
-        $objPHPExcel->setActiveSheetIndex(0)->setTitle('Non-Compliant Indicator');
+        $objPHPExcel->setActiveSheetIndex(0)->setTitle('LSWDO-NonCompliantIndicator');
         // Add new sheet
 
 
