@@ -446,7 +446,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     {
         $get_total_poor = "
          SELECT
-         lib_provinces.income_class as total_poor
+         lib_provinces.total_poor as total_poor
         FROM
           lib_provinces
         WHERE
@@ -458,33 +458,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_total_poor, $prov_code)->row();
     }
 
-/*
-    public function getExistingRecords($swdo_name) {
-        $get_records = "
-        SELECT
-        lib_application_type.application_type_name,
-        lib_lgu_type.lgu_type_name,
-        tbl_lswdo.region_code,
-        tbl_lswdo.prov_code,
-        tbl_lswdo.city_code,
-        tbl_lswdo.office_address,
-        tbl_lswdo.swdo_name,
-        tbl_lswdo.designation,
-        tbl_lswdo.contact_no,
-        tbl_lswdo.email,
-        tbl_lswdo.website,
-        tbl_lswdo.total_ira,
-        tbl_lswdo.total_budget_lswdo
-        FROM
-        tbl_lswdo
-        Inner Join lib_application_type ON tbl_lswdo.application_type_id = lib_application_type.application_type_id
-        Inner Join lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
-        WHERE
-        tbl_lswdo.swdo_name = ?
-        ORDER BY
-        tbl_lswdo.swdo_name
-        ";
-*/
+
  public function get_AssessmentRecord()
 {
     $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
