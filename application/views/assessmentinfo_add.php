@@ -446,7 +446,7 @@ else
 
 
                                 <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-
+</br></br>
 
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
                                 <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
@@ -465,7 +465,6 @@ else
                                         <option value="<?php echo $swdos->swdo_name ?>"><?php echo $swdos->swdo_name ?></option>
                                     <?php endforeach ?>
                                 </select>
-
 
 
                             </div>

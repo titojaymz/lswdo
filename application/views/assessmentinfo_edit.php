@@ -124,6 +124,7 @@ if (!$this->session->userdata('user_id')){
             dataType: "html",
             success: function(data) {
                 $('#div_citylist').html(data);
+                $('#citylist').val(cityCode);
             }
         });
 
@@ -222,7 +223,7 @@ if (!$this->session->userdata('user_id')){
             });
 
         } else {
-            $('#citylist option:gt(0)').remove().end();
+            $('#brgylist option:gt(0)').remove().end();
         }
     }
 
@@ -355,7 +356,6 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                                 </div>
                             </div>
-
 
                             <div id="groupLGUCity">
                                 <div class="form-group form-group-sm">

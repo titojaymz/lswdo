@@ -139,6 +139,11 @@ echo validation_errors();
                     </div>
 
                     <div class="form-group">
+                        <label for="budget_previous_year">Budget for the Previous Year:</label>
+                        <input class="form-control" type="text" name="budget_previous_year" value="<?php echo $budgetallocation_details->budget_previous_year ?>" placeholder="Budget for the Previous Year">
+                    </div>
+
+                    <div class="form-group">
                         <label for="budget_present_year">Budget for the Present Year:</label>
                         <input class="form-control" type="text" name="budget_present_year" value="<?php echo $budgetallocation_details->budget_present_year ?>" placeholder="Budget for the Present Year">
                     </div>
