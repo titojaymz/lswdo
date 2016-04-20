@@ -29,6 +29,7 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('footer');
     }
 
+
     public function addAssessmentinfo()
     {
         if (!$this->session->userdata('user_id'))
@@ -84,11 +85,9 @@ class assessmentinfo extends CI_Controller {
             $total_budget_lswdo = $this->input->post('total_budget_lswdo');
             $created_by = $this->session->userdata('user_id');
             $date_created = 'NOW()';
-            $modified_by= $this->session->userdata('user_id');
-            $date_modified = 'NOW()';
 
 
-            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created,$modified_by,$date_modified);
+            $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created);
             if ($addResult){
 
                 $this->init_rpmb_session();
@@ -116,16 +115,9 @@ class assessmentinfo extends CI_Controller {
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex($addResult);
+                $this->redirectIndex();
             }
         }
-    }
-
-    public function redirectIndex($addResult)
-    {
-        $page = base_url('budgetallocation/addBudgetAllocation/'.$addResult);
-//        $sec = "1";
-        header("Location: $page");
     }
 
 
@@ -211,6 +203,7 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+
     public function assessmentinfo_masterview($id = 0,$form_message = '')
     {
         if (!$this->session->userdata('user_id'))
@@ -252,6 +245,7 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('footer');
     }
 
+
     public function delete_assessmentinfo($id = 0)
     {
 
@@ -278,6 +272,7 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+
     public function populate_prov() {
         if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
 
@@ -295,6 +290,7 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+
     public function populate_cities() {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
             $prov_code = $_POST['prov_code'];
@@ -309,6 +305,8 @@ class assessmentinfo extends CI_Controller {
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
+
+
     public function populate_cities1() {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
             $prov_code = $_POST['prov_code'];
@@ -323,6 +321,7 @@ class assessmentinfo extends CI_Controller {
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
+
 
     public function populate_countcity()
     {
@@ -345,6 +344,7 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+
     public function populate_countmuni()
     {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
@@ -365,6 +365,7 @@ class assessmentinfo extends CI_Controller {
 
         }
     }
+
 
     public function populate_countbrgy()
     {
@@ -387,6 +388,7 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+
     public function populate_incomeclass()
     {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
@@ -407,6 +409,7 @@ class assessmentinfo extends CI_Controller {
 
         }
     }
+
 
     public function populate_total_pop()
     {
@@ -429,6 +432,7 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+
     public function populate_total_poor()
     {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
@@ -449,6 +453,7 @@ class assessmentinfo extends CI_Controller {
 
         }
     }
+
 
     public function init_rpmb_session() {
 
@@ -482,6 +487,7 @@ class assessmentinfo extends CI_Controller {
         return $this->form_validation->set_rules($config);
     }
 
+
     protected function validateAddForm()
     {
         $config = array(
@@ -501,25 +507,29 @@ class assessmentinfo extends CI_Controller {
         return $this->form_validation->set_rules($config);
     }
 
+
     public function listFields()
     {
         $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
-    /*
-        public function redirectIndex()
-        {
+
+
+    public function redirectIndex()
+    {
             $page = base_url();
             $sec = "1";
             header("Refresh: $sec; url=$page");
-        }
-    */
+    }
+
+
     public function refreshCurPage()
     {
         $page = current_url();
         $sec = "1";
         header("Refresh: $sec; url=$page");
     }
+
 
     public function redirectMasterPage($id,$sec = 1)
     {

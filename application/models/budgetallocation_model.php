@@ -103,6 +103,39 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
+    public function budgetallocation_masterview($id = 0,$form_message = '')
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $budgetallocation_model = new budgetallocation_model();
+        $BudgetDetails = $budgetallocation_model->getBudgetAllocationByID($id);
+        if ($BudgetDetails){
+            $form_message = $form_message;
+            $data = array(
+                'profile_id'                 =>      $BudgetDetails->profile_id,
+                'sector_id'                  =>      $BudgetDetails->sector_name,
+                'year_indicated'             =>      $BudgetDetails->year_indicated,
+                'budget_present_year'        =>      $BudgetDetails->budget_present_year,
+                'utilization'                =>      $BudgetDetails->utilization,
+                'no_bene_served'             =>      $BudgetDetails->no_bene_served,
+                'no_target_bene'             =>      $BudgetDetails->no_target_bene
+
+            );
+        } else {
+            $form_message = 'No records found!';
+            $data = array(
+                'form_message'      =>      $form_message
+            );
+        }
+        $this->load->view('header');
+        $this->load->view('nav');
+        $this->load->view('sidebar');
+        $this->load->view('budgetallocation_masterview',$data);
+        $this->load->view('footer');
+    }
 
     public function deleteBudgetAllocation($id = 0)
     {

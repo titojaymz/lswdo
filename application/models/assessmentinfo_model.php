@@ -97,8 +97,6 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
                           "' . $total_ira . '",
                           "' . $total_budget_lswdo . '",
                           "' . $created_by . '",
-                          Now(),
-                          "' . $modified_by . '",
                           Now()
                           )');
 
@@ -141,6 +139,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $this->db->close();
     }
 
+
     public function updateAssessmentinfo($id, $application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo, $modified_by, $date_modified)
     {
         $this->db->trans_begin();
@@ -174,6 +173,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         }
         $this->db->close();
     }
+
 
     public function deleteAssessmentinfo($id = 0)
     {
@@ -219,26 +219,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $this->db->close();
     }
 
-      /*
-            public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
-                $region_access = $user_region;
-                $this->db->select('t1.profile_id, t2.application_type_id, t1.office_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
-                $this->db->from('tbl_lswdo AS t1');
-                $this->db->join('lib_application_type t2','t1.application_type_id = t2.application_type_id','inner');
-                if ($user_region != 0) {
-                    $this->db->where('t1.DELETED ="0" and t1.region ="' . $region_access . '"');
-                } else {
-                    $this->db->where('t1.DELETED ="0"');
-                }
-                $query = $this->db->get();
 
-                if ($query->num_rows() > 0) {
-                    return $query->result();
-                }else{
-                    return $query->result();
-                }
-            }
-    */
     public function get_lgutype()
     {
         $get_lgutype = "
@@ -255,6 +236,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
         return $this->db->query($get_lgutype)->result();
     }
+
 
     public function get_regions()
     {
@@ -273,6 +255,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_regions)->result();
     }
 
+
     public function get_provinces($region_code)
     {
         $get_prov = "
@@ -289,6 +272,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
         return $this->db->query($get_prov, $region_code)->result();
     }
+
 
     public function get_cities($prov_code)
     {
@@ -308,6 +292,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_cities, $prov_code)->result();
     }
 
+
     public function get_cities1($prov_code)
     {
         $get_cities = "
@@ -326,6 +311,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_cities, $prov_code)->result();
     }
 
+
     public function get_brgy($city_code)
     {
         $get_brgy = "
@@ -343,6 +329,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_brgy, $city_code)->result();
     }
 
+
     public function get_count_city($prov_code)
     {
         $get_countcity = "
@@ -358,6 +345,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
         return $this->db->query($get_countcity, $prov_code)->row();
     }
+
 
     public function get_count_muni($prov_code)
     {
@@ -375,6 +363,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_count_muni, $prov_code)->row();
     }
 
+
     public function get_incomeclass($prov_code)
     {
         $get_incomeclass = "
@@ -388,6 +377,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
         return $this->db->query($get_incomeclass, $prov_code)->row();
     }
+
 
     public function get_count_brgy($city_code)
     {
@@ -407,25 +397,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_countbrgy, $city_code)->row();
     }
 
-    /*
-        public function get_incomeclass($prov_code){
-            $get_incomeclass = "
-            SELECT
-             lib_cities.income_class as income_class,
-            lib_provinces.prov_code as prov_code
-            FROM
-              lib_cities
-            INNER JOIN
-            lib_provinces
-            ON lib_cities.prov_code = lib_provinces.prov_code
-            WHERE
-              lib_provinces.prov_code = ?
-            ORDER BY
-              lib_cities.city_code
-            ";
-            return $this->db->query($get_incomeclass,$prov_code)->row();
-        }
-    */
+
     public function get_total_pop($prov_code)
     {
         $get_total_pop = "
@@ -441,6 +413,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
         return $this->db->query($get_total_pop, $prov_code)->row();
     }
+
 
     public function get_total_poor($prov_code)
     {
@@ -459,8 +432,8 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     }
 
 
- public function get_AssessmentRecord()
-{
+    public function get_AssessmentRecord()
+    {
     $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
     if ($query->num_rows() > 0){
         return $query->result();
@@ -468,6 +441,6 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return FALSE;
     }
     $this->db->close();
-}
+    }
 
 }
