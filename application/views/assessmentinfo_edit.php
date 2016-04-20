@@ -258,8 +258,8 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="profile_id">Profile ID:</label>
-                            <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
-                            <input class="form-control" type="hidden" name="profile_id" id="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" >
+
+                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" disabled>
                         </div>
 
                         <div class="form-group">
@@ -343,7 +343,7 @@ if (!$this->session->userdata('user_id')){
                                                             echo " selected";
                                                         } ?>
                                                         >
-                                                        <?php echo $provselect->prov_code; ?></option>
+                                                        <?php echo $provselect->prov_name; ?></option>
                                                     <?php
                                                 }
                                             } else {
@@ -373,7 +373,7 @@ if (!$this->session->userdata('user_id')){
                                                             echo " selected";
                                                         } ?>
                                                         >
-                                                        <?php echo $cityselect->city_code; ?></option>
+                                                        <?php echo $cityselect->city_name; ?></option>
                                                     <?php
                                                 }
                                             } else {
