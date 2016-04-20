@@ -28,13 +28,13 @@
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
                             <tr>
-                                <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                                <td align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
                                 <td align = "center"><b>Compliance</b></td>
-                                <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
+                                <td align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
                                 <td align = "center"><b>Compliance</b></td>
-                                <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
+                                <td align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
                                 <td align = "center"><b>Compliance</b></td>
-                                <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
+                                <td align = "center"><b>Specific Findings and Recommendation</b></td>
                             </tr>
                             <tr>
                                 <td align="center" colspan = "8">
@@ -85,7 +85,7 @@
                                         <?php $firsts = $arr[0];?>
                                         <?php if ($a == $firsts) { ?><!-- $a is IA1, IA2  tapos ung $firsts eto dn ung IA1, etc pero kinukuha to sa indicator_id-->
                                             <?php if($iteem[$checklist] == 0){?> <!-- so ung checklist dito ay para kunin ung value ng indicator checklist sa newArray ang value nian is $iteem[0] which is ung $iteem[0] sa newArray ay ung indicator_checklist_id sa db  -->
-                                                        <td colspan = "12"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
+                                                        <td colspan = "7"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
                                                     </tr>
                                                     <tr>
                                                     <?php foreach($secondNewArray as $b => $secondItems): ?> <!-- array for secondNewArray for child lower lower indicator -->
@@ -97,7 +97,7 @@
 
                                                             <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                             <?php $int2 = intval(preg_replace('/[^0-9]+/', '', $b), 10); ?>
-                                                            <td><?php echo $int2 ?></td>
+
                                                             <?php $bronze2 = $b.'-'.$secondItems[$checklist2]; ?>
                                                             <?php $silver2 = $b.'-'.$secondItems[$checklist2+2]; ?>
                                                             <?php $gold2 = $b.'-'.$secondItems[$checklist2+4]; ?>
@@ -112,7 +112,7 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                        <?php if($counting2 > 3){ ?> <!-- kung ma detect nia sa counting2 is greater than 3 ibig sbhn ay meron Silver medal. -->
                                                                        <td><?php echo $secondItems[$number2 + 2]; ?></td> <!-- bkt may plus 2 ung sa $number2 inassume ko na lahat ng even number is indicator name-->
@@ -125,7 +125,10 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                    <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                      <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $secondItems[$number2 + 4]; ?></td>
@@ -138,7 +141,10 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                    <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                     <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($bronze2 == $row->indicator_id){ ?>
@@ -180,7 +186,6 @@
                                                     <?php $bronze = $a.'-'.$iteem[$checklist]; ?>
                                                     <?php $silver = $a.'-'.$iteem[$checklist+2]; ?>
                                                     <?php $gold = $a.'-'.$iteem[$checklist+4]; ?>
-                                                    <td><?php echo $int1 ?></td>
                                                     <?php if($counting > 1){ ?>
                                                         <td><?php echo $iteem[$number]; ?></td>
                                                             <?php foreach($getLSWDO as $key=>$row): ?>
@@ -205,7 +210,10 @@
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
-                                                                <?php } ?>
+                                                                <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                             <?php endforeach ?>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
@@ -218,7 +226,10 @@
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
-                                                                <?php } ?>
+                                                                <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                             <?php endforeach ?>
                                                               <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($bronze == $row->indicator_id){ ?>

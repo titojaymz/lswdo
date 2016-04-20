@@ -35,13 +35,13 @@
                         <?php $unformat = ""; ?>
                         <table class="table table-bordered table-striped">
                             <tr>
-                                <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                                <td align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
                                 <td align = "center"><b>Compliance</b></td>
-                                <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
+                                <td align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
                                 <td align = "center"><b>Compliance</b></td>
-                                <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
+                                <td align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
                                 <td align = "center"><b>Compliance</b></td>
-                                <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
+                                <td align = "center"><b>Specific Findings and Recommendation</b></td>
                             </tr>
                             <tr>
                                 <td align="center" colspan = "8">
@@ -116,6 +116,9 @@
                                                                 <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                     <td align="center"><b>N/A</b></td>
                                                                 <?php } ?>
+                                                            <?php } else { ?>
+                                                                <td align="center"><b></b></td>
+                                                                <?php break; ?>
                                                             <?php } ?>
                                                         <?php endforeach ?>
                                                         <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
@@ -129,6 +132,9 @@
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
+                                                                <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
                                                                 <?php } ?>
                                                             <?php endforeach ?>
                                                             <?php foreach($getLSWDO as $key=>$row): ?>
@@ -194,7 +200,10 @@
                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                             <td align="center"><b>N/A</b></td>
                                                         <?php } ?>
-                                                    <?php } ?>
+                            <?php } else { ?>
+                            <td align="center"><b></b></td>
+                            <?php break; ?>
+                            <?php } ?>
                                                 <?php endforeach ?>
                                                 <?php if($counting > 5){ ?>
                                                     <td><?php echo $iteem[$number + 4]; ?></td>
@@ -207,7 +216,10 @@
                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                 <td align="center"><b>N/A</b></td>
                                                             <?php } ?>
-                                                        <?php } ?>
+                            <?php } else { ?>
+                            <td align="center"><b></b></td>
+                            <?php break; ?>
+                            <?php } ?>
                                                     <?php endforeach ?>
                                                     <?php foreach($getLSWDO as $key=>$row): ?>
                                                         <?php if($bronze == $row->indicator_id){ ?>

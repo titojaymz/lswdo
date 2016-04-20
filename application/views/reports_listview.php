@@ -104,131 +104,151 @@
 
                             <?php echo form_open('reports/viewTable',array('class'=>'form-horizontal')) ?>
                             <!--LGU Type-->
-                            <div id="groupLGUType">
-                                <div class="form-group form-group-sm">
-                                    <label for="lgulist" class="col-lg-2 control-label">LGU Type</label>
-                                    <div id="div_lgulist" class="col-lg-8">
-                                        <select id="LGUtype" name = "LGUtype" class="form-control" onchange = "get_lguType(this.value);">
-                                            <option value = "0">Please Select</option>
-                                            <option value = "1">PSWDO</option>
-                                            <option value = "2">CSWDO</option>
-                                            <option value = "3">MSWDO</option>
-                                            <option value = "4">LSWDO</option>
-                                        </select>
+                            <tr>
+                                <td><div id="groupLGUType">
+                                        <div class="form-group form-group-sm">
+                                            <label for="lgulist" class="col-lg-2 control-label">LGU Type</label>
+                                            <div id="div_lgulist" class="col-lg-8">
+                                                <select id="LGUtype" name = "LGUtype" class="form-control" onchange = "get_lguType(this.value);">
+                                                    <option value = "0">Please Select</option>
+                                                    <option value = "1">PSWDO</option>
+                                                    <option value = "2">CSWDO</option>
+                                                    <option value = "3">MSWDO</option>
+                                                    <option value = "4">LSWDO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="groupLGUregion" style = "display: none;">
+                                        <div class="form-group form-group-sm">
+                                            <label for="regionlist" class="col-lg-2 control-label">Region</label>
+                                            <div id="div_regionlist" class="col-lg-8">
+                                                <fieldset>
+                                                    <div class="control-group">
+                                                        <div class="controls">
+                                                            <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();">
+                                                                <option value="0">Choose Region</option>
+                                                                <?php foreach($regionlist as $regionselect): ?>
+                                                                    <option value="<?php echo $regionselect->region_code; ?>"
+                                                                        <?php if(isset($_SESSION['region'])) {
+                                                                            if($regionselect->region_code == $_SESSION['region']) {
+                                                                                echo " selected";
+                                                                            }
+                                                                        } ?>
+                                                                    >
+                                                                        <?php echo $regionselect->region_name; ?>
+                                                                    </option>
+                                                                <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="groupLGUregion" style = "display: none;">
-                                <div class="form-group form-group-sm">
-                                    <label for="regionlist" class="col-lg-2 control-label">Region</label>
-                                    <div id="div_regionlist" class="col-lg-8">
-                                        <fieldset>
-                                            <div class="control-group">
-                                                <div class="controls">
-                                                    <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();">
-                                                        <option value="0">Choose Region</option>
-                                                        <?php foreach($regionlist as $regionselect): ?>
-                                                            <option value="<?php echo $regionselect->region_code; ?>"
-                                                                <?php if(isset($_SESSION['region'])) {
-                                                                    if($regionselect->region_code == $_SESSION['region']) {
-                                                                        echo " selected";
-                                                                    }
+                                    <!--END Region-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <!--Province-->
+                                    <div id="groupLGUProvince"  style = "display: none;">
+                                        <div class="form-group form-group-sm">
+                                            <label for="provlist" class="col-lg-2 control-label">Province</label>
+                                            <div id="div_provlist" class="col-lg-8">
+                                                <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
+                                                    <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                                                        ?>
+                                                        <option value="0">Choose Province</option>
+                                                        <?php
+                                                        foreach ($provlist as $provselect) { ?>
+                                                            <option value="<?php echo $provselect->prov_code; ?>"
+                                                                <?php
+                                                                if (isset($_SESSION['province']) and $provselect->prov_code== $_SESSION['province']) {
+                                                                    echo " selected";
                                                                 } ?>
                                                             >
-                                                                <?php echo $regionselect->region_name; ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
+                                                                <?php echo $provselect->prov_name; ?></option>
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                        ?>
+                                                        <option value = "0">Select Region First</option>
+                                                        <?php
+                                                    } ?>
+                                                </select>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!--END Region-->
-                            <!--Province-->
-                            <div id="groupLGUProvince"  style = "display: none;">
-                                <div class="form-group form-group-sm">
-                                    <label for="provlist" class="col-lg-2 control-label">Province</label>
-                                    <div id="div_provlist" class="col-lg-8">
-                                        <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
-                                            <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
-                                                ?>
-                                                <option value="0">Choose Province</option>
-                                                <?php
-                                                foreach ($provlist as $provselect) { ?>
-                                                    <option value="<?php echo $provselect->prov_code; ?>"
+                                    <!--End Province-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <!--City-->
+                                    <div id="groupLGUCity"  style = "display: none;">
+                                        <div class="form-group form-group-sm">
+                                            <label for="citylist" class="col-lg-2 control-label">City</label>
+                                            <div id="div_citylist" class="col-lg-8">
+                                                <select id="citylist" name="citylist" class="form-control" onChange="get_nameofCity();">
+                                                    <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                                                        ?>
+                                                        <option value="0">Choose City</option>
                                                         <?php
-                                                        if (isset($_SESSION['province']) and $provselect->prov_code== $_SESSION['province']) {
-                                                            echo " selected";
-                                                        } ?>
-                                                    >
-                                                        <?php echo $provselect->prov_name; ?></option>
-                                                    <?php
-                                                }
-                                            } else {
-                                                ?>
-                                                <option value = "0">Select Region First</option>
-                                                <?php
-                                            } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End Province-->
-                            <!--City-->
-                            <div id="groupLGUCity"  style = "display: none;">
-                                <div class="form-group form-group-sm">
-                                    <label for="citylist" class="col-lg-2 control-label">City</label>
-                                    <div id="div_citylist" class="col-lg-8">
-                                        <select id="citylist" name="citylist" class="form-control" onChange="get_nameofCity();">
-                                            <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
-                                                ?>
-                                                <option value="0">Choose City</option>
-                                                <?php
-                                                foreach ($citylist as $cityselect) { ?>
-                                                    <option value="<?php echo $cityselect->city_code; ?>"
+                                                        foreach ($citylist as $cityselect) { ?>
+                                                            <option value="<?php echo $cityselect->city_code; ?>"
+                                                                <?php
+                                                                if (isset($_SESSION['city']) and $cityselect->city_code== $_SESSION['city']) {
+                                                                    echo " selected";
+                                                                } ?>
+                                                            >
+                                                                <?php echo $cityselect->city_name; ?></option>
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                        ?>
+                                                        <option value = "0">Select Province First</option>
                                                         <?php
-                                                        if (isset($_SESSION['city']) and $cityselect->city_code== $_SESSION['city']) {
-                                                            echo " selected";
-                                                        } ?>
-                                                    >
-                                                        <?php echo $cityselect->city_name; ?></option>
-                                                    <?php
-                                                }
-                                            } else {
-                                                ?>
-                                                <option value = "0">Select Province First</option>
-                                                <?php
-                                            } ?>
-                                        </select>
+                                                    } ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!--End City-->
-                            <!--Start Sector-->
-                            <div id="groupSectorType" style="display: none">
-                                <div class="form-group form-group-sm">
-                                    <label for="sectorlist" class="col-lg-2 control-label">Sector</label>
-                                    <div id="div_sectorlist" class="col-lg-8">
-                                        <select id="sectorType" name = "sectorType" class="form-control"">
-                                            <option value = "0">Please Select</option>
-                                            <option value = "1">Childred</option>
-                                            <option value = "2">Youth</option>
-                                            <option value = "3">Women</option>
-                                            <option value = "4">Family and Community</option>
-                                            <option value = "5">Senior Citizen</option>
-                                            <option value = "6">PWD</option>
-                                            <option value = "7">IDP</option>
-                                        </select>
+                                    <!--End City-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><!--Start Sector-->
+                                    <div id="groupSectorType" style="display: none">
+                                        <div class="form-group form-group-sm">
+                                            <label for="sectorlist" class="col-lg-2 control-label">Sector</label>
+                                            <div id="div_sectorlist" class="col-lg-8">
+                                                <select id="sectorType" name = "sectorType" class="form-control"">
+                                                <option value = "0">Please Select</option>
+                                                <option value = "1">Childred</option>
+                                                <option value = "2">Youth</option>
+                                                <option value = "3">Women</option>
+                                                <option value = "4">Family and Community</option>
+                                                <option value = "5">Senior Citizen</option>
+                                                <option value = "6">PWD</option>
+                                                <option value = "7">IDP</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="submit" name="submit" value="submit" class="btn btn-sm btn-success">Generate</button>
                                     </div>
-                                </div>
-                            </div>
-
+                                </td>
+                            </tr>
                             <input type = 'hidden' id ='prov_pass' name = 'prov_pass' class="form-control">
                             <input type = 'hidden' id ='city_pass' name = 'city_pass' class="form-control">
-                            <div class="btn-group">
-                                <button type="submit" name="submit" value="submit" class="btn btn-sm btn-success">Generate</button>
-                            </div>
+
 
                             <?php echo form_close() ?>
                             </table>
@@ -389,6 +409,11 @@
                             <tr>
                                 <td>
                                     <a class="btn btn-light" href="<?php echo base_url('reports/LCPC/'.$regionlist2.'/'.$provlist2.'/'.$LGUtype2.'') ?>">Local Council for the Protection of Children</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/DRRMC/'.$regionlist2.'/'.$provlist2.'/'.$LGUtype2.'') ?>">Disaster Risk Reduction and Management Council (DRRMC)</a>
                                 </td>
                             </tr>
                         </table>

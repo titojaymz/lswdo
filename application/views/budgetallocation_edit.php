@@ -105,7 +105,8 @@ echo validation_errors();
                     <div class="form-group">
                         <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                     </div>
-
+                    <?php echo form_open('',array('class'=>'form-horizontal')) ?>
+                    <?php echo $form_message; ?>
                     <div class="form-group">
                         <label for="sector_id">Sector:</label>
                         <select name="sector_id" id="sector_id" class="form-control"">
@@ -128,7 +129,10 @@ echo validation_errors();
                         <label for="year_indicated">Year Indicated:</label>
                         <input class="form-control" type="text" name="year_indicated" value="<?php echo $budgetallocation_details->year_indicated ?>" placeholder="Year Indicated">
                     </div>
-
+                    <div class="form-group">
+                        <label for="budget_present_year">Budget for the Previous Year:</label>
+                        <input class="form-control" type="text" name="budget_previous_year" value="<?php echo $budgetallocation_details->budget_previous_year ?>" placeholder="Budget for the Previous Year">
+                    </div>
                     <div class="form-group">
                         <label for="utilization">Utilization:</label>
                         <input class="form-control" type="text" name="utilization" value="<?php echo $budgetallocation_details->utilization ?>" placeholder="Utilization">
@@ -156,7 +160,7 @@ echo validation_errors();
                         </div>
                         <div class="col-md-1"></div>
                     </div>
-                    </form>
+                    <?php echo form_close() ?>
                 </div>
                 <div class="col-md-3"></div>
             </div>

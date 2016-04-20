@@ -15,7 +15,7 @@ class budgetallocation_model extends CI_Model {
     public function getBudgetAllocation($profID)
     {
 
-        $sql = 'select a.profile_id,b.sector_name,a.year_indicated, a.budget_present_year,
+        $sql = 'select a.profile_id,a.sector_id,b.sector_name,a.year_indicated, a.budget_present_year,
                 a.utilization, a.no_bene_served, a.no_target_bene
                 From tbl_lswdo_budget a
                 INNER JOIN lib_sector b
@@ -27,9 +27,9 @@ class budgetallocation_model extends CI_Model {
     }
 
 
-    public function getBudgetAllocationByID($id)
+    public function getBudgetAllocationByID($id,$sectorID)
     {
-        $query = $this->db->get_where('tbl_lswdo_budget',array('profile_id'=>$id,'DELETED'=>0));
+        $query = $this->db->get_where('tbl_lswdo_budget',array('profile_id'=>$id,'sector_id'=>$sectorID,'DELETED'=>0));
         if ($query->num_rows() > 0){
             return $query->row();
         } else {
@@ -74,13 +74,14 @@ class budgetallocation_model extends CI_Model {
         return $query->row();
     }
 
-    public function updateBudgetAllocation($id,$sector_id,$year_indicated,$budget_present_year,$utilization,$no_bene_served,$no_target_bene)
+    public function updateBudgetAllocation($id,$sector_id,$year_indicated,$budget_previous_year,$budget_present_year,$utilization,$no_bene_served,$no_target_bene,$prevSectorID)
     {
         $this->db->trans_begin();
 
-        $this->db->query('UPDATE tbl_lswdo SET
+        $this->db->query('UPDATE tbl_lswdo_budget SET
                           sector_id="'.$sector_id.'",
                           year_indicated="'.$year_indicated.'",
+                          budget_previous_year="'.$budget_previous_year.'",
                           budget_present_year="'.$budget_present_year.'",
                           utilization="'.$utilization.'",
                           no_bene_served="'.$no_bene_served.'",
@@ -88,6 +89,7 @@ class budgetallocation_model extends CI_Model {
                           date_modified=Now()
                           WHERE
                           profile_id = "'.$id.'"
+                          AND sector_id = '.$prevSectorID.'
                           ');
 
         if ($this->db->trans_status() === FALSE)
