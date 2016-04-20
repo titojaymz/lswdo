@@ -81,8 +81,11 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
             $this->db->trans_rollback();
             return FALSE;
         } else {
+            $insert_id = $this->db->insert_id();
             $this->db->trans_commit();
-            return TRUE;
+
+            //return TRUE;
+            return $insert_id;
         }
         $this->db->close();
     }

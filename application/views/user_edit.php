@@ -115,6 +115,15 @@
                                     </select>
                                 </td>
                             </tr>
+                            <tr>
+                                <td><label for="locked" class="control-label">Locked User:</label></td>
+                                <td>
+                                    <select class="selectpicker" name="lock" id = "lock">
+                                        <option data-icon="fa fa-check" value="1" <?php if($user_details->locked_status == "Yes"){ echo "selected"; }  ?>>Yes</option>
+                                        <option data-icon="fa fa-close" value="0" <?php if($user_details->locked_status == "No"){ echo "selected"; }  ?>>No</option>
+                                    </select>
+                                </td>
+                            </tr>
                         </table>
                         <hr>
                         <div class="btn-group">
