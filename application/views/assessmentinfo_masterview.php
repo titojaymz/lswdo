@@ -27,10 +27,10 @@ if (!$this->session->userdata('user_id')){
             <th>Profile ID:</th><td><?php echo $profile_id ?></td>
         </tr>
         <tr>
-            <th>Status of Application:</th><td><?php echo $application_type_id ?></td>
+            <th>Status of Application:</th><td><?php echo $application_type_name ?></td>
         </tr>
         <tr>
-            <th>LGU Type:</th><td><?php echo $lgu_type_id ?></td>
+            <th>LGU Type:</th><td><?php echo $lgu_type_name ?></td>
         </tr>
         <tr>
             <th>Region:</th><td><?php echo $region_name ?></td>

@@ -137,8 +137,10 @@ class assessmentinfo extends CI_Controller {
 
         if ($id > 0){
             $assessmentinfo_model = new assessmentinfo_model();
+
             $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
             $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
+           // $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
 
             $this->validateEditForm();
 
@@ -148,18 +150,26 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('sidebar');
 
-                $this->init_rpmb_session();
+               $this->init_rpmb_session();
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
                 $rpmb['application'] = $application_type_name;
                 $rpmb['lgu_type'] = $lgu_type_name;
+               // $rpmb['swdo_nameRenew'] = $swdo_nameRenew;
                 $rpmb['form_message'] = $form_message;
+
+                if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+                    $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
+                }
+                if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+                    $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
+                }
 
                 $rpmb['assessmentinfo_details'] = $this->assessmentinfo_model->getAssessmentinfoByID($id);
                 $this->load->view('assessmentinfo_edit', $rpmb);
                 $this->load->view('footer');
 
             } else {
-                $id = $this->input->post('profile_id');
+
                 $application_type_id = $this->input->post('application_type_id');
                 $lgu_type_id = $this->input->post('lgu_type_id');
                 $regionlist = $this->input->post('regionlist');
@@ -195,7 +205,11 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('sidebar');
+
                     $this->load->view('assessmentinfo_list',array(
+                        'application' => $application_type_name,
+                        'lgu_type' => $lgu_type_name,
+                       // 'swdo_nameRenew' => $swdo_nameRenew,
                         'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message
@@ -224,8 +238,10 @@ class assessmentinfo extends CI_Controller {
             $form_message = $form_message;
             $data = array(
                 'profile_id'                 =>      $AssessmentDetails->profile_id,
-                'application_type_id'        =>      $AssessmentDetails->application_type_name,
-                'lgu_type_id'                =>      $AssessmentDetails->lgu_type_name,
+                'application_type_id'        =>      $AssessmentDetails->application_type_id,
+                'application_type_name'        =>      $AssessmentDetails->application_type_name,
+                'lgu_type_id'                =>      $AssessmentDetails->lgu_type_id,
+                'lgu_type_name'                =>      $AssessmentDetails->lgu_type_name,
                 'region_name'                =>      $AssessmentDetails->region_name,
                 'prov_name'                  =>      $AssessmentDetails->prov_name,
                 'city_name'                  =>      $AssessmentDetails->city_name,

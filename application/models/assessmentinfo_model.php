@@ -29,30 +29,7 @@ class assessmentinfo_model extends CI_Model
     public function getAssessmentinfoByID($id = 0)
     {
 
-        $sql = 'SELECT
-a.profile_id,
-a.swdo_name,
-c.application_type_name,
-b.lgu_type_name,
-a.total_ira,
-a.total_budget_lswdo,
-lib_regions.region_name,
-lib_provinces.prov_name,
-lib_cities.city_name,
-a.designation,
-a.office_address,
-a.contact_no,
-a.email,
-a.website,
-a.total_ira,
-a.total_budget_lswdo,
-lib_sector.sector_name,
-tbl_lswdo_budget.year_indicated,
-tbl_lswdo_budget.budget_present_year,
-tbl_lswdo_budget.utilization,
-tbl_lswdo_budget.no_bene_served,
-tbl_lswdo_budget.no_target_bene
-FROM
+        $sql = 'SELECT * FROM
 tbl_lswdo AS a
 Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
 Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
