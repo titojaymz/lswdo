@@ -33,13 +33,13 @@
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                            <td align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
                             <td align = "center"><b>Compliance</b></td>
-                            <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>`
+                            <td align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>`
                             <td align = "center"><b>Compliance</b></td>
-                            <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
+                            <td align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
                             <td align = "center"><b>Compliance</b></td>
-                            <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
+                            <td align = "center"><b>Specific Findings and Recommendation</b></td>
                         </tr>
                         <tr>
                             <td align="center" colspan = "8">
@@ -133,7 +133,7 @@
                                                                             <?php if ($c == $thirds) { ?>
                                                                                  <?php if($iteeem[$checklist3] == 0){?>
 
-                                                                                    <td colspan = "11"><b><?php echo $iteeem[$number3]; ?></b></td>
+                                                                                    <td colspan = "10"><b><?php echo $iteeem[$number3]; ?></b></td>
 
                                                                                          <?php foreach($fourthNewArray as $d => $fourthItem): ?>
                                                                                             <?php foreach ($getSecondCategoryLowerLower as $secondCategoryLowerLower):?>
@@ -174,7 +174,10 @@
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                                                                             <td align="center"><b>N/A</b></td>
                                                                                                                                         <?php } ?>
-                                                                                                                                        <?php } ?>
+                                                                                                                                        <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                                                                                   <?php endforeach ?> <?php if($counting4 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                                                                                    <td><?php echo $fourthItem[$number4 + 4]; ?></td>
                                                                                                                                    <?php foreach($getLSWDO as $key=>$row): ?>
@@ -186,7 +189,10 @@
                                                                                                                                         <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                                                                             <td align="center"><b>N/A</b></td>
                                                                                                                                         <?php } ?>
-                                                                                                                                        <?php } ?>
+                                                                                                                                        <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                                                                                   <?php endforeach ?>
                                                                                                                                    <?php } ?>
                                                                                                                            <?php } ?>
@@ -226,7 +232,10 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                        <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                      <?php if($counting3 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $iteeem[$number3 + 4]; ?></td>
@@ -239,7 +248,10 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                       <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                     <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($bronze3 == $row->indicator_id){ ?>
@@ -277,7 +289,7 @@
                                                              <?php } else {?>
                                                             <?php $counting2 = count($secondItems); ?> <!-- eto naman bnblang kung ilan ung nsa loob ng secondNewArray/newArray -->
                                                             <?php $int2 = intval(preg_replace('/[^0-9]+/', '', $b), 10); ?>
-                                                            <td><?php echo $int2 ?></td>
+
                                                             <?php $bronze2 = $b.'-'.$secondItems[$checklist2]; ?>
                                                             <?php $silver2 = $b.'-'.$secondItems[$checklist2+2]; ?>
                                                             <?php $gold2 = $b.'-'.$secondItems[$checklist2+4]; ?>
@@ -306,7 +318,10 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                        <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                      <?php if($counting2 > 5){ ?> <!-- kung ma detect nia sa counting2 is greater than 5 ibig sbhn ay meron Gold medal. -->
                                                                            <td><?php echo $secondItems[$number2 + 4]; ?></td>
@@ -319,7 +334,10 @@
                                                                             <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                                 <td align="center"><b>N/A</b></td>
                                                                             <?php } ?>
-                                                                        <?php } ?>
+                                                                        <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                                     <?php endforeach ?>
                                                                     <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($bronze2 == $row->indicator_id){ ?>
@@ -362,7 +380,7 @@
                                                     <?php $bronze = $a.'-'.$iteem[$checklist]; ?>
                                                     <?php $silver = $a.'-'.$iteem[$checklist+2]; ?>
                                                     <?php $gold = $a.'-'.$iteem[$checklist+4]; ?>
-                                                    <td><?php echo $int1 ?></td>
+
                                                     <?php if($counting > 1){ ?>
                                                         <td><?php echo $iteem[$number]; ?></td>
                                                             <?php foreach($getLSWDO as $key=>$row): ?>
@@ -387,7 +405,10 @@
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
-                                                                <?php } ?>
+                                                                <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                             <?php endforeach ?>
                                                             <?php if($counting > 5){ ?>
                                                                 <td><?php echo $iteem[$number + 4]; ?></td>
@@ -400,7 +421,10 @@
                                                                     <?php } elseif($row->compliance_indicator_id == 3){?>
                                                                         <td align="center"><b>N/A</b></td>
                                                                     <?php } ?>
-                                                                <?php } ?>
+                                                                <?php } else { ?>
+                                                                    <td align="center"><b></b></td>
+                                                                    <?php break; ?>
+                                                                    <?php } ?>
                                                             <?php endforeach ?>
                                                               <?php foreach($getLSWDO as $key=>$row): ?>
                                                                 <?php if($bronze == $row->indicator_id){ ?>

@@ -59,7 +59,7 @@
                                 <!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart3/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 3 </a></td>-->
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-sm btn-primary" href="<?php echo base_url('budgetallocation/editBudgetAllocation/' . $budgetallocationData->profile_id . '') ?>"><i class="fa fa-edit"></i> </a>
+                                        <a class="btn btn-sm btn-primary" href="<?php echo base_url('budgetallocation/editBudgetAllocation/' . $budgetallocationData->profile_id . '/'.$budgetallocationData->sector_id) ?>"><i class="fa fa-edit"></i> </a>
 
                                     </div>
 

@@ -784,7 +784,60 @@ order	by a.new_score desc;
         $result = $query->result();
         return $result;
     }
-
+    public function getDRRMC($regCode,$provCode,$lguType)
+    {
+        if($lguType == 1){
+            $sql = 'select c.prov_name,
+                    SUM(IF(a.compliance_indicator_id = 1,1,0)) as ScoreIndicator
+                    from tbl_lswdo_standard_indicators a
+                    INNER JOIN tbl_lswdo b
+                    ON a.profile_id = b.profile_id
+                    INNER JOIN lib_provinces c
+                    ON b.prov_code = c.prov_code
+                    where indicator_id LIKE "%IIF%"
+                    AND indicator_id LIKE "%-1%"
+                    AND b.region_code = '.$regCode.'
+                    AND b.lgu_type_id = 1
+                    Group by b.prov_code;';
+        } elseif($lguType == 2){
+            $sql = 'select d.city_name,
+                    SUM(IF(a.compliance_indicator_id = 1,1,0)) as ScoreIndicator
+                    from tbl_lswdo_standard_indicators a
+                    INNER JOIN tbl_lswdo b
+                    ON a.profile_id = b.profile_id
+                    INNER JOIN lib_provinces c
+                    ON b.prov_code = c.prov_code
+                    INNER JOIN lib_cities d
+                    ON b.city_code = d.city_code
+                    where indicator_id LIKE "%IIF%"
+                    AND indicator_id LIKE "%-1%"
+                    AND b.region_code = '.$regCode.'
+                    AND b.prov_code = '.$provCode.'
+                    AND d.city_class = "CC"
+                    AND b.lgu_type_id = 1
+                    Group by b.prov_code;';
+        } elseif($lguType == 3){
+            $sql = 'select d.city_name,
+                    SUM(IF(a.compliance_indicator_id = 1,1,0)) as ScoreIndicator
+                    from tbl_lswdo_standard_indicators a
+                    INNER JOIN tbl_lswdo b
+                    ON a.profile_id = b.profile_id
+                    INNER JOIN lib_provinces c
+                    ON b.prov_code = c.prov_code
+                    INNER JOIN lib_cities d
+                    ON b.city_code = d.city_code
+                    where indicator_id LIKE "%IIF%"
+                    AND indicator_id LIKE "%-1%"
+                    AND b.region_code = '.$regCode.'
+                    AND b.prov_code = '.$provCode.'
+                    AND d.city_class = ""
+                    AND b.lgu_type_id = 1
+                    Group by b.prov_code;';
+        }
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
     //get total of assessed by region or province
     public function get_totalAssess($regCode,$provCode,$lguType)
     {
