@@ -115,9 +115,16 @@ class assessmentinfo extends CI_Controller {
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex();
+                $this->redirectIndex($addResult);
             }
         }
+    }
+
+    public function redirectIndex($addResult)
+    {
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$addResult);
+//        $sec = "1";
+        header("Location: $page");
     }
 
 
@@ -514,14 +521,14 @@ class assessmentinfo extends CI_Controller {
         return $query->list_fields();
     }
 
-
+/*
     public function redirectIndex()
     {
             $page = base_url();
             $sec = "1";
             header("Refresh: $sec; url=$page");
     }
-
+*/
 
     public function refreshCurPage()
     {
