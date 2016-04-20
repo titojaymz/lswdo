@@ -108,8 +108,9 @@ class access_control extends CI_Controller {
                 $userlevel = $this->input->post('userlevelid');
                 $region = $this->input->post('regionlist');
                 $activate = $this->input->post('status');
+                $lock = $this->input->post('lock');
 
-                $updateResult = $accesscontrol_model->updateUserinfo($firstname,$middlename,$surname,$extname, $position,$designation,$contact,$username,$email,$userlevel,$region,$activate,$uid);
+                $updateResult = $accesscontrol_model->updateUserinfo($firstname,$middlename,$surname,$extname, $position,$designation,$contact,$username,$email,$userlevel,$region,$activate,$uid,$lock);
                 if ($updateResult){
                     $this->load->view('header');
                     $this->load->view('nav');

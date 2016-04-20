@@ -80,7 +80,7 @@ class accesscontrol_model extends CI_Model
         $this->db->close();
     }
 
-    public function updateUserinfo($firstname,$middlename,$surname,$extname, $position,$designation,$contact,$username,$email,$userlevel,$region,$activate,$uid)
+    public function updateUserinfo($firstname,$middlename,$surname,$extname, $position,$designation,$contact,$username,$email,$userlevel,$region,$activate,$uid,$lock)
     {
         $this->db->trans_begin();
         $this->db->query('UPDATE tbl_user SET
@@ -96,6 +96,7 @@ class accesscontrol_model extends CI_Model
                               user_level="'.$userlevel.'",
                               region_code="'.$region.'",
                               activated="'.$activate.'"
+                              locked_status="'.$lock.'"
 
                               WHERE
                               uid = "'.$uid.'"

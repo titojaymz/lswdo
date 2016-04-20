@@ -161,7 +161,7 @@ class budgetallocation extends CI_Controller {
                         $updateResult = $budgetallocation_model->updateBudgetAllocation($id, $sectorID, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $prevSectorID);
                         if ($updateResult) {
 
-                            $this->init_rpmb_session();
+//                            $this->init_rpmb_session();
                             $rpmb['sector_id'] = $this->budgetallocation_model->get_sector();
 
                             $form_message = 'Update Success';
