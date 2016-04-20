@@ -51,16 +51,17 @@
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b></td>
+                            <td colspan = "1" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
                         </tr>
                         <tr>
-                            <td align="center" colspan = "14">
+                            <td align="center" colspan = "11">
                                 <!-- Mother Indicator eg. I. Administration and Organization-->
                                 <b><?php echo $thirdMotherIndicator->indicator_name; ?></b>
                             </td>
@@ -69,7 +70,7 @@
                         <?php foreach($thirdIndicators as $third_indicators): ?>
                             <tr>
                                 <!-- Title for the Child Indicators!!!  -->
-                                <td colspan = "14" align="center"><b><?php echo $third_indicators->indicator_name; ?></b></td>
+                                <td colspan = "11" align="center"><b><?php echo $third_indicators->indicator_name; ?></b></td>
                             </tr>
                             <!--
                             newArray is a new Array for this version..
@@ -115,7 +116,7 @@
                                         <?php $firsts = $arr[0];?>
                                         <?php if ($a == $firsts) { ?><!-- $a is IA1, IA2  tapos ung $firsts eto dn ung IA1, etc pero kinukuha to sa indicator_id-->
                                             <?php if($iteem[$checklist] == 0){?> <!-- so ung checklist dito ay para kunin ung value ng indicator checklist sa newArray ang value nian is $iteem[0] which is ung $iteem[0] sa newArray ay ung indicator_checklist_id sa db  -->
-                                                        <td colspan = "12"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
+                                                        <td colspan = "11"><b><?php echo $iteem[$number]; ?></b></td> <!-- title ng isang indicator sa ilalim ng Child Indicator -->
                                                     </tr>
                                                     <tr>
                                                     <?php foreach($secondNewArray as $b => $secondItems): ?> <!-- array for secondNewArray for child lower lower indicator -->
@@ -145,12 +146,9 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
                                                             <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
                                                             <?php }?>
                                                         <?php } else {  ?>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -195,12 +193,9 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
                                                             <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
                                                             <?php }?>
                                                         <?php } else {  ?>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>

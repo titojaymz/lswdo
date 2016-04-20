@@ -58,16 +58,17 @@
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b></td>
+                            <td colspan = "1" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
                         </tr>
                         <tr>
-                            <td align="center" colspan = "14">
+                            <td align="center" colspan = "11">
                                 <!-- Mother Indicator eg. I. Administration and Organization-->
                                 <b><?php echo $firstMotherIndicator->indicator_name; ?></b>
                             </td>
@@ -76,7 +77,7 @@
                         <?php foreach($firstIndicators as $first_indicators): ?>
                             <tr>
                                 <!-- Title for the Child Indicators!!!  -->
-                                <td colspan = "14" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
+                                <td colspan = "11" align="center"><b><?php echo $first_indicators->indicator_name; ?></b></td>
                             </tr>
                             <!--
                             newArray is a new Array for this version..
@@ -145,12 +146,9 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
                                                             <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
                                                             <?php }?>
                                                         <?php } else {  ?>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -190,12 +188,9 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
                                                             <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
                                                             <?php }?>
                                                         <?php } else {  ?>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>

@@ -57,16 +57,17 @@
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
-                            <td align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b></td>
+                            <td colspan = "1" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
-                            <td align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
-                            <td align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
                         </tr>
                         <tr>
-                            <td align="center" colspan = "8">
+                            <td align="center" colspan = "11">
                                 <!-- Mother Indicator eg. I. Administration and Organization-->
                                 <b><?php echo $fourthMotherIndicator->indicator_name; ?></b>
                             </td>
@@ -129,13 +130,9 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
                                             <td><textarea id = "textArea<?php echo $fourthCat->indicator_id ?>" name = "textArea<?php echo $fourthCat->indicator_id ?>"></textarea></td>
                                         <?php }?>
-                                    <?php } else {  ?>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <?php } else {  ?><td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -173,13 +170,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
                         <td><textarea id = "textArea<?php echo $fourthIndi->indicator_id ?>" name = "textArea<?php echo $fourthIndi->indicator_id ?>"></textarea></td>
                         <?php }?>
-                        <?php } else {  ?>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <?php } else {  ?><td></td>
                         <td></td>
                         <td></td>
                         <td></td>

@@ -81,16 +81,17 @@
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <td colspan = "2" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "1" align = "center"><b></td>
+                            <td colspan = "1" align = "center"><b>BRONZE LEVEL <BR> (MUST)</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>SILVER LEVEL <BR> (DESIRED)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>GOLD LEVEL <BR> (EXEMPLARY)</b></td>
-                            <td colspan = "3" align = "center"><b>Compliance</b></td>
+                            <td colspan = "2" align = "center"><b>Compliance</b></td>
                             <td colspan = "1" align = "center"><b>Specific Findings and Recommendation</b></td>
                         </tr>
                         <tr>
-                            <td align="center" colspan = "14">
+                            <td align="center" colspan = "11">
                                 <!-- Mother Indicator eg. I. Administration and Organization-->
                                 <b><?php echo $secondMotherIndicator->indicator_name; ?></b>
                             </td>
@@ -99,7 +100,7 @@
                         <?php foreach($secondIndicators as $second_indicators): ?>
                             <tr>
                                 <!-- Title for the Child Indicators!!!  -->
-                                <td colspan = "14" align="center"><b><?php echo $second_indicators->indicator_name; ?></b></td>
+                                <td colspan = "11" align="center"><b><?php echo $second_indicators->indicator_name; ?></b></td>
                             </tr>
                             <!--
                             newArray is a new Array for this version..
@@ -213,8 +214,21 @@
                                                                                                                                    <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "1" /> Compliant</td>
                                                                                                                                    <td><input type="radio" id = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" name = "compliance<?php echo $d.'-'.$fourthItem[$checklist4+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                                                                                    <td><textarea id = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLowerLower->indicator_id ?>"></textarea></td>
-                                                                                                                               <?php } ?>
-                                                                                                                           <?php } ?>
+                                                                                                                               <?php } else {  ?>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                                        <?php }?>
+                                                                                                                           <?php } else {  ?>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                        <?php }?>
                                                                                                                        <?php } ?>
                                                                                                                        <?php break; ?>
                                                                                                              <?php } ?>
@@ -265,8 +279,21 @@
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "1" /> Compliant</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+6] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"></textarea></td>
-                                                                       <?php } ?>
-                                                               <?php } ?>
+                                                                       <?php } else {  ?>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                                        <?php } ?>
+                                                               <?php } else {  ?>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                        <?php }?>
                                                                <?php } else { ?>
                                                                <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $c;?>','<?php echo $iteeem[$checklist3];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                                                <?php if($counting3 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
@@ -282,8 +309,21 @@
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "1" /> Compliant</td>
                                                                            <td><input type="radio" id = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" name = "compliance<?php echo $c.'-'.$iteeem[$checklist3+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategoryLower->indicator_id ?>" name = "textArea<?php echo $secondCategoryLower->indicator_id ?>"></textarea></td>
-                                                                       <?php } ?>
-                                                                   <?php } ?>
+                                                                       <?php } else {  ?>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                                        <?php }?>
+                                                                   <?php } else {  ?>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                        <?php }?>
                                                                <?php } ?>
                                                                <?php }?>
                                                                <?php break; ?>
@@ -312,8 +352,21 @@
                                                                            <td><input type="radio" id = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" name = "compliance<?php echo $b.'-'.$secondItems[$checklist2+4] ?>Gold" value = "2"/> Not Compliant</td>
                                                                            <td><textarea id = "textArea<?php echo $secondCategory->indicator_id ?>" name = "textArea<?php echo $secondCategory->indicator_id ?>"></textarea></td>
 
-                                                                       <?php } ?>
-                                                                   <?php } ?>
+                                                                       <?php } else {  ?>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                                        <?php }?>
+                                                                   <?php } else {  ?>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
+                                                        <?php }?>
                                                                <?php } ?>
                                                                <?php break; ?>
 
@@ -362,7 +415,6 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-
 
                                                         <td><textarea id = "textArea<?php echo $firstCategory->indicator_id ?>" name = "textArea<?php echo $firstCategory->indicator_id ?>"></textarea></td>
                                                         <?php }?>

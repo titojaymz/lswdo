@@ -95,7 +95,7 @@ class accesscontrol_model extends CI_Model
                               email="'.$email.'",
                               user_level="'.$userlevel.'",
                               region_code="'.$region.'",
-                              activated="'.$activate.'"
+                              activated="'.$activate.'",
                               locked_status="'.$lock.'"
 
                               WHERE
