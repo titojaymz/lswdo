@@ -21,14 +21,6 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "none";
             document.getElementById("groupLGUCity").style.visibility = "hidden";
-            document.getElementById("groupLGUBrgy").style.display = "none";
-            document.getElementById("groupLGUBrgy").style.visibility = "hidden";
-            document.getElementById("groupCity").style.display = "block";
-            document.getElementById("groupCity").style.visibility = "visible";
-            document.getElementById("groupmuni").style.display = "block";
-            document.getElementById("groupmuni").style.visibility = "visible";
-            document.getElementById("groupbrgy").style.display = "none";
-            document.getElementById("groupbrgy").style.visibility = "hidden";
         }
         else
         {
@@ -38,15 +30,6 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "block";
             document.getElementById("groupLGUCity").style.visibility = "visible";
-            document.getElementById("groupLGUBrgy").style.display = "block";
-            document.getElementById("groupLGUBrgy").style.visibility = "visible";
-            document.getElementById("groupCity").style.display = "none";
-            document.getElementById("groupCity").style.visibility = "hidden";
-            document.getElementById("groupmuni").style.display = "none";
-            document.getElementById("groupmuni").style.visibility = "hidden";
-            document.getElementById("groupbrgy").style.display = "block";
-            document.getElementById("groupbrgy").style.visibility = "visible";
-
         }
     }
 
@@ -58,7 +41,6 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("group_new").style.visibility = "hidden";
             document.getElementById("group_renewal").style.display = "none";
             document.getElementById("group_renewal").style.visibility = "hidden";
-
         }
         else if (e==1)
         {
@@ -66,15 +48,12 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("group_new").style.visibility = "visible";
             document.getElementById("group_renewal").style.display = "none";
             document.getElementById("group_renewal").style.visibility = "hidden";
-
-
         }
         else {
             document.getElementById("group_new").style.display = "none";
             document.getElementById("group_new").style.visibility = "hidden";
             document.getElementById("group_renewal").style.display = "block";
             document.getElementById("group_renewal").style.visibility = "visible";
-
         }
     }
 
@@ -94,6 +73,9 @@ if (!$this->session->userdata('user_id')){
                     $('#div_provlist').html(data);
                 }
             });
+
+
+
         } else {
             $('#provlist option:gt(0)').remove().end();
         }
@@ -103,7 +85,6 @@ if (!$this->session->userdata('user_id')){
         var prov_code = $('#provlist').val();
         var lgu_type = $('#lgu_type_id').val();
         $('#brgylist option:gt(0)').remove().end();
-
 
 
         if(lgu_type == 2 && prov_code > 0) {
@@ -351,36 +332,35 @@ else
                                         </div>
                                     </div>
 
-
-                                    <label for="nocitylist"> No. of Cities:</label>
-                                    <div id="groupCity">
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <input class="form-control" type="text" name="no_cities" placeholder="No. of Cities" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <label for="no_muni_code">No. of Municipalities:</label>
-                                    <div id="groupmuni">
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <input class="form-control" type="text" name="no_muni" placeholder="No. of Municipalities" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <label for="no_brgy">No. of Barangays:</label>
-                                    <div id="groupbrgy">
-                                        <div class="control-group">
-                                            <div class="controls">
-                                                <input class="form-control" type="text" name="no_brgy" placeholder="No. of Barangays" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>  <!--End Select-->
+
+                                <label for="nocitylist"> No. of Cities:</label>
+                                <div id="groupCity">
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input class="form-control" type="text" name="no_cities" placeholder="No. of Cities" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label for="no_muni_code">No. of Municipalities:</label>
+                                <div id="groupmuni">
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input class="form-control" type="text" name="no_muni" placeholder="No. of Municipalities" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <label for="no_brgy">No. of Barangays:</label>
+                                <div id="groupbrgy">
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input class="form-control" type="text" name="no_brgy" placeholder="No. of Barangays" readonly>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <label for="income_class">Income Class:</label>
                                 <div id="income_class">
@@ -453,7 +433,7 @@ else
 
 
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO" readonly>
+                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO">
 
                             </div>
                             <div id="group_renewal">

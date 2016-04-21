@@ -350,7 +350,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         SELECT
           income_class
         FROM
-          lib_cities
+          lib_provinces
         WHERE
           prov_code = ?
         ";
