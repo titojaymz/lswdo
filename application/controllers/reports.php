@@ -6769,16 +6769,19 @@ class reports extends CI_Controller {
     public function pswdo_psb_rider($regionlist){
 
         //$pswdoscoreladder = $this->reports_model->get_pswdoscoreLadder($regionlist);
-        $get_AllProvByReg = $this->reports_model->get_AllProvByReg($regionlist);
+        $getRegionByCode = $this->reports_model->getRegionByCode($regionlist);
+
         $getPSBMainCategory = $this->reports_model->getPSBMainCategory();
 
-
+        $region_name = $getRegionByCode[0]['region_name'];
+        $region_nick = $getRegionByCode[0]['region_nick'];
+        //$region_name = "aaaaaa";
 // Create new PHPExcel object
         $objPHPExcel = new PHPExcel();
 
 // Add some data
 
-        $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Score of PSWDO, by ladderized scaling');
+        $objPHPExcel->getActiveSheet()->setCellValue('A1', 'List of SWD Programs - '.$region_name .'');
         //autosize column
 
 
@@ -6887,7 +6890,7 @@ class reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getHighestRow()
         )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 // Rename worksheet (worksheet, not filename)
-        $objPHPExcel->getActiveSheet()->setTitle('Score of PSWDO ladderized');
+        $objPHPExcel->getActiveSheet()->setTitle('List of SWD Programs-FO '.$region_nick);
 
 // Set active sheet index to the first sheet, so Excel opens this as the first asheet
         $objPHPExcel->setActiveSheetIndex(0);
@@ -6900,7 +6903,7 @@ class reports extends CI_Controller {
 //header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 //so, we use this header instead.
 //    $regionName = $this->reports_model->getRegionName($region);
-        $filename = 'Score of PSWDO ladderized.xlsx';
+        $filename = 'List of SWD Programs-FO '.$region_nick.'.xlsx';
         header('Content-type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename='.$filename);
         header('Cache-Control: max-age=0');

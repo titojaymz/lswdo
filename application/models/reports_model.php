@@ -940,6 +940,15 @@ order	by a.new_score desc;
         return $result;
     }
 
+    public function getRegionByCode($region_code)
+    {
+        $sql = "select region_code, region_name,region_nick
+            from lib_regions where region_code = '".$region_code."';";
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        return $result;
+    }
+
     //get All Prov by Reg
     public function get_AllProvByReg($regCode)
     {
