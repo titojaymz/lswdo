@@ -639,6 +639,73 @@ order	by a.new_score desc;
         $result = $query->result();
         return $result;
     }
+
+    //cmalvarez
+
+    public function getPSBMainCategory(){
+
+        $sql = 'SELECT
+                psbrider_main_category_id,
+                psbrider_main_category_title
+                FROM `lib_psbrider_main_category`
+                ;';
+        $query = $this->db->query($sql);
+        return $query->result_array();
+        //return $query->result();
+    }
+
+    public function getPSBSubCategory($psbrider_main_category_id){
+        /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
+         $this->db->order_by('visit_date','ASC');
+         $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
+
+        $sql = 'SELECT
+                psbrider_sub_category_id,
+                psbrider_main_category_id,
+                psbrider_sub_category_title
+                FROM `lib_psbrider_sub_category`
+                WHERE psbrider_main_category_id = '.$psbrider_main_category_id.';';
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+
+
+    public function getPSBAnswer($regionlist,$psbrider_main_category_id,$psbrider_sub_category_id){
+
+        $sql = "SELECT count(a.psbrider_answer_id) as psbrider_answer_id, b.region_code, a.psbrider_main_category_title, a.psbrider_sub_category_title,a.psbrider_answer
+                FROM `tbl_psbrider_answers` a
+                LEFT OUTER JOIN tbl_lswdo b
+                ON a.profile_id = b.profile_id
+                where b.region_code = '".$regionlist."'
+                and psbrider_main_category_id = ".$psbrider_main_category_id."
+                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+                and psbrider_answer = 1
+                ;";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+        //return $query->result();
+    }
+
+   /* public function getP()
+    {
+        $sql = 'SELECT region_name,PSWDO,CSWDO,MSWDO,(PSWDO+CSWDO+MSWDO) as Total
+                FROM (select b.region_name,
+                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
+                sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
+                sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
+                from tbl_lswdo a
+                inner join lib_regions b
+                on a.region_code = b.region_code
+                where a.deleted = 0
+                group by a.region_code
+                ) as c;';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }*/
+
+    //cmalvarez
     public function get_distributionPSWDObyregion()
     {
         $sql = 'SELECT region_name,PSWDO

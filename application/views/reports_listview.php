@@ -416,6 +416,14 @@
                                     <a class="btn btn-light" href="<?php echo base_url('reports/DRRMC/'.$regionlist2.'/'.$provlist2.'/'.$LGUtype2.'') ?>">Disaster Risk Reduction and Management Council (DRRMC)</a>
                                 </td>
                             </tr>
+
+                            <tr>
+                                <td>
+                                    <a class="btn btn-light" href="<?php echo base_url('reports/pswdo_psb_rider/'.$regionlist2.'') ?>">PSB Rider</a>
+                                </td>
+                            </tr>
+
+
                         </table>
                         <?php } ?>
                     </div>

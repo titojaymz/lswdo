@@ -6768,7 +6768,9 @@ class reports extends CI_Controller {
 
     public function pswdo_psb_rider($regionlist){
 
-        $pswdoscoreladder = $this->reports_model->get_pswdoscoreLadder($regionlist);
+        //$pswdoscoreladder = $this->reports_model->get_pswdoscoreLadder($regionlist);
+        $get_AllProvByReg = $this->reports_model->get_AllProvByReg($regionlist);
+        $getPSBMainCategory = $this->reports_model->getPSBMainCategory();
 
 
 // Create new PHPExcel object
@@ -6792,11 +6794,11 @@ class reports extends CI_Controller {
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 //    $col = 'A';
 //        $row = 5;
-        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Province');
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'ITEM');
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Score');
-        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-        $objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
+        //$objPHPExcel->getActiveSheet()->setCellValue('B3', 'Score');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A4');
+        //$objPHPExcel->getActiveSheet()->mergeCells('B3:D3');
         $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
         //Center text merge columns
@@ -6807,40 +6809,77 @@ class reports extends CI_Controller {
 
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-        $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
-        $objPHPExcel->getActiveSheet()->freezePane('B6');
+       /* $objPHPExcel->getActiveSheet()->mergeCells('B6:D6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');*/
         //Header
-        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Bronze');
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'NUMBER');
         $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Silver');
+        $objPHPExcel->getActiveSheet()->setCellValue('C3', 'PERCENTAGE');
         $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+        $objPHPExcel->getActiveSheet()->getStyle('C3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Gold');
+       /* $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Gold');
         $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
-            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $row2 = 7;
-        $col2 = 'A';
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));*/
+        $row2 = 6;
+        $col2 = 'B';
         $previousvalue = '';
         $rank = 0;
-        foreach ($pswdoscoreladder as $pswdoscoreladderdata):
-            $province = $pswdoscoreladderdata->prov_name;
-            $bronze = $pswdoscoreladderdata->Bronze;
-            $silver = $pswdoscoreladderdata->Silver;
-            $gold = $pswdoscoreladderdata->Gold;
+        $counter = 0;
+        $colMainCat = 'A';
+        $rowCat = 7;
+
+        foreach($getPSBMainCategory as $key=>$val)
+        {
+            $psbrider_main_category_id = $val['psbrider_main_category_id'];
+            $psbrider_main_category_title = "DISTRIBUTION OF PSWDO IMPLEMENTED ".$val['psbrider_main_category_title'];
+
+            $getPSBSubCategory = $this->reports_model->getPSBSubCategory($psbrider_main_category_id);
+            $objPHPExcel->getActiveSheet()->setCellValue($colMainCat.$row2, $psbrider_main_category_title);$row2++;
+            $objPHPExcel->getActiveSheet()->mergeCells('A6:D6');
+            $objPHPExcel->getActiveSheet()->mergeCells('A25:D25');
+            $objPHPExcel->getActiveSheet()->mergeCells('A37:D37');
+            $objPHPExcel->getActiveSheet()->mergeCells('A52:D52');
+            $objPHPExcel->getActiveSheet()->mergeCells('A63:D63');
+            $objPHPExcel->getActiveSheet()->mergeCells('A83:D83');
+            foreach($getPSBSubCategory as $keySub=>$valSub )
+            {
+                //$counter++;
+                $psbrider_sub_category_title = $valSub['psbrider_sub_category_title'];
+                $psbrider_sub_category_id = $valSub['psbrider_sub_category_id'];
+                $objPHPExcel->getActiveSheet()->setCellValue($colMainCat.$row2, $psbrider_sub_category_title);
+
+                $getPSBAnswer = $this->reports_model->getPSBAnswer($regionlist,$psbrider_main_category_id,$psbrider_sub_category_id);
+
+                foreach($getPSBAnswer as $keyAns => $valAns)
+                {
+
+                    $psbrider_answer_id = $valAns['psbrider_answer_id'];
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$rowCat, $psbrider_answer_id);$rowCat++;
+                    $counter += $psbrider_answer_id;
+
+                }
+                $row2++;
+
+            }
+            $objPHPExcel->getActiveSheet()->setCellValue($colMainCat.$row2, "Total");
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$rowCat, $counter);$rowCat++;$row2++;
+            $counter = 0;
+            //$objPHPExcel->getActiveSheet()->setCellValue($colMainCat.$row2, "");
+            if($colMainCat == 'B'){$colMainCat = 'A';}
+           // $row2++;
+            if($colMainCat == 'C'){$colMainCat = 'B';}
+            $rowCat++;
+
+            //$objPHPExcel->getActiveSheet()->setCellValue($colMainCat.$row2, $counter);$colMainCat++;
 
 
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $province);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $bronze);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $silver);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $gold);
+        }
 
-            if($col2 == 'D'){$col2 = 'A';}
-            $row2++;
-        endforeach;
+
 //    //border
         $objPHPExcel->getActiveSheet()->getStyle(
             'A1:' .
