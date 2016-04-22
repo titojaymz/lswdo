@@ -44,7 +44,8 @@ class PSBRider_Model extends CI_Model
                 psbrider_indicative_reason
                 FROM `tbl_psbrider_answers`
                 WHERE profile_id = '.$profile_id . '
-                AND ref_id = '.$ref_id.';';
+                AND ref_id = '.$ref_id.'
+                AND psbrider_answer = 1 ;';
 
         $query = $this->db->query($sql);
         return $query->result_array();
