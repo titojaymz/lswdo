@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 error_reporting(0);
-
+$region = $this->session->userdata('uregion_code');
 
 if (!$this->session->userdata('user_id')){
     echo validation_errors();
@@ -31,5 +31,5 @@ if (!$this->session->userdata('user_id')){
         </div>
     </div>
 <?php } else { ?>
-    <?php redirect('/dashboardc/dashboard/'.$user_region.'','location'); ?>
+    <?php redirect('/dashboardc/dashboard/'.$region.'','location'); ?>
 <?php } ?>

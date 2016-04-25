@@ -142,6 +142,7 @@ class users extends CI_Controller {
             $ifUserExist = $Model_user->ifUserExist($newkey);
             if ($ifUserExist === true) {
                 $this->session->set_userdata('user_id',$Model_user->retrieveUserData()->uid);
+                $this->session->set_userdata('uregion_code',$Model_user->retrieveUserData()->region_code);
                 $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
                 $this->load->view('header');
                 $this->load->view('nav');

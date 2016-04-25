@@ -1,13 +1,13 @@
 <?php
 $uid = $this->session->userdata('uid');
 $access = $this->session->userdata('access');
-$region = $this->session->userdata('uregion');
+$region = $this->session->userdata('uregion_code');
 
 ?><div class="sidebar clearfix">
 
   <ul class="sidebar-panel nav">
     <li class="sidetitle">MAIN</li>
-    <li><a href="<?php echo base_url('dashboardc/dashboard/'); ?>"><span class="icon color5"><i class="fa fa-dashboard"></i></span>Dashboard</a></li> <!--edited link! -->
+    <li><a href="<?php echo base_url('dashboardc/dashboard/'.$region.''); ?>"><span class="icon color5"><i class="fa fa-dashboard"></i></span>Dashboard</a></li> <!--edited link! -->
     <li><a href="<?php echo base_url('assessmentinfo/index'); ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
 <!--    <li><a href="--><?php //echo base_url('budgetallocation/index'); ?><!--"><span class="icon color6"><i class="fa fa-users"></i></span>Budget Allocation</a></li>-->
 <!--    <li><a href="--><?php //echo base_url('indicator/indicatorView') ?><!--"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Indicators</a></li>-->
