@@ -2,14 +2,15 @@
 
 class Certification_Model extends CI_Model
 {
-    public function getCertList(){
+    public function getCertList($profile_id){
         /*$this->db->select('profile_id,certificate_no,date_issued,validity,month_valid, day_valid, year_valid');
         $this->db->order_by('profile_id','ASC');
         $query = $this->db->get_where('tbl_lswdo_certificate', array('profile_id' => '9'));*/
         /*return $query->result();*/
         $sql = 'SELECT ref_id, profile_id,certificate_no,date_issued,validity,month_valid, day_valid, year_valid
                 FROM `tbl_lswdo_certificate`
-                WHERE profile_id = 9;';
+                WHERE profile_id = '.$profile_id.';';
+                //and ref_id = '.$ref_id_cert.';';
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -23,16 +24,25 @@ class Certification_Model extends CI_Model
                 FROM `tbl_lswdo_certificate`
                 WHERE ref_id = '.$ref_id.';';
         $query = $this->db->query($sql);
+        //return $query->result_array();
+        return $query->row();
+    }
+
+    public function getValidityByID($validity_id){
+        $sql = 'SELECT validity_id, validity_inyears, validity_title
+                FROM `lib_validity`
+                where validity_id = '.$validity_id.';';
+        $query = $this->db->query($sql);
         return $query->result_array();
     }
 
-    public function getValidityByID($validityID){
-        $this->db->select('validity_title');
-        $this->db->order_by('validity_inyears','ASC');
-        $query = $this->db->get_where('lib_validity', array('validity_id' => $validityID));
-        /*return $query->row();*/
+    /*public function getValidity(){
+        $sql = 'SELECT validity_id, validity_inyears, validity_title
+                FROM `lib_validity`';
+        $query = $this->db->query($sql);
         return $query->result_array();
-    }
+    }*/
+
     public function insertLswdoCertificate($profile_id,
                                            $certificate_no,
                                            $current_certificate,
@@ -90,6 +100,7 @@ class Certification_Model extends CI_Model
     }
 
     public function updateLswdoCertificate($ref_id,
+                                           $profile_id,
                                            $certificate_no,
                                            $current_certificate,
                                            $date_issued,
@@ -102,7 +113,9 @@ class Certification_Model extends CI_Model
 
         $this->db->trans_begin();
 
+        //$status =
         $this->db->query('Update tbl_lswdo_certificate SET
+					profile_id = "'.$profile_id.'",
 					certificate_no = "'.$certificate_no.'",
 					current_certificate = "'.$current_certificate.'",
 					date_issued = "'.$date_issued.'",
@@ -126,13 +139,14 @@ class Certification_Model extends CI_Model
             $this->db->trans_commit();
             return TRUE;
         }
+
         $this->db->close();
     }
 
-    function form_insert($data)
+    /*function form_update($data)
     {
-        $this->db->insert('tbl_lswdo_certificate', $data);
-    }
+        $this->db->update('tbl_lswdo_certificate', $data);
+    }*/
 
 
 }

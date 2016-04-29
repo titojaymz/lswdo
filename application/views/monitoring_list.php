@@ -52,7 +52,8 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    MONITORING
+                    Status of Monitoring
+
                     <ul class="panel-tools">
                         <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
                         <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
@@ -61,32 +62,37 @@
                 <div class = "panel-body" style="display: block;">
 
                     <?php
-                    $profile_id = $getDataByProfileID->profile_id;
+                    //$profile_id = $getDataByProfileID->profile_id;
+                    $profile_id = $this->uri->segment('3');
                     //$ref_id =
                     echo "<input type=\"hidden\" id=\"profile_id\" name=\"profile_id\" class=\"form-control\" value ='".$profile_id."'/>";
-                    $getCertList = $certification_model->getCertList();
+                    //$getCertList = $certification_model->getCertList();
 
                     ?>
 
                     <?php
                         $attributes = array("class" => "form-horizontal", "id" => "addCert", "name" => "addCert");
-                        echo form_open("monitoring/monitoring_add", $attributes);
+                        echo form_open("monitoring/monitoring_add/$profile_id", $attributes);
                     ?>
 
 
                     <div class="btn-group">
-                        <input id="btn_addCert" name="btn_addCert" type="submit" class="btn btn-primary" value="Add Cert"/>
+                        <input id="btn_addCert" name="btn_addCert" type="submit" class="btn btn-primary" value="Add Monitoring"/>
                     </div>
 
-                    <br/>
-                    <h4>Certification Details</h4>
+                    <br/> <br/>
+
                     <table class="table table-bordered table-striped">
                         <tr>
                             <td align="center"><b>&nbsp;</b></td>
-                            <td align="center"><b>Certificate No</b></td>
+                            <td align="center"><b>&nbsp;</b></td>
+                            <td align="center"><b>&nbsp;</b></td>
+                            <td align="center"><b>&nbsp;</b></td>
+
+                            <!--<td align="center"><b>Certificate No</b></td>
                             <td align="center"><b>Date Issued</b></td>
                             <td align="center"><b>Validity In Years</b></td>
-                            <td align="center"><b>Valid until</b></td>
+                            <td align="center"><b>Valid until</b></td>-->
                             <td align="center"><b>Visit Count</b></td>
                             <td align="center"><b>Visit Date</b></td>
                             <td align="center"><b>Remarks</b></td>
@@ -96,46 +102,37 @@
                         <tr>
 
                             <?php
+                                    //$getMonitoringList = $monitoring_model->getMonitoringList();
+                                    $getMonitoringList = $monitoring_model->getMonitoringListByRefID($profile_id);
+                            //print_r($getMonitoringList);
 
-                                foreach($getCertList as $key=>$val)
-                                {
-                                    $ref_id_cert = $val['ref_id'];
-                                    echo "<td align=\"center\"><b>";
-                                    //echo $ref_id;
-                                    //echo "monitoring_edit/".$ref_id.'/'.$profile_id;
 
-                                    echo "<a class='btn btn-sm btn-primary' href= 'monitoring_edit/$ref_id_cert/'>
+                                    foreach($getMonitoringList as $keyMonitoring => $valMonitoring)
+                                    {
+                                        $ref_id = $valMonitoring['ref_id'];
+                                        echo "<td align=\"center\"><b>";
+                                        echo "<a class='btn btn-sm btn-primary' href= '../monitoring_edit/$ref_id/'>
                                             <i class=\"fa fa-edit\"></i>Edit </a>";
-                                    echo " </b></td>";
+                                        echo " </b></td>";
 
-                                    echo "<td align=\"center\"><b>" . $val['certificate_no'] ." </b></td>";
+                                        echo "<td align=\"center\"><b>";
+                                        echo "<a class='btn btn-sm btn-primary' href= '../../indicator/indicatorView/$profile_id/$ref_id/'>
+                                            <i class=\"fa fa-edit\"></i>View Indicators </a>";
+                                        echo " </b></td>";
 
-                                    $dateIssuedToDate = date_create($val['date_issued']);
-                                    $date_issued_val = date_format($dateIssuedToDate, "F d, Y");
+                                        echo "<td align=\"center\"><b>";
+                                        echo "<a class='btn btn-sm btn-default' href= '../../certificate_issuance/certificate_issuance_list/$profile_id/'>
+                                            <i class=\" fa fa-newspaper-o\"></i>Certification Details </a>";
+                                        echo " </b></td>";
 
-                                    echo "<td align=\"center\"><b>" . $date_issued_val ." </b></td>";
+                                        echo "<td align=\"center\"><b>";
+                                        echo "<a class='btn btn-sm btn-primary' href= '../../updates/update_view/$profile_id/$ref_id/'>
+                                            <i class=\"fa fa-edit\"></i>View Updates</a>";
+                                        echo " </b></td>";
 
-                                    $getValidityByID = $certification_model->getValidityByID($val['validity']);
-
-                                    foreach($getValidityByID as $validityKey => $validityVal)
-                                    {
-                                        echo "<td align=\"center\"><b>" .$validityVal['validity_title'] ." </b></td>";
-
-                                    }
-
-                                    $strValidUntil = $val['day_valid'] . "-" . $val['month_valid'] . "-" . $val['year_valid'];
-                                    $validUntilToDate = date_create($strValidUntil);
-                                    $date_valid_val = date_format($validUntilToDate, "F d, Y");
-
-                                    echo "<td align=\"center\"><b>".$date_valid_val." </b></td>";
-
-                                    $getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($ref_id_cert);
-
-                                    foreach($getMonitoringListByRefID as $keyMonitoring => $valMonitoring)
-                                    {
                                         echo "<td align=\"center\"><b>";
                                         //echo $valMonitoring['visit_count'];
-                                        $getVisitCountByID = $monitoring_model->getVisitCountByID($valMonitoring['visit_count']);
+                                        $getVisitCountByID = $visit_model->getVisitCountByID($valMonitoring['visit_count']);
 
                                         foreach($getVisitCountByID as $keyVisit => $valVisit)
                                         {
@@ -154,10 +151,14 @@
 
                                         //Remarks
                                         echo "<td align=\"center\"><b>" . $valMonitoring['remarks'] . " </b></td>";
+                                        echo "</tr>";
+
+
                                     } //end foreach $getMonitoringListByRefID
 
-                                    echo "</tr>";
-                                }
+
+
+                                //}
                             ?>
 
                     </table>

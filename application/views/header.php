@@ -13,7 +13,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         body{background: #F5F5F5;}
 
     </style>
-    <title>LSWDO</title>
+    <title>MSFLSWDO</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 

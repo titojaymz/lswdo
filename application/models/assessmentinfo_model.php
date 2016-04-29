@@ -1,101 +1,159 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by JOSEF FRIEDRICH S. BALDO
- * Date Time: 10/17/15 11:56 PM
+ * Created by PhpStorm
+ * User: mglveniegas
+ *
  */
-class assessmentinfo_model extends CI_Model {
+class assessmentinfo_model extends CI_Model
+{
+
+
+    public function record_count()
+    { //pagination query
+        return $this->db->count_all("tbl_lswdo");
+    }
 
     public function getAssessmentinfo()
     {
-        $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
-        if ($query->num_rows() > 0){
-            return $query->result();
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
+        $sql = 'SELECT a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
+                FROM tbl_lswdo a
+                INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
+                INNER join lib_application_type c on a.application_type_id = c.application_type_id
+                WHERE a.deleted = 0';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
     }
+
 
     public function getAssessmentinfoByID($id = 0)
     {
-        $query = $this->db->get_where('tbl_lswdo',array('profile_id'=>$id,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            return $query->row();
-        } else {
+
+        $sql = 'SELECT * FROM
+tbl_lswdo AS a
+Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
+Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
+Inner Join lib_regions ON a.region_code = lib_regions.region_code
+Inner Join lib_provinces ON a.prov_code = lib_provinces.prov_code
+Inner Join lib_cities ON a.city_code = lib_cities.city_code
+Inner Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
+Inner Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
+WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+
+
+    }
+
+
+    public function insertAssessmentinfo($application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo, $created_by, $date_created)
+    {
+        if ($provlist == 0) {
+            $provlist = null;
+        }
+        if ($citylist == 0) {
+            $citylist = null;
+        }
+        $this->db->trans_begin();
+
+        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created)
+                          VALUES
+                          (
+                          "' . $application_type_id . '",
+                          "' . $lgu_type_id . '",
+                          "' . $regionlist . '",
+                          "' . $provlist . '",
+                          "' . $citylist . '",
+                          "' . $office_address . '",
+                          "' . $swdo_name . '",
+                          "' . $designation . '",
+                          "' . $contact_no . '",
+                          "' . $email . '",
+                          "' . $website . '",
+                          "' . $total_ira . '",
+                          "' . $total_budget_lswdo . '",
+                          "' . $created_by . '",
+                          Now()
+                          )');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
             return FALSE;
+        } else {
+            $insert_id = $this->db->insert_id();
+            $this->db->trans_commit();
+
+            //return TRUE;
+            return $insert_id;
         }
         $this->db->close();
     }
 
-    public function insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$brgylist,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+
+    public function insertBudgetAllocation($sector_id, $year_indicated,$budget_present_year, $utilization, $budget_previous_year, $no_bene_served, $no_target_bene, $created_by, $date_created)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,brgy_code,street_address,swdo_name,contact_no,email,website,total_ira,total_budget_lswdo)
+        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_present_year,utilization,budget_previous_year,no_bene_served,no_target_bene,created_by,date_created)
                           VALUES
                           (
-                          "'.$application_type_id.'",
-                          "'.$lgu_type_id.'",
-                          "'.$regionlist.'",
-                          "'.$provlist.'",
-                          "'.$citylist.'",
-                          "'.$brgylist.'",
-                          "'.$street_address.'",
-                          "'.$swdo_name.'",
-                          "'.$contact_no.'",
-                          "'.$email.'",
-                          "'.$website.'",
-                          "'.$total_ira.'",
-                          "'.$total_budget_lswdo.'"
+                          "' . $sector_id . '",
+                          "' . $year_indicated . '",
+                          "' . $budget_present_year . '",
+                          "' . $utilization . '",
+                          "'.$budget_previous_year.'",
+                          "' . $no_bene_served . '",
+                          "' . $no_target_bene . '",
+                           "' . $created_by . '",
+                          Now()
                           )');
 
-        if ($this->db->trans_status() === FALSE)
-        {
+        if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return FALSE;
-        }
-        else
-        {
+        } else {
             $this->db->trans_commit();
             return TRUE;
         }
         $this->db->close();
     }
 
-    public function updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$region_code,$prov_code,$city_code,$brgy_code,$street_address,$swdo_name,$contact_no,$email,$website,$total_ira,$total_budget_lswdo)
+
+    public function updateAssessmentinfo($id, $application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo, $modified_by, $date_modified)
     {
         $this->db->trans_begin();
 
         $this->db->query('UPDATE tbl_lswdo SET
-                          application_type_id="'.$application_type_id.'",
-                          lgu_type_id="'.$lgu_type_id.'",
-                          region_code="'.$region_code.'",
-                          prov_code="'.$prov_code.'",
-                          city_code="'.$city_code.'",
-                          brgy_code="'.$brgy_code.'",
-                          street_address="'.$street_address.'",
-                          swdo_name="'.$swdo_name.'",
-                          contact_no="'.$contact_no.'",
-                          email="'.$email.'",
-                          website="'.$website.'",
-                          total_ira="'.$total_ira.'",
-                          total_budget_lswdo="'.$total_budget_lswdo.'"
+                          application_type_id="' . $application_type_id . '",
+                          lgu_type_id="' . $lgu_type_id . '",
+                          region_code="' . $regionlist . '",
+                          prov_code="' . $provlist . '",
+                          city_code="' . $citylist . '",
+                          office_address="' . $office_address . '",
+                          swdo_name="' . $swdo_name . '",
+                          designation="' . $designation . '",
+                          contact_no="' . $contact_no . '",
+                          email="' . $email . '",
+                          website="' . $website . '",
+                          total_ira="' . $total_ira . '",
+                          total_budget_lswdo="' . $total_budget_lswdo . '",
+                          modified_by="' . $modified_by . '",
+                          date_modified=Now()
                           WHERE
-                          profile_id = "'.$id.'"
+                          profile_id = "' . $id . '"
                           ');
 
-        if ($this->db->trans_status() === FALSE)
-        {
+        if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return FALSE;
-        }
-        else
-        {
+        } else {
             $this->db->trans_commit();
             return TRUE;
         }
         $this->db->close();
     }
+
 
     public function deleteAssessmentinfo($id = 0)
     {
@@ -104,37 +162,36 @@ class assessmentinfo_model extends CI_Model {
         $this->db->query('UPDATE tbl_lswdo SET
                           DELETED="1"
                           WHERE
-                          profile_id = "'.$id.'"
+                          profile_id = "' . $id . '"
                           ');
 
-        if ($this->db->trans_status() === FALSE)
-        {
+        if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return FALSE;
-        }
-        else
-        {
+        } else {
             $this->db->trans_commit();
             return TRUE;
         }
         $this->db->close();
     }
-//select
+
+
     public function Lib_getAllApplicationtype()
     {
-        $query = $this->db->get_where('lib_application_type',array('DELETED' => 0));
-        if ($query->num_rows() > 0){
+        $query = $this->db->get_where('lib_application_type', array('DELETED' => 0));
+        if ($query->num_rows() > 0) {
             return $query->result();
         } else {
             return FALSE;
         }
         $this->db->close();
     }
+
 
     public function Lib_getLGUtype()
     {
-        $query = $this->db->get_where('lib_lgu_type',array('DELETED' => 0));
-        if ($query->num_rows() > 0){
+        $query = $this->db->get_where('lib_lgu_type', array('DELETED' => 0));
+        if ($query->num_rows() > 0) {
             return $query->result();
         } else {
             return FALSE;
@@ -142,30 +199,9 @@ class assessmentinfo_model extends CI_Model {
         $this->db->close();
     }
 
-    public function record_count() { //pagination query
-        return $this->db->count_all("tbl_lswdo");
-    }
-/*
-    public function fetch_assessmentinfo($user_region) { //pagination query $limit, $offset,
-        $region_access = $user_region;
-        $this->db->select('t1.profile_id, t2.application_type_id, t1.street_address, t1.swdo_name, t1.contact_no, t1.email, t1.website, t1.total_ira, t1.total_budget_lswdo');
-        $this->db->from('tbl_lswdo AS t1');
-        $this->db->join('lib_application_type t2','t1.application_type_id = t2.application_type_id','inner');
-        if ($user_region != 0) {
-            $this->db->where('t1.DELETED ="0" and t1.region ="' . $region_access . '"');
-        } else {
-            $this->db->where('t1.DELETED ="0"');
-        }
-        $query = $this->db->get();
 
-        if ($query->num_rows() > 0) {
-            return $query->result();
-        }else{
-            return $query->result();
-        }
-    }
-*/
-    public function get_lgutype() {
+    public function get_lgutype()
+    {
         $get_lgutype = "
         SELECT
           lgu_type_id,
@@ -181,7 +217,9 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_lgutype)->result();
     }
 
-    public function get_regions() {
+
+    public function get_regions()
+    {
         $get_regions = "
         SELECT
           region_code,
@@ -197,7 +235,9 @@ class assessmentinfo_model extends CI_Model {
         return $this->db->query($get_regions)->result();
     }
 
-    public function get_provinces($region_code) {
+
+    public function get_provinces($region_code)
+    {
         $get_prov = "
         SELECT
             prov_code,
@@ -210,26 +250,50 @@ class assessmentinfo_model extends CI_Model {
           prov_name
         ";
 
-        return $this->db->query($get_prov,$region_code)->result();
+        return $this->db->query($get_prov, $region_code)->result();
     }
 
-    public function get_cities($prov_code) {
+
+    public function get_cities($prov_code)
+    {
         $get_cities = "
         SELECT
-            city_code,
-            city_name
+         city_code,
+         city_name
         FROM
           lib_cities
         WHERE
           prov_code = ?
+          and city_class = ''
         ORDER BY
           city_name
         ";
 
-        return $this->db->query($get_cities,$prov_code)->result();
+        return $this->db->query($get_cities, $prov_code)->result();
     }
 
-    public function get_brgy($city_code) {
+
+    public function get_cities1($prov_code)
+    {
+        $get_cities = "
+        SELECT
+         city_code,
+         city_name
+        FROM
+          lib_cities
+        WHERE
+          prov_code = ?
+          and city_class = 'CC'
+        ORDER BY
+          city_name
+        ";
+
+        return $this->db->query($get_cities, $prov_code)->result();
+    }
+
+
+    public function get_brgy($city_code)
+    {
         $get_brgy = "
         SELECT
             brgy_code,
@@ -242,8 +306,121 @@ class assessmentinfo_model extends CI_Model {
           brgy_name
         ";
 
-        return $this->db->query($get_brgy,$city_code)->result();
+        return $this->db->query($get_brgy, $city_code)->result();
     }
 
+
+    public function get_count_city($prov_code)
+    {
+        $get_countcity = "
+        SELECT
+         city_name,
+          count(city_code) AS value_sum
+        FROM
+          lib_cities
+        WHERE
+         prov_code = ?
+          and city_class = 'CC'
+        ";
+
+        return $this->db->query($get_countcity, $prov_code)->row();
+    }
+
+
+    public function get_count_muni($prov_code)
+    {
+        $get_count_muni = "
+        SELECT
+         city_name,
+          count(city_code) AS value_sum
+        FROM
+          lib_cities
+        WHERE
+          prov_code = ?
+          and city_class = ''
+        ";
+
+        return $this->db->query($get_count_muni, $prov_code)->row();
+    }
+
+
+    public function get_incomeclass($prov_code)
+    {
+        $get_incomeclass = "
+        SELECT
+          income_class
+        FROM
+          lib_provinces
+        WHERE
+          prov_code = ?
+        ";
+
+        return $this->db->query($get_incomeclass, $prov_code)->row();
+    }
+
+
+    public function get_count_brgy($city_code)
+    {
+        $get_countbrgy = "
+        SELECT
+         lib_cities.city_name,
+         lib_brgy.brgy_name,
+         count(lib_brgy.brgy_code) AS no_brgy
+        FROM
+          lib_brgy
+        INNER JOIN
+         lib_cities on lib_brgy.city_code=lib_cities.city_code
+        WHERE
+         lib_cities.city_code = ?
+        ";
+
+        return $this->db->query($get_countbrgy, $city_code)->row();
+    }
+
+
+    public function get_total_pop($prov_code)
+    {
+        $get_total_pop = "
+         SELECT
+         lib_provinces.total_pop as total_pop
+        FROM
+          lib_provinces
+        WHERE
+          lib_provinces.prov_code = ?
+        ORDER BY
+          lib_provinces.prov_code
+        ";
+
+        return $this->db->query($get_total_pop, $prov_code)->row();
+    }
+
+
+    public function get_total_poor($prov_code)
+    {
+        $get_total_poor = "
+         SELECT
+         lib_provinces.total_poor as total_poor
+        FROM
+          lib_provinces
+        WHERE
+          lib_provinces.prov_code = ?
+        ORDER BY
+          lib_provinces.prov_code
+        ";
+
+        return $this->db->query($get_total_poor, $prov_code)->row();
+    }
+
+
+    public function get_AssessmentRecord()
+    {
+    $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
+    if ($query->num_rows() > 0){
+        return $query->result();
+    } else {
+        return FALSE;
+    }
+    $this->db->close();
+    }
 
 }

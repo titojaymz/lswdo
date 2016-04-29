@@ -42,7 +42,10 @@ Summernote
 
 <!-- HIGH CHARTS-->
 
+
 <script type="text/javascript" src="<?php echo base_url('assets/js/highcharts.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/modules/exporting.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/modules/export-csv.js'); ?>"></script>
 
 <!-- ================================================
 /modules/exporting.js
@@ -65,7 +68,7 @@ Chartist
 <!-- main file -->
 <script type="text/javascript" src="<?php echo base_url('assets/bootstrap/js/chartist/chartist.js'); ?>"></script>
 <!-- demo codes -->
-<!--<script type="text/javascript" src="--><?php //echo base_url('assets/bootstrap/js/chartist/chartist-plugin.js'); ?><!--"></script>-->
+<script type="text/javascript" src="<?php echo base_url('assets/bootstrap/js/chartist/chartist-plugin.js'); ?>"></script>
 
 <!-- ================================================
 Easy Pie Chart
