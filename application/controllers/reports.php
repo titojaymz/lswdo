@@ -26,6 +26,8 @@ class reports extends CI_Controller {
     }
     public function viewTable()
     {
+        $report_model = new reports_model();
+        $regionlist2 = $report_model->get_regions();
         $regionlist = $this->input->post('regionlist');
         $provlist = $this->input->post('prov_pass');
         $citylist = $this->input->post('city_pass');
@@ -49,6 +51,7 @@ class reports extends CI_Controller {
             'citylist2' => $citylist,
             'LGUtype2' => $LGUtype,
             'sectorType2' => $sectorType,
+            'regionlists' => $regionlist2,
             'submit' => $submit,
         ));
         $this->load->view('footer');
