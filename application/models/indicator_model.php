@@ -787,6 +787,57 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result_array();
     }
+    public function getScorePartarray2($regCode,$provCode,$lguType){
+
+        if($lguType != 0) {
+            if ($regCode != 0) {
+                if ($provCode != 0) {
+                    $where2 = 'where b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"
+                    and b.prov_code = "' . $provCode . '"';
+
+                } else {
+                    $where2 = 'where b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                }
+            } else {
+                $where2 = 'where  b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+            }
+        } else {
+            if ($regCode != 0) {
+                if ($provCode != 0) {
+                    $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and b.prov_code = "' . $provCode . '"';
+
+                } else {
+                    $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                }
+            } else {
+                $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+            }
+        }
+
+        $sql = 'select a.indicator_id,c.indicator_name,SUM(if(a.compliance_indicator_id = 1,1,0)) TotalCompliance
+        from tbl_lswdo_standard_indicators a
+        INNER JOIN tbl_lswdo b
+        ON a.profile_id = b.profile_id
+        inner join lib_indicator_codes c
+        on a.indicator_id = c.indicator_id
+        '.$where2.'
+        group by a.indicator_id
+        Order by TotalCompliance DESC
+        LIMIT 10;
+        ';
+        $query = $this->db->query($sql);
+        return  $query->result_array();
+    }
     public function getNCperLSWDO($regCode,$provCode,$cityCode){
 
             if ($regCode != 0) {
