@@ -23,7 +23,10 @@ class dashboardc extends CI_Controller {
             'countRegion'=>$dashboard_model->countRegions(),
             'pgetScorePart1'=>$indicator_model->getScorePartarray1($regCode,$provCode,$lgu_PSWDO),
             'cgetScorePart1'=>$indicator_model->getScorePartarray1($regCode,$provCode,$lgu_CSWDO),
-            'mgetScorePart1'=>$indicator_model->getScorePartarray1($regCode,$provCode,$lgu_MSWDO)
+            'mgetScorePart1'=>$indicator_model->getScorePartarray1($regCode,$provCode,$lgu_MSWDO),
+            'pgetScorePart2'=>$indicator_model->getScorePartarray2($regCode,$provCode,$lgu_PSWDO),
+            'cgetScorePart2'=>$indicator_model->getScorePartarray2($regCode,$provCode,$lgu_CSWDO),
+            'mgetScorePart2'=>$indicator_model->getScorePartarray2($regCode,$provCode,$lgu_MSWDO),
 
         ));
         $this->load->view('footer');
