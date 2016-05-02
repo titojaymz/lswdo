@@ -40,7 +40,7 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-        $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
+       // $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
 
         $this->validateAddForm();
 
@@ -54,7 +54,7 @@ class assessmentinfo extends CI_Controller {
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
-            $rpmb['swdo_nameRenew'] = $swdo_nameRenew;
+            //$rpmb['swdo_nameRenew'] = $swdo_nameRenew;
             $rpmb['form_message'] = $form_message;
 
             if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -86,7 +86,9 @@ class assessmentinfo extends CI_Controller {
             $created_by = $this->session->userdata('user_id');
             $date_created = 'NOW()';
 
-
+            if ($citylist == 0) {
+            $citylist = "null";
+            }
             $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created);
             if ($addResult){
 
@@ -108,7 +110,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'swdo_nameRenew' => $swdo_nameRenew,
+                   // 'swdo_nameRenew' => $swdo_nameRenew,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
@@ -140,7 +142,7 @@ class assessmentinfo extends CI_Controller {
 
             $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
             $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-           // $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
+            // $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
 
             $this->validateEditForm();
 
@@ -150,11 +152,11 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('sidebar');
 
-               $this->init_rpmb_session();
+                $this->init_rpmb_session();
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
                 $rpmb['application'] = $application_type_name;
                 $rpmb['lgu_type'] = $lgu_type_name;
-               // $rpmb['swdo_nameRenew'] = $swdo_nameRenew;
+                // $rpmb['swdo_nameRenew'] = $swdo_nameRenew;
                 $rpmb['form_message'] = $form_message;
 
                 if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -209,7 +211,7 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
-                       // 'swdo_nameRenew' => $swdo_nameRenew,
+                        // 'swdo_nameRenew' => $swdo_nameRenew,
                         'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message
@@ -411,6 +413,27 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function populate_countbrgy2()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $numberofbrgy = $this->assessmentinfo_model->get_count_brgy2($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'no_brgy',
+                'name'       => 'no_brgy',
+                'value'   =>  $numberofbrgy->no_brgy,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
 
     public function populate_incomeclass()
     {
@@ -537,14 +560,14 @@ class assessmentinfo extends CI_Controller {
         return $query->list_fields();
     }
 
-/*
-    public function redirectIndex()
-    {
-            $page = base_url();
-            $sec = "1";
-            header("Refresh: $sec; url=$page");
-    }
-*/
+    /*
+        public function redirectIndex()
+        {
+                $page = base_url();
+                $sec = "1";
+                header("Refresh: $sec; url=$page");
+        }
+    */
 
     public function refreshCurPage()
     {

@@ -49,12 +49,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
 
     public function insertAssessmentinfo($application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo, $created_by, $date_created)
     {
-        if ($provlist == 0) {
-            $provlist = null;
-        }
-        if ($citylist == 0) {
-            $citylist = null;
-        }
+
         $this->db->trans_begin();
 
         $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created)
@@ -64,7 +59,7 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
                           "' . $lgu_type_id . '",
                           "' . $regionlist . '",
                           "' . $provlist . '",
-                          "' . $citylist . '",
+                           '.$citylist.',
                           "' . $office_address . '",
                           "' . $swdo_name . '",
                           "' . $designation . '",
@@ -377,6 +372,25 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_countbrgy, $city_code)->row();
     }
 
+    public function get_count_brgy2($prov_code)
+    {
+        $get_countbrgy2 = "
+        SELECT
+lib_cities.city_name,
+lib_regions.region_name,
+count(lib_brgy.brgy_name) as no_brgy
+FROM
+lib_brgy
+Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
+Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
+Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
+        WHERE
+         lib_provinces.prov_code = ?
+        ";
+
+        return $this->db->query($get_countbrgy2, $prov_code)->row();
+    }
+
 
     public function get_total_pop($prov_code)
     {
@@ -411,6 +425,54 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         return $this->db->query($get_total_poor, $prov_code)->row();
     }
 
+    public function get_swdo()
+    {
+        $get_swdo = "
+        SELECT
+          profile_id,
+          swdo_name
+        FROM
+          tbl_lswdo
+        WHERE
+          DELETED='0'
+        ORDER BY
+          swdo_name
+        ";
+
+        return $this->db->query($get_swdo)->result();
+    }
+
+    public function get_records($swdo_name)
+    {
+        $get_records = "
+        SELECT
+        tbl_lswdo.profile_id,
+        lib_lgu_type.lgu_type_name,
+        lib_regions.region_name,
+        lib_provinces.prov_name,
+        lib_cities.city_name,
+        tbl_lswdo.office_address as office_address,
+        tbl_lswdo.swdo_name as swdo_name,
+        tbl_lswdo.designation,
+        tbl_lswdo.contact_no,
+        tbl_lswdo.email,
+        tbl_lswdo.website,
+        tbl_lswdo.total_ira,
+        tbl_lswdo.total_budget_lswdo
+        FROM
+          tbl_lswdo
+          INNER JOIN lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
+          INNER JOIN lib_regions ON tbl_lswdo.region_code = lib_regions.region_code
+          INNER JOIN lib_provinces ON tbl_lswdo.prov_code = lib_provinces.prov_code
+          INNER JOIN lib_cities ON tbl_lswdo.city_code = lib_cities.city_code
+        WHERE
+        tbl_lswdo.swdo_name = ?
+        ORDER BY
+        tbl_lswdo.swdo_name
+        ";
+
+        return $this->db->query($get_records, $swdo_name)->row();
+    }
 
     public function get_AssessmentRecord()
     {

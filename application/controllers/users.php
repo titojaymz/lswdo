@@ -76,14 +76,14 @@ class users extends CI_Controller {
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'ssl://smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->Host = '';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'itsm-desk@dswd.gov.ph';                 // SMTP username
-        $mail->Password = 'm21l3rm0d3r@t0r123';                           // SMTP password
+        $mail->Username = '';                 // SMTP username
+        $mail->Password = '';                           // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;                                    // TCP port to connect to
 
-        $mail->setFrom('msflswdo-noreply@dswd.gov.ph', 'msflswdo-noreply@dswd.gov.ph');
+        $mail->setFrom('', '');
         $mail->addAddress($email);     // Add a recipient
         $mail->isHTML(true);                                  // Set email format to HTML
 

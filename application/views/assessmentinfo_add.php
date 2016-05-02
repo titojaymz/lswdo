@@ -11,6 +11,33 @@ if (!$this->session->userdata('user_id')){
 
 ?>
 <script type="text/javascript">
+
+    /*
+     function GroupStatus() {
+     var e = document.getElementById("application_type_id").value;
+     if (e == 0)
+     {
+     document.getElementById("group_new").style.display = "none";
+     document.getElementById("group_new").style.visibility = "hidden";
+     document.getElementById("group_renewal").style.display = "none";
+     document.getElementById("group_renewal").style.visibility = "hidden";
+     }
+     else if (e==1)
+     {
+     document.getElementById("group_new").style.display = "block";
+     document.getElementById("group_new").style.visibility = "visible";
+     document.getElementById("group_renewal").style.display = "none";
+     document.getElementById("group_renewal").style.visibility = "hidden";
+     }
+     else {
+     document.getElementById("group_new").style.display = "none";
+     document.getElementById("group_new").style.visibility = "hidden";
+     document.getElementById("group_renewal").style.display = "block";
+     document.getElementById("group_renewal").style.visibility = "visible";
+     }
+     }
+     */
+
     function askLGU() {
         var e = document.getElementById("lgu_type_id").value;
         if (e == 1)
@@ -33,31 +60,6 @@ if (!$this->session->userdata('user_id')){
         }
     }
 
-    function GroupStatus() {
-        var e = document.getElementById("application_type_id").value;
-        if (e == 0)
-        {
-            document.getElementById("group_new").style.display = "none";
-            document.getElementById("group_new").style.visibility = "hidden";
-            document.getElementById("group_renewal").style.display = "none";
-            document.getElementById("group_renewal").style.visibility = "hidden";
-        }
-        else if (e==1)
-        {
-            document.getElementById("group_new").style.display = "block";
-            document.getElementById("group_new").style.visibility = "visible";
-            document.getElementById("group_renewal").style.display = "none";
-            document.getElementById("group_renewal").style.visibility = "hidden";
-        }
-        else {
-            document.getElementById("group_new").style.display = "none";
-            document.getElementById("group_new").style.visibility = "hidden";
-            document.getElementById("group_renewal").style.display = "block";
-            document.getElementById("group_renewal").style.visibility = "visible";
-        }
-    }
-
-
     function get_provinces() {
         var region_code = $('#regionlist').val();
         $('#citylist option:gt(0)').remove().end();
@@ -74,8 +76,6 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-
-
         } else {
             $('#provlist option:gt(0)').remove().end();
         }
@@ -86,8 +86,65 @@ if (!$this->session->userdata('user_id')){
         var lgu_type = $('#lgu_type_id').val();
         $('#brgylist option:gt(0)').remove().end();
 
+        if(lgu_type == 1 && prov_code > 0) {
 
-        if(lgu_type == 2 && prov_code > 0) {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupCity').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countmuni'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupmuni').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy2'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupbrgy').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+        }
+
+       else if(lgu_type == 2 && prov_code > 0) {
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
                 async: false,
@@ -145,9 +202,9 @@ if (!$this->session->userdata('user_id')){
                     $('#total_pop').html(data);
                 }
             });
-
+/*
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
+                url: "<?php //echo base_url('assessmentinfo/populate_total_poor'); ?>",
                 async: false,
                 type: "POST",
                 data: "prov_code="+prov_code,
@@ -156,7 +213,7 @@ if (!$this->session->userdata('user_id')){
                     $('#total_poor').html(data);
                 }
             });
-
+*/
         }
         else if (lgu_type == 3 && prov_code > 0)
         {
@@ -172,12 +229,13 @@ if (!$this->session->userdata('user_id')){
             });
 //
         }
-else
+        else
         {
             $('#citylist option:gt(0)').remove().end();
         }
 
     }
+
     function get_brgy() {
         var city_code = $('#citylist').val();
         if(city_code > 0) {
@@ -224,20 +282,20 @@ else
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
-
+<!--onChange="GroupStatus();"-->
                         <div class="form-group">
                             <label class="control-label">Status of Application:</label>
-                            <select class="form-control" name="application_type_id" id="application_type_id" onChange="GroupStatus();">
+                            <select class="form-control" name="application_type_id" id="application_type_id" required>
                                 <option select value="0">Please select</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
                             </select>
 
-                            <div id="group_new">
+                            <!--   <div id="group_new">-->
 
-                                <label class="control-label">Type of LSWDO</label>
-                                <!--Select-->
+                                   <label class="control-label">Type of LSWDO</label>
+                                   <!--Select-->
                                 <select id="lgu_type_id" name="lgu_type_id" placeholder="lgu_type_id" type="text" class="form-control" onchange="askLGU();" required>
                                     <option select value="">Please select</option>
                                     <?php foreach($lgu_type as $lgus): ?>
@@ -252,7 +310,7 @@ else
                                             <fieldset>
                                                 <div class="control-group">
                                                     <div class="controls">
-                                                        <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();">
+                                                        <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();" required>
                                                             <option value="0">Choose Region</option>
                                                             <?php foreach($regionlist as $regionselect): ?>
                                                                 <option value="<?php echo $regionselect->region_code; ?>"
@@ -325,7 +383,7 @@ else
                                                     }
                                                 } else {
                                                     ?>
-                                                    <option>Select Province First</option>
+                                                    <option value="0">Select Province First</option>
                                                     <?php
                                                 } ?>
                                             </select>
@@ -352,7 +410,6 @@ else
                                     </div>
                                 </div>
 
-
                                 <label for="no_brgy">No. of Barangays:</label>
                                 <div id="groupbrgy">
                                     <div class="control-group">
@@ -372,7 +429,6 @@ else
                                     </div>
                                 </div>
 
-
                                 <label for="total_pop">Total Population:</label>
                                 <div id="total_pop">
                                     <div class="control-group">
@@ -381,8 +437,6 @@ else
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <label for="total_poor">Total No. of Poor Families:</label>
                                 <div id="total_poor">
@@ -394,60 +448,52 @@ else
                                 </div>
 
                                 <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="Name of SWDO Officer/Head">
-
-
+                                <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="Name of SWDO Officer/Head" required>
 
                                 <label for="designation">Designation:</label>
-                                <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation">
-
-
+                                <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation" required>
 
                                 <label for="office_address">Office Address:</label>
-                                <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address">
-
-
+                                <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address" required>
 
                                 <label for="contact_no">Contact No:</label>
-                                <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No">
-
-
+                                <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No" required>
 
                                 <label for="email">Email:</label>
-                                <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email">
-
-
+                                <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" required>
 
                                 <label for="website">Website:</label>
-                                <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website">
+                                <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website" required>
 
                                 </br>
                                 <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
 
-
                                 <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-</br></br>
+                                </br></br>
 
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total IRA">
+                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total Internal Revenue Allotment">
 
 
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
                                 <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO">
 
-                            </div>
-                            <div id="group_renewal">
-
+                       <!--     </div>
+                            <div id="group_renewal"> -->
+<!---
                                 <label for="swdo_nameRenew">Name of SWDO Officer/Head:</label>
                                 <select class="form-control" name="swdo_nameRenew" id="swdo_nameRenew">
                                     <option select value="">Please select</option>
-                                    <?php foreach($swdo_nameRenew as $swdos): ?>
-                                        <option value="<?php echo $swdos->swdo_name ?>"><?php echo $swdos->swdo_name ?></option>
-                                    <?php endforeach ?>
+                                    <?php //foreach($swdo_nameRenew as $swdos): ?>
+                                        <option value="<?php //echo $swdos->swdo_name ?>"><?php //echo $swdos->swdo_name ?></option>
+                                    <?php //endforeach ?>
                                 </select>
 
-
-                            </div>
+                            </div>-->
+                            <pre>
+                                <?php echo $lgus->lgu_type_id; ?>
+                                <?php echo set_value('total_budget_lswdo') ?>
+                            </pre>
                         </div>
                         <div class="form-group">
                             <div class="btn-group">
