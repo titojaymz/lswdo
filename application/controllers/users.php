@@ -4,6 +4,22 @@
  * Date Time: 10/17/15 10:57 PMasdasdas
  */
 class users extends CI_Controller {
+
+    /***
+     * methods added:
+     * date added: May 3, 2016
+     * added by: jfsbaldo
+     * description: added this method to optimize the code for email credentials
+     */
+    protected function email_credentials()
+    {
+        return array(
+            'host' => '',
+            'username' => '',
+            'password' => '',
+            'mail_sender' => ''
+        );
+    }
     public function index()
     {
         redirect('/users/login','location');
@@ -71,19 +87,21 @@ class users extends CI_Controller {
     }
 
     public function registration_sendmail($email,$username,$firstname,$middlename,$surname,$extensionname,$regionlist) {
+
+        $email_credentials = $this->email_credentials();
         $mail = new PHPMailer;
 
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = '';  // Specify main and backup SMTP servers
+        $mail->Host = $email_credentials['host'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = '';                 // SMTP username
-        $mail->Password = '';                           // SMTP password
+        $mail->Username = $email_credentials['username'];                 // SMTP username
+        $mail->Password = $email_credentials['password'];                           // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;                                    // TCP port to connect to
 
-        $mail->setFrom('', '');
+        $mail->setFrom($email_credentials['mail_sender'], $email_credentials['mail_sender']);
         $mail->addAddress($email);     // Add a recipient
         $mail->isHTML(true);                                  // Set email format to HTML
 
@@ -319,20 +337,21 @@ class users extends CI_Controller {
     }
     public function forgotpassword_sendmail($email,$password)
     {
+        $email_creds = $this->email_credentials();
         $this->load->library('My_PHPMailer');
         $mail = new PHPMailer;
 
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'ssl://smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->Host = $email_creds['host'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'itsm-desk@dswd.gov.ph';                 // SMTP username
-        $mail->Password = 'm21l3rm0d3r@t0r123';                           // SMTP password
+        $mail->Username = $email_creds['username'];                 // SMTP username
+        $mail->Password = $email_creds['password'];                           // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;                                    // TCP port to connect to
 
-        $mail->setFrom('msflswdo-noreply@dswd.gov.ph', 'msflswdo-noreply@dswd.gov.ph');
+        $mail->setFrom($email_creds['mail_sender'], $email_creds['mail_sender']);
         $mail->addAddress($email);     // Add a recipient
         $mail->isHTML(true);                                  // Set email format to HTML
 
