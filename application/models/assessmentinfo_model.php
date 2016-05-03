@@ -429,6 +429,26 @@ Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
         return $this->db->query($get_total_poor, $prov_code)->row();
     }
 
+    public function get_total_poor2($city_code)
+    {
+        $get_total_poor2 = "
+         SELECT
+         sum(lib_brgy.Total_Poor_HHs) as total_poor
+        FROM
+          lib_regions
+        INNER JOIN
+          lib_provinces ON lib_provinces.region_code = lib_regions.region_code
+          Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
+          Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
+        WHERE
+          lib_cities.city_code = ?
+        ORDER BY
+          lib_cities.city_code
+        ";
+
+        return $this->db->query($get_total_poor2, $city_code)->row();
+    }
+
     public function get_swdo()
     {
         $get_swdo = "

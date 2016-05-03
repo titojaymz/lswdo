@@ -214,17 +214,6 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_poor').html(data);
-                }
-            });
-
         }
         else if (lgu_type == 3 && prov_code > 0)
         {
@@ -296,16 +285,7 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_poor').html(data);
-                }
-            });
+
 //
         }
         else
@@ -317,19 +297,58 @@ if (!$this->session->userdata('user_id')){
 
     function get_brgy() {
         var city_code = $('#citylist').val();
-        if(city_code > 0) {
+        var lgu_type = $('#lgu_type_id').val();
+
+        if(lgu_type == 2 && city_code > 0) {
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
                 async: false,
                 type: "POST",
-                data: "city_code="+city_code,
+                data: "city_code=" + city_code,
                 dataType: "html",
-                success: function(data) {
+                success: function (data) {
                     $('#groupbrgy').html(data);
                 }
             });
 
-        } else {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#total_poor').html(data);
+                }
+            });
+        }
+        else if(lgu_type == 3 && city_code > 0){
+
+
+                $.ajax({
+                    url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
+                    async: false,
+                    type: "POST",
+                    data: "city_code="+city_code,
+                    dataType: "html",
+                    success: function(data) {
+                        $('#groupbrgy').html(data);
+                    }
+                });
+
+                $.ajax({
+                    url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
+                    async: false,
+                    type: "POST",
+                    data: "city_code="+city_code,
+                    dataType: "html",
+                    success: function(data) {
+                        $('#total_poor').html(data);
+                    }
+                });
+        }
+         else {
             $('#brgylist option:gt(0)').remove().end();
         }
     }

@@ -247,9 +247,9 @@ class assessmentinfo extends CI_Controller {
             $data = array(
                 'profile_id'                 =>      $AssessmentDetails->profile_id,
                 'application_type_id'        =>      $AssessmentDetails->application_type_id,
-                'application_type_name'        =>      $AssessmentDetails->application_type_name,
+                'application_type_name'      =>      $AssessmentDetails->application_type_name,
                 'lgu_type_id'                =>      $AssessmentDetails->lgu_type_id,
-                'lgu_type_name'                =>      $AssessmentDetails->lgu_type_name,
+                'lgu_type_name'              =>      $AssessmentDetails->lgu_type_name,
                 'region_name'                =>      $AssessmentDetails->region_name,
                 'prov_name'                  =>      $AssessmentDetails->prov_name,
                 'city_name'                  =>      $AssessmentDetails->city_name,
@@ -266,7 +266,6 @@ class assessmentinfo extends CI_Controller {
             );
         } else {
             $form_message = 'No records found!';
-
             $data = array(
                 'form_message'      =>      $form_message
             );
@@ -502,6 +501,27 @@ class assessmentinfo extends CI_Controller {
         {
             $prov_code = $_POST['prov_code'];
             $totalpoor = $this->assessmentinfo_model->get_total_poor($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_poor',
+                'name'       => 'total_poor',
+                'value'   =>  $totalpoor->total_poor,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_poor2()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $totalpoor = $this->assessmentinfo_model->get_total_poor2($city_code);
 
             $data = array(
                 'type'        => 'text',
