@@ -122,9 +122,9 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $this->db->query('UPDATE tbl_lswdo SET
                           application_type_id="' . $application_type_id . '",
                           lgu_type_id="' . $lgu_type_id . '",
-                          region_code="' . $regionlist . '",
-                          prov_code="' . $provlist . '",
-                          city_code="' . $citylist . '",
+                          region_code=' . $regionlist . ',
+                          prov_code=' . $provlist . ',
+                          city_code=' . $citylist . ',
                           office_address="' . $office_address . '",
                           swdo_name="' . $swdo_name . '",
                           designation="' . $designation . '",

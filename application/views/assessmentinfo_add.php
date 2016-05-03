@@ -251,7 +251,7 @@ if (!$this->session->userdata('user_id')){
             });
 
         } else {
-            $('#citylist option:gt(0)').remove().end();
+            $('#brgylist option:gt(0)').remove().end();
         }
     }
 
@@ -490,10 +490,7 @@ if (!$this->session->userdata('user_id')){
                                 </select>
 
                             </div>-->
-                            <pre>
-                                <?php echo $lgus->lgu_type_id; ?>
-                                <?php echo set_value('total_budget_lswdo') ?>
-                            </pre>
+
                         </div>
                         <div class="form-group">
                             <div class="btn-group">
