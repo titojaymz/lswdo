@@ -413,9 +413,13 @@ Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
     {
         $get_total_poor = "
          SELECT
-         lib_provinces.total_poor as total_poor
+         sum(lib_brgy.Total_Poor_HHs) as total_poor
         FROM
-          lib_provinces
+          lib_regions
+        INNER JOIN
+          lib_provinces ON lib_provinces.region_code = lib_regions.region_code
+          Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
+          Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
         WHERE
           lib_provinces.prov_code = ?
         ORDER BY

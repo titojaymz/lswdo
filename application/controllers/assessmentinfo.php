@@ -89,6 +89,7 @@ class assessmentinfo extends CI_Controller {
             if ($citylist == 0) {
             $citylist = "null";
             }
+
             $addResult = $assessmentinfo_model->insertAssessmentinfo($application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$created_by,$date_created);
             if ($addResult){
 
@@ -102,7 +103,7 @@ class assessmentinfo extends CI_Controller {
                     $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                 }
 
-                $form_message = 'Add Success!';
+                $form_message = 'Add Succeeded!';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
@@ -117,12 +118,12 @@ class assessmentinfo extends CI_Controller {
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex($addResult);
+                $this->redirectIndex2($addResult);
             }
         }
     }
 
-    public function redirectIndex($addResult)
+    public function redirectIndex2($addResult)
     {
         $page = base_url('budgetallocation/addBudgetAllocation/'.$addResult);
 //        $sec = "1";
@@ -188,15 +189,9 @@ class assessmentinfo extends CI_Controller {
                 $modified_by= $this->session->userdata('user_id');
                 $date_modified = 'NOW()';
 
-                if ($regionlist == 0) {
-                    $regionlist = "null";
-                }
-                if ($provlist == 0) {
-                    $provlist = "null";
-                }
                 if ($citylist == 0) {
                     $citylist = "null";
-               }
+                }
 
                 $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified);
                 if ($updateResult){
@@ -213,7 +208,7 @@ class assessmentinfo extends CI_Controller {
                         $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                     }
 
-                    $form_message = 'Update Success';
+                    $form_message = 'Update Succeeded';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('sidebar');
@@ -232,7 +227,7 @@ class assessmentinfo extends CI_Controller {
         }
         else
         {
-
+            $this->load->view('no_id',array('redirectIndex'=>$this->redirectIndex()));
         }
     }
 
@@ -246,6 +241,7 @@ class assessmentinfo extends CI_Controller {
 
         $assessmentinfo_model = new assessmentinfo_model();
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
+
         if ($AssessmentDetails){
             $form_message = $form_message;
             $data = array(
@@ -270,10 +266,12 @@ class assessmentinfo extends CI_Controller {
             );
         } else {
             $form_message = 'No records found!';
+
             $data = array(
                 'form_message'      =>      $form_message
             );
         }
+
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
@@ -294,7 +292,7 @@ class assessmentinfo extends CI_Controller {
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
             if ($deleteResult){
-                $form_message = 'Delete Success!';
+                $form_message = 'Delete Succeeded!';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('assessmentinfo_list',array(
@@ -303,14 +301,14 @@ class assessmentinfo extends CI_Controller {
                     'form_message'=>$form_message,
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex2();
+                $this->redirectIndex();
 
 
             }
         }
     }
 
-    public function redirectIndex2()
+    public function redirectIndex()
     {
         $page = base_url('assessmentinfo/index/');
 //        $sec = "1";

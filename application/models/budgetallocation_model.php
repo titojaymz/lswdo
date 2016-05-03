@@ -105,6 +105,7 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
+/*
     public function budgetallocation_masterview($id = 0,$form_message = '')
     {
         if (!$this->session->userdata('user_id'))
@@ -138,6 +139,7 @@ class budgetallocation_model extends CI_Model {
         $this->load->view('budgetallocation_masterview',$data);
         $this->load->view('footer');
     }
+*/
 
     public function deleteBudgetAllocation($id = 0)
     {

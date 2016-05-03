@@ -285,10 +285,7 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
-
-
 </script>
-
 <?php if (validation_errors() <> '') { ?>
     <div class="alert alert-danger">
         <strong><?php echo validation_errors() ?></strong>
@@ -296,7 +293,6 @@ if (!$this->session->userdata('user_id')){
 <?php } ?>
 <body>
 <div class="content">
-
     <!-- Start Page Header -->
     <div class="page-header">
         <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
@@ -306,7 +302,6 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
-
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -319,12 +314,12 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <label for="profile_id">Profile ID:</label>
 
-                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" disabled>
+                            <input class="form-control" type="hidden" id="profile_id" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" disabled>
                         </div>
                         <!--onChange="GroupStatus();"-->
                         <div class="form-group">
                             <label for="application_type_id">Status of Application: </label>
-                            <select name="application_type_id" id="application_type_id" class="form-control" onChange="GroupStatus();">
+                            <select name="application_type_id" id="application_type_id" class="form-control">
                                 <option value="0">-Please select-</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id; ?>"
@@ -340,7 +335,7 @@ if (!$this->session->userdata('user_id')){
                             </select>
                         </div>
 
-                        <div id="group_new">
+                        <!--    <div id="group_new">-->
 
                             <div class="form-group">
                                 <label class="control-label">Type of LSWDO: </label>
@@ -554,11 +549,10 @@ if (!$this->session->userdata('user_id')){
                                 <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                             </div>
 
-                          </div>
-                        <div id="group_renewal">
+                            <!--   </div>-->
+                       <!-- <div id="group_renewal">-->
 
-
-                       </div>
+                            <!--   </div>-->
                         <pre><?php echo $assessmentinfo_details->region_name; ?>
                         </pre>
                  </div>
