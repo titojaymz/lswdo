@@ -20,7 +20,7 @@ if (!$this->session->userdata('user_id')){
         <label for="geo_info" class="control-label"> View: Identifying Information </label>
     </div>
     <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
-    <a href="<?php echo base_url()?>assessmentinfo/addAssessmentinfo/<?php echo $profile_id ?>/<?php echo $application_type_id ?>/<?php echo $lgu_type_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
+    <a class="btn btn-sm btn-success" href="<?php echo base_url('assessmentinfo/addAssessmentinfo/')?>"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
     <br><br>
     <table class="table table-bordered">
         <tr>

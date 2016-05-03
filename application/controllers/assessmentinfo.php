@@ -264,7 +264,8 @@ class assessmentinfo extends CI_Controller {
                 'email'                      =>      $AssessmentDetails->email,
                 'website'                    =>      $AssessmentDetails->website,
                 'total_ira'                  =>      $AssessmentDetails->total_ira,
-                'total_budget_lswdo'         =>      $AssessmentDetails->total_budget_lswdo
+                'total_budget_lswdo'         =>      $AssessmentDetails->total_budget_lswdo,
+                'form_message'  =>      $form_message
 
             );
         } else {
