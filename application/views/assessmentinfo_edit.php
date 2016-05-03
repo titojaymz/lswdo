@@ -23,6 +23,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "hidden";
             document.getElementById("groupLGUBrgy").style.display = "none";
             document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+
             document.getElementById("groupCity").style.display = "block";
             document.getElementById("groupCity").style.visibility = "visible";
             document.getElementById("groupmuni").style.display = "block";
@@ -40,6 +41,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "visible";
             document.getElementById("groupLGUBrgy").style.display = "block";
             document.getElementById("groupLGUBrgy").style.visibility = "visible";
+
             document.getElementById("groupCity").style.display = "none";
             document.getElementById("groupCity").style.visibility = "hidden";
             document.getElementById("groupmuni").style.display = "none";
@@ -110,13 +112,70 @@ if (!$this->session->userdata('user_id')){
 
     }
 
-
     function get_cities() {
         var prov_code = $('#provlist').val();
         var lgu_type = $('#lgu_type_id').val();
         var cityCode = $('#city_pass').val();
 
-        if(lgu_type == 2 && prov_code > 0) { $.ajax({
+        if(lgu_type == 1 && prov_code > 0) {
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupCity').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countmuni'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupmuni').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy2'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupbrgy').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+        }
+
+       else if(lgu_type == 2 && prov_code > 0) { $.ajax({
             url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
             async: false,
             type: "POST",
@@ -262,7 +321,7 @@ if (!$this->session->userdata('user_id')){
 
                             <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" disabled>
                         </div>
-
+                        <!--onChange="GroupStatus();"-->
                         <div class="form-group">
                             <label for="application_type_id">Status of Application: </label>
                             <select name="application_type_id" id="application_type_id" class="form-control" onChange="GroupStatus();">
@@ -362,7 +421,7 @@ if (!$this->session->userdata('user_id')){
                                         <label for="citylist" class="col-lg-2 control-label">City: </label>
                                         <div id="div_citylist" class="col-lg-8">
                                             <select id="citylist" name="citylist" class="form-control" onchange="get_brgy();">
-                                                <?php if($assessmentinfo_details->city_code or $assessmentinfo_details->prov_code) {
+                                                <?php if(isset($assessmentinfo_details->city_code) or isset($assessmentinfo_details->prov_code)) {
                                                     ?>
                                                     <option value="0">Choose City</option>
                                                     <?php
@@ -378,7 +437,7 @@ if (!$this->session->userdata('user_id')){
                                                     }
                                                 } else {
                                                     ?>
-                                                    <option>Select City First</option>
+                                                    <option>Select Province First</option>
                                                     <?php
                                                 } ?>
                                             </select>
@@ -457,65 +516,66 @@ if (!$this->session->userdata('user_id')){
 
                             <div class="form-group">
                                 <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <input class="form-control" type="text" name="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head">
+                                <input class="form-control" type="text" name="swdo_name" id="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head">
                             </div>
 
                             <div class="form-group">
                                 <label for="designation">Designation:</label>
-                                <input class="form-control" type="text" name="designation" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation">
+                                <input class="form-control" type="text" name="designation" id="designation" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation">
                             </div>
 
                             <div class="form-group">
                                 <label for="office_address">Office Address:</label>
-                                <input class="form-control" type="text" name="office_address" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address">
+                                <input class="form-control" type="text" name="office_address" id="office_address" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address">
                             </div>
 
                             <div class="form-group">
                                 <label for="contact_no">Contact No:</label>
-                                <input class="form-control" type="text" name="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
+                                <input class="form-control" type="text" name="contact_no" id="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input class="form-control" type="text" name="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
+                                <input class="form-control" type="text" name="email" id="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
                             </div>
 
                             <div class="form-group">
                                 <label for="website">Website:</label>
-                                <input class="form-control" type="text" name="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
+                                <input class="form-control" type="text" name="website" id="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
                             </div>
 
                             <div class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="text" name="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total IRA">
+                                <input class="form-control" type="text" name="total_ira" id="total_ira" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
                             </div>
 
                             <div class="form-group">
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
+                                <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                             </div>
 
-                        </div>
+                          </div>
                         <div id="group_renewal">
 
 
+                       </div>
+                        <pre><?php echo $assessmentinfo_details->region_name; ?>
+                        </pre>
+                 </div>
+                 <div class="form-group">
+                     <div class="btn-group">
+                         <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
+                         <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                     </div>
+                 </div>
+             </div>
+             </form>
+         </div>
+         <div class="col-md-3"></div>
+     </div>
+ </div>
+ </div>
+ </div>
 
-                        </div>
-                </div>
-                <div class="form-group">
-                    <div class="btn-group">
-                        <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                        <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
-                    </div>
-                </div>
-            </div>
-            </form>
-        </div>
-        <div class="col-md-3"></div>
-    </div>
-</div>
-</div>
-</div>
-
-</div>
-</body>
+ </div>
+ </body>

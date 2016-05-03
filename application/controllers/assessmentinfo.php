@@ -188,6 +188,16 @@ class assessmentinfo extends CI_Controller {
                 $modified_by= $this->session->userdata('user_id');
                 $date_modified = 'NOW()';
 
+                if ($regionlist == 0) {
+                    $regionlist = "null";
+                }
+                if ($provlist == 0) {
+                    $provlist = "null";
+                }
+                if ($citylist == 0) {
+                    $citylist = "null";
+               }
+
                 $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified);
                 if ($updateResult){
 
@@ -281,7 +291,7 @@ class assessmentinfo extends CI_Controller {
 
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
-            $deleteResult = $assessmentinfo_model->deleteassessmentinfo($id);
+            $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
             if ($deleteResult){
                 $form_message = 'Delete Success!';
                 $this->load->view('header');
@@ -290,13 +300,21 @@ class assessmentinfo extends CI_Controller {
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
-                    $this->redirectIndex()
                 ));
                 $this->load->view('footer');
+                $this->redirectIndex2();
+
+
             }
         }
     }
 
+    public function redirectIndex2()
+    {
+        $page = base_url('assessmentinfo/index/');
+//        $sec = "1";
+        header("Location: $page");
+    }
 
     public function populate_prov() {
         if($_POST['region_code'] > 0 and isset($_POST) and isset($_POST['region_code'])) {
