@@ -30,15 +30,15 @@ class assessmentinfo_model extends CI_Model
     {
 
         $sql = 'SELECT * FROM
-tbl_lswdo AS a
-Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
-Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
-Inner Join lib_regions ON a.region_code = lib_regions.region_code
-Inner Join lib_provinces ON a.prov_code = lib_provinces.prov_code
-Inner Join lib_cities ON a.city_code = lib_cities.city_code
-Inner Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
-Inner Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
-WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
+                tbl_lswdo AS a
+                Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
+                Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
+                Inner Join lib_regions ON a.region_code = lib_regions.region_code
+                Inner Join lib_provinces ON a.prov_code = lib_provinces.prov_code
+                Inner Join lib_cities ON a.city_code = lib_cities.city_code
+                Inner Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
+                Inner Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
+                WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $query = $this->db->query($sql);
         $result = $query->row();
         return $result;
@@ -436,18 +436,19 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     public function get_total_poor2($city_code)
     {
         $get_total_poor2 = "
-         SELECT
-         sum(lib_brgy.Total_Poor_HHs) as total_poor
-        FROM
-          lib_regions
-        INNER JOIN
-          lib_provinces ON lib_provinces.region_code = lib_regions.region_code
-          Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
-          Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
-        WHERE
-         lib_cities.city_code = ?
-        ORDER BY
-          lib_cities.city_code
+           SELECT
+           lib_cities.city_code,
+           sum(lib_brgy.Total_Poor_HHs) as total_poor
+           FROM
+           lib_regions
+           INNER JOIN
+            lib_provinces ON lib_provinces.region_code = lib_regions.region_code
+           Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
+            Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
+           WHERE
+           lib_cities.city_code = ?
+           ORDER BY
+           lib_cities.city_code
         ";
 
         return $this->db->query($get_total_poor2, $city_code)->row();
@@ -456,16 +457,16 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     public function get_total_poor3($city_code)
     {
         $get_total_poor3 = "
-         SELECT
+          SELECT
           sum(lib_brgy.Total_Poor_HHs) as total_poor
           FROM
-          lib_brgy
-          Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
-          Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
-          Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
+          lib_regions
+          INNER JOIN
+          lib_provinces ON lib_provinces.region_code = lib_regions.region_code
+          Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
+          Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
           WHERE
           lib_cities.city_code = ?
-
           ORDER BY
           lib_cities.city_code
         ";

@@ -105,13 +105,15 @@ if (!$this->session->userdata('user_id')){
     }
 
     function get_cities() {
-        var lgu_type = $('#lgu_type_id').val();
+        var lgu_type = document.getElementById("lgu_type_id").value;
         var prov_code = $('#provlist').val();
         var cityCode = $('#city_pass').val();
 
         $('#brgylist option:gt(0)').remove().end();
 
         if(lgu_type == 1 && prov_code > 0) {
+
+            $('#city_pass').val().end();
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
@@ -311,10 +313,10 @@ if (!$this->session->userdata('user_id')){
     }
 
     function get_brgy() {
-        var lgu_type = $('#lgu_type_id').val();
+        var lgu_type = document.getElementById("lgu_type_id").value;
         var city_code = $('#citylist').val();
 
-        if(lgu_type == 2 && city_code > 0) {
+        if(city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
@@ -338,32 +340,7 @@ if (!$this->session->userdata('user_id')){
                 }
             });
         }
-        else if(lgu_type == 3 && city_code > 0){
-
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
-                async: false,
-                type: "POST",
-                data: "city_code="+city_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#groupbrgy').html(data);
-                }
-            });
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_poor3'); ?>",
-                async: false,
-                type: "POST",
-                data: "city_code="+city_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_poor').html(data);
-                }
-            });
-
-        } else {
+         else {
             $('#brgylist option:gt(0)').remove().end();
         }
     }

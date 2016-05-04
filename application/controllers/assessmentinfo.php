@@ -539,10 +539,10 @@ class assessmentinfo extends CI_Controller {
 
     public function populate_total_poor3()
     {
-        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
         {
-            $prov_code = $_POST['prov_code'];
-            $totalpoor = $this->assessmentinfo_model->get_total_poor3($prov_code);
+            $city_code = $_POST['city_code'];
+            $totalpoor = $this->assessmentinfo_model->get_total_poor3($city_code);
 
             $data = array(
                 'type'        => 'text',
