@@ -172,7 +172,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('footer');
 
             } else {
-
+                //$id = $this->input->post('profile_id');
                 $application_type_id = $this->input->post('application_type_id');
                 $lgu_type_id = $this->input->post('lgu_type_id');
                 $regionlist = $this->input->post('regionlist');
@@ -190,7 +190,7 @@ class assessmentinfo extends CI_Controller {
                 $date_modified = 'NOW()';
 
                 if ($citylist == 0) {
-                    $citylist = "null";
+                   $citylist = "null";
                 }
 
                 $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified);
@@ -522,6 +522,27 @@ class assessmentinfo extends CI_Controller {
         {
             $city_code = $_POST['city_code'];
             $totalpoor = $this->assessmentinfo_model->get_total_poor2($city_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_poor',
+                'name'       => 'total_poor',
+                'value'   =>  $totalpoor->total_poor,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_poor3()
+    {
+        if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))
+        {
+            $prov_code = $_POST['prov_code'];
+            $totalpoor = $this->assessmentinfo_model->get_total_poor3($prov_code);
 
             $data = array(
                 'type'        => 'text',

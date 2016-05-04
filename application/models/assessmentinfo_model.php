@@ -120,23 +120,23 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
         $this->db->trans_begin();
 
         $this->db->query('UPDATE tbl_lswdo SET
-                          application_type_id="' . $application_type_id . '",
-                          lgu_type_id="' . $lgu_type_id . '",
-                          region_code=' . $regionlist . ',
-                          prov_code=' . $provlist . ',
-                          city_code=' . $citylist . ',
-                          office_address="' . $office_address . '",
-                          swdo_name="' . $swdo_name . '",
-                          designation="' . $designation . '",
-                          contact_no="' . $contact_no . '",
-                          email="' . $email . '",
-                          website="' . $website . '",
-                          total_ira="' . $total_ira . '",
-                          total_budget_lswdo="' . $total_budget_lswdo . '",
-                          modified_by="' . $modified_by . '",
+                          application_type_id="'.$application_type_id.'",
+                          lgu_type_id="'.$lgu_type_id.'",
+                          region_code="'.$regionlist.'",
+                          prov_code="'.$provlist.'",
+                          city_code='.$citylist.',
+                          office_address="'.$office_address.'",
+                          swdo_name="'.$swdo_name.'",
+                          designation="'.$designation.'",
+                          contact_no="'.$contact_no.'",
+                          email="'.$email.'",
+                          website="'.$website.'",
+                          total_ira="'.$total_ira.'",
+                          total_budget_lswdo="'.$total_budget_lswdo.'",
+                          modified_by="'.$modified_by.'",
                           date_modified=Now()
                           WHERE
-                          profile_id = "' . $id . '"
+                          profile_id = "'.$id.'"
                           ');
 
         if ($this->db->trans_status() === FALSE) {
@@ -153,13 +153,17 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     public function deleteAssessmentinfo($id = 0)
     {
         $this->db->trans_begin();
+        $this->db->query('UPDATE tbl_lswdo T1, tbl_lswdo_budget T2
+                          SET T1.DELETED="1", T2.DELETED="1"
+                          WHERE T1.profile_id = T2.profile_id and T1.profile_id = "' . $id . '"
+                          ');
 
-        $this->db->query('UPDATE tbl_lswdo SET
+         /*   $this->db->query('UPDATE tbl_lswdo SET
                           DELETED="1"
                           WHERE
                           profile_id = "' . $id . '"
                           ');
-
+        */
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return FALSE;
@@ -376,14 +380,14 @@ WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
     {
         $get_countbrgy2 = "
         SELECT
-lib_cities.city_name,
-lib_regions.region_name,
-count(lib_brgy.brgy_name) as no_brgy
-FROM
-lib_brgy
-Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
-Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
-Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
+        lib_cities.city_name,
+        lib_regions.region_name,
+        count(lib_brgy.brgy_name) as no_brgy
+        FROM
+        lib_brgy
+        Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
+        Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
+        Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
         WHERE
          lib_provinces.prov_code = ?
         ";
@@ -441,12 +445,32 @@ Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
           Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
           Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
         WHERE
-          lib_cities.city_code = ?
+         lib_cities.city_code = ?
         ORDER BY
           lib_cities.city_code
         ";
 
         return $this->db->query($get_total_poor2, $city_code)->row();
+    }
+
+    public function get_total_poor3($city_code)
+    {
+        $get_total_poor3 = "
+         SELECT
+          sum(lib_brgy.Total_Poor_HHs) as total_poor
+          FROM
+          lib_brgy
+          Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
+          Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
+          Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
+          WHERE
+          lib_cities.city_code = ?
+
+          ORDER BY
+          lib_cities.city_code
+        ";
+
+        return $this->db->query($get_total_poor3, $city_code)->row();
     }
 
     public function get_swdo()

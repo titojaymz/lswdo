@@ -156,6 +156,7 @@ if (!$this->session->userdata('user_id')){
         }
 
        else if(lgu_type == 2 && prov_code > 0) {
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
                 async: false,
@@ -227,16 +228,6 @@ if (!$this->session->userdata('user_id')){
                     $('#div_citylist').html(data);
                 }
             });
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#div_citylist').html(data);
-                }
-            });
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
@@ -285,8 +276,6 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-
-//
         }
         else
         {
@@ -325,7 +314,6 @@ if (!$this->session->userdata('user_id')){
         }
         else if(lgu_type == 3 && city_code > 0){
 
-
                 $.ajax({
                     url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
                     async: false,
@@ -338,7 +326,7 @@ if (!$this->session->userdata('user_id')){
                 });
 
                 $.ajax({
-                    url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
+                    url: "<?php echo base_url('assessmentinfo/populate_total_poor3'); ?>",
                     async: false,
                     type: "POST",
                     data: "city_code="+city_code,

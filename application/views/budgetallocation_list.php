@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label for="list_info" class="control-label">Budget Allocation List</label>
                     </div>
-
+                    <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
                     <a class="btn btn-sm btn-success" href="<?php echo base_url('budgetallocation/addBudgetAllocation/'.$profID) ?>"><i class="fa fa-plus-circle"></i> Add Budget Allocation</a>
 
                 </div>
