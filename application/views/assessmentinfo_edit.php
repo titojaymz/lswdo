@@ -113,7 +113,7 @@ if (!$this->session->userdata('user_id')){
 
         if(lgu_type == 1 && prov_code > 0) {
 
-            $('#city_pass').val().end();
+            $('#citylist option:gt(0)').remove().end();
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",

@@ -13,7 +13,6 @@ class assessmentinfo extends CI_Controller {
         {
             redirect('/users/login','location');
         }
-        //$user_region = $this->session->userdata('uregion');
 
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
@@ -40,7 +39,6 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
         $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-       // $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
 
         $this->validateAddForm();
 
@@ -54,7 +52,6 @@ class assessmentinfo extends CI_Controller {
             $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
             $rpmb['application'] = $application_type_name;
             $rpmb['lgu_type'] = $lgu_type_name;
-            //$rpmb['swdo_nameRenew'] = $swdo_nameRenew;
             $rpmb['form_message'] = $form_message;
 
             if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -111,7 +108,6 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                   // 'swdo_nameRenew' => $swdo_nameRenew,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
@@ -143,7 +139,6 @@ class assessmentinfo extends CI_Controller {
 
             $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
             $lgu_type_name = $assessmentinfo_model->Lib_getLGUtype();
-            // $swdo_nameRenew = $assessmentinfo_model->get_AssessmentRecord();
 
             $this->validateEditForm();
 
@@ -157,7 +152,6 @@ class assessmentinfo extends CI_Controller {
                 $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
                 $rpmb['application'] = $application_type_name;
                 $rpmb['lgu_type'] = $lgu_type_name;
-                // $rpmb['swdo_nameRenew'] = $swdo_nameRenew;
                 $rpmb['form_message'] = $form_message;
 
                 if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
@@ -172,7 +166,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('footer');
 
             } else {
-                //$id = $this->input->post('profile_id');
+
                 $application_type_id = $this->input->post('application_type_id');
                 $lgu_type_id = $this->input->post('lgu_type_id');
                 $regionlist = $this->input->post('regionlist');
@@ -216,7 +210,6 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
-                        // 'swdo_nameRenew' => $swdo_nameRenew,
                         'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message
@@ -472,6 +465,27 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function populate_incomeclass2()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $incomeclass = $this->assessmentinfo_model->get_incomeclass2($city_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'income_class',
+                'name'       => 'income_class',
+                'value'   =>  $incomeclass->income_class,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
 
     public function populate_total_pop()
     {
@@ -479,6 +493,27 @@ class assessmentinfo extends CI_Controller {
         {
             $prov_code = $_POST['prov_code'];
             $totalpop = $this->assessmentinfo_model->get_total_pop($prov_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_pop',
+                'name'       => 'total_pop',
+                'value'   =>  $totalpop->total_pop,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_pop2()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $totalpop = $this->assessmentinfo_model->get_total_pop2($city_code);
 
             $data = array(
                 'type'        => 'text',

@@ -48,6 +48,28 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "none";
             document.getElementById("groupLGUCity").style.visibility = "hidden";
+            $('#citylist option:gt(0)').remove().end();
+
+        }
+       else if (e == 2)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
+
+        }
+        else if (e == 3)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
+
         }
         else
         {
@@ -193,28 +215,6 @@ if (!$this->session->userdata('user_id')){
 
             });
 
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#income_class').html(data);
-                }
-            });
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_pop').html(data);
-                }
-            });
-
         }
         else if (lgu_type == 3 && prov_code > 0)
         {
@@ -254,28 +254,6 @@ if (!$this->session->userdata('user_id')){
 
             });
 
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#income_class').html(data);
-                }
-            });
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_pop').html(data);
-                }
-            });
-
         }
         else
         {
@@ -286,9 +264,9 @@ if (!$this->session->userdata('user_id')){
 
     function get_brgy() {
         var city_code = $('#citylist').val();
-        var lgu_type = $('#lgu_type_id').val();
+        var lgu_type2 = $('#lgu_type_id').val();
 
-        if(lgu_type == 2 && city_code > 0) {
+        if(lgu_type2 == 3 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
@@ -311,30 +289,76 @@ if (!$this->session->userdata('user_id')){
                     $('#total_poor').html(data);
                 }
             });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
         }
-        else if(lgu_type == 3 && city_code > 0){
+      else if(lgu_type2 == 2 && city_code > 0) {
 
-                $.ajax({
-                    url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
-                    async: false,
-                    type: "POST",
-                    data: "city_code="+city_code,
-                    dataType: "html",
-                    success: function(data) {
-                        $('#groupbrgy').html(data);
-                    }
-                });
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#groupbrgy').html(data);
+                }
+            });
 
-                $.ajax({
-                    url: "<?php echo base_url('assessmentinfo/populate_total_poor3'); ?>",
-                    async: false,
-                    type: "POST",
-                    data: "city_code="+city_code,
-                    dataType: "html",
-                    success: function(data) {
-                        $('#total_poor').html(data);
-                    }
-                });
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#total_poor').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
         }
          else {
             $('#brgylist option:gt(0)').remove().end();
