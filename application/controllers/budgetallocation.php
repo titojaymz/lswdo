@@ -29,6 +29,7 @@ class budgetallocation extends CI_Controller {
         $this->load->view('footer');
     }
 
+
     public function addBudgetAllocation($id)
     {
 
@@ -201,17 +202,19 @@ class budgetallocation extends CI_Controller {
 
     public function budgetallocation_masterview($id = 0,$form_message = '')
     {
-        $budgetallocation_model = new budgetallocation_model();
+        $assessmentinfo_model = new assessmentinfo_model();
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
-        $BudgetDetails = $budgetallocation_model->getBudgetAllocationByID($id);
+        $BudgetDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
         if ($BudgetDetails){
             $form_message = $form_message;
             $data = array(
                 'profile_id'                 =>      $BudgetDetails->profile_id,
                 'sector_id'                 =>      $BudgetDetails->sector_id,
+                'sector_name'                 =>      $BudgetDetails->sector_name,
                 'year_indicated'      =>      $BudgetDetails->year_indicated,
+                'budget_previous_year'      =>      $BudgetDetails->budget_previous_year,
                 'budget_present_year'      =>      $BudgetDetails->budget_present_year,
                 'utilization'      =>      $BudgetDetails->utilization,
                 'no_bene_served'      =>      $BudgetDetails->no_bene_served,

@@ -19,7 +19,8 @@ class assessmentinfo_model extends CI_Model
                 FROM tbl_lswdo a
                 INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
                 INNER join lib_application_type c on a.application_type_id = c.application_type_id
-                WHERE a.deleted = 0';
+                WHERE a.deleted = 0
+                ORDER BY a.profile_id';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;

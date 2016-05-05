@@ -20,27 +20,30 @@ if (!$this->session->userdata('user_id')){
                     <div class="form-group">
                         <label for="geo_info" class="control-label"> View: Budget Allocation </label>
                     </div>
-                    <a class="btn btn-sm btn-warning" href="<?php echo base_url('budgetallocation/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
-                    <a href="<?php echo base_url()?>budgetallocation/addbudgetallocation/<?php echo $profile_id ?>/<?php echo $sector_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Budget Allocation</a>
+                    <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
+                   <!-- <a href="<?php echo base_url()?>budgetallocation/addbudgetallocation/<?php echo $profile_id ?>/<?php echo $sector_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Budget Allocation</a>-->
                     <br><br>
                     <table class="table table-bordered">
                         <tr>
                             <th>Profile ID:</th><td><?php echo $profile_id ?></td>
                         </tr>
                         <tr>
-                            <th>Sector:</th><td><?php echo $sector_id ?></td>
+                            <th>Sector:</th><td><?php echo $sector_name ?></td>
                         </tr>
                         <tr>
                             <th>Year Indicated:</th><td><?php echo $year_indicated ?></td>
                         </tr>
                         <tr>
+                            <th>Budget for Previous Year:</th><td><?php echo $budget_previous_year ?></td>
+                        </tr>
+                        <tr>
                             <th>Utilization:</th><td><?php echo $utilization ?></td>
                         </tr>
                         <tr>
-                            <th>Number of Beneficiaries Served:</th><td><?php echo $no_bene_served ?></td>
+                            <th>Budget for the Present Year:</th><td><?php echo $budget_present_year ?></td>
                         </tr>
                         <tr>
-                            <th>Budget for the Present Year:</th><td><?php echo $budget_present_year ?></td>
+                            <th>Number of Beneficiaries Served:</th><td><?php echo $no_bene_served ?></td>
                         </tr>
                         <tr>
                             <th>Number of Target Beneficiaries:</th><td><?php echo $no_target_bene ?></td>
