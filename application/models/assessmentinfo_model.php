@@ -152,9 +152,26 @@ class assessmentinfo_model extends CI_Model
     public function deleteAssessmentinfo($id = 0)
     {
         $this->db->trans_begin();
-        $this->db->query('UPDATE tbl_lswdo T1, tbl_lswdo_budget T2
-                          SET T1.DELETED="1", T2.DELETED="1"
-                          WHERE T1.profile_id = T2.profile_id and T1.profile_id = "' . $id . '"
+        $this->db->query('UPDATE tbl_lswdo T1
+                          SET T1.DELETED="1"
+                          WHERE T1.profile_id = "' . $id . '"
+                          ');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return FALSE;
+        } else {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+    public function deleteAssessmentinfoBudget($id = 0)
+    {
+        $this->db->trans_begin();
+        $this->db->query('UPDATE tbl_lswdo_budget T2
+                          SET T2.DELETED="1"
+                          WHERE T2.profile_id = "' . $id . '"
                           ');
 
         if ($this->db->trans_status() === FALSE) {

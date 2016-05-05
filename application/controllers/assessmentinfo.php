@@ -283,7 +283,8 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
-            if ($deleteResult){
+            $deleteResultbudget = $assessmentinfo_model->deleteAssessmentinfoBudget($id);
+            if ($deleteResult && $deleteResultbudget ){
                 $form_message = 'Delete Succeeded!';
                 $this->load->view('header');
                 $this->load->view('nav');
