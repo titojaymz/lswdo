@@ -53,8 +53,8 @@
                                 <td><?php echo $budgetallocationData->sector_name ?></td>
                                 <td><?php echo $budgetallocationData->year_indicated ?></td>
                                 <td><?php echo $budgetallocationData->budget_previous_year ?></td>
-                                <td><?php echo $budgetallocationData->utilization ?></td>
                                 <td><?php echo $budgetallocationData->budget_present_year ?></td>
+                                <td><?php echo $budgetallocationData->utilization ?></td>
                                 <td><?php echo $budgetallocationData->no_bene_served ?></td>
                                 <td><?php echo $budgetallocationData->no_target_bene ?></td>
 

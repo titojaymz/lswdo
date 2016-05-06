@@ -423,6 +423,27 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function populate_countbrgy3()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $numberofbrgy = $this->assessmentinfo_model->get_count_brgy3($city_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'no_brgy',
+                'name'       => 'no_brgy',
+                'value'   =>  $numberofbrgy->no_brgy,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
     public function populate_countbrgy2()
     {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code']))

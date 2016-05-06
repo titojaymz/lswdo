@@ -198,9 +198,7 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
-
                 }
-
             });
 
             $.ajax({
@@ -212,7 +210,6 @@ if (!$this->session->userdata('user_id')){
                 success: function(data) {
                     $('#groupmuni').html(data);
                 }
-
             });
 
         }
@@ -237,9 +234,7 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#groupCity').html(data);
-
                 }
-
             });
 
             $.ajax({
@@ -251,8 +246,8 @@ if (!$this->session->userdata('user_id')){
                 success: function(data) {
                     $('#groupmuni').html(data);
                 }
-
             });
+
 
         }
         else
@@ -266,7 +261,7 @@ if (!$this->session->userdata('user_id')){
         var city_code = $('#citylist').val();
         var lgu_type2 = $('#lgu_type_id').val();
 
-        if(lgu_type2 == 3 && city_code > 0) {
+        if(lgu_type2 == 2 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
@@ -276,6 +271,17 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function (data) {
                     $('#groupbrgy').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
                 }
             });
 
@@ -301,6 +307,20 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
+        }
+       else if(lgu_type2 == 3 && city_code > 0) {
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy3'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#groupbrgy').html(data);
+                }
+            });
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
                 async: false,
@@ -309,20 +329,6 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function(data) {
                     $('#income_class').html(data);
-                }
-            });
-
-        }
-      else if(lgu_type2 == 2 && city_code > 0) {
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
-                async: false,
-                type: "POST",
-                data: "city_code=" + city_code,
-                dataType: "html",
-                success: function (data) {
-                    $('#groupbrgy').html(data);
                 }
             });
 
@@ -348,18 +354,9 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
-                async: false,
-                type: "POST",
-                data: "city_code="+city_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#income_class').html(data);
-                }
-            });
 
         }
+
          else {
             $('#brgylist option:gt(0)').remove().end();
         }

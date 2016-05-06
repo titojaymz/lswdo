@@ -138,13 +138,13 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="utilization">Utilization:</label>
-                            <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
+                            <label for="budget_present_year">Budget for the Present Year:</label>
+                            <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
                         </div>
 
                         <div class="form-group">
-                            <label for="budget_present_year">Budget for the Present Year:</label>
-                            <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
+                            <label for="utilization">Utilization:</label>
+                            <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
                         </div>
 
                         <div class="form-group">

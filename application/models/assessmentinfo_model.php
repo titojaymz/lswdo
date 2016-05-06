@@ -86,21 +86,21 @@ class assessmentinfo_model extends CI_Model
     }
 
 
-    public function insertBudgetAllocation($sector_id, $year_indicated,$budget_present_year, $utilization, $budget_previous_year, $no_bene_served, $no_target_bene, $created_by, $date_created)
+    public function insertBudgetAllocation($sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_present_year,utilization,budget_previous_year,no_bene_served,no_target_bene,created_by,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene,created_by,date_created)
                           VALUES
                           (
                           "' . $sector_id . '",
                           "' . $year_indicated . '",
-                          "' . $budget_present_year . '",
-                          "' . $utilization . '",
                           "'.$budget_previous_year.'",
+                            "' . $budget_present_year . '",
+                          "' . $utilization . '",
                           "' . $no_bene_served . '",
                           "' . $no_target_bene . '",
-                           "' . $created_by . '",
+                          "' . $created_by . '",
                           Now()
                           )');
 
@@ -263,7 +263,7 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_prov, $region_code)->result();
     }
 
-
+// Populate cities if MSWDO
     public function get_cities($prov_code)
     {
         $get_cities = "
@@ -282,7 +282,7 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_cities, $prov_code)->result();
     }
 
-
+// Populate Cities if CSWDO
     public function get_cities1($prov_code)
     {
         $get_cities = "
@@ -319,7 +319,7 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_brgy, $city_code)->result();
     }
 
-
+// NO. of cities either PSWDO,CSWDO and MSWDO
     public function get_count_city($prov_code)
     {
         $get_countcity = "
@@ -336,7 +336,7 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_countcity, $prov_code)->row();
     }
 
-
+// NO. of municipalities either PSWDO,CSWDO and MSWDO
     public function get_count_muni($prov_code)
     {
         $get_count_muni = "
@@ -382,7 +382,7 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_incomeclass2, $city_code)->row();
     }
 
-
+//No of BRGY for CSWDO
     public function get_count_brgy($city_code)
     {
         $get_countbrgy = "
@@ -396,16 +396,38 @@ class assessmentinfo_model extends CI_Model
          lib_cities on lib_brgy.city_code=lib_cities.city_code
         WHERE
          lib_cities.city_code = ?
+         and lib_cities.city_class = 'CC'
         ";
 
         return $this->db->query($get_countbrgy, $city_code)->row();
     }
 
+    //No of BRGY for MSWDO
+    public function get_count_brgy3($city_code)
+    {
+        $get_countbrgy3 = "
+        SELECT
+         lib_cities.city_name,
+         lib_brgy.brgy_name,
+         count(lib_brgy.brgy_code) AS no_brgy
+        FROM
+          lib_brgy
+        INNER JOIN
+         lib_cities on lib_brgy.city_code=lib_cities.city_code
+        WHERE
+         lib_cities.city_code = ?
+         and lib_cities.city_class = ''
+        ";
+
+        return $this->db->query($get_countbrgy3, $city_code)->row();
+    }
+
+//No of BRGY for PSWDO
     public function get_count_brgy2($prov_code)
     {
         $get_countbrgy2 = "
         SELECT
-        lib_cities.city_name,
+        lib_provinces.prov_name,
         lib_regions.region_name,
         count(lib_brgy.brgy_name) as no_brgy
         FROM
@@ -481,6 +503,7 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_total_poor, $prov_code)->row();
     }
 
+    //Total poor for CSWDO and MSWDO
     public function get_total_poor2($city_code)
     {
         $get_total_poor2 = "
