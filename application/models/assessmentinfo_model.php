@@ -382,6 +382,21 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_incomeclass2, $city_code)->row();
     }
 
+    public function get_incomeclass3($city_code)
+    {
+        $get_incomeclass3 = "
+        SELECT
+          income_class
+        FROM
+          lib_cities
+        WHERE
+          city_code = ?
+          and city_class = ''
+        ";
+
+        return $this->db->query($get_incomeclass3, $city_code)->row();
+    }
+
 //No of BRGY for CSWDO
     public function get_count_brgy($city_code)
     {
@@ -396,7 +411,6 @@ class assessmentinfo_model extends CI_Model
          lib_cities on lib_brgy.city_code=lib_cities.city_code
         WHERE
          lib_cities.city_code = ?
-         and lib_cities.city_class = 'CC'
         ";
 
         return $this->db->query($get_countbrgy, $city_code)->row();
@@ -416,7 +430,7 @@ class assessmentinfo_model extends CI_Model
          lib_cities on lib_brgy.city_code=lib_cities.city_code
         WHERE
          lib_cities.city_code = ?
-         and lib_cities.city_class = ''
+        and lib_cities.city_class = ''
         ";
 
         return $this->db->query($get_countbrgy3, $city_code)->row();
@@ -482,6 +496,27 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_total_pop2, $city_code)->row();
     }
 
+    public function get_total_pop3($city_code)
+    {
+        $get_total_pop3 = "
+           SELECT
+               lib_cities.city_code,
+               SUM(lib_brgy.total_pop) as total_pop
+           FROM
+               lib_brgy
+           Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
+           Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
+           Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
+           WHERE
+               lib_cities.city_code = ?
+           ORDER BY
+               lib_cities.city_code
+              and lib_cities.city_class = ''
+        ";
+
+        return $this->db->query($get_total_pop3, $city_code)->row();
+    }
+
 
     public function get_total_poor($prov_code)
     {
@@ -540,27 +575,12 @@ class assessmentinfo_model extends CI_Model
           lib_cities.city_code = ?
           ORDER BY
           lib_cities.city_code
+          and lib_cities.city_class = ''
         ";
 
         return $this->db->query($get_total_poor3, $city_code)->row();
     }
 
-    public function get_swdo()
-    {
-        $get_swdo = "
-        SELECT
-          profile_id,
-          swdo_name
-        FROM
-          tbl_lswdo
-        WHERE
-          DELETED='0'
-        ORDER BY
-          swdo_name
-        ";
-
-        return $this->db->query($get_swdo)->result();
-    }
 
     public function get_records($swdo_name)
     {

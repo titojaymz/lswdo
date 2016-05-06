@@ -508,6 +508,27 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function populate_incomeclass3()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $incomeclass = $this->assessmentinfo_model->get_incomeclass3($city_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'income_class',
+                'name'       => 'income_class',
+                'value'   =>  $incomeclass->income_class,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
 
     public function populate_total_pop()
     {
@@ -536,6 +557,27 @@ class assessmentinfo extends CI_Controller {
         {
             $city_code = $_POST['city_code'];
             $totalpop = $this->assessmentinfo_model->get_total_pop2($city_code);
+
+            $data = array(
+                'type'        => 'text',
+                'id'          => 'total_pop',
+                'name'       => 'total_pop',
+                'value'   =>  $totalpop->total_pop,
+                'class'        => 'form-control',
+                'readonly' => true
+            );
+
+            echo form_input($data);
+
+        }
+    }
+
+    public function populate_total_pop3()
+    {
+        if($_POST['city_code'] > 0 and isset($_POST) and isset($_POST['city_code']))
+        {
+            $city_code = $_POST['city_code'];
+            $totalpop = $this->assessmentinfo_model->get_total_pop3($city_code);
 
             $data = array(
                 'type'        => 'text',

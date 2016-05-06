@@ -322,7 +322,7 @@ if (!$this->session->userdata('user_id')){
             });
 
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass3'); ?>",
                 async: false,
                 type: "POST",
                 data: "city_code="+city_code,
@@ -333,7 +333,7 @@ if (!$this->session->userdata('user_id')){
             });
 
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor3'); ?>",
                 async: false,
                 type: "POST",
                 data: "city_code=" + city_code,
@@ -344,7 +344,7 @@ if (!$this->session->userdata('user_id')){
             });
 
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_pop2'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop3'); ?>",
                 async: false,
                 type: "POST",
                 data: "city_code="+city_code,
