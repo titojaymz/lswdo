@@ -67,10 +67,11 @@ class budgetallocation extends CI_Controller {
             $no_bene_served = $this->input->post('no_bene_served');
             $no_target_bene = $this->input->post('no_target_bene');
             $created_by = $this->session->userdata('user_id');
+            $date_created = 'NOW()';
 
             $checkDupli = $budgetallocation_model->checkDuplicate($id, $sector_id);
             if($checkDupli->countProf == 0) {
-                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene,$created_by);
+                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene,$created_by,$date_created);
                 if ($addResult) {
                     $form_message = 'Add Success!';
                     $this->load->view('header');
@@ -134,10 +135,12 @@ class budgetallocation extends CI_Controller {
                 $utilization = $this->input->post('utilization');
                 $no_bene_served = $this->input->post('no_bene_served');
                 $no_target_bene = $this->input->post('no_target_bene');
+                $modified_by= $this->session->userdata('user_id');
+                $date_modified = 'NOW()';
 
                 $checkDupli = $budgetallocation_model->checkDuplicate($id, $sectorID);
                 if ($sectorID == $prevSectorID) {
-                    $updateResult = $budgetallocation_model->updateBudgetAllocation($id, $sectorID, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $prevSectorID);
+                    $updateResult = $budgetallocation_model->updateBudgetAllocation($id, $sectorID, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $prevSectorID,$modified_by,$date_modified);
                     if ($updateResult) {
 
 //                        $this->init_rpmb_session();
@@ -286,7 +289,7 @@ class budgetallocation extends CI_Controller {
 
     public function listFields()
     {
-        $query = $this->db->query('SELECT profile_id,sector_id,year_indicated,budget_present_year,utilization,no_bene_served,no_target_bene FROM tbl_lswdo_budget');
+        $query = $this->db->query('SELECT profile_id,sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene FROM tbl_lswdo_budget');
         return $query->list_fields();
     }
 

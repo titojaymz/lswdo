@@ -67,6 +67,9 @@
                                     <div class="btn-group">
                                         <a class="btn btn-xs btn-info" href="<?php echo base_url('budgetallocation/budgetallocation_masterview/' . $budgetallocationData->profile_id) ?>"><i class="fa fa-plus"></i> View </a>
                                     </div>
+                                    <!--      <div class="btn-group">
+                                        <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('budgetallocation/delete_budgetallocation/' . $budgetallocationData->profile_id) ?>"><i class="fa fa-trash"> </i> </a>
+                                    </div>-->
 
                                 </td>
                             </tr>

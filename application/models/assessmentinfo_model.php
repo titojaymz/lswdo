@@ -85,7 +85,7 @@ class assessmentinfo_model extends CI_Model
         $this->db->close();
     }
 
-
+/*
     public function insertBudgetAllocation($sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created)
     {
         $this->db->trans_begin();
@@ -113,7 +113,7 @@ class assessmentinfo_model extends CI_Model
         }
         $this->db->close();
     }
-
+*/
 
     public function updateAssessmentinfo($id, $application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo, $modified_by, $date_modified)
     {
