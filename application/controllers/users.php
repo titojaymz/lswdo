@@ -67,11 +67,21 @@ class users extends CI_Controller {
                 } else {
                     echo '<h2></h2>';
                 }
-                $Model_user = new Model_user($username, $superkey, $email, $firstname, $middlename, $surname, $extensionname, $regionlist);
+                /**
+                 * CORRECTED BY: JFSBALDO
+                 * DESCRIPTION OF CORRECTION: tinama ang parameter para sa firstname at email, nagkabaliktad kasi
+                 * DATE & TIME OF UPDATE: May 6, 2016, 17:02
+                 */
+                $Model_user = new Model_user($username, $superkey, $firstname, $middlename, $surname, $extensionname, $email, $regionlist);
                 //username,`password`, email, firstname, middlename,surname,extensionname,region_code
                 $regResult = $Model_user->registerUser();
                 if ($regResult == 1) {
-                    $registerSendResult = $this->registration_sendmail($username, $password, $email, $firstname, $middlename, $surname, $extensionname, $regionlist);
+                    /**
+                     * CORRECTED BY: JFSBALDO
+                     * DESCRIPTION OF CORRECTION: tinama ang username at email, tinanggal din ang password kasi hindi naman kailangan
+                     * DATE & TIME OF UPDATE: May 6, 2016, 17:02
+                     */
+                    $registerSendResult = $this->registration_sendmail($email, $username, $firstname, $middlename, $surname, $extensionname, $regionlist);
                     $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Registration Successful! <a href="#" class="closed">&times;</a></div>';
                     $this->load->view('header');
                     $this->load->view('login', array($rpmb, 'form_message' => $form_message));
