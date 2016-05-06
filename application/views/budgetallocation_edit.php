@@ -133,19 +133,15 @@ echo validation_errors();
                         <label for="budget_present_year">Budget for the Previous Year:</label>
                         <input class="form-control" type="text" name="budget_previous_year" value="<?php echo $budgetallocation_details->budget_previous_year ?>" placeholder="Budget for the Previous Year">
                     </div>
-                    <div class="form-group">
-                        <label for="utilization">Utilization:</label>
-                        <input class="form-control" type="text" name="utilization" value="<?php echo $budgetallocation_details->utilization ?>" placeholder="Utilization">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="budget_previous_year">Budget for the Previous Year:</label>
-                        <input class="form-control" type="text" name="budget_previous_year" value="<?php echo $budgetallocation_details->budget_previous_year ?>" placeholder="Budget for the Previous Year">
-                    </div>
 
                     <div class="form-group">
                         <label for="budget_present_year">Budget for the Present Year:</label>
                         <input class="form-control" type="text" name="budget_present_year" value="<?php echo $budgetallocation_details->budget_present_year ?>" placeholder="Budget for the Present Year">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="utilization">Utilization:</label>
+                        <input class="form-control" type="text" name="utilization" value="<?php echo $budgetallocation_details->utilization ?>" placeholder="Utilization">
                     </div>
 
                     <div class="form-group">
@@ -161,9 +157,8 @@ echo validation_errors();
                     <div class="form-group">
                         <div class="btn-group">
                             <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                            <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index.html"><i class="fa fa-refresh"></i> Cancel</a>
+                            <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
                         </div>
-                        <div class="col-md-1"></div>
                     </div>
                     <?php echo form_close() ?>
                 </div>

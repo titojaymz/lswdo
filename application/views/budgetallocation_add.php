@@ -138,13 +138,13 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="utilization">Utilization:</label>
-                            <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
+                            <label for="budget_present_year">Budget for the Present Year:</label>
+                            <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
                         </div>
 
                         <div class="form-group">
-                            <label for="budget_present_year">Budget for the Present Year:</label>
-                            <input class="form-control" type="text" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
+                            <label for="utilization">Utilization:</label>
+                            <input class="form-control" type="text" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
                         </div>
 
                         <div class="form-group">
@@ -161,7 +161,7 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                                <a class="btn btn-warning btn-group" href="/lswdo/budgetallocation/index.html"><i class="fa fa-refresh"></i> Cancel</a>
+                                <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
                 </div>

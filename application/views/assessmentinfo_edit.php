@@ -23,13 +23,9 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUCity").style.visibility = "hidden";
             document.getElementById("groupLGUBrgy").style.display = "none";
             document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+            $('#div_citylist option:gt(0)').remove().end();
+            $('#citylist option:gt(0)').remove().end();
 
-            document.getElementById("groupCity").style.display = "block";
-            document.getElementById("groupCity").style.visibility = "visible";
-            document.getElementById("groupmuni").style.display = "block";
-            document.getElementById("groupmuni").style.visibility = "visible";
-            document.getElementById("groupbrgy").style.display = "none";
-            document.getElementById("groupbrgy").style.visibility = "hidden";
         }
         else
         {
@@ -42,12 +38,6 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUBrgy").style.display = "block";
             document.getElementById("groupLGUBrgy").style.visibility = "visible";
 
-            document.getElementById("groupCity").style.display = "none";
-            document.getElementById("groupCity").style.visibility = "hidden";
-            document.getElementById("groupmuni").style.display = "none";
-            document.getElementById("groupmuni").style.visibility = "hidden";
-            document.getElementById("groupbrgy").style.display = "block";
-            document.getElementById("groupbrgy").style.visibility = "visible";
         }
     }
 
@@ -84,12 +74,14 @@ if (!$this->session->userdata('user_id')){
         get_prov();
         get_cities();
         get_brgy();
+        askLGU();
+        GroupStatus();
 
     }
 
     function get_prov() {
         var region_code = $('#regionlist').val();
-        var provCode =  $('#prov_pass').val();
+        var provCode = $('#prov_pass').val();
 
         $('#citylist option:gt(0)').remove().end();
         $('#brgylist option:gt(0)').remove().end();
@@ -113,11 +105,15 @@ if (!$this->session->userdata('user_id')){
     }
 
     function get_cities() {
+        var lgu_type = document.getElementById("lgu_type_id").value;
         var prov_code = $('#provlist').val();
-        var lgu_type = $('#lgu_type_id').val();
         var cityCode = $('#city_pass').val();
 
+        $('#brgylist option:gt(0)').remove().end();
+
         if(lgu_type == 1 && prov_code > 0) {
+
+            $('#citylist option:gt(0)').remove().end();
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
@@ -173,9 +169,22 @@ if (!$this->session->userdata('user_id')){
                     $('#total_pop').html(data);
                 }
             });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_poor').html(data);
+                }
+            });
         }
 
-       else if(lgu_type == 2 && prov_code > 0) { $.ajax({
+       else if(lgu_type == 2 && prov_code > 0) {
+
+            $.ajax({
             url: "<?php echo base_url('assessmentinfo/populate_cities1'); ?>",
             async: false,
             type: "POST",
@@ -185,7 +194,68 @@ if (!$this->session->userdata('user_id')){
                 $('#div_citylist').html(data);
                 $('#citylist').val(cityCode);
             }
-        });
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupCity').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countmuni'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#groupmuni').html(data);
+                }
+
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+        }
+        else if (lgu_type == 3 && prov_code > 0)
+        {
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#div_citylist').html(data);
+                    $('#citylist').val(cityCode);
+                }
+            });
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countcity'); ?>",
@@ -233,62 +303,48 @@ if (!$this->session->userdata('user_id')){
                     $('#total_pop').html(data);
                 }
             });
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_poor'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_poor').html(data);
-                }
-            });
-
-        }
-        else if (lgu_type == 3 && prov_code > 0)
-        {
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#div_citylist').html(data);
-                }
-            });
 //
         }
         else
         {
-            $('#citylist option:gt(0)').remove().end();
+           $('#citylist option:gt(0)').remove().end();
         }
 
     }
 
     function get_brgy() {
+        var lgu_type = document.getElementById("lgu_type_id").value;
         var city_code = $('#citylist').val();
+
         if(city_code > 0) {
+
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
                 async: false,
                 type: "POST",
-                data: "city_code="+city_code,
+                data: "city_code=" + city_code,
                 dataType: "html",
-                success: function(data) {
+                success: function (data) {
                     $('#groupbrgy').html(data);
                 }
             });
 
-        } else {
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#total_poor').html(data);
+                }
+            });
+        }
+         else {
             $('#brgylist option:gt(0)').remove().end();
         }
     }
-
-
 </script>
-
 <?php if (validation_errors() <> '') { ?>
     <div class="alert alert-danger">
         <strong><?php echo validation_errors() ?></strong>
@@ -296,7 +352,6 @@ if (!$this->session->userdata('user_id')){
 <?php } ?>
 <body>
 <div class="content">
-
     <!-- Start Page Header -->
     <div class="page-header">
         <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
@@ -306,7 +361,6 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
-
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -318,13 +372,13 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="profile_id">Profile ID:</label>
-
-                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>" disabled>
+                            <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
+                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>">
                         </div>
                         <!--onChange="GroupStatus();"-->
                         <div class="form-group">
                             <label for="application_type_id">Status of Application: </label>
-                            <select name="application_type_id" id="application_type_id" class="form-control" onChange="GroupStatus();">
+                            <select name="application_type_id" id="application_type_id" class="form-control">
                                 <option value="0">-Please select-</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id; ?>"
@@ -339,8 +393,7 @@ if (!$this->session->userdata('user_id')){
                                 <?php endforeach; ?>
                             </select>
                         </div>
-
-                        <div id="group_new">
+          <!--    <div id="group_new">-->
 
                             <div class="form-group">
                                 <label class="control-label">Type of LSWDO: </label>
@@ -368,6 +421,7 @@ if (!$this->session->userdata('user_id')){
                                                 <div class="control-group">
                                                     <div class="controls">
                                                         <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
+
                                                             <option value="0">Choose Region</option>
                                                             <?php foreach($regionlist as $regionselect): ?>
                                                                 <option value="<?php echo $regionselect->region_code; ?>"
@@ -386,24 +440,23 @@ if (!$this->session->userdata('user_id')){
                                         </div>
                                     </div>
                                 </div>
-
                                 <div id="groupLGUProvince">
                                     <div class="form-group form-group-sm">
-                                        <label for="provlist" class="col-lg-2 control-label">Province: </label>
+                                        <label for="provlist" class="col-lg-2 control-label">Province:</label>
                                         <div id="div_provlist" class="col-lg-8">
                                             <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
                                                 <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
                                                     ?>
                                                     <option value="0">Choose Province</option>
                                                     <?php
-                                                    foreach ($provlist as $provselect) { ?>
+                                                    foreach($provlist as $provselect) { ?>
                                                         <option value="<?php echo $provselect->prov_code; ?>"
                                                             <?php
                                                             if ($provselect->prov_code == $assessmentinfo_details->prov_code) {
                                                                 echo " selected";
                                                             } ?>
                                                             >
-                                                            <?php echo $provselect->prov_name; ?></option>
+                                                            <?php echo $provselect->prov_code; ?></option>
                                                         <?php
                                                     }
                                                 } else {
@@ -416,23 +469,27 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                                 </div>
 
+                                <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
+                                <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_code ?>" >
+
+
                                 <div id="groupLGUCity">
                                     <div class="form-group form-group-sm">
-                                        <label for="citylist" class="col-lg-2 control-label">City: </label>
+                                        <label for="citylist" class="col-lg-2 control-label">City:</label>
                                         <div id="div_citylist" class="col-lg-8">
-                                            <select id="citylist" name="citylist" class="form-control" onchange="get_brgy();">
+                                            <select id="citylist" name="citylist" class="form-control" onChange="get_brgy();">
                                                 <?php if(isset($assessmentinfo_details->city_code) or isset($assessmentinfo_details->prov_code)) {
                                                     ?>
                                                     <option value="0">Choose City</option>
                                                     <?php
-                                                    foreach ($citylist as $cityselect) { ?>
+                                                    foreach($citylist as $cityselect) { ?>
                                                         <option value="<?php echo $cityselect->city_code; ?>"
                                                             <?php
-                                                            if ($cityselect->city_code == $assessmentinfo_details->city_code ) {
+                                                            if ($cityselect->city_code == $assessmentinfo_details->city_code) {
                                                                 echo " selected";
                                                             } ?>
                                                             >
-                                                            <?php echo $cityselect->city_name; ?></option>
+                                                            <?php echo $cityselect->city_code; ?></option>
                                                         <?php
                                                     }
                                                 } else {
@@ -445,10 +502,7 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" value ="<?php echo $assessmentinfo_details->prov_name ?>" >
-                            <input class="form-control" type="hidden" id = "city_pass" name="city_pass" value ="<?php echo $assessmentinfo_details->city_name ?>" >
+                            </div><!--end of lgu type-->
 
                             <div class="form-group">
                                 <label for="no_cities">No. of Cities:</label>
@@ -554,13 +608,10 @@ if (!$this->session->userdata('user_id')){
                                 <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                             </div>
 
-                          </div>
-                        <div id="group_renewal">
+                            <!--   </div>-->
+                       <!-- <div id="group_renewal">-->
 
-
-                       </div>
-                        <pre><?php echo $assessmentinfo_details->region_name; ?>
-                        </pre>
+                            <!--   </div>-->
                  </div>
                  <div class="form-group">
                      <div class="btn-group">

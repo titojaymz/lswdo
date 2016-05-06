@@ -15,7 +15,7 @@ class budgetallocation_model extends CI_Model {
     public function getBudgetAllocation($profID)
     {
 
-        $sql = 'select a.profile_id,a.sector_id,b.sector_name,a.year_indicated, a.budget_present_year,
+        $sql = 'select a.profile_id,a.sector_id,b.sector_name,a.year_indicated, a.budget_present_year, a.budget_previous_year,
                 a.utilization, a.no_bene_served, a.no_target_bene
                 From tbl_lswdo_budget a
                 INNER JOIN lib_sector b
@@ -38,23 +38,23 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
-    public function insertBudgetAllocation($profID,$sector_id, $year_indicated,$budget_present_year, $utilization, $budget_previous_year, $no_bene_served, $no_target_bene, $created_by)
+    public function insertBudgetAllocation($profID, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created)
     {
 
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id,sector_id,year_indicated,budget_present_year,utilization,budget_previous_year,no_bene_served,no_target_bene,created_by,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo_budget(profile_id, sector_id, year_indicated, budget_previous_year,budget_present_year, utilization, no_bene_served, no_target_bene, created_by, date_created)
                           VALUES
                           (
                           "' . $profID . '",
                           "' . $sector_id . '",
                           "' . $year_indicated . '",
+                          "'.$budget_previous_year.'",
                           "' . $budget_present_year . '",
                           "' . $utilization . '",
-                          "'.$budget_previous_year.'",
                           "' . $no_bene_served . '",
                           "' . $no_target_bene . '",
-                           "' . $created_by . '",
+                          "' . $created_by . '",
                           Now()
                           )');
 
@@ -74,7 +74,7 @@ class budgetallocation_model extends CI_Model {
         return $query->row();
     }
 
-    public function updateBudgetAllocation($id,$sector_id,$year_indicated,$budget_previous_year,$budget_present_year,$utilization,$no_bene_served,$no_target_bene,$prevSectorID)
+    public function updateBudgetAllocation($id,$sector_id,$year_indicated,$budget_previous_year,$budget_present_year,$utilization,$no_bene_served,$no_target_bene,$prevSectorID,$modified_by, $date_modified)
     {
         $this->db->trans_begin();
 
@@ -105,39 +105,6 @@ class budgetallocation_model extends CI_Model {
         $this->db->close();
     }
 
-    public function budgetallocation_masterview($id = 0,$form_message = '')
-    {
-        if (!$this->session->userdata('user_id'))
-        {
-            redirect('/users/login','location');
-        }
-
-        $budgetallocation_model = new budgetallocation_model();
-        $BudgetDetails = $budgetallocation_model->getBudgetAllocationByID($id);
-        if ($BudgetDetails){
-            $form_message = $form_message;
-            $data = array(
-                'profile_id'                 =>      $BudgetDetails->profile_id,
-                'sector_id'                  =>      $BudgetDetails->sector_name,
-                'year_indicated'             =>      $BudgetDetails->year_indicated,
-                'budget_present_year'        =>      $BudgetDetails->budget_present_year,
-                'utilization'                =>      $BudgetDetails->utilization,
-                'no_bene_served'             =>      $BudgetDetails->no_bene_served,
-                'no_target_bene'             =>      $BudgetDetails->no_target_bene
-
-            );
-        } else {
-            $form_message = 'No records found!';
-            $data = array(
-                'form_message'      =>      $form_message
-            );
-        }
-        $this->load->view('header');
-        $this->load->view('nav');
-        $this->load->view('sidebar');
-        $this->load->view('budgetallocation_masterview',$data);
-        $this->load->view('footer');
-    }
 
     public function deleteBudgetAllocation($id = 0)
     {
