@@ -259,9 +259,9 @@ if (!$this->session->userdata('user_id')){
 
     function get_brgy() {
         var city_code = $('#citylist').val();
-        var lgu_type2 = $('#lgu_type_id').val();
+        var lgu_type = $('#lgu_type_id').val();
 
-        if(lgu_type2 == 2 && city_code > 0) {
+        if(lgu_type == 2 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
@@ -308,7 +308,7 @@ if (!$this->session->userdata('user_id')){
             });
 
         }
-       else if(lgu_type2 == 3 && city_code > 0) {
+       else if(lgu_type == 3 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy3'); ?>",

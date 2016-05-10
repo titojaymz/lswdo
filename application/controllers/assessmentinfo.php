@@ -17,6 +17,18 @@ class assessmentinfo extends CI_Controller {
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
 
+        $this->init_rpmb_session();
+        $this->init_rpmbsearch_session();
+
+        $rpmb['regionlist'] = $this->assessmentinfo_model->get_regions();
+
+        if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
+            $rpmb['provlist'] = $this->assessmentinfo_model->get_provinces($_SESSION['region']);
+        }
+        if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
+            $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
+        }
+
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
@@ -671,6 +683,18 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
+    public function init_rpmbsearch_session() {
+        if(isset($_POST['regionlistsearch']) and $_POST['regionlistsearch'] > 0) {
+            $_SESSION['regionsearch'] = $_POST['regionlistsearch'];
+        }
+        if(isset($_POST['provlistsearch']) and $_POST['provlistsearch'] > 0) {
+            $_SESSION['provincesearch'] = $_POST['provlistsearch'];
+        }
+        if(isset($_POST['citylistsearch']) and $_POST['citylistsearch'] > 0) {
+            $_SESSION['city'] = $_POST['citylist'];
+        }
+
+    }
 
     protected function validateEditForm()
     {
