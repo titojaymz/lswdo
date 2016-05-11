@@ -7,7 +7,23 @@
 
 ?>
 <body>
+<?php if ($form_message <> ''){ ?>
+    <div class="alert alert-success">
+        <?php echo $form_message ?>
+    </div>
+<?php } ?>
 <div class="content">
+
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li class="active">Assessment Information</li>
+            <li class="active">Budget Allocation</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
 
     <div class = "row">
         <div class="col-md-12">
@@ -62,11 +78,12 @@
                                 <!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart3/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 3 </a></td>-->
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-sm btn-primary" href="<?php echo base_url('budgetallocation/editBudgetAllocation/' . $budgetallocationData->profile_id . '/'.$budgetallocationData->sector_id) ?>"><i class="fa fa-edit"></i> </a>
-                                    </div>
-                                    <div class="btn-group">
                                         <a class="btn btn-xs btn-info" href="<?php echo base_url('budgetallocation/budgetallocation_masterview/' . $budgetallocationData->profile_id) ?>"><i class="fa fa-plus"></i> View </a>
                                     </div>
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-primary" href="<?php echo base_url('budgetallocation/editBudgetAllocation/' . $budgetallocationData->profile_id . '/'.$budgetallocationData->sector_id) ?>"><i class="fa fa-edit"></i> </a>
+                                    </div>
+
                                     <!--      <div class="btn-group">
                                         <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('budgetallocation/delete_budgetallocation/' . $budgetallocationData->profile_id) ?>"><i class="fa fa-trash"> </i> </a>
                                     </div>-->
