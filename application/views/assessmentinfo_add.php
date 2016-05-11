@@ -216,7 +216,7 @@ if (!$this->session->userdata('user_id')){
         else if (lgu_type == 3 && prov_code > 0)
         {
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_cities2'); ?>",
                 async: false,
                 type: "POST",
                 data: "prov_code="+prov_code,
