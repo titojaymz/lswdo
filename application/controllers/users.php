@@ -13,11 +13,13 @@ class users extends CI_Controller {
      */
     protected function email_credentials()
     {
+        $email_credentials = $this->config->item('email_credentials');
+
         return array(
-            'host' => '',
-            'username' => '',
-            'password' => '',
-            'mail_sender' => ''
+            'host' => $email_credentials['host'],
+            'username' => $email_credentials['username'],
+            'password' => $email_credentials['password'],
+            'mail_sender' => $email_credentials['email_sender']
         );
     }
     public function index()
