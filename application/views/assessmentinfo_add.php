@@ -212,11 +212,33 @@ if (!$this->session->userdata('user_id')){
                 }
             });
 
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
+                async: false,
+                type: "POST",
+                data: "prov_code="+prov_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
         }
         else if (lgu_type == 3 && prov_code > 0)
         {
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_cities2'); ?>",
                 async: false,
                 type: "POST",
                 data: "prov_code="+prov_code,
@@ -259,9 +281,9 @@ if (!$this->session->userdata('user_id')){
 
     function get_brgy() {
         var city_code = $('#citylist').val();
-        var lgu_type2 = $('#lgu_type_id').val();
+        var lgu_type = $('#lgu_type_id').val();
 
-        if(lgu_type2 == 2 && city_code > 0) {
+        if(lgu_type == 2 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
@@ -308,7 +330,7 @@ if (!$this->session->userdata('user_id')){
             });
 
         }
-       else if(lgu_type2 == 3 && city_code > 0) {
+       else if(lgu_type == 3 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy3'); ?>",
@@ -368,15 +390,17 @@ if (!$this->session->userdata('user_id')){
         <strong><?php echo validation_errors() ?></strong>
     </div>
 <?php } ?>
+<?php echo $form_message; ?>
 <body>
 <div class="content">
 
     <!-- Start Page Header -->
     <div class="page-header">
-        <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
+        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
             <li class="active">Assessment Information</li>
+            <li class="active">Add</li>
         </ol>
     </div>
     <!-- End Page Header -->

@@ -12,6 +12,18 @@ if (!$this->session->userdata('user_id')){
 <body>
 <div class="content">
 
+    <!-- Start Page Header -->
+    <div class="page-header">
+        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
+        <ol class="breadcrumb">
+            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li class="active">Assessment Information</li>
+            <li class="active">Budget Allocation</li>
+            <li class="active">View</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
+
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">

@@ -163,15 +163,22 @@
 </script>
 
 <div class="content">
+
+    <!-- Start Page Header -->
     <div class="page-header">
-        <h1 class="title">Reports List</h1>
+        <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li class="active">Reports </li>
+        </ol>
     </div>
-    <div class="container-padding">
+    <!-- End Page Header -->
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Reports
+                        Reports List
                     </div>
                     <div class="panel-body table-responsive">
                         <?php echo form_open('reports/viewTable',array('class'=>'form-horizontal')) ?>

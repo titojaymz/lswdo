@@ -73,8 +73,9 @@ class budgetallocation extends CI_Controller {
             if($checkDupli->countProf == 0) {
                 $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene,$created_by,$date_created);
                 if ($addResult) {
-                    $form_message = 'Add Success!';
+                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Add Succeeded! <a href="#" class="closed">&times;</a></div>!';
                     $this->load->view('header');
+                    $rpmb['form_message'] = $form_message;
                     $this->load->view('nav');
                     $this->load->view('sidebar');
                     $this->load->view('budgetallocation_add', array(

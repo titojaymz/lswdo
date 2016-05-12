@@ -11,36 +11,6 @@ if (!$this->session->userdata('user_id')){
 
 ?>
 <script type="text/javascript">
-    function askLGU() {
-        var e = document.getElementById("lgu_type_id").value;
-        if (e == 1)
-        {
-            document.getElementById("groupLGUregion").style.display = "block";
-            document.getElementById("groupLGUregion").style.visibility = "visible";
-            document.getElementById("groupLGUProvince").style.display = "block";
-            document.getElementById("groupLGUProvince").style.visibility = "visible";
-            document.getElementById("groupLGUCity").style.display = "none";
-            document.getElementById("groupLGUCity").style.visibility = "hidden";
-            document.getElementById("groupLGUBrgy").style.display = "none";
-            document.getElementById("groupLGUBrgy").style.visibility = "hidden";
-            $('#div_citylist option:gt(0)').remove().end();
-            $('#citylist option:gt(0)').remove().end();
-
-        }
-        else
-        {
-            document.getElementById("groupLGUregion").style.display = "block";
-            document.getElementById("groupLGUregion").style.visibility = "visible";
-            document.getElementById("groupLGUProvince").style.display = "block";
-            document.getElementById("groupLGUProvince").style.visibility = "visible";
-            document.getElementById("groupLGUCity").style.display = "block";
-            document.getElementById("groupLGUCity").style.visibility = "visible";
-            document.getElementById("groupLGUBrgy").style.display = "block";
-            document.getElementById("groupLGUBrgy").style.visibility = "visible";
-
-        }
-    }
-
 
     function GroupStatus() {
         var e = document.getElementById("application_type_id").value;
@@ -67,6 +37,50 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("group_renewal").style.display = "block";
             document.getElementById("group_renewal").style.visibility = "visible";
 
+        }
+    }
+
+    function askLGU() {
+        var e = document.getElementById("lgu_type_id").value;
+        if (e == 1)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "none";
+            document.getElementById("groupLGUCity").style.visibility = "hidden";
+            $('#citylist option:gt(0)').remove().end();
+
+        }
+        else if (e == 2)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
+
+        }
+        else if (e == 3)
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
+
+        }
+        else
+        {
+            document.getElementById("groupLGUregion").style.display = "block";
+            document.getElementById("groupLGUregion").style.visibility = "visible";
+            document.getElementById("groupLGUProvince").style.display = "block";
+            document.getElementById("groupLGUProvince").style.visibility = "visible";
+            document.getElementById("groupLGUCity").style.display = "block";
+            document.getElementById("groupLGUCity").style.visibility = "visible";
         }
     }
 
@@ -246,7 +260,7 @@ if (!$this->session->userdata('user_id')){
         {
 
             $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_cities'); ?>",
+                url: "<?php echo base_url('assessmentinfo/populate_cities2'); ?>",
                 async: false,
                 type: "POST",
                 data: "prov_code="+prov_code,
@@ -281,28 +295,6 @@ if (!$this->session->userdata('user_id')){
                 }
 
             });
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_incomeclass'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#income_class').html(data);
-                }
-            });
-
-            $.ajax({
-                url: "<?php echo base_url('assessmentinfo/populate_total_pop'); ?>",
-                async: false,
-                type: "POST",
-                data: "prov_code="+prov_code,
-                dataType: "html",
-                success: function(data) {
-                    $('#total_pop').html(data);
-                }
-            });
 //
         }
         else
@@ -316,7 +308,7 @@ if (!$this->session->userdata('user_id')){
         var lgu_type = document.getElementById("lgu_type_id").value;
         var city_code = $('#citylist').val();
 
-        if(city_code > 0) {
+        if(lgu_type == 2 && city_code > 0) {
 
             $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_countbrgy'); ?>",
@@ -330,6 +322,17 @@ if (!$this->session->userdata('user_id')){
             });
 
             $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
                 url: "<?php echo base_url('assessmentinfo/populate_total_poor2'); ?>",
                 async: false,
                 type: "POST",
@@ -337,6 +340,64 @@ if (!$this->session->userdata('user_id')){
                 dataType: "html",
                 success: function (data) {
                     $('#total_poor').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop2'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
+                }
+            });
+
+        }
+        else if(lgu_type == 3 && city_code > 0) {
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_countbrgy3'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#groupbrgy').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_incomeclass3'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#income_class').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_poor3'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code=" + city_code,
+                dataType: "html",
+                success: function (data) {
+                    $('#total_poor').html(data);
+                }
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('assessmentinfo/populate_total_pop3'); ?>",
+                async: false,
+                type: "POST",
+                data: "city_code="+city_code,
+                dataType: "html",
+                success: function(data) {
+                    $('#total_pop').html(data);
                 }
             });
         }
@@ -354,10 +415,11 @@ if (!$this->session->userdata('user_id')){
 <div class="content">
     <!-- Start Page Header -->
     <div class="page-header">
-        <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>
+        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
             <li class="active">Assessment Information</li>
+            <li class="active">Renewal</li>
         </ol>
     </div>
     <!-- End Page Header -->

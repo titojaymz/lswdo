@@ -6599,7 +6599,7 @@ class reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->getHighestRow()
         )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 // Rename worksheet (worksheet, not filename)
-        $objPHPExcel->setActiveSheetIndex(0)->setTitle('Budget Utilization (Previous Year)');
+        $objPHPExcel->setActiveSheetIndex(0)->setTitle('Budget Utilization Prev Year');
         // Add new sheet
 
 
@@ -6617,7 +6617,7 @@ class reports extends CI_Controller {
 //header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 //so, we use this header instead.
 //    $regionName = $this->reports_model->getRegionName($region);
-        $filename = 'Non-CompliantIndicator.xlsx';
+        $filename = 'budgetUtilization.xlsx';
         header('Content-type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename='.$filename);
         header('Cache-Control: max-age=0');
