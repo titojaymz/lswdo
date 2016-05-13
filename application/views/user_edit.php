@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <div class="content">
+
+    <!-- Start Page Header -->
     <div class="page-header">
-        <h1 class="title">Users List</h1>
+        <!--  <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
+        <ol class="breadcrumb">
+            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li class="active">Users List </li>
+            <li class="active">Edit </li>
+        </ol>
     </div>
-    <div class="container-padding">
+    <!-- End Page Header -->
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Add User
+                        Edit User
                     </div>
 
                     <div class="panel-body">

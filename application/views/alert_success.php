@@ -6,5 +6,5 @@
  * Time: 2:29 PM
  */
 
-echo "Add Success!";
+echo "Add Succeeded!";
 ?>
