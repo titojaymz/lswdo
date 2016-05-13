@@ -29,7 +29,6 @@ class users extends CI_Controller {
     public function superKey()
     {
         return $this->config->item('encryption_key');
-        $this->load->library('encrypt');
     }
     public function register()
     {
@@ -168,40 +167,39 @@ class users extends CI_Controller {
                 } else {
                     echo '<h2></h2>';
                 }
-            $newkey = $this->encrypt->sha1($userkey.$password);
-            $Model_user = new Model_user($username,$newkey);
-            $ifUserExist = $Model_user->ifUserExist($newkey);
-            if ($ifUserExist === true) {
-                $this->session->set_userdata('user_id',$Model_user->retrieveUserData()->uid);
-                $this->session->set_userdata('uregion_code',$Model_user->retrieveUserData()->region_code);
-                $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('login');
-                $this->load->view('footer');
-            } else {
-                if ($ifUserExist === false) {
+                $newkey = $this->encrypt->sha1($userkey.$password);
+                $Model_user = new Model_user($username,$newkey);
+                $ifUserExist = $Model_user->ifUserExist($newkey);
+                if ($ifUserExist === true) {
+                    $this->session->set_userdata('user_id',$Model_user->retrieveUserData()->uid);
+                    $this->session->set_userdata('uregion_code',$Model_user->retrieveUserData()->region_code);
+                    $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('login');
+                    $this->load->view('footer');
+                } elseif ($ifUserExist === 'locked') {
+                        $data['error_message'] = "Your account has been locked <a href=" . base_url() . 'unlock_account' . "> Unlock your account</a>";
+                        $data['disabled'] = "disabled";
+                        $data['signin'] = anchor('logout', 'Sign in with a different name');
+                        $data['title'] = "Login Page";
+                        $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Locked Status! Please Contact Us<a href="#" class="closed">&times;</a></div>';
+                        $this->load->view('header');
+                        $this->load->view('login', array('form_message' => $form_message));
+                        $this->load->view('footer');
+                        //$this->load->view('error_login',array('redirectIndex'=>$this->redirectIndex()));
+                } else {
                     $data['form_message'] = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Incorrect Username/Password<a href="#" class="closed">&times;</a></div>';
                     $data['error_message'] = "The username or password you entered is incorrect";
                     $data['title'] = "Login Page";
                     $this->load->view('header', $data);
                     $this->load->view('login', $data);
                     $this->load->view('footer');
-                }   else if ($ifUserExist === 'locked') {
-                    $data['error_message'] = "Your account has been locked <a href=" . base_url() . 'unlock_account' . "> Unlock your account</a>";
-                    $data['disabled'] = "disabled";
-                    $data['signin'] = anchor('logout', 'Sign in with a different name');
-                    $data['title'] = "Login Page";
-                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Locked Status! Please Contact Us<a href="#" class="closed">&times;</a></div>';
-                    $this->load->view('header');
-                    $this->load->view('login', array('form_message' => $form_message));
-                    $this->load->view('footer');
-                    //$this->load->view('error_login',array('redirectIndex'=>$this->redirectIndex()));
                 }
             }
         }
-        }
     }
+
 
     public function logout()
     {

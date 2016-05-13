@@ -3,50 +3,74 @@
  * Created by JOSEF FRIEDRICH S. BALDO
  * Date Time: 10/17/15 10:27 PM
  */
-class Model_user extends CI_Model {
+class Model_user extends CI_Model
+{
     private $username;
+
     private $password;
+
     private $firstname;
+
     private $middlename;
+
     private $surname;
+
     private $extensionname;
+
     private $email;
+
     private $regionlist;
+
+
     protected function getUsername()
     {
         return $this->username;
     }
+
+
     protected function getPassword()
     {
         return $this->password;
     }
+
+
     protected function getFirstname()
     {
         return $this->firstname;
     }
+
+
     protected function getMiddlename()
     {
         return $this->middlename;
     }
+
+
     protected function getSurname()
     {
         return $this->surname;
     }
+
+
     protected function getExtensionname()
     {
         return $this->extensionname;
     }
+
 
     protected function getEmail()
     {
         return $this->email;
     }
 
+
     protected function getRegion()
     {
         return $this->regionlist;
     }
-    public function __construct($username = NULL,$password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL,$email = NULL, $regionlist = NULL)
+
+
+    public function __construct($username = NULL, $password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL,$email = NULL, $regionlist = NULL)
     {
         $this->username = $username;
         $this->password = $password;
@@ -60,11 +84,18 @@ class Model_user extends CI_Model {
         $this -> locked = 'Yes';
         $this -> logged = "Yes";
     }
+
+    /**
+     * registerUser
+     * validated: YES
+     * errors found: none
+     * validated by: JFSBALDO
+     * date and time validated: May 13, 2016 10:41
+     */
     public function registerUser()
     {
-
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_user (username,`password`, email, firstname, middlename,surname,extensionname,region_code)
+        $this->db->query('Insert into tbl_user (username,password,email,firstname,middlename,surname,extensionname,region_code)
                           Values
                           ("'.$this->getUsername().'",
                           "'.$this->getPassword().'",
@@ -84,12 +115,27 @@ class Model_user extends CI_Model {
             $this->db->trans_commit();
             $queryResult = 1;
         }
+        $this->db->close();
         return $queryResult;
     }
-    public function userActivated($email){
+
+    /**
+     * @param $email
+     * @return mixed
+     * userActivated
+     * validated: YES
+     * errors found: none
+     * validated by: JFSBALDO
+     * date and time validated: May 13, 2016 10:42
+     */
+    public function userActivated()
+    {
+        $email = $this->getEmail();
         $query = $this->db->get_where('tbl_user', array('email' => $email,'activated' => 1));
         return $query->num_rows();
     }
+
+
     public function forgotPassword($email,$superkey)
     {
         $this->db->trans_begin();
@@ -112,6 +158,8 @@ class Model_user extends CI_Model {
         }
         $this->db->close();
     }
+
+
     public function getuserpass($uid = 0)
     {
         $query = $this->db->query('SELECT password from tbl_user where uid = "'.$uid.'"');
@@ -125,6 +173,8 @@ class Model_user extends CI_Model {
         }
         $this->db->close();
     }
+
+
     public function changePassword($id,$password)
     {
         $this->db->trans_begin();
@@ -145,6 +195,8 @@ class Model_user extends CI_Model {
         }
         $this->db->close();
     }
+
+
     public function ifUserExist($newkey)
     {
         // fetch the username record from the databse users.sdfsdfsdfsd
@@ -188,6 +240,7 @@ class Model_user extends CI_Model {
         }
     }
 
+
     function update_ci_session($session_id, $user_id) {
         $attempt = $this->session->userdata['login_attempt'];
         if ($attempt == 0) {
@@ -208,21 +261,28 @@ class Model_user extends CI_Model {
         }
     }
 
+
     function lock_user_account($user_id) {
         // update the users account status to locked === yes
         $this -> db -> where('uid', $user_id);
         $this -> db -> update('tbl_user', array('locked_status' => $this -> locked));
         $this -> session -> sess_destroy();
     }
+
+
     function update_users_activity($user_id, $logged) {
         $this -> db -> where('uid', $user_id);
         $this -> db -> update('tbl_user', array('logged_in' => $logged));
     }
+
+
     function update_session_start($user_id, $session_id) {
         $session_start = time();
         $this -> db -> where('session_id', $session_id);
         $this -> db -> update('ci_sessions', array('session_start' => $session_start, 'user_id' => $user_id));
     }
+
+
     function update_session_end($user_id, $session_id) {
         $session_end = time();
         $this -> db -> where('session_id', $session_id);
@@ -235,7 +295,6 @@ class Model_user extends CI_Model {
         $query = $this->db->get_where('tbl_user', array('username' => $this->getUsername(),'password' => $this->getPassword()));
         return $query->row();
     }
-
 
 
 }

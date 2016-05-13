@@ -31,7 +31,7 @@ error_reporting(0);
                 <i class="fa fa-user-secret"></i>
             </div>
             <div class="group">
-                <input type="password" class="form-control" placeholder="Password" name="password"  maxlength="30"   required>
+                <input type="password" class="form-control" placeholder="Password" name="password"  maxlength="30" required>
                 <i class="fa fa-key"></i>
             </div>
             <div class="group">
