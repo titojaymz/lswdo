@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '/lswdo';
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ $config['index_page'] = '';
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol']	= 'AUTO';
 
 /*
 |--------------------------------------------------------------------------
@@ -232,7 +232,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'Ncfj68BQJlC4995h4CPGi6Kw3gAE3827';
+$config['encryption_key'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -375,10 +375,10 @@ $config['proxy_ips'] = '';
  *
 */
 $config['email_credentials'] = array(
-    'host' => 'ssl://smtp.gmail.com',
-    'username' => 'itsm-desk@dswd.gov.ph',
-    'password' => 'm21l3rm0d3r@t0r123',
-    'email_sender' => 'msflswdo-noreply@dswd.gov.ph'
+    'host' => '',
+    'username' => '',
+    'password' => '',
+    'email_sender' => ''
 );
 
 
