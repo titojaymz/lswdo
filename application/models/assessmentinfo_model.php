@@ -15,10 +15,15 @@ class assessmentinfo_model extends CI_Model
 
     public function getAssessmentinfo()
     {
-        $sql = 'SELECT a.profile_id,a.swdo_name,c.application_type_name,b.lgu_type_name,total_ira,total_budget_lswdo
-                FROM tbl_lswdo a
-                INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
-                INNER join lib_application_type c on a.application_type_id = c.application_type_id
+        $sql = 'SELECT * FROM
+                tbl_lswdo AS a
+                LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
+                LEFT Join lib_application_type AS c ON a.application_type_id = c.application_type_id
+                LEFT Join lib_regions ON a.region_code = lib_regions.region_code
+                LEFT Join lib_provinces ON a.prov_code = lib_provinces.prov_code
+                LEFT Join lib_cities ON a.city_code = lib_cities.city_code
+                LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
+                LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
                 WHERE a.deleted = 0
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);

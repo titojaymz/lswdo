@@ -18,7 +18,7 @@ class budgetallocation_model extends CI_Model {
         $sql = 'select a.profile_id,a.sector_id,b.sector_name,a.year_indicated, a.budget_present_year, a.budget_previous_year,
                 a.utilization, a.no_bene_served, a.no_target_bene
                 From tbl_lswdo_budget a
-                INNER JOIN lib_sector b
+                LEFT JOIN lib_sector b
                 ON a.sector_id = b.sector_id
                 where a.profile_id = '.$profID.';';
         $query = $this->db->query($sql);
