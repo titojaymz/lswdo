@@ -22,8 +22,6 @@ class assessmentinfo_model extends CI_Model
                 LEFT Join lib_regions ON a.region_code = lib_regions.region_code
                 LEFT Join lib_provinces ON a.prov_code = lib_provinces.prov_code
                 LEFT Join lib_cities ON a.city_code = lib_cities.city_code
-                LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
-                LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
                 WHERE a.DELETED = 0
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
