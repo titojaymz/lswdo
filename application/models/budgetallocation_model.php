@@ -25,7 +25,7 @@ class budgetallocation_model extends CI_Model {
         $result = $query->result();
         return $result;
     }
-
+//sdfgsdf
 
     public function getBudgetAllocationByID($id,$sectorID)
     {
