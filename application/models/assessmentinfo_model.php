@@ -24,7 +24,7 @@ class assessmentinfo_model extends CI_Model
                 LEFT Join lib_cities ON a.city_code = lib_cities.city_code
                 LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
                 LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
-                WHERE a.deleted = 0
+                WHERE a.DELETED = 0
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -44,7 +44,7 @@ class assessmentinfo_model extends CI_Model
                 LEFT Join lib_cities ON a.city_code = lib_cities.city_code
                 LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
                 LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
-                WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
+                WHERE a.DELETED = 0 and a.profile_id="' . $id . '"';
         $query = $this->db->query($sql);
         $result = $query->row();
         return $result;
