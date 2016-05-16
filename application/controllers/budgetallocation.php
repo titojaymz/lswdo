@@ -298,7 +298,7 @@ class budgetallocation extends CI_Controller {
 
     public function listFields()
     {
-        $query = $this->db->query('SELECT profile_id,sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene FROM tbl_lswdo_budget INNER JOIN tbl_lswdo ON tbl_lswdo_budget.profile_id=tbl_lswdo.profile_id');
+        $query = $this->db->query('SELECT profile_id,sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene FROM tbl_lswdo_budget');
         return $query->list_fields();
     }
 
