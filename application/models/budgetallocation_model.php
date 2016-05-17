@@ -19,7 +19,7 @@ class budgetallocation_model extends CI_Model {
                 From tbl_lswdo_budget a
                 LEFT JOIN lib_sector b
                 ON a.sector_id = b.sector_id
-                where a.deleted = 0 AND a.profile_id = '.$profID.';';
+                where a.DELETED = 0 AND a.profile_id = '.$profID.';';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
