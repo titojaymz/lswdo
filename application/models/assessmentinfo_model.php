@@ -13,15 +13,20 @@ class assessmentinfo_model extends CI_Model
         return $this->db->count_all("tbl_lswdo");
     }
 
-    public function getAssessmentinfo()
+    public function getAssessmentinfo($region)
     {
+        if($region == '000000000'){
+           $where =  'WHERE a.deleted = 0';
+        } else {
+            $where =  'WHERE a.deleted = 0 and a.region_code = '.$region;
+        }
         $sql = 'SELECT *
                 FROM tbl_lswdo a
                 INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
                 INNER join lib_application_type c on a.application_type_id = c.application_type_id
                 INNER join lib_regions d on a.region_code = d.region_code
                 INNER Join lib_provinces e ON a.prov_code = e.prov_code
-                WHERE a.deleted = 0
+                '.$where.'
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
         $result = $query->result();

@@ -89,9 +89,16 @@
                                 <td><label for="userlevelid" class="control-label">User Level:</label></td>
                                 <td>
                                     <select name="userlevelid" id="userlevelid" class="form-control"">
-                                    <option value="0">-Please select-</option>
-                                    <option value="-1" <?php if($user_details->user_level == -1){ echo "selected"; }  ?>>Administrator</option>
-                                    <option value="2" <?php if($user_details->user_level == 2){ echo "selected"; }  ?>>Staff</option>
+                                    <option value="">Please Select</option>
+                                    <?php foreach($getUserLevel as $userlevel):?>
+                                        <option value="<?php echo $userlevel->userlevel_id; ?>"
+                                        <?php if(isset($user_details->user_level)){
+                                            if($user_details->user_level == $userlevel->userlevel_id ){
+                                                echo "selected";
+                                            }
+                                        } ?>
+                                        ><?php echo $userlevel->userlevel_name; ?></option>
+                                    <?php endforeach; ?>
                                     </select>
                                 </td>
                             </tr>

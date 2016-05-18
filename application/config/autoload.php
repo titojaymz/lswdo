@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Model_user','Model_form','accesscontrol_model','assessmentinfo_model','indicator_model','Monitoring_Model','Certification_Model','Validity_Model','Visit_Model','budgetallocation_model','dashboard_model','updates_model','PSBRider_Model','reports_model');
+$autoload['model'] = array('Model_user','Model_form','accesscontrol_model','assessmentinfo_model','indicator_model','Monitoring_Model','Certification_Model','Validity_Model','Visit_Model','budgetallocation_model','dashboard_model','updates_model','reports_model','PSBRider_Model','userlevel_model');
 
 
 /* End of file autoload.php */

@@ -4,7 +4,7 @@
  * User: mglveniegas
  *
  */
-
+$accessLevel = $this->session->userdata('accessLevel');
 ?>
 <body>
 <?php if ($form_message <> ''){ ?>
@@ -31,9 +31,9 @@
                     <div class="form-group">
                         <label for="list_info" class="control-label">Assessment Information List</label>
                     </div>
-
+<?php if($accessLevel == -1 || $accessLevel == 5){ ?>
                     <a class="btn btn-sm btn-success" href="<?php echo base_url('assessmentinfo/addAssessmentinfo') ?>"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
-
+<?php } ?>
                 </div>
                 <div class = "panel-body" style="display: block;">
                     <?php if ($form_message <> '') { ?>
@@ -84,19 +84,20 @@
                                     <div class="btn-group">
                                         <a class="btn btn-xs btn-info" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-plus"></i> View </a>
                                     </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-xs btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i>Renewal </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/index/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-money"></i> Budget Allocation </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-tasks"></i> Indicators </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-trash"> </i> </a>
-                                    </div>
-
+                                    <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
+                                        <div class="btn-group">
+                                            <a class="btn btn-xs btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i>Renewal </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/index/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-money"></i> Budget Allocation </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-tasks"></i> Indicators </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-trash"> </i> </a>
+                                        </div>
+                                    <?php } ?>
                                 </td>
 
                                 <!--<td><a class="btn btn-xs btn-success" href=sss"<?php /*echo base_url('indicator/indicatorView/' . $assessmentinfoData->profile_id) */?>"><i class="fa fa-list"></i> Indicators </a></td>-->
