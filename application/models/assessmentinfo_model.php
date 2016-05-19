@@ -16,15 +16,15 @@ class assessmentinfo_model extends CI_Model
     public function getAssessmentinfo($region)
     {
         if($region == '000000000'){
-           $where =  'WHERE a.deleted = 0';
+           $where =  'WHERE a.DELETED = 0';
         } else {
-            $where =  'WHERE a.deleted = 0 and a.region_code = '.$region;
+            $where =  'WHERE a.DELETED = 0 and a.region_code = '.$region;
         }
-        $sql = 'SELECT *
+        $sql = 'SELECT a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,a.swdo_name,a.total_ira,a.total_budget_lswdo
                 FROM tbl_lswdo a
                 INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
                 INNER join lib_application_type c on a.application_type_id = c.application_type_id
-                INNER join lib_regions d on a.region_code = d.region_code
+                INNER Join lib_regions d ON a.region_code = d.region_code
                 INNER Join lib_provinces e ON a.prov_code = e.prov_code
                 '.$where.'
                 ORDER BY a.profile_id';
@@ -33,11 +33,14 @@ class assessmentinfo_model extends CI_Model
         return $result;
     }
 
-
+/*a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,a.swdo_name,a.total_ira,a.total_budget_lswdo,
+h.sector_id,h.sector_name,g.year_indicated,g.budget_present_year, g.budget_previous_year,
+g.utilization, g.no_bene_served, g.no_target_bene */
     public function getAssessmentinfoByID($id = 0)
     {
 
-        $sql = 'SELECT * FROM
+        $sql = 'SELECT *
+                FROM
                 tbl_lswdo AS a
                 LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
                 LEFT Join lib_application_type AS c ON a.application_type_id = c.application_type_id
@@ -460,7 +463,7 @@ class assessmentinfo_model extends CI_Model
           SUM(lib_brgy.total_pop) as total_pop
         FROM
           lib_brgy
-       Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
+           Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
            Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
            Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
         WHERE

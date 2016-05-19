@@ -230,8 +230,8 @@ class budgetallocation extends CI_Controller {
                 'budget_present_year'      =>      $BudgetDetails->budget_present_year,
                 'utilization'      =>      $BudgetDetails->utilization,
                 'no_bene_served'      =>      $BudgetDetails->no_bene_served,
-                'no_target_bene'      =>      $BudgetDetails->no_target_bene
-
+                'no_target_bene'      =>      $BudgetDetails->no_target_bene,
+               'form_message'  =>      $form_message
             );
         } else {
             $form_message = 'No records found!';
