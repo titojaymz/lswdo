@@ -37,7 +37,7 @@ class assessmentinfo extends CI_Controller {
         }
 */
         $this->load->view('header');
-        $this->load->view('nav');
+      //  $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
