@@ -22,7 +22,8 @@
 <br>
 <br> -->
 <!-- Start Page Loading -->
-<div class="loading"><img src="<?php echo base_url('assets/bootstrap/img/loading.gif'); ?>" alt="loading-img"></div>
+<!--<div class="loading"><img src="<?php echo base_url('assets/bootstrap/img/loading.gif'); ?>" alt="loading-img"></div>-->
+<!-- sir josef ito po yung niremove po para sa loading po sir -->
 <!-- End Page Loading -->
 <!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START TOP -->

@@ -23,7 +23,7 @@ class assessmentinfo extends CI_Controller {
         }
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
-/*
+
         $this->init_rpmb_session();
         $this->init_rpmbsearch_session();
 
@@ -35,9 +35,9 @@ class assessmentinfo extends CI_Controller {
         if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
             $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
         }
-*/
+
         $this->load->view('header');
-      //  $this->load->view('nav');
+       $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
