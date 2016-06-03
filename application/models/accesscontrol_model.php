@@ -13,12 +13,24 @@ class accesscontrol_model extends CI_Model
     }
 
 
-    public function get_users_list()
+    public function get_users_list($region,$userid,$accesslevel)
     {
-        $sql = 'select a.uid,a.username, a.email, a.firstname, a.middlename,a.surname,a.extensionname, b.region_name, a.activated, a.user_level
+
+        if($accesslevel == -1){
+            $where =  '';
+        } elseif($accesslevel == 2){
+            $where =  'WHERE a.region_code = '.$region;
+        } else {
+            $where =  'WHERE a.region_code = '.$region. ' and a.uid='.$userid;
+        }
+
+        $sql = 'select a.uid,a.username, a.email, a.firstname, a.middlename,a.surname,a.extensionname, b.region_name, a.activated, c.userlevel_name
                 from tbl_user a
                 INNer join lib_regions b
-                ON a.region_code = b.region_code';
+                ON a.region_code = b.region_code
+                INNER JOIN tbl_userlevel c
+                ON a.user_level = c.userlevel_id '.$where.'
+                ';
 
 
         $query = $this->db->query($sql);
@@ -136,8 +148,6 @@ class accesscontrol_model extends CI_Model
           region_name
         FROM
           lib_regions
-        WHERE
-          region_code <> '000000000'
         ORDER BY
           region_code
         ";
@@ -189,6 +199,14 @@ class accesscontrol_model extends CI_Model
         }
         $this->db->close();
     }
+    public function getUserLevel()
+    {
+        $sql = 'select userlevel_id, userlevel_name from tbl_userlevel where deleted = 0';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        $this->db->close();
+        return $result;
 
+    }
 
 }

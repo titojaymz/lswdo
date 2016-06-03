@@ -96,9 +96,10 @@
                                     <td><label for="userlevelid" class="control-label">User Level:</label></td>
                                     <td>
                                         <select name="userlevelid" id="userlevelid" class="form-control"">
-                                        <option value="0">-Please select-</option>
-                                        <option value="-1">Administrator</option>
-                                        <option value="2">Staff</option>
+                                        <option value="">Please Select</option>
+                                        <?php foreach($getUserLevel as $userlevel):?>
+                                                <option value="<?php echo $userlevel->userlevel_id; ?>"><?php echo $userlevel->userlevel_name; ?></option>
+                                        <?php endforeach; ?>
                                         </select>
                                     </td>
                                 </tr>

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 error_reporting(0);
-$region = $this->session->userdata('uregion_code');
+$region = $this->session->userdata('lswdo_regioncode');
 
 if (!$this->session->userdata('user_id')){
     echo validation_errors();

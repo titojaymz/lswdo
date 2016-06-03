@@ -14,6 +14,13 @@ class assessmentinfo extends CI_Controller {
             redirect('/users/login','location');
         }
 
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
         $assessmentinfo_model = new assessmentinfo_model();
         $form_message = '';
 
@@ -30,10 +37,10 @@ class assessmentinfo extends CI_Controller {
         }
 
         $this->load->view('header');
-        $this->load->view('nav');
+       $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
-            'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
+            'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
             'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
@@ -46,6 +53,14 @@ class assessmentinfo extends CI_Controller {
         if (!$this->session->userdata('user_id'))
         {
             redirect('/users/login','location');
+        }
+
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
         }
 
         $assessmentinfo_model = new assessmentinfo_model();
@@ -120,7 +135,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
                     'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
 
@@ -752,7 +767,7 @@ class assessmentinfo extends CI_Controller {
 
     public function listFields()
     {
-        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
+        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,swdo_name,office_address,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
 

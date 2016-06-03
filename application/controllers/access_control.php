@@ -6,13 +6,22 @@
 class access_control extends CI_Controller {
 
     public function users(){
+        $accessLevel = $this->session->userdata('accessLevel');
+        $user_id = $this->session->userdata('user_id');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
         $user_control = new accesscontrol_model();
         $form_message = '';
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('users_list', array(
-            'userslist' => $user_control->get_users_list()));
+            'userslist' => $user_control->get_users_list($region,$user_id,$accessLevel),
+        ));
         $this->load->view('footer');
 
     }
@@ -27,12 +36,20 @@ class access_control extends CI_Controller {
         $accesscontrol_model = new accesscontrol_model();
         $this->validateAddForm();
         $userkey = $this->superKey();
+        $accessLevel = $this->session->userdata('accessLevel');
+        $user_id = $this->session->userdata('user_id');
 
+        if($accessLevel == -1){
+            $regions = '000000000';
+        } else {
+            $regions = $this->session->userdata('lswdo_regioncode');
+        }
         if ($this->form_validation->run() == FALSE)
         {
             //fail validation
             $this->load->view('header');
             $rpmb['regionlist'] = $accesscontrol_model->get_regions();
+            $rpmb['getUserLevel'] = $accesscontrol_model->getUserLevel();
             $this->load->view('nav');
             $this->load->view('sidebar');
             $this->load->view('user_add',$rpmb);
@@ -65,8 +82,10 @@ class access_control extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('sidebar');
                 $this->load->view('users_list', array(
-                    'userslist' => $accesscontrol_model->get_users_list()));
+                    'userslist' => $accesscontrol_model->get_users_list($regions,$user_id,$accessLevel)));
                 $this->load->view('footer');
+
+                $this->redirectIndex();
             }
         }
 
@@ -85,7 +104,14 @@ class access_control extends CI_Controller {
             $accesscontrol_model = new accesscontrol_model();
             $user_region = $this->session->userdata('uregion');
             $this->validateEditForm();
+        $accessLevel = $this->session->userdata('accessLevel');
+        $user_id = $this->session->userdata('user_id');
 
+        if($accessLevel == -1){
+            $regions = '000000000';
+        } else {
+            $regions = $this->session->userdata('lswdo_regioncode');
+        }
             if (!$this->form_validation->run()){
                 $form_message = '';
                 $this->load->view('header');
@@ -93,6 +119,7 @@ class access_control extends CI_Controller {
                 $this->load->view('sidebar');
                 $rpmb['regionlist'] =$accesscontrol_model->get_regions();
                 $rpmb['user_details'] = $accesscontrol_model->getuserid($uid);
+                $rpmb['getUserLevel'] = $accesscontrol_model->getUserLevel();
                 $this->load->view('user_edit',$rpmb);
                 $this->load->view('footer');
             } else {
@@ -116,8 +143,10 @@ class access_control extends CI_Controller {
                     $this->load->view('nav');
                     $this->load->view('sidebar');
                     $this->load->view('users_list', array(
-                        'userslist' => $accesscontrol_model->get_users_list()));
+                        'userslist' => $accesscontrol_model->get_users_list($regions,$user_id,$accessLevel)));
                     $this->load->view('footer');
+
+                    $this->redirectIndex();
                 }
             }
 
@@ -126,6 +155,15 @@ class access_control extends CI_Controller {
     public function delete_Userinfo($uid)
     {
         $accesscontrol_model = new accesscontrol_model();
+
+        $accessLevel = $this->session->userdata('accessLevel');
+        $user_id = $this->session->userdata('user_id');
+
+        if($accessLevel == -1){
+            $regions = '000000000';
+        } else {
+            $regions = $this->session->userdata('lswdo_regioncode');
+        }
         if ($uid > 0){
             $deleteResult = $accesscontrol_model->deleteUserinfo($uid);
             if ($deleteResult){
@@ -133,8 +171,10 @@ class access_control extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('sidebar');
                 $this->load->view('users_list', array(
-                    'userslist' => $accesscontrol_model->get_users_list()));
+                    'userslist' => $accesscontrol_model->get_users_list($regions,$user_id,$accessLevel)));
                 $this->load->view('footer');
+
+                $this->redirectIndex();
             }
         }
     }
@@ -150,6 +190,8 @@ class access_control extends CI_Controller {
                 $this->load->view('users_list', array(
                     'userslist' => $accesscontrol_model->get_users_list()));
                 $this->load->view('footer');
+
+                $this->redirectIndex();
             }
         }
     }
@@ -179,6 +221,12 @@ class access_control extends CI_Controller {
 
         );
         return $this->form_validation->set_rules($config);
+    }
+    public function redirectIndex()
+    {
+        $page = base_url('access_control/users/');
+//        $sec = "1";
+        header("Location: $page");
     }
 
 }

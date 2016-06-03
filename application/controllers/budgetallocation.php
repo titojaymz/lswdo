@@ -16,6 +16,14 @@ class budgetallocation extends CI_Controller {
 
         $user_region = $this->session->userdata('uregion');
         $budgetallocation_model = new budgetallocation_model();
+        $assessmentinfo_model = new assessmentinfo_model();
+        $monitoring_model = new Monitoring_Model();
+        $certification_model = new Certification_Model();
+        $validity_model = new Validity_model();
+        $visit_model = new Visit_model();
+        $indi_model = new indicator_model();
+        $profile_id = $this->input->post('profile_id'); //cma
+
         $form_message = '';
 
         $this->load->view('header');
@@ -222,8 +230,8 @@ class budgetallocation extends CI_Controller {
                 'budget_present_year'      =>      $BudgetDetails->budget_present_year,
                 'utilization'      =>      $BudgetDetails->utilization,
                 'no_bene_served'      =>      $BudgetDetails->no_bene_served,
-                'no_target_bene'      =>      $BudgetDetails->no_target_bene
-
+                'no_target_bene'      =>      $BudgetDetails->no_target_bene,
+               'form_message'  =>      $form_message
             );
         } else {
             $form_message = 'No records found!';

@@ -13,38 +13,44 @@ class assessmentinfo_model extends CI_Model
         return $this->db->count_all("tbl_lswdo");
     }
 
-    public function getAssessmentinfo()
+    public function getAssessmentinfo($region)
     {
-        $sql = 'SELECT * FROM
-                tbl_lswdo AS a
-                LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
-                LEFT Join lib_application_type AS c ON a.application_type_id = c.application_type_id
-                LEFT Join lib_regions ON a.region_code = lib_regions.region_code
-                LEFT Join lib_provinces ON a.prov_code = lib_provinces.prov_code
-                LEFT Join lib_cities ON a.city_code = lib_cities.city_code
-                LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
-                LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
-                WHERE a.deleted = 0
+        if($region == '000000000'){
+           $where =  'WHERE a.DELETED = 0';
+        } else {
+            $where =  'WHERE a.DELETED = 0 and a.region_code = '.$region;
+        }
+        $sql = 'SELECT a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,a.swdo_name,a.total_ira,a.total_budget_lswdo
+                FROM tbl_lswdo a
+                LEFT join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
+                LEFT join lib_application_type c on a.application_type_id = c.application_type_id
+                LEFT Join lib_regions d ON a.region_code = d.region_code
+                LEFT Join lib_provinces e ON a.prov_code = e.prov_code
+                '.$where.'
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }
 
+/*a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,a.swdo_name,a.total_ira,a.total_budget_lswdo,
+h.sector_id,h.sector_name,g.year_indicated,g.budget_present_year, g.budget_previous_year,
+g.utilization, g.no_bene_served, g.no_target_bene */
 
     public function getAssessmentinfoByID($id = 0)
     {
 
-        $sql = 'SELECT * FROM
+        $sql = 'SELECT *
+                FROM
                 tbl_lswdo AS a
                 LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
                 LEFT Join lib_application_type AS c ON a.application_type_id = c.application_type_id
-                LEFT Join lib_regions ON a.region_code = lib_regions.region_code
-                LEFT Join lib_provinces ON a.prov_code = lib_provinces.prov_code
-                LEFT Join lib_cities ON a.city_code = lib_cities.city_code
-                LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
-                LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
-                WHERE a.deleted = 0 and a.profile_id="' . $id . '"';
+                LEFT Join lib_regions as d ON a.region_code = d.region_code
+                LEFT Join lib_provinces as e ON a.prov_code = e.prov_code
+                LEFT Join lib_cities as f ON a.city_code = f.city_code
+                LEFT Join tbl_lswdo_budget as g ON a.profile_id = g.profile_id
+                LEFT Join lib_sector as h ON g.sector_id = h.sector_id
+                WHERE a.DELETED = 0 and a.profile_id="' . $id . '"';
         $query = $this->db->query($sql);
         $result = $query->row();
         return $result;
@@ -88,36 +94,6 @@ class assessmentinfo_model extends CI_Model
         }
         $this->db->close();
     }
-
-/*
-    public function insertBudgetAllocation($sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created)
-    {
-        $this->db->trans_begin();
-
-        $this->db->query('INSERT INTO tbl_lswdo_budget(sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene,created_by,date_created)
-                          VALUES
-                          (
-                          "' . $sector_id . '",
-                          "' . $year_indicated . '",
-                          "'.$budget_previous_year.'",
-                            "' . $budget_present_year . '",
-                          "' . $utilization . '",
-                          "' . $no_bene_served . '",
-                          "' . $no_target_bene . '",
-                          "' . $created_by . '",
-                          Now()
-                          )');
-
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            return FALSE;
-        } else {
-            $this->db->trans_commit();
-            return TRUE;
-        }
-        $this->db->close();
-    }
-*/
 
     public function updateAssessmentinfo($id, $application_type_id, $lgu_type_id, $regionlist, $provlist, $citylist, $office_address, $swdo_name, $designation, $contact_no, $email, $website, $total_ira, $total_budget_lswdo, $modified_by, $date_modified)
     {
@@ -488,7 +464,7 @@ class assessmentinfo_model extends CI_Model
           SUM(lib_brgy.total_pop) as total_pop
         FROM
           lib_brgy
-       Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
+           Inner Join lib_cities ON lib_brgy.city_code = lib_cities.city_code
            Inner Join lib_provinces ON lib_cities.prov_code = lib_provinces.prov_code
            Inner Join lib_regions ON lib_provinces.region_code = lib_regions.region_code
         WHERE
@@ -606,48 +582,5 @@ class assessmentinfo_model extends CI_Model
         return $this->db->query($get_total_poor3, $city_code)->row();
     }
 
-
-    public function get_records($swdo_name)
-    {
-        $get_records = "
-        SELECT
-        tbl_lswdo.profile_id,
-        lib_lgu_type.lgu_type_name,
-        lib_regions.region_name,
-        lib_provinces.prov_name,
-        lib_cities.city_name,
-        tbl_lswdo.office_address as office_address,
-        tbl_lswdo.swdo_name as swdo_name,
-        tbl_lswdo.designation,
-        tbl_lswdo.contact_no,
-        tbl_lswdo.email,
-        tbl_lswdo.website,
-        tbl_lswdo.total_ira,
-        tbl_lswdo.total_budget_lswdo
-        FROM
-          tbl_lswdo
-          INNER JOIN lib_lgu_type ON tbl_lswdo.lgu_type_id = lib_lgu_type.lgu_type_id
-          INNER JOIN lib_regions ON tbl_lswdo.region_code = lib_regions.region_code
-          INNER JOIN lib_provinces ON tbl_lswdo.prov_code = lib_provinces.prov_code
-          INNER JOIN lib_cities ON tbl_lswdo.city_code = lib_cities.city_code
-        WHERE
-        tbl_lswdo.swdo_name = ?
-        ORDER BY
-        tbl_lswdo.swdo_name
-        ";
-
-        return $this->db->query($get_records, $swdo_name)->row();
-    }
-
-    public function get_AssessmentRecord()
-    {
-    $query = $this->db->get_where('tbl_lswdo',array('DELETED' => 0));
-    if ($query->num_rows() > 0){
-        return $query->result();
-    } else {
-        return FALSE;
-    }
-    $this->db->close();
-    }
 
 }
