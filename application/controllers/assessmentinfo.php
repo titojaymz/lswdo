@@ -161,6 +161,14 @@ class assessmentinfo extends CI_Controller {
             redirect('/users/login','location');
         }
 
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
+
         if ($id > 0){
             $assessmentinfo_model = new assessmentinfo_model();
 
@@ -237,7 +245,7 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
-                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
+                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
                         'list_fields'=>$this->listFields(),
                         'form_message'=>$form_message
                     ));
