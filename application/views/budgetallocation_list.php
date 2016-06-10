@@ -54,8 +54,8 @@
                             <th>Sector ID</th>
                             <th>Year Indicated</th>
                             <th>Budget for the Previous Year</th>
-                            <th>Utilization</th>
                             <th>Budget for the Present Year</th>
+                            <th>Utilization</th>
                             <th>Number of Beneficiaries Served</th>
                             <th>Number of Target Beneficiaries</th>
                             <th> </th>

@@ -49,10 +49,10 @@ if (!$this->session->userdata('user_id')){
                             <th>Budget for Previous Year:</th><td><?php echo $budget_previous_year ?></td>
                         </tr>
                         <tr>
-                            <th>Utilization:</th><td><?php echo $utilization ?></td>
+                            <th>Budget for the Present Year:</th><td><?php echo $budget_present_year ?></td>
                         </tr>
                         <tr>
-                            <th>Budget for the Present Year:</th><td><?php echo $budget_present_year ?></td>
+                            <th>Utilization:</th><td><?php echo $utilization ?></td>
                         </tr>
                         <tr>
                             <th>Number of Beneficiaries Served:</th><td><?php echo $no_bene_served ?></td>

@@ -79,7 +79,7 @@ class budgetallocation extends CI_Controller {
 
             $checkDupli = $budgetallocation_model->checkDuplicate($id, $sector_id);
             if($checkDupli->countProf == 0) {
-                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene,$created_by,$date_created);
+                $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created);
                 if ($addResult) {
                     $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Add Succeeded! <a href="#" class="closed">&times;</a></div>!';
                     $this->load->view('header');
