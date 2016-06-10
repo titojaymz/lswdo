@@ -12,7 +12,7 @@ class assessmentinfo_model extends CI_Model
     { //pagination query
         return $this->db->count_all("tbl_lswdo");
     }
-
+//try
     public function getAssessmentinfo($region)
     {
         if($region == '000000000'){
