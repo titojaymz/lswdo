@@ -20,15 +20,12 @@ class assessmentinfo_model extends CI_Model
         } else {
             $where =  'WHERE a.DELETED = 0 and a.region_code = '.$region;
         }
-        $sql = 'SELECT * FROM
-                tbl_lswdo AS a
-                LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
-                LEFT Join lib_application_type AS c ON a.application_type_id = c.application_type_id
-                LEFT Join lib_regions ON a.region_code = lib_regions.region_code
-                LEFT Join lib_provinces ON a.prov_code = lib_provinces.prov_code
-                LEFT Join lib_cities ON a.city_code = lib_cities.city_code
-                LEFT Join tbl_lswdo_budget ON a.profile_id = tbl_lswdo_budget.profile_id
-                LEFT Join lib_sector ON tbl_lswdo_budget.sector_id = lib_sector.sector_id
+        $sql = 'SELECT *
+                FROM tbl_lswdo a
+                INNER join lib_lgu_type b on a.lgu_type_id = b.lgu_type_id
+                INNER join lib_application_type c on a.application_type_id = c.application_type_id
+                INNER join lib_regions d on a.region_code = d.region_code
+                INNER Join lib_provinces e ON a.prov_code = e.prov_code
                 '.$where.'
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
