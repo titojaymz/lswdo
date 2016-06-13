@@ -1063,6 +1063,26 @@ class indicator extends CI_Controller
             $this->redirectIndexAddPart2($profID,$ref_id);
         }
     }
+    public function indicatorDeletepart4($profID,$ref_id)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $indicator_model = new indicator_model();
+        $lguTypes = $indicator_model->getLGUtype($profID);
+        $updateResult = $indicator_model->deleteIndicatorpart4($profID,$ref_id);
+        if($updateResult){
+            $form_message = 'Add Success!';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('indicator_viewpart4');
+            $this->load->view('footer');
+            $this->redirectIndexAddPart4($profID,$ref_id);
+        }
+    }
 
     protected function validateAddIndicator()
     {

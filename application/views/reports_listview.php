@@ -528,7 +528,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/avePSWDObudgetpreyearbyregion/') ?>"></i>Average PSWDO budget allocation (present year) per sector,by region</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/avePSWDObudgetpresentyearbyregion/') ?>"></i>Average PSWDO budget allocation (present year) per sector,by region</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -596,7 +596,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveCSWDObudgetpreyearbyregion/') ?>"></i>Average CSWDO budget allocation (present year) per sector,by region</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveCSWDObudgetpresentyearbyregion/') ?>"></i>Average CSWDO budget allocation (present year) per sector,by region</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -639,7 +639,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetpreyearbyregion/') ?>"></i>Average MSWDO budget allocation (present year) per sector,by region</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetpresentyearbyregion/') ?>"></i>Average MSWDO budget allocation (present year) per sector,by region</a>
                                     </td>
                                 </tr>
                             <?php } ?>
