@@ -41,7 +41,6 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-            'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
@@ -136,7 +135,6 @@ class assessmentinfo extends CI_Controller {
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-                    'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
 
                 ));
@@ -762,6 +760,47 @@ class assessmentinfo extends CI_Controller {
                 'field'   => 'application_type_id',
                 'label'   => 'application_type_id',
                 'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'lgu_type_id',
+                'label'   => 'lgu_type_id',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'region_code',
+                'label'   => 'region_code',
+                'rules'   => 'required'
+            ),
+
+            array(
+                'field'   => 'swdo_name',
+                'label'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'label'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'label'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'label'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'label'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
+                'label'   => 'website',
+                'rules'   => 'required'
             )
         );
 
@@ -782,7 +821,48 @@ class assessmentinfo extends CI_Controller {
                 'field'   => 'lgu_type_id',
                 'label'   => 'lgu_type_id',
                 'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'region_code',
+                'label'   => 'region_code',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'prov_code',
+                'label'   => 'prov_code',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'swdo_name',
+                'label'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'label'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'label'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'label'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'label'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
+                'label'   => 'website',
+                'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);

@@ -65,7 +65,27 @@ g.utilization, g.no_bene_served, g.no_target_bene */
     public function getAssessmentinfoByID($id = 0)
     {
 
-        $sql = 'SELECT *
+        $sql = 'SELECT a.profile_id,
+c.application_type_name,
+b.lgu_type_name,
+d.region_name,
+e.prov_name,
+f.city_name,
+a.swdo_name,
+a.designation,
+a.office_address,
+a.contact_no,
+a.email,
+a.website,
+a.total_ira,
+a.total_budget_lswdo,
+h.sector_name,
+g.year_indicated,
+g.budget_previous_year,
+g.budget_present_year,
+g.utilization,
+g.no_bene_served,
+g.no_target_bene
                 FROM
                 tbl_lswdo AS a
                 LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id

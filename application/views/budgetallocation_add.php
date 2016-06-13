@@ -163,7 +163,7 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                                <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                                <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index'); ?>"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
                 </div>
