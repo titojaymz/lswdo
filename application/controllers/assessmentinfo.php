@@ -753,55 +753,15 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
-                'label'   => 'profile_id',
+
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'lgu_type_id',
-                'label'   => 'lgu_type_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'region_code',
-                'label'   => 'region_code',
-                'rules'   => 'required'
-            ),
 
-            array(
-                'field'   => 'swdo_name',
-                'label'   => 'swdo_name',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'designation',
-                'label'   => 'designation',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'office_address',
-                'label'   => 'office_address',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'contact_no',
-                'label'   => 'contact_no',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'email',
-                'label'   => 'email',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'website',
-                'label'   => 'website',
                 'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);
@@ -814,47 +774,10 @@ class assessmentinfo extends CI_Controller {
 
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'lgu_type_id',
-                'label'   => 'lgu_type_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'region_code',
-                'label'   => 'region_code',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'swdo_name',
-                'label'   => 'swdo_name',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'designation',
-                'label'   => 'designation',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'office_address',
-                'label'   => 'office_address',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'contact_no',
-                'label'   => 'contact_no',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'email',
-                'label'   => 'email',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'website',
-                'label'   => 'website',
                 'rules'   => 'required'
             )
 
