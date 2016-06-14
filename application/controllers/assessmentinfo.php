@@ -753,12 +753,10 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
-
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'application_type_id',
-
                 'rules'   => 'required'
             )
 
