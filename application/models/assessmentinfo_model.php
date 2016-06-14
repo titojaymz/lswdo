@@ -20,37 +20,16 @@ class assessmentinfo_model extends CI_Model
         } else {
             $where =  'WHERE a.DELETED = 0 and a.region_code = '.$region;
         }
-        $sql = 'SELECT
-a.profile_id,
-c.application_type_name,
-b.lgu_type_name,
-d.region_name,
-e.prov_name,
-f.city_name,
-a.swdo_name,
-a.designation,
-a.office_address,
-a.contact_no,
-a.email,
-a.website,
-a.total_ira,
-a.total_budget_lswdo,
-h.sector_name,
-g.year_indicated,
-g.budget_previous_year,
-g.budget_present_year,
-g.utilization,
-g.no_bene_served,
-g.no_target_bene
-FROM
-	tbl_lswdo a
-	INNER JOIN lib_lgu_type b ON a.lgu_type_id = b.lgu_type_id
-	INNER JOIN lib_application_type c ON a.application_type_id = c.application_type_id
-	INNER JOIN lib_regions d ON a.region_code = d.region_code
-	INNER JOIN lib_provinces e ON a.prov_code = e.prov_code
-	INNER JOIN lib_cities AS f ON a.city_code = f.city_code
-	INNER JOIN tbl_lswdo_budget AS g ON a.profile_id = g.profile_id
-	INNER JOIN lib_sector AS h ON g.sector_id = h.sector_id
+        $sql = 'SELECT a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,a.swdo_name,a.designation,a.office_address,a.contact_no,a.email,a.website,a.total_ira,a.total_budget_lswdo,
+                h.sector_name,g.year_indicated,g.budget_previous_year,g.budget_present_year,g.utilization,g.no_bene_served,g.no_target_bene
+                FROM tbl_lswdo a
+	            INNER JOIN lib_lgu_type b ON a.lgu_type_id = b.lgu_type_id
+	            INNER JOIN lib_application_type c ON a.application_type_id = c.application_type_id
+                INNER JOIN lib_regions d ON a.region_code = d.region_code
+	            INNER JOIN lib_provinces e ON a.prov_code = e.prov_code
+	            INNER JOIN lib_cities AS f ON a.city_code = f.city_code
+	            INNER JOIN tbl_lswdo_budget AS g ON a.profile_id = g.profile_id
+	            INNER JOIN lib_sector AS h ON g.sector_id = h.sector_id
                 '.$where.'
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
@@ -65,37 +44,17 @@ g.utilization, g.no_bene_served, g.no_target_bene */
     public function getAssessmentinfoByID($id = 0)
     {
 
-        $sql = 'SELECT a.profile_id,
-c.application_type_name,
-b.lgu_type_name,
-d.region_name,
-e.prov_name,
-f.city_name,
-a.swdo_name,
-a.designation,
-a.office_address,
-a.contact_no,
-a.email,
-a.website,
-a.total_ira,
-a.total_budget_lswdo,
-h.sector_name,
-g.year_indicated,
-g.budget_previous_year,
-g.budget_present_year,
-g.utilization,
-g.no_bene_served,
-g.no_target_bene
-                FROM
-                tbl_lswdo AS a
-                LEFT Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
-                LEFT Join lib_application_type AS c ON a.application_type_id = c.application_type_id
-                LEFT Join lib_regions as d ON a.region_code = d.region_code
-                LEFT Join lib_provinces as e ON a.prov_code = e.prov_code
-                LEFT Join lib_cities as f ON a.city_code = f.city_code
-                LEFT Join tbl_lswdo_budget as g ON a.profile_id = g.profile_id
-                LEFT Join lib_sector as h ON g.sector_id = h.sector_id
-                WHERE a.DELETED = 0 and a.profile_id="' . $id . '"';
+        $sql = 'SELECT a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,a.swdo_name,a.designation,a.office_address,a.contact_no,a.email,a.website,a.total_ira,a.total_budget_lswdo,
+                h.sector_name,g.year_indicated,g.budget_previous_year,g.budget_present_year,g.utilization,g.no_bene_served,g.no_target_bene
+                FROM tbl_lswdo AS a
+                INNER JOIN lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
+                INNER JOIN lib_application_type AS c ON a.application_type_id = c.application_type_id
+                INNER JOIN lib_regions as d ON a.region_code = d.region_code
+                INNER JOIN lib_provinces as e ON a.prov_code = e.prov_code
+                INNER JOIN lib_cities as f ON a.city_code = f.city_code
+                INNER JOIN tbl_lswdo_budget as g ON a.profile_id = g.profile_id
+                INNER JOIN lib_sector as h ON g.sector_id = h.sector_id
+                WHERE a.DELETED = 0 AND a.profile_id="' . $id . '"';
         $query = $this->db->query($sql);
         $result = $query->row();
         return $result;
