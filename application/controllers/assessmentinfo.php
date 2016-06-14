@@ -828,11 +828,6 @@ class assessmentinfo extends CI_Controller {
                 'rules'   => 'required'
             ),
             array(
-                'field'   => 'prov_code',
-                'label'   => 'prov_code',
-                'rules'   => 'required'
-            ),
-            array(
                 'field'   => 'swdo_name',
                 'label'   => 'swdo_name',
                 'rules'   => 'required'
