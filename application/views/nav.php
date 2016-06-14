@@ -22,7 +22,7 @@
 <br>
 <br> -->
 <!-- Start Page Loading -->
-<!--<div class="loading"><img src="<?php echo base_url('assets/bootstrap/img/loading.gif'); ?>" alt="loading-img"></div>-->
+<div class="loading"><img src="<?php echo base_url('assets/bootstrap/img/loading.gif'); ?>" alt="loading-img"></div>
 <!-- sir josef ito po yung niremove po para sa loading po sir -->
 <!-- End Page Loading -->
 <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -55,7 +55,7 @@
             <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
                 <li role="presentation" class="dropdown-header">Profile</li>
                 <li class="divider"></li>
-                <li><a href="<?php echo base_url('access_control/lockscreen') ?>"><i class="fa falist fa-lock"></i> Lockscreen</a></li>
+                <!--     <li><a href="<?php //echo base_url('access_control/lockscreen') ?>"><i class="fa falist fa-lock"></i> Lockscreen</a></li>-->
                 <li><a id="button3" href=""  data-toggle="modal" data-target="#myModal"><i class="fa falist fa-power-off"></i> Log-out</a></li> <!--edited link -->
                 <script>
 

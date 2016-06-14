@@ -44,8 +44,8 @@ g.utilization, g.no_bene_served, g.no_target_bene */
     public function getAssessmentinfoByID($id = 0)
     {
 
-        $sql = 'SELECT a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,a.swdo_name,a.designation,a.office_address,a.contact_no,a.email,a.website,a.total_ira,a.total_budget_lswdo,
-                h.sector_name,g.year_indicated,g.budget_previous_year,g.budget_present_year,g.utilization,g.no_bene_served,g.no_target_bene
+        $sql = 'SELECT a.profile_id,c.application_type_id,c.application_type_name,b.lgu_type_id,b.lgu_type_name,d.region_code,d.region_name,e.prov_code,e.prov_name,f.city_code,f.city_name,a.swdo_name,a.designation,a.office_address,a.contact_no,a.email,a.website,a.total_ira,a.total_budget_lswdo,
+                h.sector_id,h.sector_name,g.year_indicated,g.budget_previous_year,g.budget_present_year,g.utilization,g.no_bene_served,g.no_target_bene
                 FROM tbl_lswdo AS a
                 INNER JOIN lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
                 INNER JOIN lib_application_type AS c ON a.application_type_id = c.application_type_id
@@ -344,7 +344,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
         $get_count_muni = "
         SELECT
          city_name,
-          count(city_code) AS value_sum
+        count(city_code) AS value_sum
         FROM
           lib_cities
         WHERE

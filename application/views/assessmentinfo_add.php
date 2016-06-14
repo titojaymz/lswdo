@@ -500,7 +500,7 @@ if (!$this->session->userdata('user_id')){
                                             <select id="citylist" name="citylist" class="form-control">
                                                 <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                     ?>
-                                                    <option value="0">Choose City</option>
+                                                    <option value="0">Choose City/Municipality</option>
                                                     <?php
                                                     foreach ($citylist as $cityselect) { ?>
                                                         <option value="<?php echo $cityselect->city_code; ?>"

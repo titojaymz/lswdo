@@ -174,7 +174,8 @@ class users extends CI_Controller {
                     $this->session->set_userdata('user_id',$Model_user->retrieveUserData()->uid);
                     $this->session->set_userdata('lswdo_regioncode',$Model_user->retrieveUserData()->region_code);
                     $this->session->set_userdata('accessLevel',$Model_user->retrieveUserData()->user_level);
-                    $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
+                   // $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname.' '.$Model_user->retrieveUserData()->middlename.' '.$Model_user->retrieveUserData()->lastname);
+                    $this->session->set_userdata('fullName',$Model_user->retrieveUserData()->firstname);
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('login');
