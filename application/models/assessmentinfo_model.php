@@ -295,7 +295,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
           lib_cities
         WHERE
           prov_code = ?
-          and city_class = 'CC'
+          and city_class <> ''
         ORDER BY
           city_name
         ";
@@ -332,7 +332,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
           lib_cities
         WHERE
          prov_code = ?
-          and city_class = 'CC'
+          and city_class <> ''
         ";
 
         return $this->db->query($get_countcity, $prov_code)->row();
@@ -379,7 +379,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
           lib_cities
         WHERE
           city_code = ?
-          and city_class = 'CC'
+          and city_class <> ''
         ";
 
         return $this->db->query($get_incomeclass2, $city_code)->row();
@@ -414,7 +414,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
          lib_cities on lib_brgy.city_code=lib_cities.city_code
         WHERE
          lib_cities.city_code = ?
-         and lib_cities.city_class = 'CC'
+         and lib_cities.city_class <> ''
         ";
 
         return $this->db->query($get_countbrgy, $city_code)->row();
@@ -509,7 +509,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
                lib_cities.city_code = ?
            ORDER BY
                lib_cities.city_code
-                and lib_cities.city_class = 'CC'
+                and lib_cities.city_class <> ''
         ";
 
         return $this->db->query($get_total_pop2, $city_code)->row();
@@ -573,7 +573,7 @@ g.utilization, g.no_bene_served, g.no_target_bene */
            lib_cities.city_code = ?
            ORDER BY
            lib_cities.city_code
-            and lib_cities.city_class = 'CC'
+            and lib_cities.city_class <> ''
         ";
 
         return $this->db->query($get_total_poor2, $city_code)->row();
