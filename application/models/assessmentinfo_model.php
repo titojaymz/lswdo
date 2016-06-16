@@ -20,16 +20,13 @@ class assessmentinfo_model extends CI_Model
         } else {
             $where =  'WHERE a.DELETED = 0 and a.region_code = '.$region;
         }
-        $sql = 'SELECT a.profile_id,c.application_type_name,c.application_type_id,b.lgu_type_name,b.lgu_type_id,d.region_name,d.region_code,e.prov_name,e.prov_code,f.city_name,f.city_code,a.swdo_name,a.designation,a.office_address,a.contact_no,a.email,a.website,a.total_ira,a.total_budget_lswdo,
-                h.sector_name,h.sector_id,g.year_indicated,g.budget_previous_year,g.budget_present_year,g.utilization,g.no_bene_served,g.no_target_bene
+        $sql = 'SELECT a.profile_id,c.application_type_name,c.application_type_id,b.lgu_type_name,b.lgu_type_id,d.region_name,d.region_code,e.prov_name,e.prov_code,f.city_name,f.city_code,a.swdo_name,a.designation,a.office_address,a.contact_no,a.email,a.website,a.total_ira,a.total_budget_lswdo
                 FROM tbl_lswdo a
 	            LEFT JOIN lib_lgu_type b ON a.lgu_type_id = b.lgu_type_id
 	            LEFT JOIN lib_application_type c ON a.application_type_id = c.application_type_id
                 LEFT JOIN lib_regions d ON a.region_code = d.region_code
 	            LEFT JOIN lib_provinces e ON a.prov_code = e.prov_code
 	            LEFT JOIN lib_cities AS f ON a.city_code = f.city_code
-	            LEFT JOIN tbl_lswdo_budget AS g ON a.profile_id = g.profile_id
-	            LEFT JOIN lib_sector AS h ON g.sector_id = h.sector_id
                 '.$where.'
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
