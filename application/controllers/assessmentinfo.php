@@ -41,7 +41,6 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-            'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
@@ -136,7 +135,6 @@ class assessmentinfo extends CI_Controller {
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-                    'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
 
                 ));
@@ -755,14 +753,13 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
-                'label'   => 'profile_id',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
                 'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);
@@ -775,14 +772,13 @@ class assessmentinfo extends CI_Controller {
 
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'lgu_type_id',
-                'label'   => 'lgu_type_id',
                 'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);

@@ -96,7 +96,7 @@ class psb_riders extends CI_Controller
 
     public function redirectIndex($profID,$addResult)
     {
-        $page = base_url('indicator/indicatorViewAll/'.$profID.'/'.$addResult);
+        $page = base_url('indicator/indicatorViewAll/'.$addResult.'/'.$profID);
 //        $sec = "1";
         header("Location: $page");
     }

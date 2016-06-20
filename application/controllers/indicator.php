@@ -148,6 +148,8 @@ class indicator extends CI_Controller
             'checkPart3' => $indicator_model->getCheckPart3($profID,$ref_id),
             'checkPart4' => $indicator_model->getCheckPart4($profID,$ref_id),
             'scoreProf' => $indicator_model->getBaselineScorePerProf($profID,$ref_id),
+            'scoreProfSilver' => $indicator_model->getBaselineScorePerProfSilver($profID,$ref_id),
+            'scoreProfGold' => $indicator_model->getBaselineScorePerProfGold($profID,$ref_id),
             'getTotalIndicatorsPart1'=>$indicator_model->getTotalIndicatorsPart1($lguTypes->lgu_type_id),
             'getTotalIndicatorsPart2'=>$indicator_model->getTotalIndicatorsPart2($lguTypes->lgu_type_id),
             'getTotalIndicatorsPart3'=>$indicator_model->getTotalIndicatorsPart3($lguTypes->lgu_type_id),
@@ -1061,6 +1063,26 @@ class indicator extends CI_Controller
             $this->load->view('indicator_viewpart3');
             $this->load->view('footer');
             $this->redirectIndexAddPart2($profID,$ref_id);
+        }
+    }
+    public function indicatorDeletepart4($profID,$ref_id)
+    {
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $indicator_model = new indicator_model();
+        $lguTypes = $indicator_model->getLGUtype($profID);
+        $updateResult = $indicator_model->deleteIndicatorpart4($profID,$ref_id);
+        if($updateResult){
+            $form_message = 'Add Success!';
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('indicator_viewpart4');
+            $this->load->view('footer');
+            $this->redirectIndexAddPart4($profID,$ref_id);
         }
     }
 

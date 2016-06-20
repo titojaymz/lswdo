@@ -161,7 +161,6 @@ class budgetallocation extends CI_Controller {
                         $this->load->view('sidebar');
                         $this->load->view('budgetallocation_list', array(
                             'budgetallocation_data' => $budgetallocation_model->getBudgetAllocationByID($id,$prevSectorID),
-                            'list_fields' => $this->listFields(),
                             'form_message' => $form_message,
 
                         ));
@@ -183,7 +182,6 @@ class budgetallocation extends CI_Controller {
                             $this->load->view('sidebar');
                             $this->load->view('budgetallocation_list', array(
                                 'budgetallocation_data' => $budgetallocation_model->getBudgetAllocationByID($id),
-                                'list_fields' => $this->listFields(),
                                 'form_message' => $form_message,
 
                             ));

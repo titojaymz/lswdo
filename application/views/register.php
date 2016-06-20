@@ -47,7 +47,7 @@ error_reporting(0);
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input type="text" class="form-control" placeholder="Sur Name" name="surname" value="<?php echo htmlspecialchars($_POST['surname']); ?>" required>
+                <input type="text" class="form-control" placeholder="Surname" name="surname" value="<?php echo htmlspecialchars($_POST['surname']); ?>" required>
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">

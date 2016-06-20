@@ -500,7 +500,7 @@ if (!$this->session->userdata('user_id')){
                                             <select id="citylist" name="citylist" class="form-control">
                                                 <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                     ?>
-                                                    <option value="0">Choose City</option>
+                                                    <option value="0">Choose City/Municipality</option>
                                                     <?php
                                                     foreach ($citylist as $cityselect) { ?>
                                                         <option value="<?php echo $cityselect->city_code; ?>"
@@ -626,7 +626,7 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                                <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                                <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
                 </div>
