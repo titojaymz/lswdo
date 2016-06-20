@@ -148,6 +148,8 @@ class indicator extends CI_Controller
             'checkPart3' => $indicator_model->getCheckPart3($profID,$ref_id),
             'checkPart4' => $indicator_model->getCheckPart4($profID,$ref_id),
             'scoreProf' => $indicator_model->getBaselineScorePerProf($profID,$ref_id),
+            'scoreProfSilver' => $indicator_model->getBaselineScorePerProfSilver($profID,$ref_id),
+            'scoreProfGold' => $indicator_model->getBaselineScorePerProfGold($profID,$ref_id),
             'getTotalIndicatorsPart1'=>$indicator_model->getTotalIndicatorsPart1($lguTypes->lgu_type_id),
             'getTotalIndicatorsPart2'=>$indicator_model->getTotalIndicatorsPart2($lguTypes->lgu_type_id),
             'getTotalIndicatorsPart3'=>$indicator_model->getTotalIndicatorsPart3($lguTypes->lgu_type_id),

@@ -33,10 +33,10 @@
 
                     <?php $countLS = count($checkPart2) ?>
                     <?php if($countLS > 0){ ?>
-                        <table>
+                        <table width = "100%">
                             <tr>
-                                <td align= "left" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorView/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>I. ADMINISTRATION and ORGANIZATION</b></a></td>
-                                <td align= "right" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>III. CASE MANAGEMENT</b></a></td>
+                                <td align= "left" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorView/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>BACK TO <b>I. ADMINISTRATION and ORGANIZATION</b></a></td>
+                                <td align= "right" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>PROCEED TO <b>III. CASE MANAGEMENT</b></a></td>
                             </tr>
                         </table>
                     <br>

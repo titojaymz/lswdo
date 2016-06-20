@@ -1352,31 +1352,46 @@
                 <td align="center"><?php echo $getBaselineTotalScoreIndicatorsPart4->GoldScoreCompliant; ?></td>
             </tr>
             <?php
+            $bronzeIndiTotal =  $getTotalIndicatorsPart1->Bronze +  $getTotalIndicatorsPart2->Bronze +  $getTotalIndicatorsPart3->Bronze +  $getTotalIndicatorsPart4->Bronze;
+            $silverIndiTotal =  $getTotalIndicatorsPart1->Silver +  $getTotalIndicatorsPart2->Silver +  $getTotalIndicatorsPart3->Silver +  $getTotalIndicatorsPart4->Silver;
+            $goldIndiTotal =  $getTotalIndicatorsPart1->Gold +  $getTotalIndicatorsPart2->Gold +  $getTotalIndicatorsPart3->Gold +  $getTotalIndicatorsPart4->Gold;
             $bronzeTotal = $getBaselineTotalScoreIndicatorsPart1->BronzeScoreCompliant + $getBaselineTotalScoreIndicatorsPart2->BronzeScoreCompliant + $getBaselineTotalScoreIndicatorsPart3->BronzeScoreCompliant + $getBaselineTotalScoreIndicatorsPart4->BronzeScoreCompliant;
             $silverTotal = $getBaselineTotalScoreIndicatorsPart1->SilverScoreCompliant + $getBaselineTotalScoreIndicatorsPart2->SilverScoreCompliant + $getBaselineTotalScoreIndicatorsPart3->SilverScoreCompliant + $getBaselineTotalScoreIndicatorsPart4->SilverScoreCompliant;
             $goldTotal = $getBaselineTotalScoreIndicatorsPart1->GoldScoreCompliant + $getBaselineTotalScoreIndicatorsPart2->GoldScoreCompliant + $getBaselineTotalScoreIndicatorsPart3->GoldScoreCompliant + $getBaselineTotalScoreIndicatorsPart4->GoldScoreCompliant;
             $getPercBronze = $scoreProf->FinalScore;
+            $getPercSilver = $scoreProfSilver->FinalScore;
+            $getPercGold = $scoreProfGold->FinalScore;
 
             if($getPercBronze == 100){
-                $levelBronze = 'Fully Functional';
+                $levelBronze = 'Fully Functional - Bronze';
             } elseif($getPercBronze > 50 && $getPercBronze < 100){
-                $levelBronze = 'Functional';
-            } elseif($getPercBronze < 51) {
-                $levelBronze = 'Partially Functional';
+                $levelBronze = 'Functional - Bronze';
+            } elseif($getPercBronze < 51 && $getPercBronze > 0 ) {
+                $levelBronze = 'Partially Functional - Bronze';
+            } else {
+                $levelBronze = '';
             }
 
+            if($getPercSilver == 100){
+                $levelBronze = 'Fully Functional - Silver';
+            }
+
+            if($getPercGold == 100){
+                $levelBronze = 'Fully Functional - Gold';
+            }
             ?>
             <tr>
                 <td colspan = "2">Total</td>
-                <td colspan = "2" align="center"><b><?php echo $bronzeTotal; ?></b></td>
-                <td colspan = "2" align="center"><b><?php echo $silverTotal; ?></b></td>
-                <td colspan = "2" align="center"><b><?php echo $goldTotal; ?></b></td>
+                <td colspan = "" align="center"><b><?php echo $bronzeIndiTotal; ?></b></td>
+                <td colspan = "" align="center"><b><?php echo $bronzeTotal; ?></b></td>
+                <td colspan = "" align="center"><b><?php echo $silverIndiTotal; ?></b></td>
+                <td colspan = "" align="center"><b><?php echo $silverTotal; ?></b></td>
+                <td colspan = "" align="center"><b><?php echo $goldIndiTotal; ?></b></td>
+                <td colspan = "" align="center"><b><?php echo $goldTotal; ?></b></td>
             </tr>
             <tr>
                 <td colspan = "2">Level of Functionality</td>
-                <td colspan = "2" align="center"><b><?php echo $levelBronze; ?></b></td>
-                <td colspan = "2" align="center"><b><?php echo ''; ?></b></td>
-                <td colspan = "2" align="center"><b><?php echo ''; ?></b></td>
+                <td colspan = "6" align="center"><b><?php echo $levelBronze; ?></b></td>
             </tr>
     </table>
                 </div>
