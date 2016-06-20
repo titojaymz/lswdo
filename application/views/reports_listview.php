@@ -652,6 +652,16 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/lswdo_score/'.$regionlist2.'/'.$provlist2.'') ?>"></i> LSWDO by Baseline report</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/lswdo_newscore/'.$regionlist2.'/'.$provlist2.'') ?>"></i> LSWDO by Updated report</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <a class="btn btn-light" href="<?php echo base_url('reports/LSWDObudgetpresentbyregionbysector/'.$sectorType2.'') ?>"></i>LSWDO budget allocation present year per sector by region</a>
                                     </td>
                                 </tr>

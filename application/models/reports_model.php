@@ -428,6 +428,46 @@ order	by a.new_score desc;
         $result = $query->result();
         return $result;
     }
+    public function get_lswdoscore($regionlist,$provlist)
+    {
+        $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
+        FROM tbl_functionality a
+        INNER JOIN tbl_lswdo b
+        on a.prof_id = b.profile_id
+        inner join lib_regions c
+        on b.region_code = c.region_code
+        inner join lib_provinces d
+        on b.prov_code = d.prov_code
+        inner join lib_cities E
+        on b.city_code = e.city_code
+        where b.deleted = 0
+        and b.region_code = '.$regionlist.'
+        and b.prov_code = '.$provlist.'
+        order by a.baseline_score desc;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_lswdonewscore($regionlist,$provlist)
+    {
+        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
+                FROM tbl_functionality a
+                INNER JOIN tbl_lswdo b
+                on a.prof_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+                inner join lib_cities E
+                on b.city_code = e.city_code
+                where b.deleted = 0
+                and b.region_code = '.$regionlist.'
+                and b.prov_code = '.$provlist.'
+                order by a.new_score desc;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
     public function get_cmswdonewscore($regionlist,$provlist)
     {
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
@@ -463,7 +503,7 @@ order	by a.new_score desc;
                 on b.city_code = e.city_code
                 where b.deleted = 0
                 and b.lgu_type_id = 2
-                and e.city_class = "CC"
+                and e.city_class <> ""
                 and b.region_code = '.$regionlist.'
                 and b.prov_code = '.$provlist.'
                 order by a.baseline_score desc;' ;
@@ -485,7 +525,7 @@ order	by a.new_score desc;
                 on b.city_code = e.city_code
                 where b.deleted = 0
                 and b.lgu_type_id = 2
-                and e.city_class = "CC"
+                and e.city_class <> ""
                 and b.region_code = '.$regionlist.'
                 and b.prov_code = '.$provlist.'
                 order by a.new_score desc;' ;
@@ -508,7 +548,7 @@ order	by a.new_score desc;
                 on b.city_code = e.city_code
                 where b.deleted = 0
                 and b.lgu_type_id = 2
-                and e.city_class != "CC"
+                and e.city_class = ""
                 and b.region_code = '.$regionlist.'
                 and b.prov_code = '.$provlist.'
                 order by a.baseline_score desc;' ;
@@ -530,7 +570,7 @@ order	by a.new_score desc;
                 on b.city_code = e.city_code
                 where b.deleted = 0
                 and b.lgu_type_id = 2
-                and e.city_class != "CC"
+                and e.city_class = ""
                 and b.region_code = '.$regionlist.'
                 and b.prov_code = '.$provlist.'
                 order by a.new_score desc;' ;
@@ -826,7 +866,7 @@ order	by a.new_score desc;
                     AND indicator_id LIKE "%-1%"
                     AND b.region_code = '.$regCode.'
                     AND b.prov_code = '.$provCode.'
-                    AND d.city_class = "CC"
+                    AND d.city_class <> ""
                     AND b.lgu_type_id = 1
                     Group by b.prov_code;';
             } elseif($lguType == 3){
@@ -880,7 +920,7 @@ order	by a.new_score desc;
                     AND indicator_id LIKE "%-1%"
                     AND b.region_code = '.$regCode.'
                     AND b.prov_code = '.$provCode.'
-                    AND d.city_class = "CC"
+                    AND d.city_class <> ""
                     AND b.lgu_type_id = 1
                     Group by b.prov_code;';
         } elseif($lguType == 3){
@@ -960,7 +1000,7 @@ order	by a.new_score desc;
     //get All Prov by Reg
     public function get_AllCityByProv($provCode)
     {
-        $sql = 'select city_code, city_name from lib_cities where city_class = "CC" and prov_code = "'.$provCode.'"';
+        $sql = 'select city_code, city_name from lib_cities where city_class <> "" and prov_code = "'.$provCode.'"';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
