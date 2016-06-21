@@ -12,7 +12,9 @@
         </ol>
     </div>
     <!-- End Page Header -->
-
+<!--<pre>-->
+<?php //print_r($userslist);?>
+<!--</pre>-->
     <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">

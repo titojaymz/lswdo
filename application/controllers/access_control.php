@@ -180,6 +180,14 @@ class access_control extends CI_Controller {
     }
     public function activate_Userinfo($uid)
     {
+        $accessLevel = $this->session->userdata('accessLevel');
+        $user_id = $this->session->userdata('user_id');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
         $accesscontrol_model = new accesscontrol_model();
         if ($uid > 0){
             $deleteResult = $accesscontrol_model->activateUserinfo($uid);
@@ -188,7 +196,7 @@ class access_control extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('sidebar');
                 $this->load->view('users_list', array(
-                    'userslist' => $accesscontrol_model->get_users_list()));
+                    'userslist' => $accesscontrol_model->get_users_list($region,$user_id,$accessLevel)));
                 $this->load->view('footer');
 
                 $this->redirectIndex();
