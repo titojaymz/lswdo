@@ -44,7 +44,7 @@ error_reporting(0);
 
               <div class="group"><?php echo validation_errors(); ?><?php echo $form_message; ?><br>
                 <span class="label label-primary">Old Password:</span><br>
-                <input type="text" name="oldpassword"  maxlength="30" class="form-control" placeholder="Old Password" required>
+                <input type="password" name="oldpassword"  maxlength="30" class="form-control" placeholder="Old Password" required>
               </div><br>
 
               <div class="group">
