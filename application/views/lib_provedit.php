@@ -44,7 +44,20 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="region_code">Region Code:</label>
-                            <input class="form-control" type="text" name="region_code" value="<?php echo $prov_details->region_code ?>" placeholder="Region Code">
+                            <select name="region_code" id="region_code" class="form-control"">
+                            <option value="0">-Please select-</option>
+                            <?php foreach($region as $regions): ?>
+                                <option value="<?php echo $regions->region_code; ?>"
+                                    <?php if(isset($prov_details->region_code)) {
+                                        if($regions->region_code == $prov_details->region_code) {
+                                            echo " selected";
+                                        }
+                                    } ?>
+                                    >
+                                    <?php echo $regions->region_name; ?>
+                                </option>
+                            <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -58,6 +71,7 @@ if (!$this->session->userdata('user_id')){
                                 <a class="btn btn-warning btn-group" href="<?php echo base_url('lib_provc/index') ?>"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
+
                 </div>
                 </form>
             </div>

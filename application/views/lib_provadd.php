@@ -45,9 +45,15 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="text" name="prov_name" value="<?php echo set_value('prov_name') ?>" placeholder="Province Name" required>
                         </div>
 
+
                         <div class="form-group">
                             <label for="region_code">Region Code:</label>
-                            <input class="form-control" type="text" name="region_code" value="<?php echo set_value('region_code') ?>" placeholder="Region Code" required>
+                            <select class="form-control" name="sector_id" id="sector_id">
+                                <option select value="">Please select</option>
+                                <?php foreach($region as $regions): ?>
+                                    <option value="<?php echo $regions->region_code ?>"><?php echo $regions->region_name ?></option>
+                                <?php endforeach ?>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -61,6 +67,7 @@ if (!$this->session->userdata('user_id')){
                                 <a class="btn btn-warning btn-group" href="<?php echo base_url('lib_provc/index'); ?>"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
+
                 </div>
                 </form>
             </div>
