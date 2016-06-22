@@ -77,7 +77,7 @@ class lib_regionc extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
-                $this->load->view('lib_regionadd',array(
+                $this->load->view('lib_regionlist',array(
                     'region_data'=>$libregion_model->listAllregion($region),
                     'form_message'=>$form_message,
 

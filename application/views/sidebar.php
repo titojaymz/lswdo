@@ -24,9 +24,8 @@ $region = $this->session->userdata('lswdo_regioncode');
            <!-- ibinalik ko na libraries    -->
             <ul>
                 <li><a href="<?php echo base_url('lib_regionc/index') ?>">Regions</a></li>
+                <li><a href="<?php echo base_url('lib_provc/index') ?>">Provinces</a></li>
                 <li><a href="<?php echo base_url('lib_brgyc/index') ?>">Barangay</a></li>
-                <li><a href="<?php echo base_url('lib_brgyc/index') ?>">Provinces</a></li>
-
             </ul>
       </li>
     <?php } ?>
