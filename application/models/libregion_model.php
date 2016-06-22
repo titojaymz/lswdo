@@ -9,17 +9,17 @@
 class libregion_model extends CI_Model
 {
 
-    public function listAllregion()
+    public function listAllregion($region)
     {
-        /*if($region == '000000000'){
+        if($region == '000000000'){
             $where =  'WHERE DELETED = 0';
         } else {
             $where =  'WHERE DELETED = 0 and region_code = '.$region;
-        }*/
+        }
 
         $sql = 'select region_code,region_name,region_nick,created_by,date_created,modified_by,date_modified from lib_regions
-                WHERE DELETED = 0
-                ORDER BY region_code';
+               '.$where.'
+               ORDER BY region_code';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;

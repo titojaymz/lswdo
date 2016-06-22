@@ -15,6 +15,14 @@ class lib_regionc extends CI_Controller {
             redirect('/users/login','location');
         }
 
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
+
         $libregion_model = new libregion_model();
         $form_message = '';
 
@@ -22,7 +30,7 @@ class lib_regionc extends CI_Controller {
         $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('lib_regionlist',array(
-            'region_data'=>$libregion_model->listAllregion(),
+            'region_data'=>$libregion_model->listAllregion($region),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
@@ -31,6 +39,20 @@ class lib_regionc extends CI_Controller {
 
     public function addregion()
     {
+
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
+
         $libregion_model = new libregion_model();
         $this->validateAddForm();
 
@@ -38,22 +60,31 @@ class lib_regionc extends CI_Controller {
             $form_message = '';
             $this->load->view('header');
             $this->load->view('nav');
+            $this->load->view('sidebar');
             $this->load->view('lib_regionadd',array('form_message'=>$form_message));
             $this->load->view('footer');
         } else {
             $region_code = $this->input->post('region_code');
             $region_name = $this->input->post('region_name');
             $region_nick = $this->input->post('region_nick');
+            $created_by = $this->session->userdata('user_id');
+            $date_created = 'NOW()';
 
             $libregion_model = new libregion_model();
-            $addResult = $libregion_model->addRegion($region_code,$region_name,$region_nick);
+            $addResult = $libregion_model->addRegion($region_code,$region_name,$region_nick,$created_by,$date_created);
             if ($addResult){
                 $form_message = 'Add Succeeded!';
                 $this->load->view('header');
                 $this->load->view('nav');
-                $this->load->view('lib_regionadd',array('form_message'=>$form_message));
+                $this->load->view('sidebar');
+                $this->load->view('lib_regionadd',array(
+                    'region_data'=>$libregion_model->listAllregion($region),
+                    'form_message'=>$form_message,
+
+                ));
                 $this->load->view('footer');
                 $this->redirectIndex();
+
             }
         }
     }
@@ -64,7 +95,7 @@ class lib_regionc extends CI_Controller {
         {
             redirect('/users/login','location');
         }
-/*
+
         $accessLevel = $this->session->userdata('accessLevel');
 
         if($accessLevel == -1){
@@ -72,7 +103,7 @@ class lib_regionc extends CI_Controller {
         } else {
             $region = $this->session->userdata('lswdo_regioncode');
         }
-*/
+
         $libregion_model = new libregion_model();
         $RegionDetails = $libregion_model->getRegionDetails($id);
 
@@ -110,14 +141,14 @@ class lib_regionc extends CI_Controller {
          {
              redirect('/users/login','location');
          }
-        /*
-                 $accessLevel = $this->session->userdata('accessLevel');
 
-                 if($accessLevel == -1){
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
                      $region = '000000000';
-                 } else {
+        } else {
                      $region = $this->session->userdata('lswdo_regioncode');
-                 }*/
+        }
 
         if ($id > 0){
             $libregion_model = new libregion_model();
@@ -148,7 +179,7 @@ class lib_regionc extends CI_Controller {
                     $this->load->view('nav');
                     $this->load->view('sidebar');
                     $this->load->view('lib_regionlist', array(
-                        'region_data' => $libregion_model->listAllregion()));
+                        'region_data' => $libregion_model->listAllregion($region)));
                     $this->load->view('footer');
                 }
             }
@@ -164,14 +195,14 @@ class lib_regionc extends CI_Controller {
                 {
                     redirect('/users/login','location');
                 }
-        /*
-                       $accessLevel = $this->session->userdata('accessLevel');
 
-                        if($accessLevel == -1){
-                            $region = '000000000';
-                        } else {
-                            $region = $this->session->userdata('lswdo_regioncode');
-                        }*/
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
 
         $libregion_model = new libregion_model();
         if ($id > 0){
@@ -181,7 +212,7 @@ class lib_regionc extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('lib_regionlist',array(
-                    'region_data'=>$libregion_model->listAllregion(),
+                    'region_data'=>$libregion_model->listAllregion($region),
                     'form_message'=>$form_message,
                     $this->redirectIndex()
                 ));
@@ -234,7 +265,7 @@ class lib_regionc extends CI_Controller {
 
     public function redirectIndex($sec = 1)
     {
-        $page = base_url('lib_regionc/index.html');
+        $page = base_url('lib_regionc/index');
         header("Refresh: $sec; url=$page");
     }
 

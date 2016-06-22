@@ -25,10 +25,10 @@ $accessLevel = $this->session->userdata('accessLevel');
                 <div class="panel-title">
                     <div class="form-group">
                         <label for="list_info" class="control-label">Region Information List</label>
-                    </div><!--
+                    </div>
                     <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
-                        <a class="btn btn-sm btn-success" href="<?php echo base_url('lib_regionc/addRegion') ?>"><i class="fa fa-plus-circle"></i> Add Region Info</a>
-                    <?php } ?>-->
+                        <a class="btn btn-sm btn-success" href="<?php echo base_url('lib_regionc/addRegion') ?>"><i class="fa fa-plus-circle"></i> Add Region</a>
+                    <?php } ?>
                 </div>
                 <div class = "panel-body" style="display: block;">
 
