@@ -21,8 +21,13 @@ $region = $this->session->userdata('lswdo_regioncode');
       <li><a href="<?php echo base_url('assessmentinfo/index'); ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
       <li><a href="<?php echo base_url('reports/index'); ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Reports</a></li><!--michael for Reports -->
       <li><a href="#"><span class="icon color9"><i class="fa fa-book"></i></span>Libraries<span class="caret"></span></a> <!--removed link to index -->
-           <!-- REMOVE KO MUNA ITO BAKA DAHIL DITO NAGLOADING ULIT ANG ASSESSMENTINFO
-            -->
+           <!-- ibinalik ko na libraries    -->
+            <ul>
+                <li><a href="<?php echo base_url('lib_regionc/index') ?>">Regions</a></li>
+                <li><a href="<?php echo base_url('lib_brgyc/index') ?>">Barangay</a></li>
+                <li><a href="<?php echo base_url('lib_brgyc/index') ?>">Provinces</a></li>
+
+            </ul>
       </li>
     <?php } ?>
 
