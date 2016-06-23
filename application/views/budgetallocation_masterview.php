@@ -33,7 +33,7 @@ if (!$this->session->userdata('user_id')){
                         <label for="geo_info" class="control-label"> View: Budget Allocation </label>
                     </div>
                     <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
-                   <!-- <a href="<?php echo base_url()?>budgetallocation/addbudgetallocation/<?php echo $profile_id ?>/<?php echo $sector_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Budget Allocation</a>-->
+                    <!-- <a href="<?php echo base_url()?>budgetallocation/addbudgetallocation/<?php echo $profile_id ?>/<?php echo $sector_id ?>.html" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add Budget Allocation</a>-->
                     <br><br>
                     <table class="table table-bordered">
                         <tr>
