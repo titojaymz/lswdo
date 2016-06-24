@@ -6,7 +6,7 @@
  * Time: 4:07 PM
  */
 
-class lib_regionc extends CI_Controller {
+class lib_cityc extends CI_Controller {
 
     public function index()
     {
@@ -23,21 +23,21 @@ class lib_regionc extends CI_Controller {
             $region = $this->session->userdata('lswdo_regioncode');
         }
 
-        $libregion_model = new libregion_model();
+        $libcity_model = new libcity_model();
         $form_message = '';
 
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
-        $this->load->view('lib_regionlist',array(
-            'region_data'=>$libregion_model->listAllregion(),
+        $this->load->view('lib_citylist',array(
+            'city_data'=>$libcity_model->listAllcity(),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
 
     }
 
-    public function addregion()
+    public function addcity()
     {
 
         if (!$this->session->userdata('user_id'))
@@ -53,7 +53,8 @@ class lib_regionc extends CI_Controller {
             $region = $this->session->userdata('lswdo_regioncode');
         }
 
-        $libregion_model = new libregion_model();
+        $libcity_model = new libcity_model();
+        $provCode = $libcity_model->get_prov();
         $this->validateAddForm();
 
         if (!$this->form_validation->run()){
@@ -61,24 +62,33 @@ class lib_regionc extends CI_Controller {
             $this->load->view('header');
             $this->load->view('nav');
             $this->load->view('sidebar');
-            $this->load->view('lib_regionadd',array('form_message'=>$form_message));
+
+
+            $rpmb['prov'] = $provCode;
+            $rpmb['form_message'] = $form_message;
+            $this->load->view('lib_cityadd',$rpmb);
             $this->load->view('footer');
         } else {
-            $region_code = $this->input->post('region_code');
-            $region_name = $this->input->post('region_name');
-            $region_nick = $this->input->post('region_nick');
+            $city_code = $this->input->post('city_code');
+            $city_name = $this->input->post('city_name');
+            $prov_code = $this->input->post('prov_code');
+            $district = $this->input->post('district');
+            $city_class = $this->input->post('city_class');
+            $income_class = $this->input->post('income_class');
             $created_by = $this->session->userdata('user_id');
             $date_created = 'NOW()';
 
-            $libregion_model = new libregion_model();
-            $addResult = $libregion_model->addRegion($region_code,$region_name,$region_nick,$created_by,$date_created);
+            $libcity_model = new libcity_model();
+            $addResult = $libcity_model->addCity($city_code,$city_name,$prov_code,$district,$city_class,$income_class,$created_by,$date_created);
             if ($addResult){
                 $form_message = 'Add Succeeded!';
+                $rpmb['region'] = $provCode;
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
-                $this->load->view('lib_regionlist',array(
-                    'region_data'=>$libregion_model->listAllregion(),
+                $this->load->view('lib_citylist',array(
+                    'prov' => $provCode,
+                    'city_data'=>$libcity_model->listAllcity(),
                     'form_message'=>$form_message,
 
                 ));
@@ -89,7 +99,7 @@ class lib_regionc extends CI_Controller {
         }
     }
 
-    public function lib_regionview($id = 0,$form_message = '')
+    public function lib_cityview($id = 0,$form_message = '')
     {
         if (!$this->session->userdata('user_id'))
         {
@@ -104,19 +114,22 @@ class lib_regionc extends CI_Controller {
             $region = $this->session->userdata('lswdo_regioncode');
         }
 
-        $libregion_model = new libregion_model();
-        $RegionDetails = $libregion_model->getRegionDetails($id);
+        $libcity_model = new libcity_model();
+        $CityDetails = $libcity_model->getCityDetails($id);
 
-        if ($RegionDetails){
+        if ($CityDetails){
             $form_message = $form_message;
             $data = array(
-                'region_code'                 =>      $RegionDetails->region_code,
-                'region_name'        =>      $RegionDetails->region_name,
-                'region_nick'      =>      $RegionDetails->region_nick,
-                'created_by'      =>      $RegionDetails->created_by,
-                'date_created'      =>      $RegionDetails->date_created,
-                'modified_by'      =>      $RegionDetails->modified_by,
-                'date_modified'      =>      $RegionDetails->date_modified,
+                'city_code'                 =>      $CityDetails->city_code,
+                'city_name'        =>      $CityDetails->city_name,
+                'prov_code'      =>      $CityDetails->prov_code,
+                'district'      =>      $CityDetails->district,
+                'city_class'      =>      $CityDetails->city_class,
+                'income_class'      =>      $CityDetails->income_class,
+                'created_by'      =>      $CityDetails->created_by,
+                'date_created'      =>      $CityDetails->date_created,
+                'modified_by'      =>      $CityDetails->modified_by,
+                'date_modified'      =>      $CityDetails->date_modified,
 
                 'form_message'  =>      $form_message
 
@@ -131,70 +144,16 @@ class lib_regionc extends CI_Controller {
         $this->load->view('header');
         $this->load->view('nav');
         $this->load->view('sidebar');
-        $this->load->view('lib_regionview',$data);
+        $this->load->view('lib_cityview',$data);
         $this->load->view('footer');
     }
 
-    public function editRegion($id = "")
+    public function editCity($id = "")
     {
-         if (!$this->session->userdata('user_id'))
-         {
-             redirect('/users/login','location');
-         }
-
-        $accessLevel = $this->session->userdata('accessLevel');
-
-        if($accessLevel == -1){
-                     $region = '000000000';
-        } else {
-                     $region = $this->session->userdata('lswdo_regioncode');
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
         }
-
-        if ($id > 0){
-            $libregion_model = new libregion_model();
-
-          //  $application_type_name = $libregion_model->Lib_getAllApplicationtype();
-         //   $lgu_type_name = $libregion_model->Lib_getLGUtype();
-
-            $this->validateEditForm();
-
-            if (!$this->form_validation->run()){
-                $form_message = '';
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('sidebar');
-                $this->load->view('lib_regionedit',array(
-                    'region_details'=>$libregion_model->getRegionDetails($id)));
-                $this->load->view('footer');
-            } else {
-
-                $region_name = $this->input->post('region_name');
-                $region_nick = $this->input->post('region_nick');
-                $modified_by= $this->session->userdata('user_id');
-                $date_modified = 'NOW()';
-
-                $updateResult = $libregion_model->updateRegion($id, $region_name, $region_nick,$modified_by,$date_modified);
-                if ($updateResult){
-                    $this->load->view('header');
-                    $this->load->view('nav');
-                    $this->load->view('sidebar');
-                    $this->load->view('lib_regionlist', array(
-                        'region_data' => $libregion_model->listAllregion()));
-                    $this->load->view('footer');
-                }
-            }
-        } else {
-            $this->load->view('no_id',array('redirectIndex'=>$this->redirectIndex()));
-        }
-    }
-
-    public function delete_region($id = 0)
-    {
-
-                if (!$this->session->userdata('user_id'))
-                {
-                    redirect('/users/login','location');
-                }
 
         $accessLevel = $this->session->userdata('accessLevel');
 
@@ -204,15 +163,78 @@ class lib_regionc extends CI_Controller {
             $region = $this->session->userdata('lswdo_regioncode');
         }
 
-        $libregion_model = new libregion_model();
         if ($id > 0){
-            $deleteResult = $libregion_model->deleteRegion($id);
+            $libcity_model = new libcity_model();
+            $provCode = $libcity_model->get_prov();
+            //  $application_type_name = $libregion_model->Lib_getAllApplicationtype();
+            //   $lgu_type_name = $libregion_model->Lib_getLGUtype();
+
+            $this->validateEditForm();
+
+            if (!$this->form_validation->run()){
+                $form_message = '';
+                $this->load->view('header');
+                $this->load->view('nav');
+                $this->load->view('sidebar');
+
+
+                $rpmb['prov'] = $provCode;
+                $rpmb['city_details'] = $this->libcity_model->getCityDetails($id);
+                $this->load->view('lib_cityedit', $rpmb);
+                $this->load->view('footer');
+
+            } else {
+
+                $city_name = $this->input->post('city_name');
+                $prov_code = $this->input->post('prov_code');
+                $district = $this->input->post('district');
+                $city_class = $this->input->post('city_class');
+                $income_class = $this->input->post('income_class');
+                $modified_by= $this->session->userdata('user_id');
+                $date_modified = 'NOW()';
+
+                $updateResult = $libcity_model->updateCity($id, $city_name, $prov_code, $district, $city_class, $income_class, $modified_by, $date_modified);
+                if ($updateResult){
+                    $this->load->view('header');
+                    $this->load->view('nav');
+                    $this->load->view('sidebar');
+
+                    $rpmb['prov'] = $this->libcity_model->get_prov();
+                    $this->load->view('lib_citylist', array(
+                        'city_data' => $libcity_model->listAllcity()));
+                    $this->load->view('footer');
+                }
+            }
+        } else {
+            $this->load->view('no_id',array('redirectIndex'=>$this->redirectIndex()));
+        }
+    }
+
+    public function delete_city($id = 0)
+    {
+
+        if (!$this->session->userdata('user_id'))
+        {
+            redirect('/users/login','location');
+        }
+
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
+
+        $libcity_model = new libcity_model();
+        if ($id > 0){
+            $deleteResult = $libcity_model->deleteCity($id);
             if ($deleteResult){
                 $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Delete Succeeded! <a href="#" class="closed">&times;</a></div>';
                 $this->load->view('header');
                 $this->load->view('nav');
-                $this->load->view('lib_regionlist',array(
-                    'region_data'=>$libregion_model->listAllregion(),
+                $this->load->view('lib_citylist',array(
+                    'city_data'=>$libcity_model->listAllcity(),
                     'form_message'=>$form_message,
                     $this->redirectIndex()
                 ));
@@ -226,8 +248,8 @@ class lib_regionc extends CI_Controller {
     {
         $config = array(
             array(
-                'field'   => 'region_name',
-                'label'   => 'Region Name',
+                'field'   => 'city_name',
+                'label'   => 'City Name',
                 'rules'   => 'required'
             )/*,
             array(
@@ -254,7 +276,7 @@ class lib_regionc extends CI_Controller {
     {
         $config = array(
             array(
-                'field'   => 'region_name',
+                'field'   => 'city_name',
                 'rules'   => 'required'
             )
 
@@ -265,7 +287,7 @@ class lib_regionc extends CI_Controller {
 
     public function redirectIndex($sec = 1)
     {
-        $page = base_url('lib_regionc/index');
+        $page = base_url('lib_cityc/index');
         header("Refresh: $sec; url=$page");
     }
 

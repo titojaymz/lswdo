@@ -14,7 +14,8 @@ $accessLevel = $this->session->userdata('accessLevel');
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard/'); ?>">Home</a></li>
-            <li class="active">Region Information</li>
+            <li class="active">Libraries</li>
+            <li class="active">Region</li>
         </ol>
     </div>
     <!-- End Page Header -->
@@ -24,7 +25,7 @@ $accessLevel = $this->session->userdata('accessLevel');
             <div class="panel panel-default">
                 <div class="panel-title">
                     <div class="form-group">
-                        <label for="list_info" class="control-label">Region Information List</label>
+                        <label for="list_info" class="control-label">Region List</label>
                     </div>
                     <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
                         <a class="btn btn-sm btn-success" href="<?php echo base_url('lib_regionc/addRegion') ?>"><i class="fa fa-plus-circle"></i> Add Region</a>

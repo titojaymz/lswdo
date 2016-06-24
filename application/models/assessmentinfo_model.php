@@ -12,7 +12,7 @@ class assessmentinfo_model extends CI_Model
     { //pagination query
         return $this->db->count_all("tbl_lswdo");
     }
-//try
+
     public function getAssessmentinfo($region)
     {
         if($region == '000000000'){
@@ -33,10 +33,6 @@ class assessmentinfo_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-
-/*a.profile_id,c.application_type_name,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,a.swdo_name,a.total_ira,a.total_budget_lswdo,
-h.sector_id,h.sector_name,g.year_indicated,g.budget_present_year, g.budget_previous_year,
-g.utilization, g.no_bene_served, g.no_target_bene */
 
     public function getAssessmentinfoByID($id = 0)
     {

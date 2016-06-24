@@ -6,41 +6,42 @@
  * Time: 4:07 PM
  */
 
-class libregion_model extends CI_Model
+class libprov_model extends CI_Model
 {
 
-    public function listAllregion()
+    public function listAllprov()
     {
 
-        $sql = 'select region_code,region_name,region_nick,created_by,date_created,modified_by,date_modified from lib_regions
-                WHERE DELETED = 0
-                ORDER BY region_code';
+        $sql = 'select prov_code,prov_name,region_code,income_class,created_by,date_created,modified_by,date_modified from lib_provinces
+               WHERE DELETED = 0
+               ORDER BY prov_code';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }
 
 
-    public function getRegionDetails($id=0)
+    public function getProvDetails($id=0)
     {
-        $sql = 'select region_code,region_name,region_nick,created_by,date_created,modified_by,date_modified from lib_regions
-                WHERE DELETED = 0 AND region_code="' . $id . '"';
+        $sql = 'select prov_code,prov_name,region_code,income_class,created_by,date_created,modified_by,date_modified from lib_provinces
+                WHERE DELETED = 0 AND prov_code="' . $id . '"';
         $query = $this->db->query($sql);
         $result = $query->row();
         return $result;
     }
 
 
-    public function addRegion($region_code,$region_name,$region_nick,$created_by,$date_created)
+    public function addProv($prov_code,$prov_name,$region_code,$income_class,$created_by,$date_created)
     {
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO lib_regions(region_code,region_name,region_nick,created_by,date_created)
+        $this->db->query('INSERT INTO lib_provinces(prov_code,prov_name,region_code,income_class,created_by,date_created)
                           VALUES
                           (
+                          "'.$prov_code.'",
+                          "'.$prov_name.'",
                           "'.$region_code.'",
-                          "'.$region_name.'",
-                          "'.$region_nick.'",
+                          "'.$income_class.'",
                           "'.$created_by.'",
                           Now()
                           )');
@@ -58,17 +59,18 @@ class libregion_model extends CI_Model
         $this->db->close();
     }
 
-    public function updateRegion($id, $region_name, $region_nick, $modified_by, $date_modified)
+    public function updateProv($id, $prov_name,$region_code,$income_class, $modified_by, $date_modified)
     {
         $this->db->trans_begin();
 
-        $this->db->query('UPDATE lib_regions SET
-                          region_name="'.$region_name.'",
-                          region_nick="'.$region_nick.'",
+        $this->db->query('UPDATE lib_provinces SET
+                          prov_name="'.$prov_name.'",
+                          region_code="'.$region_code.'",
+                          income_class="'.$income_class.'",
                           modified_by="'.$modified_by.'",
                           date_modified=Now()
                           WHERE
-                          region_code = "'.$id.'"
+                          prov_code = "'.$id.'"
                           ');
 
         if ($this->db->trans_status() === FALSE) {
@@ -81,12 +83,12 @@ class libregion_model extends CI_Model
         $this->db->close();
     }
 
-    public function deleteRegion($id = 0)
+    public function deleteProv($id = 0)
     {
         $this->db->trans_begin();
-        $this->db->query('UPDATE lib_regions T1
+        $this->db->query('UPDATE lib_provinces T1
                           SET T1.DELETED="1"
-                          WHERE T1.region_code = "' . $id . '"
+                          WHERE T1.prov_code = "' . $id . '"
                           ');
 
         if ($this->db->trans_status() === FALSE) {
@@ -97,5 +99,20 @@ class libregion_model extends CI_Model
             return TRUE;
         }
         $this->db->close();
+    }
+
+    public function get_region(){
+        $get_Region = "
+        SELECT
+          region_code,
+          region_name
+        FROM
+          lib_regions
+        WHERE
+          region_code > '0'
+        ORDER BY
+          region_code
+        ";
+        return $this->db->query($get_Region)->result();
     }
 }

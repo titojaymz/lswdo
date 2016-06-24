@@ -15,25 +15,42 @@ class budgetallocation_model extends CI_Model {
     public function getBudgetAllocation($profID)
     {
 
-        $sql = 'SELECT a.profile_id,c.sector_id,c.sector_name,b.year_indicated,b.budget_present_year,b.budget_previous_year,b.utilization,b.no_bene_served,b.no_target_bene FROM tbl_lswdo a
-                LEFT JOIN tbl_lswdo_budget b ON a.profile_id=b.profile_id
-                LEFT JOIN lib_sector c ON b.sector_id = c.sector_id
+        $sql = 'SELECT
+a.profile_id,
+c.sector_id,
+c.sector_name,
+b.year_indicated,
+b.budget_present_year,
+b.budget_previous_year,
+b.utilization,
+b.no_bene_served,
+b.no_target_bene,
+lib_cities.city_name as city_name,
+lib_provinces.prov_name as prov_name
+FROM
+tbl_lswdo AS a
+Left Join tbl_lswdo_budget AS b ON a.profile_id = b.profile_id
+Left Join lib_sector AS c ON b.sector_id = c.sector_id
+Left Join lib_cities ON a.city_code = lib_cities.city_code
+Left Join lib_provinces ON a.prov_code = lib_provinces.prov_code
                 WHERE b.DELETED = 0 AND a.profile_id = '.$profID.';';
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }
-
+/*SELECT a.profile_id,c.sector_id,c.sector_name,b.year_indicated,b.budget_present_year,b.budget_previous_year,b.utilization,b.no_bene_served,b.no_target_bene FROM tbl_lswdo a
+                LEFT JOIN tbl_lswdo_budget b ON a.profile_id=b.profile_id
+                LEFT JOIN lib_sector c ON b.sector_id = c.sector_id*/
 
     public function getBudgetAllocationByID($id,$sectorID)
     {
-        $query = $this->db->get_where('tbl_lswdo_budget',array('profile_id'=>$id,'sector_id'=>$sectorID,'DELETED'=>0));
-        if ($query->num_rows() > 0){
-            return $query->row();
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
+        $sql = 'SELECT a.profile_id,c.sector_id,c.sector_name,b.year_indicated,b.budget_present_year,b.budget_previous_year,b.utilization,b.no_bene_served,b.no_target_bene FROM tbl_lswdo a
+                LEFT JOIN tbl_lswdo_budget b ON a.profile_id=b.profile_id
+                LEFT JOIN lib_sector c ON b.sector_id = c.sector_id
+                WHERE b.DELETED = 0 AND a.profile_id = '.$id.' AND c.sector_id = '.$sectorID.';';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
     }
 
     public function insertBudgetAllocation($profID, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created)

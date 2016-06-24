@@ -89,12 +89,6 @@ if (!$this->session->userdata('user_id')){
     }
 
 </script>
-<?php if (validation_errors() <> '') { ?>
-    <div class="alert alert-danger">
-        <strong><?php echo validation_errors() ?></strong>
-    </div>
-<?php } ?>
-<?php echo $form_message; ?>
 <body>
 <div class="content">
 
@@ -108,6 +102,7 @@ if (!$this->session->userdata('user_id')){
             <li class="active">Add</li>
         </ol>
     </div>
+    <?php echo $form_message ?>
     <!-- End Page Header -->
 
     <div class = "row">
@@ -163,7 +158,7 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <div class="btn-group">
                                 <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                                <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index'); ?>"><i class="fa fa-refresh"></i> Cancel</a>
+                                <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index/0'); ?>"><i class="fa fa-refresh"></i> Cancel</a>
                             </div>
                         </div>
                 </div>

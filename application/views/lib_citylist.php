@@ -14,8 +14,8 @@ $accessLevel = $this->session->userdata('accessLevel');
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard/'); ?>">Home</a></li>
-            <li class="active">Libraries</li>
-            <li class="active">Province</li>
+            <li class="active"> Libraries </li>
+            <li class="active"> Cities </li>
         </ol>
     </div>
     <!-- End Page Header -->
@@ -25,10 +25,10 @@ $accessLevel = $this->session->userdata('accessLevel');
             <div class="panel panel-default">
                 <div class="panel-title">
                     <div class="form-group">
-                        <label for="list_info" class="control-label">Province List</label>
+                        <label for="list_info" class="control-label">City List</label>
                     </div>
                     <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
-                        <a class="btn btn-sm btn-success" href="<?php echo base_url('lib_provc/addProv') ?>"><i class="fa fa-plus-circle"></i> Add Province</a>
+                        <a class="btn btn-sm btn-success" href="<?php echo base_url('lib_cityc/addCity') ?>"><i class="fa fa-plus-circle"></i> Add City</a>
                     <?php } ?>
                 </div>
                 <div class = "panel-body" style="display: block;">
@@ -51,36 +51,40 @@ $accessLevel = $this->session->userdata('accessLevel');
                         <tr>
                             <th>&nbsp;</th>
                             <!-- <th>&nbsp;</th>-->
+                            <th>City Code</th>
+                            <th>City Name</th>
                             <th>Province Code</th>
-                            <th>Province Name</th>
-                            <th>Region Code</th>
+                            <th>District</th>
+                            <th>City Class</th>
                             <th>Income Class</th>
 
 
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($prov_data as $provData): ?>
+                        <?php foreach($city_data as $cityData): ?>
                             <tr>
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-xs btn-info" href="<?php echo base_url('lib_provc/lib_provview/' . $provData->prov_code) ?>"><i class="fa fa-plus"></i> View </a>
+                                        <a class="btn btn-xs btn-info" href="<?php echo base_url('lib_cityc/lib_cityview/' . $cityData->city_code) ?>"><i class="fa fa-plus"></i> View </a>
                                     </div>
                                     <!--      <?php if($accessLevel == -1 || $accessLevel == 5){ ?>-->
                                     <div class="btn-group">
-                                        <a class="btn btn-xs btn-primary" href="<?php echo base_url('lib_provc/editProv/' . $provData->prov_code . '.html') ?>"><i class="fa fa-edit"></i>Edit </a>
+                                        <a class="btn btn-xs btn-primary" href="<?php echo base_url('lib_cityc/editCity/' . $cityData->city_code . '.html') ?>"><i class="fa fa-edit"></i>Edit </a>
                                     </div>
 
                                     <div class="btn-group">
-                                        <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('lib_provc/delete_prov/' . $provData->prov_code) ?>"><i class="fa fa-trash"> </i> </a>
+                                        <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('lib_cityc/delete_city/' . $cityData->city_code) ?>"><i class="fa fa-trash"> </i> </a>
                                     </div>
                                     <!--   <?php } ?>-->
                                 </td>
 
-                                <td><?php echo $provData->prov_code ?></td>
-                                <td><?php echo $provData->prov_name ?></td>
-                                <td><?php echo $provData->region_code ?></td>
-                                <td><?php echo $provData->income_class ?></td>
+                                <td><?php echo $cityData->city_code ?></td>
+                                <td><?php echo $cityData->city_name ?></td>
+                                <td><?php echo $cityData->prov_code ?></td>
+                                <td><?php echo $cityData->district ?></td>
+                                <td><?php echo $cityData->city_class ?></td>
+                                <td><?php echo $cityData->income_class ?></td>
 
                             </tr>
                         <?php endforeach ?>

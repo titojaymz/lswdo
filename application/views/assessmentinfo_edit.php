@@ -8,6 +8,7 @@ if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
 //echo validation_errors();
+//echo $form_message;
 
 ?>
 <script type="text/javascript">
@@ -406,12 +407,12 @@ if (!$this->session->userdata('user_id')){
         }
     }
 </script>
-<?php if (validation_errors() <> '') { ?>
-    <div class="alert alert-danger">
-        <strong><?php echo validation_errors() ?></strong>
+<body>
+<?php if ($form_message <> ''){ ?>
+    <div class="alert alert-success">
+        <?php echo $form_message ?>
     </div>
 <?php } ?>
-<body>
 <div class="content">
     <!-- Start Page Header -->
     <div class="page-header">
@@ -678,7 +679,7 @@ if (!$this->session->userdata('user_id')){
                  <div class="form-group">
                      <div class="btn-group">
                          <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                         <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-refresh"></i> Cancel</a>
+                         <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index/0') ?>"><i class="fa fa-refresh"></i> Cancel</a>
                      </div>
                  </div>
              </div>
