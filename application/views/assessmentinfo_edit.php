@@ -8,6 +8,7 @@ if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
 //echo validation_errors();
+//echo $form_message;
 
 ?>
 <script type="text/javascript">
@@ -406,12 +407,12 @@ if (!$this->session->userdata('user_id')){
         }
     }
 </script>
-<?php if (validation_errors() <> '') { ?>
-    <div class="alert alert-danger">
-        <strong><?php echo validation_errors() ?></strong>
+<body>
+<?php if ($form_message <> ''){ ?>
+    <div class="alert alert-success">
+        <?php echo $form_message ?>
     </div>
 <?php } ?>
-<body>
 <div class="content">
     <!-- Start Page Header -->
     <div class="page-header">
@@ -440,7 +441,7 @@ if (!$this->session->userdata('user_id')){
                         <!--onChange="GroupStatus();"-->
                         <div class="form-group">
                             <label for="application_type_id">Status of Application: </label>
-                            <select name="application_type_id" id="application_type_id" class="form-control">
+                            <select name="application_type_id" id="application_type_id" class="form-control" required>
                                 <option value="0">-Please select-</option>
                                 <?php foreach($application as $applications): ?>
                                     <option value="<?php echo $applications->application_type_id; ?>"
@@ -460,7 +461,7 @@ if (!$this->session->userdata('user_id')){
                             <div class="form-group">
                                 <label class="control-label">Type of LSWDO: </label>
 
-                                <select name="lgu_type_id" id="lgu_type_id" class="form-control" onchange="askLGU();">
+                                <select name="lgu_type_id" id="lgu_type_id" class="form-control" onchange="askLGU();" required>
                                     <option select value="0">-Please select-</option>
                                     <?php foreach($lgu_type as $lgus): ?>
                                         <option value="<?php echo $lgus->lgu_type_id; ?>"
@@ -482,7 +483,7 @@ if (!$this->session->userdata('user_id')){
                                             <fieldset>
                                                 <div class="control-group">
                                                     <div class="controls">
-                                                        <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
+                                                        <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();" required>
 
                                                             <option value="0">Choose Region</option>
                                                             <?php foreach($regionlist as $regionselect): ?>
@@ -506,7 +507,7 @@ if (!$this->session->userdata('user_id')){
                                     <div class="form-group form-group-sm">
                                         <label for="provlist" class="col-lg-2 control-label">Province:</label>
                                         <div id="div_provlist" class="col-lg-8">
-                                            <select id="provlist" name="provlist" class="form-control" onChange="get_cities();">
+                                            <select id="provlist" name="provlist" class="form-control" onChange="get_cities();" required>
                                                 <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
                                                     ?>
                                                     <option value="0">Choose Province</option>
@@ -632,32 +633,32 @@ if (!$this->session->userdata('user_id')){
 
                             <div class="form-group">
                                 <label for="swdo_name">Name of SWDO Officer/Head:</label>
-                                <input class="form-control" type="text" name="swdo_name" id="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head">
+                                <input class="form-control" type="text" name="swdo_name" id="swdo_name" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="designation">Designation:</label>
-                                <input class="form-control" type="text" name="designation" id="designation" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation">
+                                <input class="form-control" type="text" name="designation" id="designation" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="office_address">Office Address:</label>
-                                <input class="form-control" type="text" name="office_address" id="office_address" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address">
+                                <input class="form-control" type="text" name="office_address" id="office_address" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="contact_no">Contact No:</label>
-                                <input class="form-control" type="text" name="contact_no" id="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
+                                <input class="form-control" type="text" name="contact_no" id="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input class="form-control" type="text" name="email" id="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
+                                <input class="form-control" type="text" name="email" id="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="website">Website:</label>
-                                <input class="form-control" type="text" name="website" id="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
+                                <input class="form-control" type="text" name="website" id="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website" required>
                             </div>
 
                             <div class="form-group">
@@ -678,7 +679,7 @@ if (!$this->session->userdata('user_id')){
                  <div class="form-group">
                      <div class="btn-group">
                          <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                         <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                         <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index/0') ?>"><i class="fa fa-refresh"></i> Cancel</a>
                      </div>
                  </div>
              </div>

@@ -5,16 +5,16 @@
   </div>
   <div class="col-md-6 text-right">
     Design and Developed by <a href="" target="_blank">IMB-ICTMS</a>
-  </div> 
+  </div>
 </div>
 <!-- End Footer -->
 
 
 </div>
 <!-- End Content -->
- <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START SIDEPANEL -->
 <div role="tabpanel" class="sidepanel">
 
@@ -92,19 +92,19 @@
         <li class="checkbox checkbox-primary">
           <input id="checkboxside1" type="checkbox"><label for="checkboxside1">Add new products</label>
         </li>
-        
+
         <li class="checkbox checkbox-primary">
           <input id="checkboxside2" type="checkbox"><label for="checkboxside2"><b>May 12, 6:30 pm</b> Meeting with Team</label>
         </li>
-        
+
         <li class="checkbox checkbox-warning">
           <input id="checkboxside3" type="checkbox"><label for="checkboxside3">Design Facebook page</label>
         </li>
-        
+
         <li class="checkbox checkbox-info">
           <input id="checkboxside4" type="checkbox"><label for="checkboxside4">Send Invoice to customers</label>
         </li>
-        
+
         <li class="checkbox checkbox-danger">
           <input id="checkboxside5" type="checkbox"><label for="checkboxside5">Meeting with developer team</label>
         </li>
@@ -115,17 +115,17 @@
         <li class="checkbox checkbox-warning">
           <input id="checkboxside6" type="checkbox"><label for="checkboxside6">Redesign our company blog</label>
         </li>
-        
+
         <li class="checkbox checkbox-success">
           <input id="checkboxside7" type="checkbox"><label for="checkboxside7">Finish client work</label>
         </li>
-        
+
         <li class="checkbox checkbox-info">
           <input id="checkboxside8" type="checkbox"><label for="checkboxside8">Call Johnny from Developer Team</label>
         </li>
 
       </ul>
-    </div>    
+    </div>
     <!-- End Tasks -->
 
     <!-- Start Chat -->

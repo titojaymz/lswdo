@@ -30,7 +30,7 @@ if (!$this->session->userdata('user_id')){
     <div class="form-group">
         <label for="geo_info" class="control-label"> View: Identifying Information </label>
     </div>
-    <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
+    <a class="btn btn-sm btn-warning" href="<?php echo base_url('assessmentinfo/index/0') ?>"><i class="fa fa-arrow-left"></i> Back to list</a>
    <!-- <a class="btn btn-sm btn-success" href="<?php echo base_url('budgetallocation/index')?>"><i class="fa fa-plus-circle"></i> View Budget Allocation </a>-->
     <br><br>
     <table class="table table-bordered">

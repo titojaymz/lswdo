@@ -7,10 +7,9 @@
 if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
-echo validation_errors();
+///echo validation_errors();
 
 ?>
-<body>
 <script type="text/javascript">
     function askLGU() {
         var e = document.getElementById("lgu_type_id").value;
@@ -95,6 +94,7 @@ echo validation_errors();
 
 </script>
 <body>
+
 <div class="content">
 
     <!-- Start Page Header -->
@@ -108,20 +108,20 @@ echo validation_errors();
         </ol>
     </div>
     <!-- End Page Header -->
-
+<?php echo $form_message ?>
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-
+                    <form method="post" class="form-horizontal">
                     <div class="form-group">
+
                         <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                     </div>
-                    <?php echo form_open('',array('class'=>'form-horizontal')) ?>
-                    <?php echo $form_message; ?>
+
                     <div class="form-group">
                         <label for="sector_id">Sector:</label>
-                        <select name="sector_id" id="sector_id" class="form-control"">
+                        <select name="sector_id" id="sector_id" class="form-control">
                         <option value="0">-Please select-</option>
                         <?php foreach($sector_id as $sectors): ?>
                             <option value="<?php echo $sectors->sector_id; ?>"
@@ -166,18 +166,19 @@ echo validation_errors();
                         <input class="form-control" type="text" name="no_target_bene" value="<?php echo $budgetallocation_details->no_target_bene ?>" placeholder="Number of Target Beneficiaries">
                     </div>
 
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                            <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
+                                <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index/0') ?>"><i class="fa fa-refresh"></i> Cancel</a>
+                            </div>
                         </div>
-                    </div>
-                    <?php echo form_close() ?>
                 </div>
-                <div class="col-md-3"></div>
+                </form>
             </div>
+            <div class="col-md-3"></div>
         </div>
     </div>
+</div>
 </div>
 
 </div>

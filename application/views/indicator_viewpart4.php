@@ -39,10 +39,13 @@
                 <div class = "panel-body" style="display: block;">
                     <?php $countLS = count($checkPart4) ?>
                     <?php if($countLS > 0){ ?>
-                        <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>III. CASE MANAGEMENT</b></a>
-                        <br/><br/>
-                        <a class="btn btn-m btn-option5" href="<?php echo base_url('psb_riders/psb_rider_add/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed To <b>PSB Rider Questions</b></a>
-                        <br/><br/>
+                        <table width = "100%">
+                            <tr>
+                                <td align= "left" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart3/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Back to <b>III. CASE MANAGEMENT</b></a></td>
+                                <td align= "right" width = "50%"><a class="btn btn-m btn-option5" href="<?php echo base_url('psb_riders/psb_rider_add/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed To <b>PSB Rider Questions</b></a></td>
+                            </tr>
+                        </table>
+<br/>
                         <!--<a class="btn btn-m btn-option5" href="<?php /*echo base_url('indicator/indicatorViewAll/'.$profileID.'/'.$refID) */?>"><i class="fa fa-caret-square-o-down"></i><b>View All</b></a><br><br>-->
 <!--                        <a class="btn btn-m btn-option3" href="--><?php //echo base_url('indicator/indicatorEditpart4/'.$profileID.'/'.$refID) ?><!--"><i class="fa fa-check-square"></i> Edit</a>-->
                         <a class="btn btn-m btn-option4" href="<?php echo base_url('indicator/indicatordeletepart4/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>

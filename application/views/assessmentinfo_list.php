@@ -7,11 +7,7 @@
 $accessLevel = $this->session->userdata('accessLevel');
 ?>
 <body>
-<?php if ($form_message <> ''){ ?>
-    <div class="alert alert-success">
-        <?php echo $form_message ?>
-    </div>
-<?php } ?>
+
 <div class="content">
 
     <!-- Start Page Header -->
@@ -23,7 +19,11 @@ $accessLevel = $this->session->userdata('accessLevel');
         </ol>
     </div>
     <!-- End Page Header -->
-
+    <?php if ($form_message <> ''){ ?>
+        <div class="alert alert-success">
+            <?php echo $form_message ?>
+        </div>
+    <?php } ?>
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -36,16 +36,6 @@ $accessLevel = $this->session->userdata('accessLevel');
 <?php } ?>
                 </div>
                 <div class = "panel-body" style="display: block;">
-                    <?php if ($form_message <> '') { ?>
-                        <div class="alert alert-success">
-                            <strong><?php echo $form_message ?></strong>
-                        </div>
-                    <?php } ?>
-                    <?php if (validation_errors() <> '') { ?>
-                        <div class="alert alert-danger">
-                            <strong><?php echo validation_errors() ?></strong>
-                        </div>
-                    <?php } ?>
 
                     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
@@ -89,13 +79,13 @@ $accessLevel = $this->session->userdata('accessLevel');
                                             <a class="btn btn-xs btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i>Renewal </a>
                                         </div>
                                         <div class="btn-group">
-                                            <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/index/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-money"></i> Budget Allocation </a>
+                                            <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/index/' . $assessmentinfoData->profile_id . '/0') ?>"><i class="fa fa-money"></i> Budget Allocation </a>
                                         </div>
                                         <div class="btn-group">
                                             <a class="btn btn-xs btn-success" href="<?php echo base_url('monitoring/monitoring_list/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-tasks"></i> Indicators </a>
                                         </div>
                                         <div class="btn-group">
-                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-trash"> </i> </a>
+                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete selected record?')"  href="<?php echo base_url('/assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-trash"> </i> </a>
                                         </div>
                                     <?php } ?>
                                 </td>

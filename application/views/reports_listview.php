@@ -528,7 +528,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/avePSWDObudgetpreyearbyregion/') ?>"></i>Average PSWDO budget allocation (present year) per sector,by region</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/avePSWDObudgetpresentyearbyregion/') ?>"></i>Average PSWDO budget allocation (present year) per sector,by region</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -541,12 +541,12 @@
                             <?php if($LGUtype2 == 2){ ?>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/cmswdo_score/'.$regionlist2.'/'.$provlist2.'') ?>"></i>C/MSWDO Baseline Reports</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/cmswdo_score/'.$regionlist2.'/'.$provlist2.'') ?>"></i>CSWDO Baseline Reports</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/cmswdo_newscore/'.$regionlist2.'/'.$provlist2.'') ?>"></i>C/MSWDO Updated Reports</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/cmswdo_newscore/'.$regionlist2.'/'.$provlist2.'') ?>"></i>CSWDO Updated Reports</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -561,7 +561,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/distributionCMSWDOall/'.$regionlist2.'') ?>">Distribution of CMSWDO ALL(assessed and not assessed)</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/distributionCMSWDOall/'.$regionlist2.'') ?>">Distribution of CSWDO ALL(assessed and not assessed)</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -581,7 +581,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/distributionofCMSWDOFunctionalityprovince/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Distribution C/MSWDO Functionality by Province</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/distributionofCMSWDOFunctionalityprovince/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Distribution CSWDO Functionality by Province</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -596,7 +596,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveCSWDObudgetpreyearbyregion/') ?>"></i>Average CSWDO budget allocation (present year) per sector,by region</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveCSWDObudgetpresentyearbyregion/') ?>"></i>Average CSWDO budget allocation (present year) per sector,by region</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -639,7 +639,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetpreyearbyregion/') ?>"></i>Average MSWDO budget allocation (present year) per sector,by region</a>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/aveMSWDObudgetpresentyearbyregion/') ?>"></i>Average MSWDO budget allocation (present year) per sector,by region</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -648,6 +648,16 @@
                                 <tr>
                                     <td>
                                         <a class="btn btn-light" href="<?php echo base_url('reports/distributionLSWDObyregion') ?>"></i>Distribution LSWDO by Region</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/lswdo_score/'.$regionlist2.'/'.$provlist2.'') ?>"></i> LSWDO by Baseline report</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/lswdo_newscore/'.$regionlist2.'/'.$provlist2.'') ?>"></i> LSWDO by Updated report</a>
                                     </td>
                                 </tr>
                                 <tr>

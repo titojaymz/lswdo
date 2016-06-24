@@ -6,7 +6,7 @@
  */
 class assessmentinfo extends CI_Controller {
 
-    public function index()
+    public function index($function)
     {
 
         if (!$this->session->userdata('user_id'))
@@ -21,8 +21,19 @@ class assessmentinfo extends CI_Controller {
         } else {
             $region = $this->session->userdata('lswdo_regioncode');
         }
+
+        if($function == 0){
+            $form_message = '';
+        } elseif($function == 1){
+            $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i>Save Succeeded!<a href="#" class="closed">&times;</a></div>';
+        } elseif($function == 2){
+            $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert4"><i class="fa fa-lock"></i>Update Succeeded!<a href="#" class="closed">&times;</a></div>';
+        }elseif($function == 3){
+            $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Delete Succeeded!<a href="#" class="closed">&times;</a></div>';
+        }
+
         $assessmentinfo_model = new assessmentinfo_model();
-        $form_message = '';
+
 
         $this->init_rpmb_session();
         $this->init_rpmbsearch_session();
@@ -41,7 +52,6 @@ class assessmentinfo extends CI_Controller {
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-            'list_fields'=>$this->listFields(),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
@@ -136,19 +146,18 @@ class assessmentinfo extends CI_Controller {
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
                     'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-                    'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
 
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex2($addResult);
+                $this->redirectIndex2($addResult,1);
             }
         }
     }
 
-    public function redirectIndex2($addResult)
+    public function redirectIndex2($addResult,$function)
     {
-        $page = base_url('budgetallocation/addBudgetAllocation/'.$addResult);
+        $page = base_url('budgetallocation/addBudgetAllocation/'.$addResult.'/'.$function.'');
 //        $sec = "1";
         header("Location: $page");
     }
@@ -159,6 +168,14 @@ class assessmentinfo extends CI_Controller {
         if (!$this->session->userdata('user_id'))
         {
             redirect('/users/login','location');
+        }
+
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
         }
 
         if ($id > 0){
@@ -229,20 +246,19 @@ class assessmentinfo extends CI_Controller {
                         $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                     }
 
-                    $form_message = 'Update Succeeded';
+                    $form_message = 'Update Succeeded!';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('sidebar');
-
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
-                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
-                        'list_fields'=>$this->listFields(),
-                        'form_message'=>$form_message
+                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                        'form_message'=>$form_message,
+                        $this->redirectIndex(2)
                     ));
+                    $this->load->view('footer');
                 }
-                $this->redirectIndex();
             }
         }
         else
@@ -257,6 +273,14 @@ class assessmentinfo extends CI_Controller {
         if (!$this->session->userdata('user_id'))
         {
             redirect('/users/login','location');
+        }
+
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
         }
 
         $assessmentinfo_model = new assessmentinfo_model();
@@ -307,6 +331,14 @@ class assessmentinfo extends CI_Controller {
             redirect('/users/login','location');
         }
 
+        $accessLevel = $this->session->userdata('accessLevel');
+
+        if($accessLevel == -1){
+            $region = '000000000';
+        } else {
+            $region = $this->session->userdata('lswdo_regioncode');
+        }
+
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
@@ -316,21 +348,19 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('assessmentinfo_list',array(
-                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
-                    'list_fields'=>$this->listFields(),
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
                     'form_message'=>$form_message,
+                    $this->redirectIndex(3)
                 ));
                 $this->load->view('footer');
-                $this->redirectIndex();
-
 
             }
         }
     }
 
-    public function redirectIndex()
+    public function redirectIndex($function)
     {
-        $page = base_url('assessmentinfo/index/');
+        $page = base_url('assessmentinfo/index/'.$function.'');
 //        $sec = "1";
         header("Location: $page");
     }
@@ -731,14 +761,49 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
-                'label'   => 'profile_id',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'lgu_type_id',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'region_code',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'prov_code',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
                 'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);
@@ -751,35 +816,49 @@ class assessmentinfo extends CI_Controller {
 
             array(
                 'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'lgu_type_id',
-                'label'   => 'lgu_type_id',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
                 'rules'   => 'required'
             )
+
         );
 
         return $this->form_validation->set_rules($config);
     }
-
+/*
 
     public function listFields()
     {
         $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,swdo_name,office_address,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
-
-    /*
-        public function redirectIndex()
-        {
-                $page = base_url();
-                $sec = "1";
-                header("Refresh: $sec; url=$page");
-        }
-    */
-
+*/
     public function refreshCurPage()
     {
         $page = current_url();

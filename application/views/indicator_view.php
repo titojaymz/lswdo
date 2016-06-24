@@ -37,7 +37,7 @@
 
                     <?php $countLS = count($checkPart1) ?>
                     <?php if($countLS > 0){ ?>
-                    <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>Proceed to <b>II. PROGRAM MANAGEMENT</b></a><br><br>
+                    <a class="btn btn-m btn-option5" href="<?php echo base_url('indicator/indicatorViewpart2/'.$profileID.'/'.$refID) ?>"><i class="fa fa-caret-square-o-down"></i>PROCEED TO <b>II. PROGRAM MANAGEMENT</b></a><br><br>
 <!--                        <a class="btn btn-m btn-option3" href="--><?php //echo base_url('indicator/indicatorEdit/'.$profileID.'/'.$refID) ?><!--"><i class="fa fa-check-square"></i> Edit</a>-->
                         <a class="btn btn-m btn-option2" href="<?php echo base_url('indicator/indicatorDelete/'.$profileID.'/'.$refID) ?>"><i class="fa fa-check-square"></i> Delete</a><br><br>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
@@ -67,7 +67,7 @@
                             <!--
                             newArray is a new Array for this version..
                             Pinag sanib-sanib ang mga column na may kaparehas na indiciator ID like IA1, IA2, IB1 and so on.
-                            -->t
+                            -->
                                 <?php
                                 $newArray = array();
                                 foreach($getFirstCategory as $item):

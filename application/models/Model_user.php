@@ -95,7 +95,7 @@ class Model_user extends CI_Model
     public function registerUser()
     {
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_user (username,password,email,firstname,middlename,surname,extensionname,region_code)
+        $this->db->query('Insert into tbl_user (username,password,email,firstname,middlename,surname,extensionname,user_level,region_code)
                           Values
                           ("'.$this->getUsername().'",
                           "'.$this->getPassword().'",
@@ -104,6 +104,7 @@ class Model_user extends CI_Model
                            "'.$this->getMiddlename().'",
                             "'.$this->getSurname().'",
                             "'.$this->getExtensionname().'",
+                            "0",
                             "'.$this->getRegion().'")');
         if ($this->db->trans_status() === FALSE)
         {
@@ -128,9 +129,9 @@ class Model_user extends CI_Model
      * validated by: JFSBALDO
      * date and time validated: May 13, 2016 10:42
      */
-    public function userActivated()
+    public function userActivated($email)
     {
-        $email = $this->getEmail();
+//        $email = $this->getEmail();
         $query = $this->db->get_where('tbl_user', array('email' => $email,'activated' => 1));
         return $query->num_rows();
     }
