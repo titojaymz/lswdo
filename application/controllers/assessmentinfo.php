@@ -138,8 +138,6 @@ class assessmentinfo extends CI_Controller {
                 }
 
                 $form_message = 'Add Succeeded!';
-                //$data['form_message'] = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Save Successfully!<a href="#" class="closed">&times;</a></div>';
-               // $error_message = "Save Failed! Check your inputs.";
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('sidebar');
@@ -248,7 +246,7 @@ class assessmentinfo extends CI_Controller {
                         $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                     }
 
-                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Update Succeeded! <a href="#" class="closed">&times;</a></div>';
+                    $form_message = 'Update Succeeded!';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('sidebar');
@@ -346,7 +344,7 @@ class assessmentinfo extends CI_Controller {
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
             $deleteResultbudget = $assessmentinfo_model->deleteAssessmentinfoBudget($id);
             if ($deleteResult && $deleteResultbudget ){
-                $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Delete Succeeded! <a href="#" class="closed">&times;</a></div>';
+                $form_message = 'Delete Succeeded!';
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('assessmentinfo_list',array(
@@ -768,6 +766,42 @@ class assessmentinfo extends CI_Controller {
             array(
                 'field'   => 'application_type_id',
                 'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'lgu_type_id',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'region_code',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'prov_code',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
+                'rules'   => 'required'
             )
 
         );
@@ -787,20 +821,44 @@ class assessmentinfo extends CI_Controller {
             array(
                 'field'   => 'lgu_type_id',
                 'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
+                'rules'   => 'required'
             )
 
         );
 
         return $this->form_validation->set_rules($config);
     }
-
+/*
 
     public function listFields()
     {
         $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,swdo_name,office_address,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
         return $query->list_fields();
     }
-
+*/
     public function refreshCurPage()
     {
         $page = current_url();

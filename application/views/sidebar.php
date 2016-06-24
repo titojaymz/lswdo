@@ -21,7 +21,7 @@ $region = $this->session->userdata('lswdo_regioncode');
       <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
       <li><a href="<?php echo base_url('reports/index'); ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Reports</a></li><!--michael for Reports -->
       <li><a href="#"><span class="icon color9"><i class="fa fa-book"></i></span>Libraries<span class="caret"></span></a> <!--removed link to index -->
-           <!-- ibinalik ko na libraries    -->
+           <!-- ibinalik ko na libraries  cxvxc  -->
             <ul>
                 <li><a href="<?php echo base_url('lib_regionc/index') ?>">Regions</a></li>
                 <li><a href="<?php echo base_url('lib_provc/index') ?>">Provinces</a></li>

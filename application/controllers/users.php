@@ -56,7 +56,7 @@ class users extends CI_Controller {
             if (!$captcha) {
                 $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Please check the captcha form!.<a href="#" class="closed">&times;</a></div>';
                 $this->load->view('header');
-                $this->load->view('register', array($rpmb, 'form_message' => $form_message));
+              //  $this->load->view('register', array($rpmb, 'form_message' => $form_message));
                 $this->load->view('footer');
             } else {
                 $secretKey = "6LcMzRwTAAAAAMj1ENuYhur5H67mc8dXSfa_cFIy";
@@ -91,7 +91,7 @@ class users extends CI_Controller {
                 } else {
                     $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Registration Failed!<a href="#" class="closed">&times;</a></div>';
                     $this->load->view('header');
-                    $this->load->view('register', array($rpmb, 'form_message' => $form_message));
+                    $this->load->view('register', array( 'form_message' => $form_message));
                     $this->load->view('footer');
                 }
             }

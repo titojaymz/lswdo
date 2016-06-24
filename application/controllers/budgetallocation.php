@@ -99,7 +99,7 @@ class budgetallocation extends CI_Controller {
             if($checkDupli->countProf == 0) {
                 $addResult = $budgetallocation_model->insertBudgetAllocation($id, $sector_id, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $created_by, $date_created);
                 if ($addResult) {
-                    $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert3"><i class="fa fa-lock"></i> Add Succeeded! <a href="#" class="closed">&times;</a></div>!';
+                    $form_message = 'Add Succeeded!';
                     $this->load->view('header');
                     $rpmb['form_message'] = $form_message;
                     $this->load->view('nav');
@@ -244,7 +244,7 @@ class budgetallocation extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('sidebar');
 
-                //    $this->init_rpmb_session();
+              //  $this->init_rpmb_session();
                 $rpmb['sector_id'] = $sector_id;
                 $rpmb['form_message'] = $form_message;
 
@@ -292,7 +292,7 @@ class budgetallocation extends CI_Controller {
                         $updateResult = $budgetallocation_model->updateBudgetAllocation($id, $sectorID, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $prevSectorID);
                         if ($updateResult) {
 
-//                            $this->init_rpmb_session();
+//                          $this->init_rpmb_session();
                             $rpmb['sector_id'] = $this->budgetallocation_model->get_sector();
 
                             $form_message = 'Update Success';
