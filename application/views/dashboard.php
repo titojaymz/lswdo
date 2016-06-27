@@ -157,7 +157,7 @@
                                     type: 'bar'
                                 },
                                 title: {
-                                    text: 'TOP 10 PSWDO'
+                                    text: ''
                                 },
                                 subtitle: {
                                     text: 'Non-Compliance'
@@ -218,7 +218,7 @@
                                     type: 'bar'
                                 },
                                 title: {
-                                    text: 'TOP 10 CSWDO'
+                                    text: ''
                                 },
                                 subtitle: {
                                     text: 'Non-Compliance'
@@ -279,7 +279,7 @@
                                     type: 'bar'
                                 },
                                 title: {
-                                    text: 'TOP 10 MSWDO'
+                                    text: ''
                                 },
                                 subtitle: {
                                     text: 'Non-Compliance'
@@ -342,7 +342,7 @@
                                     type: 'bar'
                                 },
                                 title: {
-                                    text: 'TOP 10 PSWDO'
+                                    text: ''
                                 },
                                 subtitle: {
                                     text: 'Compliance'
@@ -403,7 +403,7 @@
                                     type: 'bar'
                                 },
                                 title: {
-                                    text: 'TOP 10 CSWDO'
+                                    text: ''
                                 },
                                 subtitle: {
                                     text: 'Compliance'
@@ -464,7 +464,7 @@
                                     type: 'bar'
                                 },
                                 title: {
-                                    text: 'TOP 10 MSWDO'
+                                    text: ''
                                 },
                                 subtitle: {
                                     text: 'Compliance'
@@ -518,14 +518,65 @@
                         });
 
                     </script>
-
                     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                    <div id="container4" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-                    <div id="container5" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-                    <div id="container6" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-                    <div id="container1" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-                    <div id="container2" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-                    <div id="container3" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+
+                    <table class="table" >
+                        <tr>
+                            <td align ="center" colspan="2">
+                                TOP 10 PSWDO
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="container4" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            </td>
+                            <td>
+                                <div id="container1" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align ="center" colspan="2">
+                                TOP 10 CSWDO
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="container5" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            </td>
+                            <td>
+                                <div id="container2" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align ="center" colspan="2">
+                                TOP 10 MSWDO
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="container6" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            </td>
+                            <td>
+                                <div id="container3" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            </td>
+                        </tr>
+
+<!--                        <tr>-->
+<!--                            <td>-->
+<!---->
+<!--                            <div id="container5" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>-->
+<!--                            <div id="container6" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!---->
+<!--                            <div id="container2" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>-->
+<!--                            <div id="container3" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                    </table>
+
 
 
 
