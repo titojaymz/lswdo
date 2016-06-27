@@ -144,7 +144,9 @@
                         </tr>
 
                     </table>-->
-
+<pre>
+    <?php print_r($getStatus); ?>
+</pre>
 
                     <br/>
                     <table class="table table-bordered table-striped">
@@ -162,6 +164,23 @@
                                 }
                                  echo "</select>";
                             ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Status:</b></td>
+                            <td align="center">
+                                <?php
+                                //print_r($getVisitCount);
+                                echo "<select id = 'visit_status' name = 'visit_status' class=\"form-control\">";
+                                echo "<option id = '#'>Please Select</option>";
+                                foreach ($getStatus as $key=>$val)
+                                {
+                                    echo "<option value='".$val['status_id']."'>";
+                                    echo $val['status_name'];
+                                    echo "</option>";
+                                }
+                                echo "</select>";
+                                ?>
                             </td>
                         </tr>
                         </tr>

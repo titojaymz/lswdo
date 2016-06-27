@@ -603,7 +603,7 @@ class indicator extends CI_Controller
                 } elseif($getPerc < 51) {
                     $level = 'Partially Functional';
                 }
-                $addFunction = $indicator_model->insertFunctionality($profID, $ref_id,$level,$totalScore);
+                $addFunction = $indicator_model->updateFunctionalityProfOnly($profID, $level,$totalScore);
                 $this->redirectIndexAddPart4($profID,$ref_id);
 //                $this->redirectIndexViewAll($profID,$ref_id);
 
