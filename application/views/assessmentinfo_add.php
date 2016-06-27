@@ -414,11 +414,15 @@ if (!$this->session->userdata('user_id')){
                         </div>
 <!--onChange="GroupStatus();"-->
                         <div class="form-group">
-                            <label class="control-label">Status of Application:*</label>
+                            <label class="control-label">Status of Application:</label>
                             <select class="form-control" name="application_type_id" id="application_type_id" required>
-                                <option select value="0">Please select</option>
+                                <option select value="1">Please select</option>
                                 <?php foreach($application as $applications): ?>
-                                    <option value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
+                                    <option <?php if ($applications->application_type_id==1)
+                                    {
+                                        echo "selected ";
+                                    }
+                                    ?> value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
                             </select>
 

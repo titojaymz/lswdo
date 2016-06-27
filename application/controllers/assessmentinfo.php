@@ -228,7 +228,7 @@ class assessmentinfo extends CI_Controller {
                 $date_modified = 'NOW()';
 
                 if ($citylist == 0) {
-                   $citylist = "null";
+                    $citylist = "null";
                 }
 
                 $updateResult = $assessmentinfo_model->updateAssessmentinfo($id,$application_type_id,$lgu_type_id,$regionlist,$provlist,$citylist,$office_address,$swdo_name,$designation,$contact_no,$email,$website,$total_ira,$total_budget_lswdo,$modified_by,$date_modified);
@@ -246,19 +246,19 @@ class assessmentinfo extends CI_Controller {
                         $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
                     }
 
-                    $form_message = 'Update Succeeded!';
+                    $form_message = 'Update Succeeded';
                     $this->load->view('header');
                     $this->load->view('nav');
                     $this->load->view('sidebar');
+
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
                         'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
-                        'form_message'=>$form_message,
-                        $this->redirectIndex(2)
+                        'form_message'=>$form_message
                     ));
-                    $this->load->view('footer');
                 }
+                $this->redirectIndex();
             }
         }
         else
@@ -761,49 +761,14 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
+                'label'   => 'profile_id',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'application_type_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'lgu_type_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'region_code',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'prov_code',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'swdo_name',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'designation',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'office_address',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'contact_no',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'email',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'website',
+                'label'   => 'application_type_id',
                 'rules'   => 'required'
             )
-
         );
 
         return $this->form_validation->set_rules($config);
