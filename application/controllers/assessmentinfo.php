@@ -258,7 +258,7 @@ class assessmentinfo extends CI_Controller {
                         'form_message'=>$form_message
                     ));
                 }
-                $this->redirectIndex();
+                $this->redirectIndex(2);
             }
         }
         else
