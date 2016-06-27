@@ -25,8 +25,8 @@ b.budget_previous_year,
 b.utilization,
 b.no_bene_served,
 b.no_target_bene,
-lib_cities.city_name as city_name,
-lib_provinces.prov_name as prov_name
+lib_cities.city_name,
+lib_provinces.prov_name
 FROM
 tbl_lswdo AS a
 Left Join tbl_lswdo_budget AS b ON a.profile_id = b.profile_id

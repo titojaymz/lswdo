@@ -108,30 +108,20 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
-
+<?php echo $form_message ?>
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
                     <form method="post" class="form-horizontal">
                     <div class="form-group">
-                        <?php if ($form_message <> '') { ?>
-                            <div class="alert alert-success">
-                                <strong><?php echo $form_message ?></strong>
-                            </div>
-                        <?php } ?>
-                        <?php if (validation_errors() <> '') { ?>
-                            <div class="alert alert-danger">
-                                <strong><?php echo validation_errors() ?></strong>
-                            </div>
-                        <?php } ?>
 
                         <label for="budget" class="control-label">Total Budget Allocated to Programs and Services per Sector</label>
                     </div>
 
                     <div class="form-group">
                         <label for="sector_id">Sector:</label>
-                        <select name="sector_id" id="sector_id" class="form-control"">
+                        <select name="sector_id" id="sector_id" class="form-control">
                         <option value="0">-Please select-</option>
                         <?php foreach($sector_id as $sectors): ?>
                             <option value="<?php echo $sectors->sector_id; ?>"
