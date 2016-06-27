@@ -21,9 +21,6 @@ class indicator_model extends CI_Model
                 where a.indicator_id LIKE "%-1%"  and b.profile_id ='.$profID.' and a.ref_id = '.$ref_id.';';
         $query = $this->db->query($sql);
         return  $query->row();
-
-
-
     }
     //Baseline
     public function getBaselineScorePerProf($profID,$ref_id){
@@ -707,16 +704,26 @@ class indicator_model extends CI_Model
     }
 
     public function getScorePart1($regCode,$provCode,$lguType){
-
-        if($lguType != 0) {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where a.indicator_id LIKE "%-1%"
+        if($regCode == 000000000 )
+        {
+            $where2 = 'where b.deleted = 0';
+        }
+        else{
+            if($lguType != 0) {
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
@@ -724,30 +731,26 @@ class indicator_model extends CI_Model
                     and b.region_code = "' . $regCode . '"';
                 }
             } else {
-                $where2 = 'where a.indicator_id LIKE "%-1%"
-                    and b.deleted = 0
-                    and b.lgu_type_id = ' . $lguType . '
-                    and b.region_code = "' . $regCode . '"';
-            }
-        } else {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where a.indicator_id LIKE "%-1%"
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
                     and b.region_code = "' . $regCode . '"';
                 }
-            } else {
-                $where2 = 'where a.indicator_id LIKE "%-1%"
-                    and b.deleted = 0
-                    and b.region_code = "' . $regCode . '"';
             }
         }
+
 
         $sql = 'select
         a.indicator_id,
@@ -763,41 +766,47 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
     public function getScorePartarray1($regCode,$provCode,$lguType){
-
-        if($lguType != 0) {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+        if($regCode == 000000000 )
+        {
+            $where2 = 'where b.deleted = 0';
+        }
+        else{
+            if($lguType != 0) {
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
-                    $where2 = 'where b.deleted = 0
+                    $where2 = 'where  b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"';
                 }
             } else {
-                $where2 = 'where  b.deleted = 0
-                    and b.lgu_type_id = ' . $lguType . '
-                    and b.region_code = "' . $regCode . '"';
-            }
-        } else {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"';
                 }
-            } else {
-                $where2 = 'where b.deleted = 0
-                    and b.region_code = "' . $regCode . '"';
             }
         }
+
 
         $sql = 'select a.indicator_id,c.indicator_name,SUM(if(a.compliance_indicator_id = 2,1,0)) TotalNonCompliance
         from tbl_lswdo_standard_indicators a
@@ -814,41 +823,47 @@ class indicator_model extends CI_Model
         return  $query->result_array();
     }
     public function getScorePartarray2($regCode,$provCode,$lguType){
-
-        if($lguType != 0) {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+        if($regCode == 000000000 )
+        {
+            $where2 = 'where b.deleted = 0';
+        }
+        else{
+            if($lguType != 0) {
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
-                    $where2 = 'where b.deleted = 0
+                    $where2 = 'where  b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"';
                 }
             } else {
-                $where2 = 'where  b.deleted = 0
-                    and b.lgu_type_id = ' . $lguType . '
-                    and b.region_code = "' . $regCode . '"';
-            }
-        } else {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"';
                 }
-            } else {
-                $where2 = 'where b.deleted = 0
-                    and b.region_code = "' . $regCode . '"';
             }
         }
+
 
         $sql = 'select a.indicator_id,c.indicator_name,SUM(if(a.compliance_indicator_id = 1,1,0)) TotalCompliance
         from tbl_lswdo_standard_indicators a
