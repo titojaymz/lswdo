@@ -8,8 +8,17 @@ class dashboard_model extends CI_Model
      * Time: 9:50 AM
      *
      */
-    public function getFunctionalityScore()
+    public function getFunctionalityScore($regCode)
     {
+
+        if($regCode != '000000000')
+        {
+            $where = 'where b.region_code = "'.$regCode.'" and b.deleted = 0';
+        }
+        else
+        {
+            $where = 'where b.deleted = 0';
+        }
         $sql = 'SELECT
 SUM(IF(a.level_function_baseline = \'Functional\',1,0)) \'Functional\',
 SUM(IF(a.level_function_baseline = \'Fully Functional\',1,0)) \'FullyFunctional\',
@@ -19,8 +28,7 @@ FROM `tbl_functionality` a
 INNER JOIN tbl_lswdo b
 ON b.profile_id = a.prof_id
 Inner Join lib_regions c
-ON b.region_code = c.region_code
-where b.deleted = 0
+ON b.region_code = c.region_code '.$where.'
 GROUP BY c.region_name;';
         /*$sql = 'select c.region_name,b.profile_id,
                 case b.lgu_type_id
@@ -61,17 +69,33 @@ GROUP BY c.region_name;';
 
     }
 
-    public function getRegions()
+    public function getRegions($regCode)
     {
-        $sql = 'select region_name from lib_regions where region_name != "Central Office";';
+        if($regCode != '000000000')
+        {
+            $where = 'where region_code = "'.$regCode.'" and region_name != "Central Office";';
+        }
+        else
+        {
+            $where = 'where region_name != "Central Office";';
+        }
+        $sql = 'select region_name from lib_regions '.$where.';';
         $query = $this->db->query($sql);
         return $query->result();
 
 
     }
-    public function countRegions()
+    public function countRegions($regCode)
     {
-        $sql = 'SELECT COUNT(region_name) countReg FROM lib_regions where region_name != "Central Office";';
+        if($regCode != '000000000')
+        {
+            $where = 'where region_code = "'.$regCode.'" and region_name != "Central Office";';
+        }
+        else
+        {
+            $where = 'where region_name != "Central Office";';
+        }
+        $sql = 'SELECT COUNT(region_name) countReg FROM lib_regions '.$where.';';
         $query = $this->db->query($sql);
         return $query->row();
 

@@ -76,8 +76,8 @@
 
                         <?php
 
-                        $ref_id = $this->uri->segment('3'); //ref_id for tbl_lswdo_certificate; ref_cert_id for lswdo_monitoring
-                        //$ref_id = $this->uri->segment('4'); //$_GET['ref_cert_id']
+                        $prof_id = $this->uri->segment('3'); //ref_id for tbl_lswdo_certificate; ref_cert_id for lswdo_monitoring
+                        $ref_id = $this->uri->segment('4'); //$_GET['ref_cert_id']
                         echo "<input type =\"hidden\" id=\"ref_cert_id\" name=\"ref_cert_id\" type=\"text\" value=\"$ref_id\"/>";
 
                         $attributes = array("class" => "form-horizontal", "id" => "monitoringForm", "name" => "monitoringForm");
@@ -108,100 +108,155 @@
                         <!-- date Valid-->
 
                                     <?php
-                                        $getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($ref_id);
-
-                                        foreach ($getMonitoringListByRefID as $keyMonitoring => $valMonitoring)
-                                        {
-                                            //visit_count
-                                        echo "<tr>";
-                                        echo "<td align=\"center\"><b>Visit Count</b></td>";
-                                        echo "<td align=\"center\">";
-                                        echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
-
-                                        $getVisitCount = $visit_model->getVisitCount();
-                                        foreach ($getVisitCount as $key=>$val)
-                                        {
-                                            echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'";
-
-                                            if($valMonitoring['visit_count'] == $val['visit_id'])
-                                            {
-                                                echo " selected = selected";
-                                                echo ">";
-                                                echo $val['visit_count'];
-
-
-                                            }else
-                                            {
-                                                echo " ";
-                                                echo ">";
-                                                echo $val['visit_count'];
-
-                                            }
-                                            echo "</option>";
-
-                                        }
-                                        echo "</select>";
-                                        echo "</td>";
-                                        echo "</tr>";
-
-                                        //visit_date
-                                        echo "<tr>";
-                                        echo "<td align=\"center\"><b>Visit Date</b></td>";
-                                        echo "<td align=\"center\">";
-                                        echo " <input type=\"text\" id=\"visit_date\" name=\"visit_date\" class=\"form-control\" value = '".$valMonitoring['visit_date']."' placeholder = 'Enter Visit Date' />";
-                                        echo "</td>";
-                                        echo "</tr>";
-
-                                        //remarks
-                                        echo "<tr>";
-                                        echo "<td align=\"center\"><b>Remarks</b></td>";
-                                        echo "<td align=\"center\">";
-                                        echo "<textarea class=\"form-control\" rows=\"3\" id=\"remarks\" name=\"remarks\" placeholder=\"Type your message...\">".$valMonitoring['remarks']."</textarea>";
-                                        echo "</td>";
-                                        echo "</tr>";
-
-
-                                        }//end of $getMonitoringListByRefID
-
-                                        $certificate_no = $this->input->post('certificate_no');
-                                        $current_certificate = '0';
-                                        //date
-                                        $strIssuedDate = $this->input->post('date_issued');
-                                        $issuedDateToDate = date_create($strIssuedDate);
-                                        $date_issued = date_format($issuedDateToDate, "Y-m-d");
-                                        //date
-
-                                        $validity = $this->input->post('validity');
-                                        $month_valid = $this->input->post('month_valid');
-                                        $day_valid = $this->input->post('day_valid');
-                                        $year_valid = $this->input->post('year_valid');
-                                        $DELETED = '0';
-                                        $modified_by = 104;
-
-                                        //echo "Month Valid=>".$month_valid;
-
-                                        $sql ='Update tbl_lswdo_certificate SET
-                                                certificate_no = "'.$certificate_no.'",
-                                                current_certificate = "'.$current_certificate.'",
-                                                date_issued = "'.$date_issued.'",
-                                                validity = "'.$validity.'",
-                                                month_valid = "'.$month_valid.'",
-                                                day_valid = "'.$day_valid.'",
-                                                year_valid = "'.$year_valid.'",
-                                                modified_by = "'.$modified_by.'",
-                                                date_modified = now(),
-                                                DELETED = "'.$DELETED.'"
-                                                WHERE
-                                                ref_id = "'.$ref_id.'"
-                                                ';
-
-                                        echo $sql;
+//                                        $getMonitoringListByRefID = $monitoring_model->getMonitoringListByRefID($prof_id,$ref_id);
+//
+//                                        foreach ($getMonitoringListByRefID as $keyMonitoring => $valMonitoring)
+//                                        {
+//                                            //visit_count
+//                                        echo "<tr>";
+//                                        echo "<td align=\"center\"><b>Visit Count</b></td>";
+//                                        echo "<td align=\"center\">";
+//                                        echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
+//
+//                                        $getVisitCount = $visit_model->getVisitCount();
+//                                        foreach ($getVisitCount as $key=>$val)
+//                                        {
+//                                            echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'";
+//
+//                                            if($valMonitoring['visit_count'] == $val['visit_id'])
+//                                            {
+//                                                echo " selected = selected";
+//                                                echo ">";
+//                                                echo $val['visit_count'];
+//
+//
+//                                            }else
+//                                            {
+//                                                echo " ";
+//                                                echo ">";
+//                                                echo $val['visit_count'];
+//
+//                                            }
+//                                            echo "</option>";
+//
+//                                        }
+//                                        echo "</select>";
+//                                        echo "</td>";
+//                                        echo "</tr>";
+//
+//                                        //visit_date
+//                                        echo "<tr>";
+//                                        echo "<td align=\"center\"><b>Visit Date</b></td>";
+//                                        echo "<td align=\"center\">";
+//                                        echo " <input type=\"text\" id=\"visit_date\" name=\"visit_date\" class=\"form-control\" value = '".$valMonitoring['visit_date']."' placeholder = 'Enter Visit Date' />";
+//                                        echo "</td>";
+//                                        echo "</tr>";
+//
+//                                        //remarks
+//                                        echo "<tr>";
+//                                        echo "<td align=\"center\"><b>Remarks</b></td>";
+//                                        echo "<td align=\"center\">";
+//                                        echo "<textarea class=\"form-control\" rows=\"3\" id=\"remarks\" name=\"remarks\" placeholder=\"Type your message...\">".$valMonitoring['remarks']."</textarea>";
+//                                        echo "</td>";
+//                                        echo "</tr>";
 
 
+//                                        }//end of $getMonitoringListByRefID
                                     ?>
 
+                        <tr>
+                            <td><b>Visit Count</b></td>
+                            <td align="center">
+                            <?php
+//                                print_r($getMonitoringList);
+                            $getVisitCount = $visit_model->getVisitCount();
+                                echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
+                                foreach ($getVisitCount as $key=>$val)
+                                {
+
+                                    if($val['visit_id'] == $getMonitoringList->visit_count) {
+                                        echo "<option id='" . $val['visit_id'] . "' value='" . $val['visit_id'] . "' selected>";
+                                    } else {
+                                        echo "<option id='" . $val['visit_id'] . "' value='" . $val['visit_id'] . "'>";
+                                    }
+                                    echo $val['visit_count'];
+                                    echo "</option>";
+                                }
+                                 echo "</select>";
+                            ?>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td><b>Status:</b></td>
+                            <td align="center">
+                                <?php
+                                //print_r($getVisitCount);
+                                echo "<select id = 'visit_status' name = 'visit_status' class=\"form-control\">";
+                                echo "<option id = '#'>Please Select</option>";
+                                foreach ($getStatus as $key=>$val)
+                                {
+                                if($val['status_id'] == $getMonitoringList->visit_status) {
+                                    echo "<option value='" . $val['status_id'] . "' selected>";
+                                } else {
+                                    echo "<option value='" . $val['status_id'] . "'>";
+                                }
+                                    echo $val['status_name'];
+                                    echo "</option>";
+                                }
+                                echo "</select>";
+                                ?>
+                            </td>
+                        </tr>
+                        </tr>
+                        <td><b>Visit Date</b></td>
+                        <td align="center">
+                            <input type="text" id="visit_date" name="visit_date" class="form-control" placeholder = 'Enter Visit Date' value = '<?php echo $getMonitoringList->visit_date ?>'/>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td><b>Remarks</b></td>
+                            <td>
+                                <textarea class="form-control" rows="3" id="remarks" name="remarks" placeholder="Type your message..."><?php echo  $getMonitoringList->remarks ?></textarea>
+                            </td>
                         </tr>
 
+                    </table>
+<!--                                        $certificate_no = $this->input->post('certificate_no');-->
+<!--                                        $current_certificate = '0';-->
+<!--                                        //date-->
+<!--                                        $strIssuedDate = $this->input->post('date_issued');-->
+<!--                                        $issuedDateToDate = date_create($strIssuedDate);-->
+<!--                                        $date_issued = date_format($issuedDateToDate, "Y-m-d");-->
+<!--                                        //date-->
+<!---->
+<!--                                        $validity = $this->input->post('validity');-->
+<!--                                        $month_valid = $this->input->post('month_valid');-->
+<!--                                        $day_valid = $this->input->post('day_valid');-->
+<!--                                        $year_valid = $this->input->post('year_valid');-->
+<!--                                        $DELETED = '0';-->
+<!--                                        $modified_by = 104;-->
+<!---->
+<!--                                        //echo "Month Valid=>".$month_valid;-->
+<!---->
+<!--                                        $sql ='Update tbl_lswdo_certificate SET-->
+<!--                                                certificate_no = "'.$certificate_no.'",-->
+<!--                                                current_certificate = "'.$current_certificate.'",-->
+<!--                                                date_issued = "'.$date_issued.'",-->
+<!--                                                validity = "'.$validity.'",-->
+<!--                                                month_valid = "'.$month_valid.'",-->
+<!--                                                day_valid = "'.$day_valid.'",-->
+<!--                                                year_valid = "'.$year_valid.'",-->
+<!--                                                modified_by = "'.$modified_by.'",-->
+<!--                                                date_modified = now(),-->
+<!--                                                DELETED = "'.$DELETED.'"-->
+<!--                                                WHERE-->
+<!--                                                ref_id = "'.$ref_id.'"-->
+<!--                                                ';-->
+<!---->
+<!--//                                        echo $sql;-->
+<!---->
+<!---->
+<!--                                    ?>-->
                     </table>
 
 

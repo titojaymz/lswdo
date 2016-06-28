@@ -15,7 +15,7 @@ class Monitoring_Model extends CI_Model
          $this->db->order_by('visit_date','ASC');
          $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
 
-        $sql = 'SELECT ref_id,ref_cert_id,profile_id,visit_count,visit_date,remarks
+        $sql = 'SELECT ref_id,ref_cert_id,profile_id,visit_count,visit_date,remarks,visit_status
                 FROM `tbl_lswdo_monitoring`
                 WHERE profile_id = "'.$profile_id.'";';
         $query = $this->db->query($sql);
@@ -74,14 +74,15 @@ class Monitoring_Model extends CI_Model
 
 
 
-    public function insertLswdoMonitoring($profile_id,$ref_cert_id, $visit_count, $visit_date,$remarks,$created_by,$date_created,$modified_by,$date_modified,$deleted){
+    public function insertLswdoMonitoring($profile_id,$ref_cert_id, $visit_count, $visit_date,$visit_status,$remarks,$created_by,$date_created,$modified_by,$date_modified,$deleted){
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_lswdo_monitoring(profile_id,ref_cert_id, visit_count, visit_date,remarks,created_by,date_created,modified_by,date_modified,deleted)
+        $this->db->query('Insert into tbl_lswdo_monitoring(profile_id,ref_cert_id, visit_count, visit_date,visit_status,remarks,created_by,date_created,modified_by,date_modified,deleted)
                           VALUES(
                           "'.$profile_id.'",
                           "'.$ref_cert_id.'",
                           "'.$visit_count.'",
                           "'.$visit_date.'",
+                          "'.$visit_status.'",
                           "'.$remarks.'",
                           "'.$created_by.'",
                           '.$date_created.',
@@ -106,13 +107,14 @@ class Monitoring_Model extends CI_Model
         $this->db->close();
     }
 
-    public function updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$remarks,$modified_by,$deleted){
+    public function updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$visit_status,$remarks,$modified_by,$deleted){
 
         $this->db->trans_begin();
 
         $this->db->query('Update tbl_lswdo_monitoring SET
 					visit_count = "'.$visit_count.'",
 					visit_date = "'.$visit_date.'",
+					visit_status = "'.$visit_status.'",
 					remarks = "'.$remarks.'",
 					modified_by = "'.$modified_by.'",
 					date_modified = now(),
@@ -139,6 +141,38 @@ class Monitoring_Model extends CI_Model
     {
         $this->db->insert('tbl_lswdo_monitoring', $data);
     }
+//Lerrie Boy !!!!
+    public function getStatus(){
 
+        $sql = 'SELECT status_id, status_name
+                FROM `lib_status`;';
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    public function getStatusName($statID){
+        /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
+         $this->db->order_by('visit_date','ASC');
+         $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
+
+        $sql = 'SELECT status_name
+                FROM `lib_status`
+                WHERE status_id = "'.$statID.'";';
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
+
+    public function getMonitoringList($profile_id,$ref_id){
+        /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
+         $this->db->order_by('visit_date','ASC');
+         $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
+
+        $sql = 'SELECT ref_id,ref_cert_id,profile_id,visit_count,visit_date,remarks,visit_status
+                FROM `tbl_lswdo_monitoring`
+                WHERE profile_id = "'.$profile_id.'" and ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
+
+//End Lerrie
 
 }

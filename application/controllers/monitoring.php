@@ -28,6 +28,7 @@ class monitoring extends CI_Controller
             'certification_model' => $certification_model,
             'visit_model' => $visit_model,
             'validity_model' => $validity_model,
+            'validity_model' => $validity_model,
         ));
         $this->load->view('footer');
     }
@@ -60,6 +61,7 @@ class monitoring extends CI_Controller
                 'monitoring_model' => $monitoring_model,
                 'visit_model' => $visit_model,
                 'validity_model' => $validity_model,
+                'getStatus' => $monitoring_model->getStatus(),
             ));
             $this->load->view('footer');
         } else {
@@ -72,6 +74,7 @@ class monitoring extends CI_Controller
             $profile_id = $this->input->post('profile_id'); //mglv
             $ref_cert_id = '0';
             $visit_count = $this->input->post('visit_count');
+            $visit_status = $this->input->post('visit_status');
 
             //date
             $strVisitDate = $this->input->post('visit_date');
@@ -86,7 +89,7 @@ class monitoring extends CI_Controller
             $date_modified = '0000-00-00';
             $deleted='0';
 
-            $addResult = $monitoring_model->insertLswdoMonitoring($profile_id,$ref_cert_id, $visit_count, $visit_date, $remarks, $created_by, $date_created, $modified_by, $date_modified, $deleted);
+            $addResult = $monitoring_model->insertLswdoMonitoring($profile_id,$ref_cert_id, $visit_count, $visit_date,$visit_status, $remarks, $created_by, $date_created, $modified_by, $date_modified, $deleted);
 
             if ($addResult) {
                 $indicator_model = new indicator_model();
@@ -130,8 +133,15 @@ class monitoring extends CI_Controller
         header("Location: $page");
     }
 
+    public function redirectMonitoring($profID,$ref_id)
+    {
+        $page = base_url('monitoring/monitoring_list/'.$profID.'/'.$ref_id);
+//        $sec = "1";
+        header("Location: $page");
+    }
 
-    public function monitoring_edit()
+
+    public function monitoring_edit($profile_id,$ref_id)
     {
 
         $monitoring_model = new Monitoring_model();
@@ -147,15 +157,18 @@ class monitoring extends CI_Controller
             $this->load->view('sidebar');
             $this->load->view('monitoring_edit',array(
                 'monitoring_model'=>$monitoring_model,
+                'getMonitoringList'=>$monitoring_model->getMonitoringList($profile_id,$ref_id),
                 'certification_model'=>$certification_model,
                 'validity_model' => $validity_model,
                 'visit_model' => $visit_model,
+                'getStatus' => $monitoring_model->getStatus(),
             ));
             $this->load->view('footer');
         }else {
 
-            $profile_id = 9;
+//            $profile_id = $this->input->post('profile_id');
             $visit_count = $this->input->post('visit_count');
+            $visit_status = $this->input->post('visit_status');
 
             //date
             $strVisitDate = $this->input->post('visit_date');
@@ -164,12 +177,14 @@ class monitoring extends CI_Controller
             //date
 
             $remarks = $this->input->post('remarks');
-            $modified_by = 104;
+//            $modified_by = 104;
             $date_modified = 'NOW()';
+
+            $modified_by= $this->session->userdata('user_id');
             $deleted = '0';
 
             //$certification_model
-            $ref_id = $this->input->post('ref_cert_id');
+//            $ref_id = $this->input->post('ref_cert_id');
             $certificate_no = $this->input->post('txtCertNo');
             $current_certificate = '0';
             //date
@@ -185,7 +200,7 @@ class monitoring extends CI_Controller
             $DELETED = '0';
 
 
-            $updateResult = $monitoring_model->updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$remarks,$modified_by,$deleted);
+            $updateResult = $monitoring_model->updateLswdoMonitoring($ref_id,$profile_id, $visit_count, $visit_date,$visit_status,$remarks,$modified_by,$deleted);
 
             if ($updateResult) {
 
@@ -208,7 +223,7 @@ class monitoring extends CI_Controller
                     'visit_model' => $visit_model,
                 ));
                 $this->load->view('footer');
-
+                $this->redirectMonitoring($profile_id,$ref_id);
 
             }
 

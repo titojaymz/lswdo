@@ -116,6 +116,7 @@
                             <?php
                                     //$getMonitoringList = $monitoring_model->getMonitoringList();
                                     $getMonitoringList = $monitoring_model->getMonitoringListByRefID($profile_id);
+
                             //print_r($getMonitoringList);
 
 
@@ -123,22 +124,25 @@
                                     {
                                         $ref_id = $valMonitoring['ref_id'];
                                         echo "<td align=\"center\"><b>";
-                                        echo "<a class='btn btn-sm btn-primary' href= '../monitoring_edit/$ref_id/'>
+                                        echo "<a class='btn btn-sm btn-primary' href= ".base_url('monitoring/monitoring_edit/'.$profile_id.'/'.$ref_id).">
                                             <i class=\"fa fa-edit\"></i>Edit </a>";
                                         echo " </b></td>";
 
                                         echo "<td align=\"center\"><b>";
-                                        echo "<a class='btn btn-sm btn-primary' href= '../../indicator/indicatorView/$profile_id/$ref_id/'>
+
+                                        echo "<a class='btn btn-sm btn-primary'  href= ".base_url('indicator/indicatorView/'.$profile_id.'/'.$ref_id).">
                                             <i class=\"fa fa-edit\"></i>View Indicators </a>";
                                         echo " </b></td>";
 
                                         echo "<td align=\"center\"><b>";
-                                        echo "<a class='btn btn-sm btn-default' href= '../../certificate_issuance/certificate_issuance_list/$profile_id/'>
+
+                                        echo "<a class='btn btn-sm btn-default' href= ".base_url('certificate_issuance/certificate_issuance_list/'.$profile_id).">
                                             <i class=\" fa fa-newspaper-o\"></i>Certification Details </a>";
                                         echo " </b></td>";
 
                                         echo "<td align=\"center\"><b>";
-                                        echo "<a class='btn btn-sm btn-primary' href= '../../updates/update_view/$profile_id/$ref_id/'>
+
+                                        echo "<a class='btn btn-sm btn-primary' href= ".base_url('updates/update_view/'.$profile_id.'/'.$ref_id).">
                                             <i class=\"fa fa-edit\"></i>View Updates</a>";
                                         echo " </b></td>";
 
@@ -160,9 +164,15 @@
 
                                         echo $visit_date_val;
                                         echo " </b></td>";
+                                        if($valMonitoring['visit_status'] == "" || $valMonitoring['visit_status'] == NULL){
+                                            $statName = "None";
+                                        } else {
+                                            $getStatusName = $monitoring_model->getStatusName($valMonitoring['visit_status']);
+                                            $statName = $getStatusName->status_name;
+                                        }
 
                                         //Remarks
-                                        echo "<td align=\"center\"><b>" . $valMonitoring['remarks'] . " </b></td>";
+                                        echo "<td align=\"center\"><b>" . $statName . " </b></td>";
                                         echo "</tr>";
 
 

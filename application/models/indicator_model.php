@@ -21,9 +21,6 @@ class indicator_model extends CI_Model
                 where a.indicator_id LIKE "%-1%"  and b.profile_id ='.$profID.' and a.ref_id = '.$ref_id.';';
         $query = $this->db->query($sql);
         return  $query->row();
-
-
-
     }
     //Baseline
     public function getBaselineScorePerProf($profID,$ref_id){
@@ -282,6 +279,12 @@ class indicator_model extends CI_Model
         endforeach;
         $format4 = substr($unformat4,0,-1);
 
+        $unformat5 = "";
+        foreach($this->getSecondCategoriesLowerLowerFromSI($lguType) as $secondCat):
+            $unformat5 .= "'".$secondCat->indicator_id."',";
+        endforeach;
+        $format5 = substr($unformat5,0,-1);
+
         if($lguType == 1){
             $where2 = 'lgu_type_id IN (0,1) AND indicator_checklist_id <> 0';
         } else {
@@ -292,7 +295,7 @@ class indicator_model extends CI_Model
                 SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
                 SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
                 FROM (`tbl_lswdo_standard_indicators`)
-                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.') and profile_id = '.$profID.' and ref_id = '.$ref_id.' and deleted = 0;';
+                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.','.$format5.') and profile_id = '.$profID.' and ref_id = '.$ref_id.' and deleted = 0;';
         $query = $this->db->query($sql);
         return  $query->row();
     }
@@ -707,16 +710,26 @@ class indicator_model extends CI_Model
     }
 
     public function getScorePart1($regCode,$provCode,$lguType){
-
-        if($lguType != 0) {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where a.indicator_id LIKE "%-1%"
+        if($regCode == 000000000 )
+        {
+            $where2 = 'where b.deleted = 0';
+        }
+        else{
+            if($lguType != 0) {
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
@@ -724,30 +737,26 @@ class indicator_model extends CI_Model
                     and b.region_code = "' . $regCode . '"';
                 }
             } else {
-                $where2 = 'where a.indicator_id LIKE "%-1%"
-                    and b.deleted = 0
-                    and b.lgu_type_id = ' . $lguType . '
-                    and b.region_code = "' . $regCode . '"';
-            }
-        } else {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where a.indicator_id LIKE "%-1%"
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
                     and b.region_code = "' . $regCode . '"';
                 }
-            } else {
-                $where2 = 'where a.indicator_id LIKE "%-1%"
-                    and b.deleted = 0
-                    and b.region_code = "' . $regCode . '"';
             }
         }
+
 
         $sql = 'select
         a.indicator_id,
@@ -763,41 +772,47 @@ class indicator_model extends CI_Model
         return  $query->result();
     }
     public function getScorePartarray1($regCode,$provCode,$lguType){
-
-        if($lguType != 0) {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+        if($regCode == 000000000 )
+        {
+            $where2 = 'where b.deleted = 0';
+        }
+        else{
+            if($lguType != 0) {
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
-                    $where2 = 'where b.deleted = 0
+                    $where2 = 'where  b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"';
                 }
             } else {
-                $where2 = 'where  b.deleted = 0
-                    and b.lgu_type_id = ' . $lguType . '
-                    and b.region_code = "' . $regCode . '"';
-            }
-        } else {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"';
                 }
-            } else {
-                $where2 = 'where b.deleted = 0
-                    and b.region_code = "' . $regCode . '"';
             }
         }
+
 
         $sql = 'select a.indicator_id,c.indicator_name,SUM(if(a.compliance_indicator_id = 2,1,0)) TotalNonCompliance
         from tbl_lswdo_standard_indicators a
@@ -814,41 +829,47 @@ class indicator_model extends CI_Model
         return  $query->result_array();
     }
     public function getScorePartarray2($regCode,$provCode,$lguType){
-
-        if($lguType != 0) {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+        if($regCode == 000000000 )
+        {
+            $where2 = 'where b.deleted = 0';
+        }
+        else{
+            if($lguType != 0) {
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.lgu_type_id = ' . $lguType . '
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
-                    $where2 = 'where b.deleted = 0
+                    $where2 = 'where  b.deleted = 0
                     and b.lgu_type_id = ' . $lguType . '
                     and b.region_code = "' . $regCode . '"';
                 }
             } else {
-                $where2 = 'where  b.deleted = 0
-                    and b.lgu_type_id = ' . $lguType . '
-                    and b.region_code = "' . $regCode . '"';
-            }
-        } else {
-            if ($regCode != 0) {
-                if ($provCode != 0) {
-                    $where2 = 'where b.deleted = 0
+                if ($regCode != 0) {
+                    if ($provCode != 0) {
+                        $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"
                     and b.prov_code = "' . $provCode . '"';
 
+                    } else {
+                        $where2 = 'where b.deleted = 0
+                    and b.region_code = "' . $regCode . '"';
+                    }
                 } else {
                     $where2 = 'where b.deleted = 0
                     and b.region_code = "' . $regCode . '"';
                 }
-            } else {
-                $where2 = 'where b.deleted = 0
-                    and b.region_code = "' . $regCode . '"';
             }
         }
+
 
         $sql = 'select a.indicator_id,c.indicator_name,SUM(if(a.compliance_indicator_id = 1,1,0)) TotalCompliance
         from tbl_lswdo_standard_indicators a
@@ -1136,6 +1157,26 @@ class indicator_model extends CI_Model
                           "'.$score.'",
                           "'.$level_function.'"
                           )');
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        else
+        {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+        $this->db->close();
+    }
+    public function updateFunctionalityProfOnly($profileID, $level_function, $score){
+        $this->db->trans_begin();
+        $this->db->query('update tbl_functionality SET
+                          new_score = '.$score.',
+                          level_function_new = "'.$level_function.'"
+                          Where
+                          prof_id = '.$profileID.'
+        ');
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();

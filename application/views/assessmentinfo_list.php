@@ -32,7 +32,7 @@ $accessLevel = $this->session->userdata('accessLevel');
                         <label for="list_info" class="control-label">Assessment Information List</label>
                     </div>
 <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
-                    <a class="btn btn-sm btn-success" href="<?php echo base_url('assessmentinfo/addAssessmentinfo') ?>"><i class="fa fa-plus-circle"></i> Add Assessment Info</a>
+                    <a class="btn btn-sm btn-success" href="<?php echo base_url('assessmentinfo/addAssessmentinfo') ?>"><i class="fa fa-plus-circle"></i> Add Baseline </a>
 <?php } ?>
                 </div>
                 <div class = "panel-body" style="display: block;">
@@ -75,8 +75,9 @@ $accessLevel = $this->session->userdata('accessLevel');
                                         <a class="btn btn-xs btn-info" href="<?php echo base_url('assessmentinfo/assessmentinfo_masterview/' . $assessmentinfoData->profile_id) ?>"><i class="fa fa-plus"></i> View </a>
                                     </div>
                                     <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
+
                                         <div class="btn-group">
-                                            <a class="btn btn-xs btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i>Renewal </a>
+                                            <a class="btn btn-xs btn-primary" href="<?php echo base_url('assessmentinfo/editAssessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-edit"></i>Edit </a>
                                         </div>
                                         <div class="btn-group">
                                             <a class="btn btn-xs btn-warning" href="<?php echo base_url('budgetallocation/index/' . $assessmentinfoData->profile_id . '/0') ?>"><i class="fa fa-money"></i> Budget Allocation </a>
