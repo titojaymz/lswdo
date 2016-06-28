@@ -290,12 +290,23 @@ class indicator_model extends CI_Model
         } else {
             $where2 = 'lgu_type_id IN (0,2) AND indicator_checklist_id <> 0';
         }
-        $sql = 'select
+        if($lguType == 1){
+            $sql = 'select
+                SUM(IF(indicator_id LIKE "%-1%",IF(compliance_indicator_id = 1,1,0),0)) as BronzeScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
+                SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
+                FROM (`tbl_lswdo_standard_indicators`)
+                WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.') and profile_id = '.$profID.' and ref_id = '.$ref_id.' and deleted = 0;';
+        }
+        else{
+            $sql = 'select
                 SUM(IF(indicator_id LIKE "%-1%",IF(compliance_indicator_id = 1,1,0),0)) as BronzeScoreCompliant,
                 SUM(IF(indicator_id LIKE "%-2%",IF(compliance_indicator_id = 1,1,0),0)) as SilverScoreCompliant,
                 SUM(IF(indicator_id LIKE "%-3%",IF(compliance_indicator_id = 1,1,0),0)) as GoldScoreCompliant
                 FROM (`tbl_lswdo_standard_indicators`)
                 WHERE `indicator_id` IN ('.$format.','.$format2.','.$format3.','.$format4.','.$format5.') and profile_id = '.$profID.' and ref_id = '.$ref_id.' and deleted = 0;';
+        }
+
         $query = $this->db->query($sql);
         return  $query->row();
     }

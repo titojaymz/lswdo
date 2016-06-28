@@ -1353,7 +1353,7 @@
             </tr>
             <?php
 
-            echo $getBaselineTotalScoreIndicatorsPart2;
+//            echo $getBaselineTotalScoreIndicatorsPart2;
             $bronzeIndiTotal =  $getTotalIndicatorsPart1->Bronze +  $getTotalIndicatorsPart2->Bronze +  $getTotalIndicatorsPart3->Bronze +  $getTotalIndicatorsPart4->Bronze;
             $silverIndiTotal =  $getTotalIndicatorsPart1->Silver +  $getTotalIndicatorsPart2->Silver +  $getTotalIndicatorsPart3->Silver +  $getTotalIndicatorsPart4->Silver;
             $goldIndiTotal =  $getTotalIndicatorsPart1->Gold +  $getTotalIndicatorsPart2->Gold +  $getTotalIndicatorsPart3->Gold +  $getTotalIndicatorsPart4->Gold;
