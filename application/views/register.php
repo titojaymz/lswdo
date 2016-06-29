@@ -28,6 +28,7 @@ error_reporting(0);
         <div class="form-area"><?php echo $form_message;?><?php echo validation_errors() ?>
             <div class="group">
                 <input type="text" class="form-control"  maxlength="30"  value="<?php echo htmlspecialchars($_POST['username']); ?>" placeholder="Username" name="username" required>
+                <label for = "username" class ="control-label">FMSurname (eg., jdcruz )</label>
                 <i class="fa fa-user-secret"></i>
             </div>
             <div class="group">
