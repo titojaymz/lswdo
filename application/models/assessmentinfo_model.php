@@ -165,13 +165,20 @@ class assessmentinfo_model extends CI_Model
 
     public function Lib_getAllApplicationtype()
     {
-        $query = $this->db->get_where('lib_application_type', array('DELETED' => 0));
-        if ($query->num_rows() > 0) {
-            return $query->result();
-        } else {
-            return FALSE;
-        }
-        $this->db->close();
+
+        $Lib_getAllApplicationtype = "
+        SELECT
+          application_type_id,
+          application_type_name
+        FROM
+          lib_application_type
+        WHERE
+          DELETED = '0'
+        ORDER BY
+          application_type_id
+        ";
+
+        return $this->db->query($Lib_getAllApplicationtype)->result();
     }
 
 

@@ -765,8 +765,27 @@ class assessmentinfo extends CI_Controller {
                 'rules'   => 'required'
             ),
             array(
-                'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
+                'field'   => 'swdo_name',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'email',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'website',
                 'rules'   => 'required'
             )
         );
@@ -779,10 +798,6 @@ class assessmentinfo extends CI_Controller {
     {
         $config = array(
 
-            array(
-                'field'   => 'application_type_id',
-                'rules'   => 'required'
-            ),
             array(
                 'field'   => 'lgu_type_id',
                 'rules'   => 'required'

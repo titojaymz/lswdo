@@ -415,18 +415,26 @@ if (!$this->session->userdata('user_id')){
 <!--onChange="GroupStatus();"-->
                         <div class="form-group">
                             <label class="control-label">Status of Application:</label>
-                            <select class="form-control" name="application_type_id" id="application_type_id" required>
-                                <option select value="1">Please select</option>
+                            <select class="form-control" name="application_type" id="application_type" disabled>
+                                <option selected value="1">Please select</option>
                                 <?php foreach($application as $applications): ?>
                                     <option <?php if ($applications->application_type_id==1)
                                     {
-                                        echo "selected ";
+                                        echo "selected";
                                     }
                                     ?> value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
                             </select>
-
-                            <!--   <div id="group_new">-->
+                            <select class="form-control" name="application_type_id" id="application_type_id" style="display:none;">
+                                <option selected value="1">Please select</option>
+                                <?php foreach($application as $applications): ?>
+                                    <option <?php if ($applications->application_type_id==1)
+                                    {
+                                        echo "selected";
+                                    }
+                                    ?> value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
+                                <?php endforeach ?>
+                            </select>
 
                                    <label class="control-label">Type of LSWDO:*</label>
                                    <!--Select-->
