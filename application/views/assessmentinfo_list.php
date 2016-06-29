@@ -59,6 +59,7 @@ $accessLevel = $this->session->userdata('accessLevel');
                             <th>LSWDO Type</th>
                             <th>Region</th>
                             <th>Province</th>
+                            <th>City/Municipality</th>
                             <th>Name of SWDO Officer/Head</th>
 
                             <th>Total Internal Revenue Allotment</th>
@@ -98,6 +99,7 @@ $accessLevel = $this->session->userdata('accessLevel');
                                 <td><?php echo $assessmentinfoData->lgu_type_name ?></td>
                                 <td><?php echo $assessmentinfoData->region_name ?></td>
                                 <td><?php echo $assessmentinfoData->prov_name ?></td>
+                                <td><?php echo $assessmentinfoData->city_name ?></td>
                                 <td><?php echo $assessmentinfoData->swdo_name ?></td>
 
                                 <td><?php echo $assessmentinfoData->total_ira ?></td>

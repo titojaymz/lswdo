@@ -50,7 +50,7 @@ if (!$this->session->userdata('user_id')){
             <th>Province</th><td><?php echo $prov_name ?></td>
         </tr>
         <tr>
-            <th>City:</th><td><?php echo $city_name ?></td>
+            <th>City/Municipality:</th><td><?php echo $city_name ?></td>
         </tr>
         <tr>
             <th>Name of SWDO Officer/Head:</th><td><?php echo $swdo_name ?></td>
@@ -65,7 +65,7 @@ if (!$this->session->userdata('user_id')){
             <th>Contact Number:</th><td><?php echo $contact_no ?></td>
         </tr>
         <tr>
-            <th>Email:</th><td><?php echo $email ?></td>
+            <th>Email Address:</th><td><?php echo $email ?></td>
         </tr>
         <tr>
             <th>Website:</th><td><?php echo $website ?></td>
