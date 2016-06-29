@@ -616,7 +616,7 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email:</label>
+                            <label for="email">Email Address:</label>
                             <input class="form-control" type="text" name="email" id="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
                         </div>
 
