@@ -60,6 +60,20 @@ error_reporting(0);
             </div>
 
             <div class="group">
+                <input type="text" class="form-control" placeholder="Position" name="position" value="<?php echo htmlspecialchars($_POST['position']); ?>">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Designation" name="designation" value="<?php echo htmlspecialchars($_POST['designation']); ?>">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Contact No." name="contactno" value="<?php echo htmlspecialchars($_POST['contactno']); ?>">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="group">
                 <select name="regionlist" id="regionlist" class="form-control" onchange="get_prov();">
                     <option value="0">Choose Region</option>
                     <?php foreach($rpmb['regionlist'] as $regionselect): ?>

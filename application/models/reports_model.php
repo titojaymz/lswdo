@@ -314,33 +314,50 @@ class reports_model extends CI_Model
 //ranking pswdo score = baseline ; new score = updated
     public function get_pswdoscore($regionlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 and b.lgu_type_id = 1';
+        }
+        else
+        {
+            $where = 'where b.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,a.level_function_baseline
-    FROM tbl_functionality a
-    INNER JOIN tbl_lswdo b
-    on a.prof_id = b.profile_id
-    inner join lib_regions c
-    on b.region_code = c.region_code
-    inner join lib_provinces d
-    on b.prov_code = d.prov_code
-    where b.deleted = 0 and b.lgu_type_id = 1 and b.region_code = '.$regionlist.'
-    order	by a.baseline_score desc;
-    ' ;
+                FROM tbl_functionality a
+                INNER JOIN tbl_lswdo b
+                on a.prof_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+                '.$where.'
+                order	by a.baseline_score desc;
+                ' ;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }
     public function get_pswdonewscore($regionlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where a.deleted = 0 and b.lgu_type_id = 1';
+        }
+        else
+        {
+            $where = 'where a.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
+        }
+
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,a.level_function_new
-FROM tbl_functionality a
-INNER JOIN tbl_lswdo b
-on a.prof_id = b.profile_id
-inner join lib_regions c
-on b.region_code = c.region_code
-inner join lib_provinces d
-on b.prov_code = d.prov_code
-where b.deleted = 0 and b.lgu_type_id = 1 and b.region_code = '.$regionlist.'
-order	by a.new_score desc;
+                FROM tbl_functionality a
+                INNER JOIN tbl_lswdo b
+                on a.prof_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+                '.$where.'
+                order	by a.new_score desc;
     ' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -348,6 +365,14 @@ order	by a.new_score desc;
     }
     public function get_pswdoscoreLadder($regionlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where a.deleted = 0 and b.lgu_type_id = 1';
+        }
+        else
+        {
+            $where = 'where a.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
+        }
         $sql = 'SELECT c.region_name,d.prov_name,
                 Sum(if(indicator_id LIKE "%-1%",1,0)) as Bronze,
                 Sum(if(indicator_id LIKE "%-2%",1,0)) as Silver,
@@ -359,14 +384,23 @@ order	by a.new_score desc;
                 on b.region_code = c.region_code
                 inner join lib_provinces d
                 on b.prov_code = d.prov_code
-                where a.deleted = 0 and b.region_code = '.$regionlist.' and b.lgu_type_id = 1
+                '.$where.'
                 group by d.prov_name;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
+        //where a.deleted = 0 and b.region_code = '.$regionlist.' and b.lgu_type_id = 1
     }
     public function get_cswdoscoreLadder($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where a.deleted = 0 and b.lgu_type_id = 2';
+        }
+        else
+        {
+            $where = 'where a.deleted = 0 and b.region_code = "'.$regionlist.'" and b.prov_code = "'.$provlist.'" and b.lgu_type_id = 2';
+        }
         $sql = 'SELECT d.prov_name, e.city_name,
                 Sum(if(indicator_id LIKE "%-1%",1,0)) as Bronze,
                 Sum(if(indicator_id LIKE "%-2%",1,0)) as Silver,
@@ -380,14 +414,23 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
 				inner join lib_cities e
 				on b.city_code = e.city_code
-                where a.deleted = 0 and b.region_code = '.$regionlist.' and b.prov_code = '.$provlist.' and b.lgu_type_id = 2
+                '.$where.'
                 group by e.city_name;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
+        // where a.deleted = 0 and b.region_code = '.$regionlist.' and b.prov_code = '.$provlist.' and b.lgu_type_id = 2
     }
     public function get_mswdoscoreLadder($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where a.deleted = 0 and b.lgu_type_id = 3';
+        }
+        else
+        {
+            $where = 'where a.deleted = 0 and b.region_code = "'.$regionlist.'" and b.prov_code = "'.$provlist.'" and b.lgu_type_id = 3';
+        }
         $sql = 'SELECT d.prov_name, e.city_name,
                 Sum(if(indicator_id LIKE "%-1%",1,0)) as Bronze,
                 Sum(if(indicator_id LIKE "%-2%",1,0)) as Silver,
@@ -401,7 +444,7 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
 				inner join lib_cities e
 				on b.city_code = e.city_code
-                where a.deleted = 0 and b.region_code = '.$regionlist.' and b.prov_code = '.$provlist.' and b.lgu_type_id = 3
+                '.$where.'
                 group by e.city_name;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -410,6 +453,25 @@ order	by a.new_score desc;
 //ranking cmswdo score = baseline ; new score = updated
     public function get_cmswdoscore($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 and b.lgu_type_id in (2,3)';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0 and b.lgu_type_id in (2,3)
+        and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0 and b.lgu_type_id in (2,3)
+        and b.region_code = "'.$regionlist.'"
+        and b.prov_code = "'.$provlist.'"';
+            }
+
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
         FROM tbl_functionality a
         INNER JOIN tbl_lswdo b
@@ -420,16 +482,37 @@ order	by a.new_score desc;
         on b.prov_code = d.prov_code
         inner join lib_cities E
         on b.city_code = e.city_code
-        where b.deleted = 0 and b.lgu_type_id in (2,3)
-        and b.region_code = '.$regionlist.'
-        and b.prov_code = '.$provlist.'
+        '.$where.'
         order by a.baseline_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
+//        where b.deleted = 0 and b.lgu_type_id in (2,3)
+//    and b.region_code = '.$regionlist.'
+//    and b.prov_code = '.$provlist.'
     }
     public function get_lswdoscore($regionlist,$provlist)
     {
+
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 ';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'"
+        and b.prov_code = "'.$provlist.'"';
+            }
+
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
         FROM tbl_functionality a
         INNER JOIN tbl_lswdo b
@@ -440,16 +523,35 @@ order	by a.new_score desc;
         on b.prov_code = d.prov_code
         inner join lib_cities E
         on b.city_code = e.city_code
-        where b.deleted = 0
-        and b.region_code = '.$regionlist.'
-        and b.prov_code = '.$provlist.'
+        '.$where.'
         order by a.baseline_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }
+
     public function get_lswdonewscore($regionlist,$provlist)
     {
+
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 ';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'"
+        and b.prov_code = "'.$provlist.'"';
+            }
+
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
@@ -460,9 +562,7 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
                 inner join lib_cities E
                 on b.city_code = e.city_code
-                where b.deleted = 0
-                and b.region_code = '.$regionlist.'
-                and b.prov_code = '.$provlist.'
+                '.$where.'
                 order by a.new_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -470,6 +570,25 @@ order	by a.new_score desc;
     }
     public function get_cmswdonewscore($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 and b.lgu_type_id in (2,3)';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0 and b.lgu_type_id in (2,3)
+                and b.region_code = "'.$regionlist.'""';
+            }
+            else
+            {
+                $where = ' where b.deleted = 0 and b.lgu_type_id in (2,3)
+                and b.region_code = "'.$regionlist.'"
+                and b.prov_code = "'.$provlist.'"';
+            }
+
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
@@ -480,9 +599,7 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
                 inner join lib_cities E
                 on b.city_code = e.city_code
-                where b.deleted = 0 and b.lgu_type_id in (2,3)
-                and b.region_code = '.$regionlist.'
-                and b.prov_code = '.$provlist.'
+                '.$where.'
                 order by a.new_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -491,6 +608,31 @@ order	by a.new_score desc;
 //ranking cswdo score = baseline ; new score = updated
     public function get_cswdoscore($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class <> ""';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class <> ""
+                and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class <> ""
+                and b.region_code = "'.$regionlist.'"
+                and b.prov_code = "'.$provlist.'"';
+            }
+
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
@@ -501,11 +643,7 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
                 inner join lib_cities E
                 on b.city_code = e.city_code
-                where b.deleted = 0
-                and b.lgu_type_id = 2
-                and e.city_class <> ""
-                and b.region_code = '.$regionlist.'
-                and b.prov_code = '.$provlist.'
+                '.$where.'
                 order by a.baseline_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -513,6 +651,31 @@ order	by a.new_score desc;
     }
     public function get_cswdonewscore($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class <> ""';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class <> ""
+                and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class <> ""
+                and b.region_code = "'.$regionlist.'"
+                and b.prov_code = "'.$provlist.'"';
+            }
+
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
@@ -523,11 +686,7 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
                 inner join lib_cities E
                 on b.city_code = e.city_code
-                where b.deleted = 0
-                and b.lgu_type_id = 2
-                and e.city_class <> ""
-                and b.region_code = '.$regionlist.'
-                and b.prov_code = '.$provlist.'
+                '.$where.'
                 order by a.new_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -536,6 +695,31 @@ order	by a.new_score desc;
 //ranking mswdo score = baseline ; new score = updated
     public function get_mswdoscore($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class = ""';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class = ""
+                and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class = ""
+                and b.region_code = "'.$regionlist.'"
+                and b.prov_code = "'.$provlist.'"';
+
+            }
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
@@ -546,11 +730,7 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
                 inner join lib_cities E
                 on b.city_code = e.city_code
-                where b.deleted = 0
-                and b.lgu_type_id = 2
-                and e.city_class = ""
-                and b.region_code = '.$regionlist.'
-                and b.prov_code = '.$provlist.'
+                '.$where.'
                 order by a.baseline_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -558,6 +738,31 @@ order	by a.new_score desc;
     }
     public function get_mswdonewscore($regionlist,$provlist)
     {
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class = ""';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class = ""
+                and b.region_code = "'.$regionlist.'"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+                and b.lgu_type_id = 2
+                and e.city_class = ""
+                and b.region_code = "'.$regionlist.'"
+                and b.prov_code = "'.$provlist.'"';
+
+            }
+        }
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
@@ -568,42 +773,13 @@ order	by a.new_score desc;
                 on b.prov_code = d.prov_code
                 inner join lib_cities E
                 on b.city_code = e.city_code
-                where b.deleted = 0
-                and b.lgu_type_id = 2
-                and e.city_class = ""
-                and b.region_code = '.$regionlist.'
-                and b.prov_code = '.$provlist.'
+                '.$where.'
                 order by a.new_score desc;' ;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }
 
-    public function get_noofCities($regionlist)
-    {
-        $sql = 'select count(a.prov_code) as numProv,a.prov_name,count(b.city_code) as numCity
-                from lib_provinces a
-                inner join lib_cities b
-                on a.prov_code = b.prov_code
-                where a.region_code = '.$regionlist.'
-                GROUP BY a.prov_code
-                ORDER BY a.prov_code;
-' ;
-
-        $query = $this->db->query($sql);
-        $result = $query->result();
-        return $result;
-    }
-    public function get_noofProvince($regionlist)
-    {
-        $sql = 'select count(prov_code) as numProv from lib_provinces
-                where region_code = '.$regionlist.';
-' ;
-
-        $query = $this->db->query($sql);
-        $result = $query->row();
-        return $result;
-    }
     public function get_distributionCMSWDOall()
     {
     $sql = 'SELECT c.prov_name,d.city_name,c.prov_code,
@@ -712,15 +888,24 @@ order	by a.new_score desc;
 
 
     public function getPSBAnswer($regionlist,$psbrider_main_category_id,$psbrider_sub_category_id){
-
+        if($regionlist == 0)
+        {
+            $where = 'where psbrider_main_category_id = ".$psbrider_main_category_id."
+                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+                and psbrider_answer = 1';
+        }
+        else
+        {
+            $where = 'where b.region_code = "'.$regionlist.'"
+                and psbrider_main_category_id = ".$psbrider_main_category_id."
+                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+                and psbrider_answer = 1';
+        }
         $sql = "SELECT count(a.psbrider_answer_id) as psbrider_answer_id, b.region_code, a.psbrider_main_category_title, a.psbrider_sub_category_title,a.psbrider_answer
                 FROM `tbl_psbrider_answers` a
                 LEFT OUTER JOIN tbl_lswdo b
                 ON a.profile_id = b.profile_id
-                where b.region_code = '".$regionlist."'
-                and psbrider_main_category_id = ".$psbrider_main_category_id."
-                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
-                and psbrider_answer = 1
+                '.$where.'
                 ;";
         $query = $this->db->query($sql);
         return $query->result_array();
@@ -970,7 +1155,31 @@ order	by a.new_score desc;
         $result = $query->row();
         return $result;
     }
+    public function get_noofCities($regionlist)
+    {
+        $sql = 'select count(a.prov_code) as numProv,a.prov_name,count(b.city_code) as numCity
+                from lib_provinces a
+                inner join lib_cities b
+                on a.prov_code = b.prov_code
+                where a.region_code = '.$regionlist.'
+                GROUP BY a.prov_code
+                ORDER BY a.prov_code;
+' ;
 
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_noofProvince($regionlist)
+    {
+        $sql = 'select count(prov_code) as numProv from lib_provinces
+                where region_code = '.$regionlist.';
+' ;
+
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
     //get All Regions
     public function get_AllRegion()
     {

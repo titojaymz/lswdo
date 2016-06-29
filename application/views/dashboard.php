@@ -34,6 +34,7 @@
                     $pswdoIndicator = substr($unformat,0,-1);
                     $pswdoNon = substr($unformat2,0,-1);
                     ?>
+
 <!--                    --><?php //print_r($pswdoIndicator)?>
 
                     <?php
@@ -65,13 +66,16 @@
                     $unformat = "";
                     $unformat2 = "";
                     foreach($pgetScorePart2 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."',";
+                        $unformat .= "'".$value['indicator_id']."'".',';
                         $unformat2 .= "".$value['TotalCompliance'].",";
                     }
                     $pswdoIndicator1 = substr($unformat,0,-1);
                     $pswdoCom= substr($unformat2,0,-1);
                     ?>
-                    <!--                    --><?php //print_r($pswdoIndicator)?>
+<!---->
+<!--                    <pre> --><?php //print_r($pswdoIndicator1)?>
+<!---->
+<!--                        </pre>-->
 
                     <?php
                     $unformat = "";

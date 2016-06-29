@@ -4,6 +4,7 @@
  * User: mglveniegas
  *
  */
+$region_code = $this->session->userdata('lswdo_regioncode');
 if (!$this->session->userdata('user_id')){
     redirect('/users/login','location');
 }
@@ -96,7 +97,7 @@ if (!$this->session->userdata('user_id')){
     <div class="page-header">
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
+            <li><a href="<?php echo base_url('dashboardc/dashboard/'.$region_code); ?>">Dashboard</a></li>
             <li class="active">Assessment Information</li>
             <li class="active">Budget Allocation</li>
             <li class="active">Add</li>

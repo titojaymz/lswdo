@@ -46,28 +46,28 @@
                             <tr>
                                 <td><label for="extensionname" class="control-label">Extension Name:</label></td>
                                 <td>
-                                    <input id="extensionname" name="extensionname" placeholder="Extension name" type="text" class="form-control"  value="<?php echo $user_details->extensionname; ?>" required autofocus/>
+                                    <input id="extensionname" name="extensionname" placeholder="Extension name" type="text" class="form-control"  value="<?php echo $user_details->extensionname; ?>"  autofocus/>
                                     <span class="text-danger"><?php echo form_error('extensionname'); ?></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="position" class="control-label">Position:</label></td>
                                 <td>
-                                    <input id="position" name="position" placeholder="Position" type="text" class="form-control"  value="<?php echo $user_details->position; ?>" required autofocus/>
+                                    <input id="position" name="position" placeholder="Position" type="text" class="form-control"  value="<?php echo $user_details->position; ?>"  autofocus/>
                                     <span class="text-danger"><?php echo form_error('position'); ?></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="designation" class="control-label">Designation:</label></td>
                                 <td>
-                                    <input id="designation" name="designation" placeholder="Designation" type="text" class="form-control"  value="<?php echo $user_details->designation; ?>" required autofocus/>
+                                    <input id="designation" name="designation" placeholder="Designation" type="text" class="form-control"  value="<?php echo $user_details->designation; ?>"  autofocus/>
                                     <span class="text-danger"><?php echo form_error('designation'); ?></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="contactno" class="control-label">Contact No:</label></td>
                                 <td>
-                                    <input id="contactno" name="contactno" placeholder="Contact No" type="text" class="form-control"  value="<?php echo $user_details->contact_no; ?>" required autofocus/>
+                                    <input id="contactno" name="contactno" placeholder="Contact No" type="text" class="form-control"  value="<?php echo $user_details->contact_no; ?>"  autofocus/>
                                     <span class="text-danger"><?php echo form_error('contactno'); ?></span>
                                 </td>
                             </tr>
