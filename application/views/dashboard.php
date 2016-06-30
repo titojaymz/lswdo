@@ -27,8 +27,9 @@
                     <?php
                     $unformat = "";
                     $unformat2 = "";
+
                     foreach($pgetScorePart1 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."',";
+                        $unformat .= '"'.$value['indicator_name'].'",';
                         $unformat2 .= "".$value['TotalNonCompliance'].",";
                     }
                     $pswdoIndicator = substr($unformat,0,-1);
@@ -41,7 +42,7 @@
                     $unformat = "";
                     $unformat2 = "";
                     foreach($cgetScorePart1 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."',";
+                        $unformat .= '"'.$value['indicator_name'].'",';
                         $unformat2 .= "".$value['TotalNonCompliance'].",";
                     }
                     $cswdoIndicator = substr($unformat,0,-1);
@@ -52,7 +53,7 @@
                     $unformat = "";
                     $unformat2 = "";
                     foreach($mgetScorePart1 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."',";
+                        $unformat .= '"'.$value['indicator_name'].'",';
                         $unformat2 .= "".$value['TotalNonCompliance'].",";
                     }
                     $mswdoIndicator = substr($unformat,0,-1);
@@ -66,7 +67,7 @@
                     $unformat = "";
                     $unformat2 = "";
                     foreach($pgetScorePart2 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."'".',';
+                        $unformat .= '"'.$value['indicator_name'].'",';
                         $unformat2 .= "".$value['TotalCompliance'].",";
                     }
                     $pswdoIndicator1 = substr($unformat,0,-1);
@@ -81,7 +82,7 @@
                     $unformat = "";
                     $unformat2 = "";
                     foreach($cgetScorePart2 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."',";
+                        $unformat .= '"'.$value['indicator_name'].'",';
                         $unformat2 .= "".$value['TotalCompliance'].",";
                     }
                     $cswdoIndicator1 = substr($unformat,0,-1);
@@ -92,7 +93,7 @@
                     $unformat = "";
                     $unformat2 = "";
                     foreach($mgetScorePart2 as $key=>$value){
-                        $unformat .= "'".$value['indicator_id']."',";
+                        $unformat .= '"'.$value['indicator_name'].'",';
                         $unformat2 .= "".$value['TotalCompliance'].",";
                     }
                     $mswdoIndicator1 = substr($unformat,0,-1);
