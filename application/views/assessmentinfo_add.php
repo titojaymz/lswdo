@@ -599,13 +599,13 @@ if (!$this->session->userdata('user_id')){
                                 <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address" required>
 
                                 <label for="contact_no">Contact No:*</label>
-                                <input class="form-control" type="text" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No" required>
+                                <input class="form-control" type="number" min="7" max="11" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No" required>
 
-                                <label for="email">Email:*</label>
-                                <input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" required>
+                                <label for="email">Email Address:*</label>
+                                <input class="form-control" type="email" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" required>
 
                                 <label for="website">Website:*</label>
-                                <input class="form-control" type="text" name="website" value="<?php echo set_value('website') ?>" placeholder="Website" required>
+                                <input class="form-control" type="url" name="website" value="<?php echo set_value('website') ?>" placeholder="Website" required>
 
                                 </br>
                                 <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
@@ -614,7 +614,7 @@ if (!$this->session->userdata('user_id')){
                                 </br></br>
 
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" data-mask="____-__-__" placeholder="Total Internal Revenue Allotment">
 
 
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>

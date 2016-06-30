@@ -405,12 +405,6 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="profile_id">Profile ID:</label>
-                            <span class="h4"><?php echo $assessmentinfo_details->profile_id ?></span>
-                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>">
-                        </div>
-
-                        <div class="form-group">
                             <label for="application_type_id">Status of Application:</label>
                             <div id="application_type_id">
                                 <div class="control-group">
@@ -612,17 +606,17 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="contact_no">Contact No:</label>
-                            <input class="form-control" type="text" name="contact_no" id="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
+                            <input class="form-control" type="number" min="7" max="11" name="contact_no" id="contact_no" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email Address:</label>
-                            <input class="form-control" type="text" name="email" id="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
+                            <input class="form-control" type="email" name="email" id="email" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
                         </div>
 
                         <div class="form-group">
                             <label for="website">Website:</label>
-                            <input class="form-control" type="text" name="website" id="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
+                            <input class="form-control" type="url" name="website" id="website" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
                         </div>
 
                         <div class="form-group">
