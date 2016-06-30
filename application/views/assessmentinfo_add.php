@@ -383,7 +383,18 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
-
+/*
+    function mask(f){
+        tel='(';
+        var val =f.value.split('');
+        for(var i=0;i<val.length;i++){
+            if(i==2){val[i]=val[i]+')'}
+            if(i==5){val[i]=val[i]+'-'}
+            tel=tel+val[i]
+        }
+        f.value=tel;
+    }
+*/
 </script>
 <body>
 <div class="content">
@@ -393,7 +404,7 @@ if (!$this->session->userdata('user_id')){
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
-            <li class="active">Assessment Information</li>
+            <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
             <li class="active">Add</li>
         </ol>
     </div>
@@ -412,7 +423,7 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
-<!--onChange="GroupStatus();"-->
+
                         <div class="form-group">
                             <label class="control-label">Status of Application:</label>
                             <select class="form-control" name="application_type" id="application_type" disabled>
@@ -425,6 +436,8 @@ if (!$this->session->userdata('user_id')){
                                     ?> value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                 <?php endforeach ?>
                             </select>
+
+                            <!--  <input name="phone" type="text" onblur="mask(this)">-->
                             <select class="form-control" name="application_type_id" id="application_type_id" style="display:none;">
                                 <option selected value="1">Please select</option>
                                 <?php foreach($application as $applications): ?>
@@ -614,7 +627,7 @@ if (!$this->session->userdata('user_id')){
                                 </br></br>
 
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" data-mask="____-__-__" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" data-mask="000,000,000.00" placeholder="Total Internal Revenue Allotment">
 
 
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>

@@ -15,7 +15,8 @@ $accessLevel = $this->session->userdata('accessLevel');
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard/'); ?>">Home</a></li>
-            <li class="active">Assessment Information</li>
+            <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
+            <li class="active">List</li>
         </ol>
     </div>
     <!-- End Page Header -->

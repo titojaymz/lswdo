@@ -390,8 +390,8 @@ if (!$this->session->userdata('user_id')){
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
-            <li class="active">Assessment Information</li>
-            <li class="active">Renewal</li>
+            <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
+            <li class="active">Edit</li>
         </ol>
     </div>
     <!-- End Page Header -->
@@ -633,7 +633,7 @@ if (!$this->session->userdata('user_id')){
                 <div class="form-group">
                     <div class="btn-group">
                         <button class="btn btn-success" type="submit" name="submit" value="submit"><i class="fa fa-save"></i> Save</button>
-                        <a class="btn btn-warning btn-group" href="/lswdo/assessmentinfo/index"><i class="fa fa-refresh"></i> Cancel</a>
+                        <a class="btn btn-warning btn-group" href="<?php echo base_url('assessmentinfo/index/0') ?>"><i class="fa fa-refresh"></i> Cancel</a>
                     </div>
                 </div>
             </div>
