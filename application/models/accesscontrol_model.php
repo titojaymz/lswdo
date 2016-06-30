@@ -25,7 +25,7 @@ class accesscontrol_model extends CI_Model
         }
 
         $sql = 'select a.uid,a.username, a.email, a.firstname, a.middlename,a.surname,a.extensionname, b.region_name, a.activated, c.userlevel_name
-                from tbl_user a
+                from tbl_user1 a
                 INNer join lib_regions b
                 ON a.region_code = b.region_code
                 INNER JOIN tbl_userlevel c
