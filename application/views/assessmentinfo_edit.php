@@ -629,10 +629,6 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                         </div>
 
-                        <!--   </div>-->
-                        <!-- <div id="group_renewal">-->
-
-                        <!--   </div>-->
                 </div>
                 <div class="form-group">
                     <div class="btn-group">

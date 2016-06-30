@@ -608,7 +608,7 @@ if (!$this->session->userdata('user_id')){
                                 <input class="form-control" type="url" name="website" value="<?php echo set_value('website') ?>" placeholder="Website" required>
 
                                 </br>
-                                <?php /*----------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
+                                <?php /*---------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
 
                                 <label for="budget" class="control-label">Budget Allocation and Utilization</label>
                                 </br></br>
