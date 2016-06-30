@@ -28,7 +28,6 @@ class monitoring extends CI_Controller
             'certification_model' => $certification_model,
             'visit_model' => $visit_model,
             'validity_model' => $validity_model,
-            'validity_model' => $validity_model,
         ));
         $this->load->view('footer');
     }
