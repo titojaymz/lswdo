@@ -164,7 +164,7 @@
 
                                         echo $visit_date_val;
                                         echo " </b></td>";
-                                        if($valMonitoring['visit_status'] == "" || $valMonitoring['visit_status'] == NULL){
+                                        if($valMonitoring['visit_status'] == "" || $valMonitoring['visit_status'] == NULL || $valMonitoring['visit_status'] == 0){
                                             $statName = "None";
                                         } else {
                                             $getStatusName = $monitoring_model->getStatusName($valMonitoring['visit_status']);
