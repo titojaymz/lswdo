@@ -33,7 +33,7 @@ class monitoring extends CI_Controller
     }
 
 
-    public function monitoring_add()
+    public function monitoring_add($profID)
     {
 
 
@@ -61,6 +61,7 @@ class monitoring extends CI_Controller
                 'visit_model' => $visit_model,
                 'validity_model' => $validity_model,
                 'getStatus' => $monitoring_model->getStatus(),
+                'countVisits' => $monitoring_model->countVisits($profID),
             ));
             $this->load->view('footer');
         } else {
