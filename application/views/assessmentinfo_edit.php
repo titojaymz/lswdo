@@ -405,6 +405,11 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
+
+                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>">
+                        </div>
+
+                        <div class="form-group">
                             <label for="application_type_id">Status of Application:</label>
                             <div id="application_type_id">
                                 <div class="control-group">
@@ -621,12 +626,12 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="total_ira">Total Internal Revenue Allotment:</label>
-                            <input class="form-control" type="text" name="total_ira" id="total_ira" style="width:500px;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
+                            <input class="form-control" type="number" name="total_ira" id="total_ira" style="width:500px;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
                         </div>
 
                         <div class="form-group">
                             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                            <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" style="width:500px;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
+                            <input class="form-control" type="number" name="total_budget_lswdo" id="total_budget_lswdo" style="width:500px;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                         </div>
 
                 </div>

@@ -395,6 +395,22 @@ if (!$this->session->userdata('user_id')){
         f.value=tel;
     }
 */
+
+    function bd_nice_number($n) {
+        // first strip any formatting;
+        $n = (0+str_replace(",","",$n));
+
+        // is this a number?
+        if(!is_numeric($n)) return false;
+
+        // now filter it;
+        if($n>1000000000000) return round(($n/1000000000000),1).' trillion';
+    else if($n>1000000000) return round(($n/1000000000),1).' billion';
+    else if($n>1000000) return round(($n/1000000),1).' million';
+    else if($n>1000) return round(($n/1000),1).' thousand';
+
+        return number_format($n);
+    }
 </script>
 <body>
 <div class="content">
@@ -628,11 +644,11 @@ if (!$this->session->userdata('user_id')){
                                 </br></br>
 
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" data-mask="000,000,000.00" style="width:500px;" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="number" name="total_ira" value="<?php echo set_value('total_ira') ?>" style="width:500px;" placeholder="Total Internal Revenue Allotment">
 
 
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" style="width:500px;" placeholder="Total Budget LSWDO">
+                                <input class="form-control" type="number" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" style="width:500px;" placeholder="Total Budget LSWDO">
 
                         </div>
                         <div class="form-group">
