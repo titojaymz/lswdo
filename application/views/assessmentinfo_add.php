@@ -426,7 +426,7 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label class="control-label">Status of Application:</label>
-                            <select class="form-control" name="application_type" id="application_type" disabled>
+                            <select class="form-control" name="application_type" id="application_type" style="width:500px;" disabled>
                                 <option selected value="1">Please select</option>
                                 <?php foreach($application as $applications): ?>
                                     <option <?php if ($applications->application_type_id==1)
@@ -451,7 +451,7 @@ if (!$this->session->userdata('user_id')){
 
                                    <label class="control-label">Type of LSWDO:*</label>
                                    <!--Select-->
-                                <select id="lgu_type_id" name="lgu_type_id" class="form-control" onchange="askLGU();" required>
+                                <select id="lgu_type_id" name="lgu_type_id" class="form-control" style="width:500px;" onchange="askLGU();" required>
                                     <option select value="">Please select</option>
                                     <?php foreach($lgu_type as $lgus): ?>
                                         <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
@@ -465,7 +465,7 @@ if (!$this->session->userdata('user_id')){
                                             <fieldset>
                                                 <div class="control-group">
                                                     <div class="controls">
-                                                        <select name="regionlist" id="regionlist" class="form-control" onChange="get_provinces();" required>
+                                                        <select name="regionlist" id="regionlist" class="form-control" style="width:500px;" onChange="get_provinces();" required>
                                                             <option value="0">Choose Region</option>
                                                             <?php foreach($regionlist as $regionselect): ?>
                                                                 <option value="<?php echo $regionselect->region_code; ?>"
@@ -491,7 +491,7 @@ if (!$this->session->userdata('user_id')){
                                     <div class="form-group form-group-sm">
                                         <label for="provlist" class="col-lg-2 control-label">Province:*</label>
                                         <div id="div_provlist" class="col-lg-8">
-                                            <select id="provlist" name="provlist" class="form-control" onChange="get_cities();" required>
+                                            <select id="provlist" name="provlist" class="form-control" style="width:500px;" onChange="get_cities();" required>
                                                 <?php if(isset($_SESSION['province']) or isset($_SESSION['region'])) {
                                                     ?>
                                                     <option value="0">Choose Province</option>
@@ -521,7 +521,7 @@ if (!$this->session->userdata('user_id')){
                                     <div class="form-group form-group-sm">
                                         <label for="citylist" class="col-lg-2 control-label">City/Municipalities:</label>
                                         <div id="div_citylist" class="col-lg-8">
-                                            <select id="citylist" name="citylist" class="form-control">
+                                            <select id="citylist" name="citylist" class="form-control" style="width:500px;">
                                                 <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                     ?>
                                                     <option value="0">Choose City/Municipality</option>
@@ -551,7 +551,7 @@ if (!$this->session->userdata('user_id')){
                                 <div id="groupCity">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class="form-control" type="text" name="no_cities" placeholder="No. of Cities" readonly>
+                                            <input class="form-control" type="text" name="no_cities" style="width:500px;" placeholder="No. of Cities" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -560,7 +560,7 @@ if (!$this->session->userdata('user_id')){
                                 <div id="groupmuni">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class="form-control" type="text" name="no_muni" placeholder="No. of Municipalities" readonly>
+                                            <input class="form-control" type="text" name="no_muni" style="width:500px;" placeholder="No. of Municipalities" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -569,7 +569,7 @@ if (!$this->session->userdata('user_id')){
                                 <div id="groupbrgy">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class="form-control" type="text" name="no_brgy" placeholder="No. of Barangays" readonly>
+                                            <input class="form-control" type="text" name="no_brgy" style="width:500px;" placeholder="No. of Barangays" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -579,7 +579,7 @@ if (!$this->session->userdata('user_id')){
                                     <div class="control-group">
                                         <div class="controls">
 
-                                            <input class="form-control" type="text" name="income_class"  placeholder="Income Class" readonly>
+                                            <input class="form-control" type="text" name="income_class" style="width:500px;" placeholder="Income Class" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -588,7 +588,7 @@ if (!$this->session->userdata('user_id')){
                                 <div id="total_pop">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class="form-control" type="text" name="total_pop" placeholder="Total Population" readonly>
+                                            <input class="form-control" type="text" name="total_pop" style="width:500px;" placeholder="Total Population" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -597,28 +597,28 @@ if (!$this->session->userdata('user_id')){
                                 <div id="total_poor">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class="form-control" type="text" name="total_poor" value="" placeholder="Total No. of Poor Families" readonly>
+                                            <input class="form-control" type="text" name="total_poor" style="width:500px;" value="" placeholder="Total No. of Poor Families" readonly>
                                         </div>
                                     </div>
                                 </div>
 
                                 <label for="swdo_name">Name of SWDO Officer/Head:*</label>
-                                <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" placeholder="Name of SWDO Officer/Head" required>
+                                <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" style="width:500px;" placeholder="Name of SWDO Officer/Head" required>
 
                                 <label for="designation">Designation:*</label>
-                                <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" placeholder="Designation" required>
+                                <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" style="width:500px;" placeholder="Designation" required>
 
                                 <label for="office_address">Office Address:*</label>
-                                <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" placeholder="Office Address" required>
+                                <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" style="width:500px;" placeholder="Office Address" required>
 
                                 <label for="contact_no">Contact No:*</label>
-                                <input class="form-control" type="number" min="7" max="11" name="contact_no" value="<?php echo set_value('contact_no') ?>" placeholder="Contact No" required>
+                                <input class="form-control" type="number" min="7" max="11" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:500px;" placeholder="Contact No" required>
 
                                 <label for="email">Email Address:*</label>
-                                <input class="form-control" type="email" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" required>
+                                <input class="form-control" type="email" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" style="width:500px;" required>
 
                                 <label for="website">Website:*</label>
-                                <input class="form-control" type="url" name="website" value="<?php echo set_value('website') ?>" placeholder="Website" required>
+                                <input class="form-control" type="url" name="website" value="<?php echo set_value('website') ?>" placeholder="Website" style="width:500px;" required>
 
                                 </br>
                                 <?php /*---------------------------Budget Allocation and Utilization -------------------------------------------------*/?>
@@ -627,24 +627,11 @@ if (!$this->session->userdata('user_id')){
                                 </br></br>
 
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" data-mask="000,000,000.00" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="text" name="total_ira" value="<?php echo set_value('total_ira') ?>" data-mask="000,000,000.00" style="width:500px;" placeholder="Total Internal Revenue Allotment">
 
 
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" placeholder="Total Budget LSWDO">
-
-                       <!--     </div>
-                            <div id="group_renewal"> -->
-<!---
-                                <label for="swdo_nameRenew">Name of SWDO Officer/Head:</label>
-                                <select class="form-control" name="swdo_nameRenew" id="swdo_nameRenew">
-                                    <option select value="">Please select</option>
-                                    <?php //foreach($swdo_nameRenew as $swdos): ?>
-                                        <option value="<?php //echo $swdos->swdo_name ?>"><?php //echo $swdos->swdo_name ?></option>
-                                    <?php //endforeach ?>
-                                </select>
-
-                            </div>-->
+                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" style="width:500px;" placeholder="Total Budget LSWDO">
 
                         </div>
                         <div class="form-group">
