@@ -457,6 +457,7 @@ if (!$this->session->userdata('user_id')){
                                         <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
                                     <?php endforeach ?>
                                 </select>
+                            <br>
                                 <!--Region-->
                                 <div id="groupLGUregion">
                                     <div class="form-group form-group-sm">
