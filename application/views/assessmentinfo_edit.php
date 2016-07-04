@@ -611,7 +611,7 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="contact_no">Contact No:</label>
-                            <input class="form-control" type="number" min="7" max="11" name="contact_no" id="contact_no" style="width:500px;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
+                            <input class="form-control" type="number" minlength="7" maxlength="11" name="contact_no" id="contact_no" style="width:500px;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact No">
                         </div>
 
                         <div class="form-group">
