@@ -425,7 +425,6 @@ if (!$this->session->userdata('user_id')){
                                 <?php endforeach ?>
                             </select>
 
-
                             <select class="form-control" name="application_type_id" id="application_type_id" style="display:none;">
                                 <option selected value="1">Please select</option>
                                 <?php foreach($application as $applications): ?>
