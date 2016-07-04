@@ -613,7 +613,7 @@ if (!$this->session->userdata('user_id')){
                             <label for="contact_no">Contact No:</label>
                             <input class="form-control" type="tel" minlength="7" maxlength="19" name="contact_no" id="contact_no" style="width:500px;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
                         </div>
-
+                            <!--grace -nilagay ko ung type nya is "tel" accepted na nya ung dash pero hindi siya automatic naglalgay ng dash, minlength nya 7 at maxlength 19 kasi merong dalawang contact number na nilalagay sila-->
                         <div class="form-group">
                             <label for="email">Email Address:</label>
                             <input class="form-control" type="email" name="email" id="email" style="width:500px;" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email" required>
