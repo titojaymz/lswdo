@@ -629,7 +629,7 @@ if (!$this->session->userdata('user_id')){
                                 <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" style="width:500px;" placeholder="Office Address" required>
 
                                 <label for="contact_no">Contact No:*</label>
-                                <input class="form-control" type="number" minlength="7" maxlength="11" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:500px;" placeholder="Contact No" required>
+                                <input class="form-control" type="number" min="7" max="11" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:500px;" placeholder="Contact No" required>
 
                                 <label for="email">Email Address:*</label>
                                 <input class="form-control" type="email" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" style="width:500px;" required>
