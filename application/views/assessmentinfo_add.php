@@ -383,34 +383,6 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
-/*
-    function mask(f){
-        tel='(';
-        var val =f.value.split('');
-        for(var i=0;i<val.length;i++){
-            if(i==2){val[i]=val[i]+')'}
-            if(i==5){val[i]=val[i]+'-'}
-            tel=tel+val[i]
-        }
-        f.value=tel;
-    }
-*/
-
-    function bd_nice_number($n) {
-        // first strip any formatting;
-        $n = (0+str_replace(",","",$n));
-
-        // is this a number?
-        if(!is_numeric($n)) return false;
-
-        // now filter it;
-        if($n>1000000000000) return round(($n/1000000000000),1).' trillion';
-    else if($n>1000000000) return round(($n/1000000000),1).' billion';
-    else if($n>1000000) return round(($n/1000000),1).' million';
-    else if($n>1000) return round(($n/1000),1).' thousand';
-
-        return number_format($n);
-    }
 </script>
 <body>
 <div class="content">
@@ -453,7 +425,7 @@ if (!$this->session->userdata('user_id')){
                                 <?php endforeach ?>
                             </select>
 
-                            <!--  <input name="phone" type="text" onblur="mask(this)">-->
+
                             <select class="form-control" name="application_type_id" id="application_type_id" style="display:none;">
                                 <option selected value="1">Please select</option>
                                 <?php foreach($application as $applications): ?>
