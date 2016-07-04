@@ -775,31 +775,37 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
-                'label'   => 'profile_id',
+                'label'   => 'Profile ID',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'swdo_name',
+                'label'   => 'SWDO Name Officer/Head',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'designation',
+                'label'   => 'Designation',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'office_address',
+                'label'   => 'Office Address',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'contact_no',
+                'label'   => 'Contact Number',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'email',
+                'label'   => 'Email Address',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'website',
+                'label'   => 'Website',
                 'rules'   => 'required'
             )
         );
@@ -814,30 +820,37 @@ class assessmentinfo extends CI_Controller {
 
             array(
                 'field'   => 'lgu_type_id',
+                'label'   => 'Type of LSWDO',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'swdo_name',
+                'label'   => 'SWDO Name Officer/Head',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'designation',
+                'label'   => 'Designation',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'office_address',
+                'label'   => 'Office Address',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'contact_no',
+                'label'   => 'Contact Number',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'email',
+                'label'   => 'Email Address',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'website',
+                'label'   => 'Website',
                 'rules'   => 'required'
             )
 
