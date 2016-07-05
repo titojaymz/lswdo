@@ -110,9 +110,6 @@
                         endforeach
                         ?>
 
-                        <pre>
-                            <?php print_r($newArray); ?>
-                        </pre>
                         <tr>
                             <?php $number = 1; ?>
                             <?php $checklist = 0; ?>
@@ -178,9 +175,6 @@
                         </tr>
                         <?php } else { ?>
                         <td>
-                            <p>compliance<?php echo $a.'-'.$iteem[$checklist] ?>Bronze</p><br>
-                            <p>compliance<?php echo $a.'-'.$iteem[$checklist+2] ?>Silver</p><br>
-                            <p>compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold</p><br>
                             <a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $a;?>','<?php echo $iteem[$checklist];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                         <?php $counting = count($iteem); ?>
                         <?php if($counting > 1){ ?>
