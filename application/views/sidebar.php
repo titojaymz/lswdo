@@ -16,7 +16,7 @@ $region = $this->session->userdata('lswdo_regioncode');
 <div class="sidebar clearfix">
   <ul class="sidebar-panel nav">
     <li class="sidetitle">MAIN</li>
-    <li><a href="<?php echo base_url('dashboardc/dashboard/'.$region.''); ?>"><span class="icon color5"><i class="fa fa-dashboard"></i></span>Dashboard</a></li> <!--edited link! -->
+<!--    <li><a href="--><?php //echo base_url('dashboardc/dashboard/'.$region.''); ?><!--"><span class="icon color5"><i class="fa fa-dashboard"></i></span>Dashboard</a></li> <!--edited link! -->-->
     <?php if($access == -1 || $access == 3 || $access == 4 || $access == 5){ ?>
       <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>"><span class="icon color6"><i class="fa fa-users"></i></span>Assessment Information</a></li>
       <li><a href="<?php echo base_url('reports/index'); ?>"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Reports</a></li><!--michael for Reports -->
