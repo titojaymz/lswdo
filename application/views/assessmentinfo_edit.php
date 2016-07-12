@@ -595,33 +595,33 @@ if (!$this->session->userdata('user_id')){
                         </div>
 
                         <div class="form-group">
-                            <label for="swdo_name">Name of SWDO Officer/Head:</label>
+                            <label for="swdo_name">Name of SWDO Officer/Head:*</label>
                             <input class="form-control" type="text" name="swdo_name" id="swdo_name" style="width:500px;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="designation">Designation:</label>
+                            <label for="designation">Designation:*</label>
                             <input class="form-control" type="text" name="designation" id="designation" style="width:500px;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="office_address">Office Address:</label>
+                            <label for="office_address">Office Address:*</label>
                             <input class="form-control" type="text" name="office_address" id="office_address" style="width:500px;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="contact_no">Contact No:</label>
+                            <label for="contact_no">Contact No:*</label>
                             <input class="form-control" type="tel" minlength="7" maxlength="19" name="contact_no" id="contact_no" style="width:500px;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
                         </div>
                             <!--grace -nilagay ko ung type nya is "tel" accepted na nya ung dash pero hindi siya automatic naglalgay ng dash, minlength nya 7 at maxlength 19 kasi merong dalawang contact number na nilalagay sila-->
                         <div class="form-group">
-                            <label for="email">Email Address:</label>
+                            <label for="email">Email Address:*</label>
                             <input class="form-control" type="email" name="email" id="email" style="width:500px;" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email" required>
                         </div>
 
                         <div class="form-group">
                             <label for="website">Website:</label>
-                            <input class="form-control" type="url" name="website" id="website" style="width:500px;" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website" required>
+                            <input class="form-control" type="text" name="website" id="website" pattern="www.+.com" title="www.sample.com" style="width:500px;" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
                         </div>
 
                         <div class="form-group">
