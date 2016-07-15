@@ -626,12 +626,12 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="total_ira">Total Internal Revenue Allotment:</label>
-                            <input class="form-control" type="number" name="total_ira" id="total_ira" style="width:500px;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
+                            <input class="form-control" type="number" name="total_ira" id="total_ira" data-inputmask="'mask': '999,999,999.99'" style="width:500px;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
                         </div>
 
                         <div class="form-group">
                             <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                            <input class="form-control" type="number" name="total_budget_lswdo" id="total_budget_lswdo" style="width:500px;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
+                            <input class="form-control" type="number" name="total_budget_lswdo" id="total_budget_lswdo" data-mask="____-___-___" style="width:500px;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                         </div>
 
                 </div>

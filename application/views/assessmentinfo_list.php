@@ -26,9 +26,7 @@ $accessLevel = $this->session->userdata('accessLevel');
         </div>
     <?php } ?>
     <div class = "row">
-        <?php   $region = $this->session->userdata('lswdo_regioncode');
 
-        echo $region;?>
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">

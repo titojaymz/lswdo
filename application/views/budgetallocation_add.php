@@ -117,7 +117,7 @@ if (!$this->session->userdata('user_id')){
                         </div>
                         <div class="form-group">
                             <label for="sector_id">Sector:</label>
-                            <select class="form-control" name="sector_id" id="sector_id">
+                            <select class="form-control" name="sector_id" id="sector_id" style="width:500px;">
                                 <option select value="">Please select</option>
                                 <?php foreach($sector_id as $sectors): ?>
                                     <option value="<?php echo $sectors->sector_id ?>"><?php echo $sectors->sector_name ?></option>
@@ -127,32 +127,32 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="year_indicated">Year Indicated:</label>
-                            <input class="form-control" type="date" name="year_indicated" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
+                            <input class="form-control" type="date" name="year_indicated" style="width:500px;" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
                         </div>
 
                         <div class="form-group">
                             <label for="budget_previous_year">Budget for the Previous Year:</label>
-                            <input class="form-control" type="number" name="budget_previous_year" value="<?php echo set_value('budget_previous_year') ?>" placeholder="Budget for the Previous Year">
+                            <input class="form-control" type="number" name="budget_previous_year" style="width:500px;" value="<?php echo set_value('budget_previous_year') ?>" placeholder="Budget for the Previous Year">
                         </div>
 
                         <div class="form-group">
                             <label for="budget_present_year">Budget for the Present Year:</label>
-                            <input class="form-control" type="number" name="budget_present_year" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
+                            <input class="form-control" type="number" name="budget_present_year" style="width:500px;" value="<?php echo set_value('budget_present_year') ?>" placeholder="Budget for the Present Year">
                         </div>
 
                         <div class="form-group">
                             <label for="utilization">Utilization:</label>
-                            <input class="form-control" type="number" name="utilization" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
+                            <input class="form-control" type="number" name="utilization" style="width:500px;" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
                         </div>
 
                         <div class="form-group">
                             <label for="no_bene_served">Number of Beneficiaries Served:</label>
-                            <input class="form-control" type="number" name="no_bene_served" value="<?php echo set_value('no_bene_served') ?>" placeholder="Number of Beneficiaries Served">
+                            <input class="form-control" type="number" name="no_bene_served" style="width:500px;" value="<?php echo set_value('no_bene_served') ?>" placeholder="Number of Beneficiaries Served">
                         </div>
 
                         <div class="form-group">
                             <label for="no_target_bene">Number of Target Beneficiaries:</label>
-                            <input class="form-control" type="number" name="no_target_bene" value="<?php echo set_value('no_target_bene') ?>" placeholder="Number of Target Beneficiaries">
+                            <input class="form-control" type="number" name="no_target_bene" style="width:500px;" value="<?php echo set_value('no_target_bene') ?>" placeholder="Number of Target Beneficiaries">
                         </div>
 
 
