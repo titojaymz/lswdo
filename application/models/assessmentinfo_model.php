@@ -13,8 +13,9 @@ class assessmentinfo_model extends CI_Model
         return $this->db->count_all("tbl_lswdo");
     }
 
-    public function getAssessmentinfo($region)
+    public function getAssessmentinfo()
     {
+        $region = $this->session->userdata('lswdo_regioncode');
         if($region == '000000000'){
            $where =  'WHERE a.DELETED = 0';
         } else {
@@ -477,19 +478,6 @@ class assessmentinfo_model extends CI_Model
         ORDER BY
           lib_provinces.prov_code
         ";
-        /* ok na ang error s display ng total population, nageerror kasi wala pang laman yung total population
-         * SELECT
-         sum(lib_brgy.Total_Poor_HHs) as total_poor
-        FROM
-          lib_regions
-        INNER JOIN
-          lib_provinces ON lib_provinces.region_code = lib_regions.region_code
-          Inner Join lib_cities ON lib_provinces.prov_code = lib_cities.prov_code
-          Inner Join lib_brgy ON lib_cities.city_code = lib_brgy.city_code
-        WHERE
-          lib_provinces.prov_code = ?
-        ORDER BY
-          lib_provinces.prov_code*/
 
         return $this->db->query($get_total_pop, $prov_code)->row();
     }

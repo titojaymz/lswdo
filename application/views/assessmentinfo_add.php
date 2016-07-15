@@ -606,7 +606,7 @@ if (!$this->session->userdata('user_id')){
                                 <input class="form-control" type="email" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" style="width:500px;" required>
 
                                 <label for="website">Website:</label>
-                                <input class="form-control" type="text" name="website" pattern="www.+.com" title="www.sample.com" value="<?php echo set_value('website') ?>" placeholder="Website" style="width:500px;">
+                                <input class="form-control" type="url" name="website" pattern="www.+.com" title="www.sample.com" value="<?php echo set_value('website') ?>" placeholder="Website" style="width:500px;">
 
                                 </br>
                                 <?php /*---------------------------Budget Allocation and Utilization -------------------------------------------------*/?>

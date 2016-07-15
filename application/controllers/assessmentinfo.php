@@ -16,11 +16,11 @@ class assessmentinfo extends CI_Controller {
 
         $accessLevel = $this->session->userdata('accessLevel');
 
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
+//        if($accessLevel == -1){
+//            $region = '000000000';
+//        } else {
+//            $region = $this->session->userdata('lswdo_regioncode');
+//        }
 
         if($function == 0){
             $form_message = '';
@@ -34,7 +34,6 @@ class assessmentinfo extends CI_Controller {
 
         $assessmentinfo_model = new assessmentinfo_model();
 
-
         $this->init_rpmb_session();
         $this->init_rpmbsearch_session();
 
@@ -46,12 +45,12 @@ class assessmentinfo extends CI_Controller {
         if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
             $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
         }
-
+//        $region = $this->session->userdata('lswdo_regioncode');
         $this->load->view('header');
        $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
-            'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+            'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
@@ -67,11 +66,11 @@ class assessmentinfo extends CI_Controller {
 
         $accessLevel = $this->session->userdata('accessLevel');
 
-        if($accessLevel == -1){
+       /* if($accessLevel == -1){
             $region = '000000000';
         } else {
             $region = $this->session->userdata('lswdo_regioncode');
-        }
+        }*/
 
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
@@ -145,7 +144,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'form_message'=>$form_message,
 
                 ));
@@ -171,13 +170,13 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
+/*
         if($accessLevel == -1){
             $region = '000000000';
         } else {
             $region = $this->session->userdata('lswdo_regioncode');
         }
-
+*/
         if ($id > 0){
             $assessmentinfo_model = new assessmentinfo_model();
 
@@ -254,7 +253,7 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
-                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'form_message'=>$form_message
                     ));
                 }
@@ -276,13 +275,13 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
+/*
         if($accessLevel == -1){
             $region = '000000000';
         } else {
             $region = $this->session->userdata('lswdo_regioncode');
         }
-
+*/
         $assessmentinfo_model = new assessmentinfo_model();
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
 
@@ -332,13 +331,13 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
+/*
         if($accessLevel == -1){
             $region = '000000000';
         } else {
             $region = $this->session->userdata('lswdo_regioncode');
         }
-
+*/
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
@@ -348,7 +347,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('assessmentinfo_list',array(
-                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'form_message'=>$form_message,
                     $this->redirectIndex(3)
                 ));
