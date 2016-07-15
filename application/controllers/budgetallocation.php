@@ -240,25 +240,7 @@ class budgetallocation extends CI_Controller {
         $this->load->view('sidebar');
         $BudgetDetails = $budgetallocation_model->getBudgetAllocationByID($id, $prevSectorID);
         $budgetData['BudgetDetails'] = $BudgetDetails;
-//        if ($BudgetDetails){
-////            $form_message = $form_message;
-//            $data = array(
-//                'profile_id'                 =>      $BudgetDetails->profile_id,
-//                'sector_id'                 =>      $BudgetDetails->sector_id,
-//                'sector_name'                 =>      $BudgetDetails->sector_name,
-//                'year_indicated'      =>      $BudgetDetails->year_indicated,
-//                'budget_previous_year'      =>      $BudgetDetails->budget_previous_year,
-//                'budget_present_year'      =>      $BudgetDetails->budget_present_year,
-//                'utilization'      =>      $BudgetDetails->utilization,
-//                'no_bene_served'      =>      $BudgetDetails->no_bene_served,
-//                'no_target_bene'      =>      $BudgetDetails->no_target_bene
-//            );
-//        } else {
-//         //   $form_message = 'No records found!';
-//           // $data = array(
-//            //    'form_message'      =>      $form_message
-//       //     );
-//        }
+
         $this->load->view('budgetallocation_masterview',$budgetData);
         $this->load->view('footer');
 

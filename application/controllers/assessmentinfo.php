@@ -16,12 +16,6 @@ class assessmentinfo extends CI_Controller {
 
         $accessLevel = $this->session->userdata('accessLevel');
 
-//        if($accessLevel == -1){
-//            $region = '000000000';
-//        } else {
-//            $region = $this->session->userdata('lswdo_regioncode');
-//        }
-
         if($function == 0){
             $form_message = '';
         } elseif($function == 1){
@@ -65,12 +59,6 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
-       /* if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }*/
 
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
@@ -170,13 +158,7 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-/*
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
-*/
+
         if ($id > 0){
             $assessmentinfo_model = new assessmentinfo_model();
 
@@ -275,13 +257,7 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-/*
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
-*/
+
         $assessmentinfo_model = new assessmentinfo_model();
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
 
@@ -331,13 +307,7 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-/*
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
-*/
+
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
