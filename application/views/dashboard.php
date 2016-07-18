@@ -78,7 +78,7 @@ $region = $this->session->userdata('lswdo_regioncode');
 
                     <div>
                         <center><h4>Compliance & Non-Compliance</h4></center>
-                        <?php echo form_open('dashboardc/dashboard/'.$region.'',array('class'=>'form-horizontal')) ?>
+                        <?php echo form_open('dashboardc/dashboard/',array('class'=>'form-horizontal')) ?>
                         <table>
                             <!--LGU Type-->
                             <tr>

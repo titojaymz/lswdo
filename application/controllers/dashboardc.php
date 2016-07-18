@@ -7,8 +7,9 @@
  */
 class dashboardc extends CI_Controller {
 
-    public function dashboard($regCode)
+    public function dashboard()
     {
+        $regCode = $this->session->userdata('lswdo_regioncode');
         $dashboard_model = new dashboard_model();
         $indicator_model = new indicator_model();
         $provCode = 0;

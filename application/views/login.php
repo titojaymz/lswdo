@@ -31,5 +31,5 @@ if (!$this->session->userdata('user_id')){
         </div>
     </div>
 <?php } else { ?>
-    <?php redirect('assessmentinfo/index/0'); ?>
+    <?php redirect('/dashboardc/dashboard/','location'); ?>
 <?php } ?>
