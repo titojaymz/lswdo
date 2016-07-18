@@ -21,7 +21,7 @@ if (!$this->session->userdata('user_id')){
                     <input type="password" maxlength="30" name="password" value="" class="form-control" placeholder="Password" required>
                     <i class="fa fa-key"></i>
                 </div>
-<!--                <div class="g-recaptcha" data-sitekey="6LcMzRwTAAAAADzg5oggwcUaZGdPWZ4keM-bP7Fn"></div>-->
+                <div class="g-recaptcha" data-sitekey="6LcMzRwTAAAAADzg5oggwcUaZGdPWZ4keM-bP7Fn"></div>
                 <button type="submit" type="submit" class="btn btn-default btn-block">LOGIN</button>
             </div>
         </form>
