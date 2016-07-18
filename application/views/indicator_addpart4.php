@@ -132,7 +132,9 @@
                             <?php if($b == $seconds){ ?>
 
                                 <td>
-
+<!--                                <p>compliance--><?php //echo $b.'-'.$secondItems[$checklist2] ?><!--Bronze</p><br>-->
+<!--                                <p>compliance--><?php //echo $b.'-'.$secondItems[$checklist2+2] ?><!--Silver</p><br>-->
+<!--                                <p>compliance--><?php //echo $b.'-'.$secondItems[$checklist2+4] ?><!--Gold</p><br>-->
                                     <a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $b;?>','<?php echo $secondItems[$checklist2];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                 <?php $counting2 = count($secondItems); ?>
                                 <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
