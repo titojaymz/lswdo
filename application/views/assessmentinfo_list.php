@@ -63,8 +63,7 @@ $accessLevel = $this->session->userdata('accessLevel');
                             <th>City/Municipality</th>
                             <th>Visit Count</th>
                             <th>Date</th>
-                            <th>Baseline Score</th>
-                            <th>Updated Score</th>
+                            <th>Score</th>
                             <th>Level of Functionality</th>
 
 
@@ -105,7 +104,7 @@ $accessLevel = $this->session->userdata('accessLevel');
                                 <td><?php echo $assessmentinfoData->visit_count ?></td>
 
                                 <td><?php echo $assessmentinfoData->visit_date ?></td>
-                                <td><?php echo $assessmentinfoData->baseline_score ?></td>
+
                                 <td><?php echo $assessmentinfoData->new_score ?></td>
                                 <td><?php echo $assessmentinfoData->level_function_baseline ?></td>
 
