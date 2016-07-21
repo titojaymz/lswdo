@@ -57,15 +57,15 @@ $accessLevel = $this->session->userdata('accessLevel');
                         <tr>
                             <th>&nbsp;</th>
                            <!-- <th>&nbsp;</th>-->
-                            <th>Status of Application</th>
                             <th>LSWDO Type</th>
                             <th>Region</th>
                             <th>Province</th>
                             <th>City/Municipality</th>
-                            <th>Name of SWDO Officer/Head</th>
-
-                            <th>Total Internal Revenue Allotment</th>
-                            <th>Total Budget LSWDO</th>
+                            <th>Visit Count</th>
+                            <th>Date</th>
+                            <th>Baseline Score</th>
+                            <th>Updated Score</th>
+                            <th>Level of Functionality</th>
 
 
                         </tr>
@@ -97,15 +97,17 @@ $accessLevel = $this->session->userdata('accessLevel');
                                 <!--<td><a class="btn btn-xs btn-success" href=sss"<?php /*echo base_url('indicator/indicatorView/' . $assessmentinfoData->profile_id) */?>"><i class="fa fa-list"></i> Indicators </a></td>-->
 
                                 <!-- <td> <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-trash"></i> </a></td>-->
-                                <td><?php echo $assessmentinfoData->application_type_name ?></td>
+
                                 <td><?php echo $assessmentinfoData->lgu_type_name ?></td>
                                 <td><?php echo $assessmentinfoData->region_name ?></td>
                                 <td><?php echo $assessmentinfoData->prov_name ?></td>
                                 <td><?php echo $assessmentinfoData->city_name ?></td>
-                                <td><?php echo $assessmentinfoData->swdo_name ?></td>
+                                <td><?php echo $assessmentinfoData->visit_count ?></td>
 
-                                <td><?php echo $assessmentinfoData->total_ira ?></td>
-                                <td><?php echo $assessmentinfoData->total_budget_lswdo ?></td>
+                                <td><?php echo $assessmentinfoData->visit_date ?></td>
+                                <td><?php echo $assessmentinfoData->baseline_score ?></td>
+                                <td><?php echo $assessmentinfoData->new_score ?></td>
+                                <td><?php echo $assessmentinfoData->level_function_baseline ?></td>
 
 
                                 <!--                    <td><a class="btn btn-xs btn-success" href="--><?php //echo base_url('indicator/indicatorViewpart2/' . $assessmentinfoData->profile_id) ?><!--"><i class="fa fa-list"></i> Add Indicator part 2 </a></td>-->
