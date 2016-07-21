@@ -345,7 +345,7 @@ class assessmentinfo extends CI_Controller {
                 $province_list[$tempprov->prov_code] = $tempprov->prov_name;
             }
 
-            $provlist_prop = 'id="provlist" name="provlist" class="form-control" style="width:500px;" onChange="get_cities();"';
+            $provlist_prop = 'id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();"';
 
             echo form_dropdown('provlist', $province_list, '', $provlist_prop);
         }
@@ -362,7 +362,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" style="width:500px;" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
@@ -378,7 +378,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:500px;" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
@@ -393,7 +393,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:500px;" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
@@ -412,7 +412,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_cities',
                 'value'   =>  $numberofcities->value_sum,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -435,7 +435,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_muni',
                 'value'   =>  $numberofmuni->value_sum,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -458,7 +458,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_brgy',
                 'value'   =>  $numberofbrgy->no_brgy,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -480,7 +480,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_brgy',
                 'value'   =>  $numberofbrgy->no_brgy,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -502,7 +502,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_brgy',
                 'value'   =>  $numberofbrgy->no_brgy,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -525,7 +525,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -547,7 +547,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -569,7 +569,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -592,7 +592,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_pop',
                 'value'   =>  $totalpop->total_pop,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -614,7 +614,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_pop',
                 'value'   =>  $totalpop->total_pop,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -636,7 +636,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_pop',
                 'value'   =>  $totalpop->total_pop,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -659,7 +659,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_poor',
                 'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -681,7 +681,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_poor',
                 'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -703,7 +703,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_poor',
                 'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
-                'style'        => 'width:500px',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
