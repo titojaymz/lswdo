@@ -766,11 +766,6 @@ class assessmentinfo extends CI_Controller {
                 'field'   => 'contact_no',
                 'label'   => 'Contact Number',
                 'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'email',
-                'label'   => 'Email Address',
-                'rules'   => 'required'
             )
         );
 
@@ -805,11 +800,6 @@ class assessmentinfo extends CI_Controller {
             array(
                 'field'   => 'contact_no',
                 'label'   => 'Contact Number',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'email',
-                'label'   => 'Email Address',
                 'rules'   => 'required'
             )
 

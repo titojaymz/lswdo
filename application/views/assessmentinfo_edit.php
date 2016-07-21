@@ -461,8 +461,8 @@ if (!$this->session->userdata('user_id')){
                  <td width="50%">
                             <div id="groupLGUregion">
                                 <div class="form-group form-group-sm">
-                                    <label for="regionlist" class="col-lg-2 control-label">Region: </label>
-                                    <div id="div_regionlist" class="col-lg-6">
+                                    <label for="regionlist" class="control-label">Region: </label>
+
                                         <fieldset>
                                             <div class="control-group">
                                                 <div class="controls">
@@ -483,7 +483,7 @@ if (!$this->session->userdata('user_id')){
                                                     </select>
                                                 </div>
                                             </div>
-                                    </div>
+
                                 </div>
                             </div>
                                 </td>
@@ -499,8 +499,8 @@ if (!$this->session->userdata('user_id')){
                    <td width="50%">
                             <div id="groupLGUProvince">
                                 <div class="form-group form-group-sm">
-                                    <label for="provlist" class="col-lg-2 control-label">Province:</label>
-                                    <div id="div_provlist" class="col-lg-8">
+                                    <label for="provlist" class="control-label">Province:</label>
+                                    <div id="div_provlist">
                                         <select id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();">
                                             <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
                                                 ?>
@@ -549,8 +549,8 @@ if (!$this->session->userdata('user_id')){
                        <td width="50%">
                             <div id="groupLGUCity">
                                 <div class="form-group form-group-sm">
-                                    <label for="citylist" class="col-lg-2 control-label">City/Municipality:</label>
-                                    <div id="div_citylist" class="col-lg-8">
+                                    <label for="citylist" class="control-label">City/Municipality:</label>
+                                    <div id="div_citylist">
                                         <select id="citylist" name="citylist" class="form-control" style="width:90%;" onChange="get_brgy();">
                                             <?php if(isset($assessmentinfo_details->city_code) or isset($assessmentinfo_details->prov_code)) {
                                                 ?>
@@ -687,6 +687,8 @@ if (!$this->session->userdata('user_id')){
                             <input class="form-control" type="email" name="email" id="email" style="width:90%;" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
                         </div>
                     </td>
+                </tr>
+                <tr>
                     <td width="50%">
                         <div class="form-group">
                             <label for="website">Website:</label>
