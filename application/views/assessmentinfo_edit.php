@@ -403,7 +403,10 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
+                        <div class="form-group">
 
+                            <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>">
+                        </div>
       <table style="width:100%">
               <tr>
                     <td width="50%">
