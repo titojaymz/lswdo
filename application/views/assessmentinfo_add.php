@@ -415,6 +415,7 @@ if (!$this->session->userdata('user_id')){
                     <table style="width:100%">
                         <tr>
                             <td width="50%">
+                                <div class="form-group">
                                   <label class="control-label">Status of Application:</label>
                                    <select class="form-control" name="application_type" id="application_type" style="width:90%;" disabled>
                                         <option selected value="1">Please select</option>
@@ -426,12 +427,15 @@ if (!$this->session->userdata('user_id')){
                                         ?> value="<?php echo $applications->application_type_id ?>"><?php echo $applications->application_type_name ?></option>
                                    <?php endforeach ?>
                             </select>
+                                </div>
                            </td>
                             <!--2nd column-->
 
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-                                </br></br>
+                                </br></br></br>
+                                    </div>
                             </td>
                         </tr>
 
@@ -449,6 +453,7 @@ if (!$this->session->userdata('user_id')){
 
                         <tr>
                             <td width="50%">
+                                <div class="form-group">
                                    <label class="control-label">Type of LSWDO:*</label>
                                    <!--Select-->
                                 <select id="lgu_type_id" name="lgu_type_id" class="form-control" style="width:90%;" onchange="askLGU();" required>
@@ -457,12 +462,15 @@ if (!$this->session->userdata('user_id')){
                                         <option value="<?php echo $lgus->lgu_type_id ?>"><?php echo $lgus->lgu_type_name ?></option>
                                     <?php endforeach ?>
                                 </select>
+                                 </div>
                             </td>
 
 
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
                                 <input class="form-control" type="number" name="total_ira" value="<?php echo set_value('total_ira') ?>" style="width:90%;" placeholder="Total Internal Revenue Allotment">
+                                </div>
                             </td>
 
                         </tr>
@@ -472,10 +480,13 @@ if (!$this->session->userdata('user_id')){
                             <td width="50%">
                                 <!--Region-->
                                 <div id="groupLGUregion">
-                                    <div class="form-group">
-                                    &nbsp;&nbsp;&nbsp;    <label for="regionlist" class="control-label">Region:*</label>
+                                    <div class="form-group form-group-sm">
+                                        <label for="regionlist" class="control-label"> Region:*</label>
 
-                                        &nbsp;&nbsp;&nbsp;<select name="regionlist" id="regionlist" class="form-control" style="width:90%;" onChange="get_provinces();" required>
+                                            <fieldset>
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <select name="regionlist" id="regionlist" class="form-control" style="width:90%;" onChange="get_provinces();" required>
                                                             <option value="0">Choose Region</option>
                                                             <?php foreach($regionlist as $regionselect): ?>
                                                                 <option value="<?php echo $regionselect->region_code; ?>"
@@ -489,26 +500,27 @@ if (!$this->session->userdata('user_id')){
                                                                 </option>
                                                             <?php endforeach; ?>
                                                         </select>
-
+                                                    </div>
+                                                </div>
 
                                     </div>
                                 </div>
                            </td>
 
                             <td width="50%">
-
+                                <div class="form-group">
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
                                 <input class="form-control" type="number" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" style="width:90%;" placeholder="Total Budget LSWDO">
+                               </div>
                             </td>
 
                         </tr>
                         <tr>
                             <td width="50%">
                                 <!--END Region-->
-
                                 <!--Province-->
                                 <div id="groupLGUProvince">
-                                    <div class="form-group">
+                                    <div class="form-group form-group-sm">
                                         <label for="provlist" class="control-label">Province:*</label>
                                         <div id="div_provlist">
                                             <select id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();" required>
@@ -538,6 +550,7 @@ if (!$this->session->userdata('user_id')){
                             </td>
 
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="nocitylist"> No. of Cities:</label>
                                 <div id="groupCity">
                                     <div class="control-group">
@@ -546,6 +559,7 @@ if (!$this->session->userdata('user_id')){
                                         </div>
                                     </div>
                                 </div>
+                                    </div>
                             </td>
 
 
@@ -557,8 +571,8 @@ if (!$this->session->userdata('user_id')){
                                 <!--City-->
                                 <div id="groupLGUCity">
                                     <div class="form-group form-group-sm">
-                                        <label for="citylist" class="control-label">City/Municipality:</label>
-                                        <div id="div_citylist" class="control-label">
+                                        <label for="citylist" class="control-label">City/Municipalities:</label>
+                                        <div id="div_citylist">
                                             <select id="citylist" name="citylist" class="form-control" style="width:90%;">
                                                 <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
                                                     ?>
@@ -583,10 +597,11 @@ if (!$this->session->userdata('user_id')){
                                         </div>
                                     </div>
 
-                                </div>  <!--End Select-->
+                                </div> <!--End Select-->
                              </td>
 
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="no_muni_code">No. of Municipalities:</label>
                                 <div id="groupmuni">
                                     <div class="control-group">
@@ -595,6 +610,7 @@ if (!$this->session->userdata('user_id')){
                                         </div>
                                     </div>
                                 </div>
+                                </div>
                             </td>
 
                         </tr>
@@ -602,11 +618,14 @@ if (!$this->session->userdata('user_id')){
                            <tr>
                                <!--2nd column-->
                                <td width="50%">
+                                   <div class="form-group">
                                    <label for="swdo_name">Name of SWDO Officer/Head:*</label>
                                    <input class="form-control" type="text" name="swdo_name" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
+                                     </div>
                                </td>
 
                                <td width="50%">
+                                   <div class="form-group">
                                    <label for="no_brgy">No. of Barangays:</label>
                                    <div id="groupbrgy">
                                        <div class="control-group">
@@ -614,6 +633,7 @@ if (!$this->session->userdata('user_id')){
                                                <input class="form-control" type="text" name="no_brgy" style="width:90%;" placeholder="No. of Barangays" readonly>
                                            </div>
                                        </div>
+                                   </div>
                                    </div>
                                </td>
 
@@ -623,11 +643,14 @@ if (!$this->session->userdata('user_id')){
 
                             <!--2nd column-->
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="designation">Designation:*</label>
                                 <input class="form-control" type="text" name="designation" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
+                                 </div>
                             </td>
 
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="income_class">Income Class:</label>
                                 <div id="income_class">
                                     <div class="control-group">
@@ -636,6 +659,7 @@ if (!$this->session->userdata('user_id')){
                                             <input class="form-control" type="text" name="income_class" style="width:90%;" placeholder="Income Class" readonly>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </td>
 
@@ -646,10 +670,13 @@ if (!$this->session->userdata('user_id')){
 
                              <!--2nd column-->
                              <td width="50%">
+                                 <div class="form-group">
                                  <label for="office_address">Office Address:*</label>
                                  <input class="form-control" type="text" name="office_address" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
+                                  </div>
                              </td>
                              <td width="50%">
+                                 <div class="form-group">
                                  <label for="total_pop">Total Population:</label>
                                  <div id="total_pop">
                                      <div class="control-group">
@@ -657,6 +684,7 @@ if (!$this->session->userdata('user_id')){
                                              <input class="form-control" type="text" name="total_pop" style="width:90%;" placeholder="Total Population" readonly>
                                          </div>
                                      </div>
+                                 </div>
                                  </div>
                              </td>
 
@@ -667,11 +695,14 @@ if (!$this->session->userdata('user_id')){
 
                             <!--2nd column-->
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="contact_no">Contact No:*</label>
                                 <input class="form-control" type="tel" minlength="7" maxlength="19" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:90%;" placeholder="Contact Number" required>
+                                </div>
                             </td>
 
                             <td width="50%">
+                                <div class="form-group">
                                 <label for="total_poor">Total No. of Poor Families:</label>
                                 <div id="total_poor">
                                     <div class="control-group">
@@ -679,6 +710,7 @@ if (!$this->session->userdata('user_id')){
                                             <input class="form-control" type="text" name="total_poor" style="width:90%;" value="" placeholder="Total No. of Poor Families" readonly>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </td>
 
@@ -688,8 +720,10 @@ if (!$this->session->userdata('user_id')){
 
                              <!--2nd column-->
                              <td width="50%">
+                                 <div class="form-group">
                                  <label for="email">Email Address:</label>
                                  <input class="form-control" type="email" name="email" value="<?php echo set_value('email') ?>" placeholder="Email Address" style="width:90%;">
+                                </div>
                              </td>
 
 
@@ -698,8 +732,10 @@ if (!$this->session->userdata('user_id')){
 
                              <!--2nd column-->
                              <td width="50%">
+                                 <div class="form-group">
                                  <label for="website">Website:</label>
                                  <input class="form-control" type="text" name="website" pattern="www.+.com" title="www.sample.com" value="<?php echo set_value('website') ?>" placeholder="Website" style="width:90%;">
+                                </div>
                              </td>
 
                          </tr>

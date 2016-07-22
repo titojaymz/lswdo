@@ -424,8 +424,10 @@ if (!$this->session->userdata('user_id')){
                      </td>
 
                      <td width="50%">
+                         <div class="form-group">
                                     <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-                                    </br></br>
+                                    </br></br></br>
+                             </div>
                     </td>
              </tr>
 
