@@ -468,7 +468,7 @@ if (!$this->session->userdata('user_id')){
                                  </div>
                             </td>
 
-
+<!---->
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>

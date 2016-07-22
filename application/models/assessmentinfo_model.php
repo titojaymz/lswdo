@@ -38,7 +38,7 @@ class assessmentinfo_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-
+//
     public function getAssessmentinfoByID($id = 0)
     {
 
