@@ -10,6 +10,9 @@ if (!$this->session->userdata('user_id')){
 //echo validation_errors();
 
 ?>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.maskedinput.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 
     /*
@@ -383,7 +386,17 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
+
+    jQuery(function($){
+        $("#date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
+        $("#phone").mask("(999) 999-9999");
+        $("#tin").mask("99-9999999");
+        $("#total_ira").mask("999,999,999.99");
+    });
+
 </script>
+
+
 <body>
 <div class="content">
 
@@ -467,9 +480,9 @@ if (!$this->session->userdata('user_id')){
 
 
                             <td width="50%">
-                                <div class="form-group">
+                                <div id="total_ira" class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="number" name="total_ira" value="<?php echo set_value('total_ira') ?>" style="width:90%;" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="number" pattern="^\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}$" data-mask="___,___,___.__" name="total_ira" value="<?php echo set_value('total_ira') ?>" style="width:90%;" placeholder="Total Internal Revenue Allotment">
                                 </div>
                             </td>
 
