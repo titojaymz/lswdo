@@ -163,48 +163,53 @@
 
 //                                        }//end of $getMonitoringListByRefID
                                     ?>
-
+                        <?php
+                        $visitCount = $countVisits->countVisit;
+                        $countSelect = "";
+                        $countDisabled = "";
+                        ?>
                         <tr>
                             <td><b>Visit Count</b></td>
                             <td align="center">
                             <?php
-//                                print_r($getMonitoringList);
                             $getVisitCount = $visit_model->getVisitCount();
-                                echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
-                                foreach ($getVisitCount as $key=>$val)
-                                {
-
-                                    if($val['visit_id'] == $getMonitoringList->visit_count) {
-                                        echo "<option id='" . $val['visit_id'] . "' value='" . $val['visit_id'] . "' selected>";
-                                    } else {
-                                        echo "<option id='" . $val['visit_id'] . "' value='" . $val['visit_id'] . "'>";
-                                    }
-                                    echo $val['visit_count'];
-                                    echo "</option>";
-                                }
-                                 echo "</select>";
                             ?>
+                             <select id = 'visit_count' name = 'visit_count' class="form-control">
+                                 <?php foreach ($getVisitCount as $key=>$val)
+                                {
+                                    if($val['visit_id'] == $getMonitoringList->visit_count) {
+                                ?>
+                                    <option value="<?php echo $val['visit_id']; ?>" selected>
+                                <?php } else { ?>
+                                    <option value=" <?php echo $val['visit_id']; ?>">
+                                     <?php } ?>
+                                    <?php echo $val['visit_count']; ?>
+                                    </option>
+                               <?php } ?>
+                               </select>
+
                         </td>
                         </tr>
                         <tr>
                             <td><b>Status:</b></td>
                             <td align="center">
+
+                                <select id = 'visit_status' name = 'visit_status' class="form-control">
+                                <option id = '#'>Please Select</option>
                                 <?php
-                                //print_r($getVisitCount);
-                                echo "<select id = 'visit_status' name = 'visit_status' class=\"form-control\">";
-                                echo "<option id = '#'>Please Select</option>";
-                                foreach ($getStatus as $key=>$val)
-                                {
+                                    foreach ($getStatus as $key=>$val)
+                                    {
+
                                 if($val['status_id'] == $getMonitoringList->visit_status) {
-                                    echo "<option value='" . $val['status_id'] . "' selected>";
-                                } else {
-                                    echo "<option value='" . $val['status_id'] . "'>";
-                                }
-                                    echo $val['status_name'];
-                                    echo "</option>";
-                                }
-                                echo "</select>";
                                 ?>
+                                    <option value= <?php echo $val['status_id']; ?> selected>
+                                <?php } else { ?>
+                                    <option value="<?php echo $val['status_id'];?>">
+                                <?php } ?>
+                                    <?php echo $val['status_name']; ?>
+                                    </option>
+                                <?php } ?>
+                                </select>
                             </td>
                         </tr>
                         </tr>

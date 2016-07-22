@@ -148,23 +148,26 @@
 <!--    --><?php //print_r($getStatus); ?>
 <!--</pre>-->
 
-                    <?php  $visitCount = $countVisits->countVisit; ?>
+                    <?php
+                    $visitCount = $countVisits->countVisit;
+                    $countSelect = "";
+                    $countDisabled = "";
+                    ?>
                     <br/>
+<!--                    --><?php //echo $visitCount ?>
                     <table class="table table-bordered table-striped">
                         <tr>
                             <td><b>Visit Count</b></td>
                             <td align="center">
-                            <?php
-                                //print_r($getVisitCount);
-                                echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
-                                foreach ($getVisitCount as $key=>$val)
-                                {
-                                    echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'>";
-                                    echo $val['visit_count'];
-                                    echo "</option>";
-                                }
-                                 echo "</select>";
-                            ?>
+                                <select id = 'visit_count' name = 'visit_count' class="form-control">
+                                <?php  foreach ($getVisitCount as $key=>$val)
+                                { ?>
+                                    <option value="<?php echo $val['visit_id']; ?>">
+                                   <?php echo $val['visit_count']; ?>
+                                    </option>
+                               <?php } ?>
+                                </select>
+
                             </td>
                         </tr>
                         <tr>
@@ -185,8 +188,17 @@
                                             $selected = '';
                                             $disabled = 'disabled';
                                         }
+                                    } elseif($visitCount == 1){
+                                        if($val['status_id'] == 4){
+
+                                            $selected = 'selected';
+                                            $disabled = '';
+                                        } else {
+                                            $selected = '';
+                                            $disabled = 'disabled';
+                                        }
                                     } else {
-                                        if($val['status_id'] == 1){
+                                        if($val['status_id'] == 1 || $val['status_id'] == 4 ){
 
                                             $selected = '';
                                             $disabled = 'disabled';

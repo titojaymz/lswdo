@@ -162,6 +162,7 @@ class monitoring extends CI_Controller
                 'validity_model' => $validity_model,
                 'visit_model' => $visit_model,
                 'getStatus' => $monitoring_model->getStatus(),
+                'countVisits' => $monitoring_model->countVisits($profile_id),
             ));
             $this->load->view('footer');
         }else {
