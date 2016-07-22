@@ -16,12 +16,6 @@ class assessmentinfo extends CI_Controller {
 
         $accessLevel = $this->session->userdata('accessLevel');
 
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
-
         if($function == 0){
             $form_message = '';
         } elseif($function == 1){
@@ -34,7 +28,6 @@ class assessmentinfo extends CI_Controller {
 
         $assessmentinfo_model = new assessmentinfo_model();
 
-
         $this->init_rpmb_session();
         $this->init_rpmbsearch_session();
 
@@ -46,12 +39,12 @@ class assessmentinfo extends CI_Controller {
         if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
             $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
         }
-
+//        $region = $this->session->userdata('lswdo_regioncode');
         $this->load->view('header');
        $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
-            'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+            'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
             'form_message'=>$form_message
         ));
         $this->load->view('footer');
@@ -66,12 +59,6 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
 
         $assessmentinfo_model = new assessmentinfo_model();
         $application_type_name = $assessmentinfo_model->Lib_getAllApplicationtype();
@@ -145,7 +132,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('assessmentinfo_list',array(
                     'application' => $application_type_name,
                     'lgu_type' => $lgu_type_name,
-                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'form_message'=>$form_message,
 
                 ));
@@ -171,12 +158,6 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
 
         if ($id > 0){
             $assessmentinfo_model = new assessmentinfo_model();
@@ -254,7 +235,7 @@ class assessmentinfo extends CI_Controller {
                     $this->load->view('assessmentinfo_list',array(
                         'application' => $application_type_name,
                         'lgu_type' => $lgu_type_name,
-                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                        'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                         'form_message'=>$form_message
                     ));
                 }
@@ -276,12 +257,6 @@ class assessmentinfo extends CI_Controller {
         }
 
         $accessLevel = $this->session->userdata('accessLevel');
-
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
 
         $assessmentinfo_model = new assessmentinfo_model();
         $AssessmentDetails = $assessmentinfo_model->getAssessmentinfoByID($id);
@@ -333,12 +308,6 @@ class assessmentinfo extends CI_Controller {
 
         $accessLevel = $this->session->userdata('accessLevel');
 
-        if($accessLevel == -1){
-            $region = '000000000';
-        } else {
-            $region = $this->session->userdata('lswdo_regioncode');
-        }
-
         $assessmentinfo_model = new assessmentinfo_model();
         if ($id > 0){
             $deleteResult = $assessmentinfo_model->deleteAssessmentinfo($id);
@@ -348,7 +317,7 @@ class assessmentinfo extends CI_Controller {
                 $this->load->view('header');
                 $this->load->view('nav');
                 $this->load->view('assessmentinfo_list',array(
-                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo($region),
+                    'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
                     'form_message'=>$form_message,
                     $this->redirectIndex(3)
                 ));
@@ -376,7 +345,7 @@ class assessmentinfo extends CI_Controller {
                 $province_list[$tempprov->prov_code] = $tempprov->prov_name;
             }
 
-            $provlist_prop = 'id="provlist" name="provlist" class="form-control" onChange="get_cities();"';
+            $provlist_prop = 'id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();"';
 
             echo form_dropdown('provlist', $province_list, '', $provlist_prop);
         }
@@ -393,7 +362,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
@@ -409,7 +378,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
@@ -424,7 +393,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
@@ -443,6 +412,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_cities',
                 'value'   =>  $numberofcities->value_sum,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -465,6 +435,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_muni',
                 'value'   =>  $numberofmuni->value_sum,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -487,6 +458,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_brgy',
                 'value'   =>  $numberofbrgy->no_brgy,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -508,6 +480,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_brgy',
                 'value'   =>  $numberofbrgy->no_brgy,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -529,6 +502,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'no_brgy',
                 'value'   =>  $numberofbrgy->no_brgy,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -551,6 +525,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -572,6 +547,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -593,6 +569,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'income_class',
                 'value'   =>  $incomeclass->income_class,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -615,6 +592,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_pop',
                 'value'   =>  $totalpop->total_pop,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -636,6 +614,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_pop',
                 'value'   =>  $totalpop->total_pop,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -657,6 +636,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_pop',
                 'value'   =>  $totalpop->total_pop,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -679,6 +659,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_poor',
                 'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -700,6 +681,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_poor',
                 'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -721,6 +703,7 @@ class assessmentinfo extends CI_Controller {
                 'name'       => 'total_poor',
                 'value'   =>  $totalpoor->total_poor,
                 'class'        => 'form-control',
+                'style'        => 'width:90%',
                 'readonly' => true
             );
 
@@ -761,12 +744,27 @@ class assessmentinfo extends CI_Controller {
         $config = array(
             array(
                 'field'   => 'profile_id',
-                'label'   => 'profile_id',
+                'label'   => 'Profile ID',
                 'rules'   => 'required'
             ),
             array(
-                'field'   => 'application_type_id',
-                'label'   => 'application_type_id',
+                'field'   => 'swdo_name',
+                'label'   => 'SWDO Name Officer/Head',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'designation',
+                'label'   => 'Designation',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'office_address',
+                'label'   => 'Office Address',
+                'rules'   => 'required'
+            ),
+            array(
+                'field'   => 'contact_no',
+                'label'   => 'Contact Number',
                 'rules'   => 'required'
             )
         );
@@ -780,35 +778,28 @@ class assessmentinfo extends CI_Controller {
         $config = array(
 
             array(
-                'field'   => 'application_type_id',
-                'rules'   => 'required'
-            ),
-            array(
                 'field'   => 'lgu_type_id',
+                'label'   => 'Type of LSWDO',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'swdo_name',
+                'label'   => 'SWDO Name Officer/Head',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'designation',
+                'label'   => 'Designation',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'office_address',
+                'label'   => 'Office Address',
                 'rules'   => 'required'
             ),
             array(
                 'field'   => 'contact_no',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'email',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'website',
+                'label'   => 'Contact Number',
                 'rules'   => 'required'
             )
 
@@ -816,14 +807,7 @@ class assessmentinfo extends CI_Controller {
 
         return $this->form_validation->set_rules($config);
     }
-/*
 
-    public function listFields()
-    {
-        $query = $this->db->query('SELECT profile_id,application_type_id,lgu_type_id,region_code,prov_code,city_code,swdo_name,office_address,designation,contact_no,email,website,total_ira,total_budget_lswdo FROM tbl_lswdo');
-        return $query->list_fields();
-    }
-*/
     public function refreshCurPage()
     {
         $page = current_url();

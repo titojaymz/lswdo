@@ -128,106 +128,6 @@ class budgetallocation extends CI_Controller {
             }
         }
     }
-/*
-    public function editBudgetAllocation($id = 0,$prevSectorID)
-    {
-        if ($id > 0){
-            $budgetallocation_model = new budgetallocation_model();
-            $sector_id = $budgetallocation_model->get_sector();
-
-
-            $this->validateEditForm();
-
-            if (!$this->form_validation->run()){
-                $form_message = '';
-                $this->load->view('header');
-                $this->load->view('nav');
-                $this->load->view('sidebar');
-
-            //    $this->init_rpmb_session();
-                $rpmb['sector_id'] = $sector_id;
-                $rpmb['form_message'] = $form_message;
-
-                $rpmb['budgetallocation_details'] = $this->budgetallocation_model->getBudgetAllocationByID($id,$prevSectorID);
-                $this->load->view('budgetallocation_edit', $rpmb);
-                $this->load->view('sidepanel');
-                $this->load->view('footer');
-
-            } else {
-//                $id = $this->input->post('profile_id');
-                $sectorID = $this->input->post('sector_id');
-                $year_indicated = $this->input->post('year_indicated');
-                $budget_previous_year = $this->input->post('budget_previous_year');
-                $budget_present_year = $this->input->post('budget_present_year');
-                $utilization = $this->input->post('utilization');
-                $no_bene_served = $this->input->post('no_bene_served');
-                $no_target_bene = $this->input->post('no_target_bene');
-                $modified_by= $this->session->userdata('user_id');
-                $date_modified = 'NOW()';
-
-                $checkDupli = $budgetallocation_model->checkDuplicate($id, $sectorID);
-                if ($sectorID == $prevSectorID) {
-                    $updateResult = $budgetallocation_model->updateBudgetAllocation($id, $sectorID, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $prevSectorID,$modified_by,$date_modified);
-                    if ($updateResult) {
-
-//                        $this->init_rpmb_session();
-                        $rpmb['sector_id'] = $this->budgetallocation_model->get_sector();
-
-                        $form_message = 'Update Success';
-                        $this->load->view('header');
-                        $this->load->view('nav');
-                        $this->load->view('sidebar');
-                        $this->load->view('budgetallocation_list', array(
-                            'budgetallocation_data' => $budgetallocation_model->getBudgetAllocationByID($id,$prevSectorID),
-                            'form_message' => $form_message,
-
-                        ));
-                        $this->load->view('footer');
-                        $this->redirectIndex($id,2);
-                    }
-                } else {
-                    if ($checkDupli->countProf == 0) {
-
-                        $updateResult = $budgetallocation_model->updateBudgetAllocation($id, $sectorID, $year_indicated, $budget_previous_year, $budget_present_year, $utilization, $no_bene_served, $no_target_bene, $prevSectorID);
-                        if ($updateResult) {
-
-//                            $this->init_rpmb_session();
-                            $rpmb['sector_id'] = $this->budgetallocation_model->get_sector();
-
-                            $form_message = 'Update Success';
-                            $this->load->view('header');
-                            $this->load->view('nav');
-                            $this->load->view('sidebar');
-                            $this->load->view('budgetallocation_list', array(
-                                'budgetallocation_data' => $budgetallocation_model->getBudgetAllocationByID($id),
-                                'form_message' => $form_message,
-
-                            ));
-                            $this->load->view('footer');
-                            $this->redirectIndex($id,2);
-                        }
-
-                    } else {
-                        $sectorName = $budgetallocation_model->sectorName($sectorID);
-                        $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>' . $sectorName->sector_name . ' already exist<a href="#" class="closed">&times;</a></div>';
-
-                        $rpmb['sector_id'] = $sector_id;
-                        $rpmb['form_message'] = $form_message;
-                        $rpmb['budgetallocation_details'] = $this->budgetallocation_model->getBudgetAllocationByID($id, $prevSectorID);
-                        $this->load->view('header');
-                        $this->load->view('nav');
-                        $this->load->view('sidebar');
-                        $this->load->view('budgetallocation_edit', $rpmb);
-                        $this->load->view('footer');
-                    }
-                }
-            }
-        } else {
-            $this->load->view('no_id',array('redirectIndex'=>$this->redirectIndex($id)));
-        }
-
-    }
-*/
 
     public function editBudgetAllocation($id = 0,$prevSectorID)
     {
@@ -340,25 +240,7 @@ class budgetallocation extends CI_Controller {
         $this->load->view('sidebar');
         $BudgetDetails = $budgetallocation_model->getBudgetAllocationByID($id, $prevSectorID);
         $budgetData['BudgetDetails'] = $BudgetDetails;
-//        if ($BudgetDetails){
-////            $form_message = $form_message;
-//            $data = array(
-//                'profile_id'                 =>      $BudgetDetails->profile_id,
-//                'sector_id'                 =>      $BudgetDetails->sector_id,
-//                'sector_name'                 =>      $BudgetDetails->sector_name,
-//                'year_indicated'      =>      $BudgetDetails->year_indicated,
-//                'budget_previous_year'      =>      $BudgetDetails->budget_previous_year,
-//                'budget_present_year'      =>      $BudgetDetails->budget_present_year,
-//                'utilization'      =>      $BudgetDetails->utilization,
-//                'no_bene_served'      =>      $BudgetDetails->no_bene_served,
-//                'no_target_bene'      =>      $BudgetDetails->no_target_bene
-//            );
-//        } else {
-//         //   $form_message = 'No records found!';
-//           // $data = array(
-//            //    'form_message'      =>      $form_message
-//       //     );
-//        }
+
         $this->load->view('budgetallocation_masterview',$budgetData);
         $this->load->view('footer');
 

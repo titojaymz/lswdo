@@ -46,6 +46,9 @@ class users extends CI_Controller {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
             $firstname = $this->input->post('firstname');
+            $position = $this->input->post('position');
+            $designation = $this->input->post('designation');
+            $contactno= $this->input->post('contactno');
             $middlename = $this->input->post('middlename');
             $surname = $this->input->post('surname');
             $extensionname = $this->input->post('extensionname');
@@ -73,7 +76,7 @@ class users extends CI_Controller {
                  * DESCRIPTION OF CORRECTION: tinama ang parameter para sa firstname at email, nagkabaliktad kasi
                  * DATE & TIME OF UPDATE: May 6, 2016, 17:02
                  */
-                $Model_user = new Model_user($username, $superkey, $firstname, $middlename, $surname, $extensionname, $email, $regionlist);
+                $Model_user = new Model_user($username, $superkey, $firstname, $middlename, $surname, $extensionname, $email, $regionlist,$position,$designation,$contactno);
                 //username,`password`, email, firstname, middlename,surname,extensionname,region_code
                 $regResult = $Model_user->registerUser();
                 if ($regResult == 1) {
@@ -152,12 +155,13 @@ class users extends CI_Controller {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
             $captcha = $this->input->post('g-recaptcha-response');
-            if(!$captcha) {
+            /*if(!$captcha) {
                 $form_message = '<div class="kode-alert kode-alert kode-alert-icon kode-alert-click alert6"><i class="fa fa-lock"></i>Please check the captcha form!.<a href="#" class="closed">&times;</a></div>';
                 $this->load->view('header');
                 $this->load->view('login', array('form_message' => $form_message));
                 $this->load->view('footer');
-            } else {
+            }*/
+//            else {
                 $secretKey = "6LcMzRwTAAAAAMj1ENuYhur5H67mc8dXSfa_cFIy";
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $captcha . "&remoteip=" . $ip);
@@ -198,7 +202,7 @@ class users extends CI_Controller {
                     $this->load->view('login', $data);
                     $this->load->view('footer');
                 }
-            }
+//            }
         }
     }
 

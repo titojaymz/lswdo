@@ -144,43 +144,78 @@
                         </tr>
 
                     </table>-->
-<pre>
-    <?php print_r($getStatus); ?>
-</pre>
+<!--<pre>-->
+<!--    --><?php //print_r($getStatus); ?>
+<!--</pre>-->
 
+                    <?php
+                    $visitCount = $countVisits->countVisit;
+                    $countSelect = "";
+                    $countDisabled = "";
+                    ?>
                     <br/>
+<!--                    --><?php //echo $visitCount ?>
                     <table class="table table-bordered table-striped">
                         <tr>
                             <td><b>Visit Count</b></td>
                             <td align="center">
-                            <?php
-                                //print_r($getVisitCount);
-                                echo "<select id = 'visit_count' name = 'visit_count' class=\"form-control\">";
-                                foreach ($getVisitCount as $key=>$val)
-                                {
-                                    echo "<option id='".$val['visit_id']."' value='".$val['visit_id']."'>";
-                                    echo $val['visit_count'];
-                                    echo "</option>";
-                                }
-                                 echo "</select>";
-                            ?>
+                                <select id = 'visit_count' name = 'visit_count' class="form-control">
+                                <?php  foreach ($getVisitCount as $key=>$val)
+                                { ?>
+                                    <option value="<?php echo $val['visit_id']; ?>">
+                                   <?php echo $val['visit_count']; ?>
+                                    </option>
+                               <?php } ?>
+                                </select>
+
                             </td>
                         </tr>
                         <tr>
                             <td><b>Status:</b></td>
                             <td align="center">
-                                <?php
-                                //print_r($getVisitCount);
-                                echo "<select id = 'visit_status' name = 'visit_status' class=\"form-control\">";
-                                echo "<option id = '#'>Please Select</option>";
-                                foreach ($getStatus as $key=>$val)
-                                {
-                                    echo "<option value='".$val['status_id']."'>";
-                                    echo $val['status_name'];
-                                    echo "</option>";
-                                }
-                                echo "</select>";
-                                ?>
+                                <select id = 'visit_status' name = 'visit_status' class="form-control">
+                                <option id = '#'>Please Select</option>
+                                <?php foreach ($getStatus as $key=>$val)
+                                { ?>
+                                    <option value='<?php echo $val['status_id']; ?>'
+                                    <?php
+                                    if($visitCount == 0){
+                                        if($val['status_id'] == 1){
+
+                                                $selected = 'selected';
+                                                $disabled = '';
+                                        } else {
+                                            $selected = '';
+                                            $disabled = 'disabled';
+                                        }
+                                    } elseif($visitCount == 1){
+                                        if($val['status_id'] == 4){
+
+                                            $selected = 'selected';
+                                            $disabled = '';
+                                        } else {
+                                            $selected = '';
+                                            $disabled = 'disabled';
+                                        }
+                                    } else {
+                                        if($val['status_id'] == 1 || $val['status_id'] == 4 ){
+
+                                            $selected = '';
+                                            $disabled = 'disabled';
+                                        } else {
+                                            $selected = '';
+                                            $disabled = '';
+                                        }
+
+                                    }
+                                        echo $selected.' '.$disabled;
+                                    ?>
+                                    >
+                                    <?php echo $val['status_name']; ?>
+                                    </option>
+                               <?php  }?>
+                                </select>
+
                             </td>
                         </tr>
                         </tr>

@@ -28,13 +28,12 @@ class monitoring extends CI_Controller
             'certification_model' => $certification_model,
             'visit_model' => $visit_model,
             'validity_model' => $validity_model,
-            'validity_model' => $validity_model,
         ));
         $this->load->view('footer');
     }
 
 
-    public function monitoring_add()
+    public function monitoring_add($profID)
     {
 
 
@@ -62,6 +61,7 @@ class monitoring extends CI_Controller
                 'visit_model' => $visit_model,
                 'validity_model' => $validity_model,
                 'getStatus' => $monitoring_model->getStatus(),
+                'countVisits' => $monitoring_model->countVisits($profID),
             ));
             $this->load->view('footer');
         } else {
@@ -162,6 +162,7 @@ class monitoring extends CI_Controller
                 'validity_model' => $validity_model,
                 'visit_model' => $visit_model,
                 'getStatus' => $monitoring_model->getStatus(),
+                'countVisits' => $monitoring_model->countVisits($profile_id),
             ));
             $this->load->view('footer');
         }else {

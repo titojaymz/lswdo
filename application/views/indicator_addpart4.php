@@ -70,6 +70,8 @@
                     <!--                    --><?php //$countLS = count($checkPart4) ?>
                     <!--                    --><?php //if($countLS > 0){ ?>
                     <?php echo form_open('',array('class'=>'form-horizontal')) ?>
+
+                    <input type = "hidden" id="profID" name ="profID" value ="<?php echo $profileID ?>"/>
                     <?php $unformat = ""; ?>
                     <table class="table table-bordered table-striped">
                         <tr>
@@ -107,6 +109,7 @@
                             $secondArray[$second][] = $item2->indicator_name;
                         endforeach
                         ?>
+
                         <tr>
                             <?php $number = 1; ?>
                             <?php $checklist = 0; ?>
@@ -127,7 +130,12 @@
                             <?php $arrs = explode("-", $fourthCat->indicator_id, 2);?>
                             <?php $seconds = $arrs[0];?>
                             <?php if($b == $seconds){ ?>
-                                <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $b;?>','<?php echo $secondItems[$checklist2];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
+
+                                <td>
+<!--                                <p>compliance--><?php //echo $b.'-'.$secondItems[$checklist2] ?><!--Bronze</p><br>-->
+<!--                                <p>compliance--><?php //echo $b.'-'.$secondItems[$checklist2+2] ?><!--Silver</p><br>-->
+<!--                                <p>compliance--><?php //echo $b.'-'.$secondItems[$checklist2+4] ?><!--Gold</p><br>-->
+                                    <a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $b;?>','<?php echo $secondItems[$checklist2];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                                 <?php $counting2 = count($secondItems); ?>
                                 <?php if($counting2 > 1){ ?> <!-- kung ma detect nia sa counting2 is greater than 1 ibig sbhn ay meron Bronze medal. -->
                                     <td><?php echo $secondItems[$number2]; ?></td> <!-- ung $secondItems[$number2] ung kinukuha ntn na value sa secondNewArray. so ung ibig sbhn neto is $secondItems[1] since ung checklist is 0 so ung kasunod na number nia sa loob ng array is 1 which is indicator Name -->
@@ -166,7 +174,8 @@
                         <?php endforeach; ?>
                         </tr>
                         <?php } else { ?>
-                        <td><a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $a;?>','<?php echo $iteem[$checklist];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
+                        <td>
+                            <a href="" id = "sampleReset" name = "sampleReset" onclick="return resetButton('<?php echo $a;?>','<?php echo $iteem[$checklist];?>');" class="btn btn-sm btn-rounded btn-default">Reset</a></td>
                         <?php $counting = count($iteem); ?>
                         <?php if($counting > 1){ ?>
                         <td><?php echo $iteem[$number]; ?></td>
@@ -179,7 +188,7 @@
                         <?php if($counting > 5){ ?>
                         <td><?php echo $iteem[$number + 4]; ?></td>
                         <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "1"/> Compliant</td>
-                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Non-Compliante</td>
+                        <td><input type="radio" id = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" name = "compliance<?php echo $a.'-'.$iteem[$checklist+4] ?>Gold" value = "2"/> Non-Compliant</td>
                         <td><textarea id = "textArea<?php echo $fourthIndi->indicator_id ?>" name = "textArea<?php echo $fourthIndi->indicator_id ?>"></textarea></td>
 
                         <?php } else {  ?>

@@ -1353,7 +1353,7 @@
             </tr>
             <?php
 
-            echo $getBaselineTotalScoreIndicatorsPart2;
+//            echo $getBaselineTotalScoreIndicatorsPart2;
             $bronzeIndiTotal =  $getTotalIndicatorsPart1->Bronze +  $getTotalIndicatorsPart2->Bronze +  $getTotalIndicatorsPart3->Bronze +  $getTotalIndicatorsPart4->Bronze;
             $silverIndiTotal =  $getTotalIndicatorsPart1->Silver +  $getTotalIndicatorsPart2->Silver +  $getTotalIndicatorsPart3->Silver +  $getTotalIndicatorsPart4->Silver;
             $goldIndiTotal =  $getTotalIndicatorsPart1->Gold +  $getTotalIndicatorsPart2->Gold +  $getTotalIndicatorsPart3->Gold +  $getTotalIndicatorsPart4->Gold;
@@ -1399,7 +1399,7 @@
                 </div>
             </div>
         </div>
-    <a class="btn btn-m btn-option2" href="<?php echo base_url('assessmentinfo/index/') ?>"><i class="fa fa-check-circle-o"></i> Finish</a><br><br>
+    <a class="btn btn-m btn-option2" href="<?php echo base_url('assessmentinfo/index/0') ?>"><i class="fa fa-check-circle-o"></i> Finish</a><br><br>
 </div>
 </body>
 </html>

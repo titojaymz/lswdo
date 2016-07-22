@@ -19,8 +19,27 @@ class Model_user extends CI_Model
 
     private $email;
 
+    private $position;
+
+    private $designation;
+
+    private $contactno;
+
     private $regionlist;
 
+    protected function getPosition()
+    {
+        return $this->position;
+    }
+
+    protected function getDesignation()
+    {
+        return $this->designation;
+    }
+    protected function getContactno()
+    {
+        return $this->contactno;
+    }
 
     protected function getUsername()
     {
@@ -70,7 +89,7 @@ class Model_user extends CI_Model
     }
 
 
-    public function __construct($username = NULL, $password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL,$email = NULL, $regionlist = NULL)
+    public function __construct($username = NULL, $password = NULL, $firstname = NULL, $middlename = NULL, $surname = NULL, $extensionname = NULL,$email = NULL, $regionlist = NULL,$position = NULL,$designation = NULL,$contactno = NULL)
     {
         $this->username = $username;
         $this->password = $password;
@@ -80,6 +99,9 @@ class Model_user extends CI_Model
         $this->extensionname = $extensionname;
         $this->email = $email;
         $this->regionlist = $regionlist;
+        $this->position = $position;
+        $this->designation = $designation;
+        $this->contactno = $contactno;
         $this -> account_locked = 'locked';
         $this -> locked = 'Yes';
         $this -> logged = "Yes";
@@ -95,7 +117,7 @@ class Model_user extends CI_Model
     public function registerUser()
     {
         $this->db->trans_begin();
-        $this->db->query('Insert into tbl_user (username,password,email,firstname,middlename,surname,extensionname,user_level,region_code)
+        $this->db->query('Insert into tbl_user (username,password,email,firstname,middlename,surname,extensionname,user_level,position,designation,contact_no,region_code)
                           Values
                           ("'.$this->getUsername().'",
                           "'.$this->getPassword().'",
@@ -105,6 +127,9 @@ class Model_user extends CI_Model
                             "'.$this->getSurname().'",
                             "'.$this->getExtensionname().'",
                             "0",
+                            "'.$this->getPosition().'",
+                            "'.$this->getDesignation().'",
+                            "'.$this->getContactno().'",
                             "'.$this->getRegion().'")');
         if ($this->db->trans_status() === FALSE)
         {

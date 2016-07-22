@@ -82,7 +82,7 @@ class Monitoring_Model extends CI_Model
                           "'.$ref_cert_id.'",
                           "'.$visit_count.'",
                           "'.$visit_date.'",
-                          "'.$visit_status.'",
+                          '.$visit_status.',
                           "'.$remarks.'",
                           "'.$created_by.'",
                           '.$date_created.',
@@ -169,6 +169,16 @@ class Monitoring_Model extends CI_Model
         $sql = 'SELECT ref_id,ref_cert_id,profile_id,visit_count,visit_date,remarks,visit_status
                 FROM `tbl_lswdo_monitoring`
                 WHERE profile_id = "'.$profile_id.'" and ref_id = '.$ref_id.';';
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
+    public function countVisits($profile_id){
+        /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
+         $this->db->order_by('visit_date','ASC');
+         $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
+
+        $sql = 'select count(visit_count) as countVisit from tbl_lswdo_monitoring
+                WHERE profile_id = "'.$profile_id.'";';
         $query = $this->db->query($sql);
         return $query->row();
     }

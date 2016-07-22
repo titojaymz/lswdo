@@ -28,6 +28,7 @@ error_reporting(0);
         <div class="form-area"><?php echo $form_message;?><?php echo validation_errors() ?>
             <div class="group">
                 <input type="text" class="form-control"  maxlength="30"  value="<?php echo htmlspecialchars($_POST['username']); ?>" placeholder="Username" name="username" required>
+                <label for = "username" class ="control-label">FMSurname (eg., jdcruz )</label>
                 <i class="fa fa-user-secret"></i>
             </div>
             <div class="group">
@@ -57,6 +58,20 @@ error_reporting(0);
             <div class="group">
                 <input type="email" class="form-control" placeholder="E-mail" name="email" value="<?php echo htmlspecialchars($_POST['email']); ?>" required>
                 <i class="fa fa-envelope-o"></i>
+            </div>
+
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Position" name="position" value="<?php echo htmlspecialchars($_POST['position']); ?>">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Designation" name="designation" value="<?php echo htmlspecialchars($_POST['designation']); ?>">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Contact No." name="contactno" value="<?php echo htmlspecialchars($_POST['contactno']); ?>">
+                <i class="fa fa-user"></i>
             </div>
 
             <div class="group">

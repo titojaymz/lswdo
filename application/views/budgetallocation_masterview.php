@@ -17,7 +17,7 @@ if (!$this->session->userdata('user_id')){
         <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
-            <li class="active">Assessment Information</li>
+            <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
             <li class="active">Budget Allocation</li>
             <li class="active">View</li>
         </ol>
