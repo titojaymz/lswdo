@@ -10,8 +10,6 @@ if (!$this->session->userdata('user_id')){
 //echo validation_errors();
 
 ?>
-<script src="jquery.js" type="text/javascript"></script>
-<script src="jquery.maskedinput.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 
@@ -82,6 +80,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "block";
             document.getElementById("groupLGUCity").style.visibility = "visible";
+
         }
     }
 
@@ -386,16 +385,7 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
-
-    jQuery(function($){
-        $("#date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
-        $("#phone").mask("(999) 999-9999");
-        $("#tin").mask("99-9999999");
-        $("#total_ira").mask("999,999,999.99");
-    });
-
 </script>
-
 
 <body>
 <div class="content">
@@ -480,9 +470,9 @@ if (!$this->session->userdata('user_id')){
 
 
                             <td width="50%">
-                                <div id="total_ira" class="form-group">
+                                <div class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="number" pattern="^\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}$" data-mask="___,___,___.__" name="total_ira" value="<?php echo set_value('total_ira') ?>" style="width:90%;" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="text" name="total_ira" id="total_ira" value="<?php echo set_value('total_ira') ?>" style="width:90%;" placeholder="Total Internal Revenue Allotment">
                                 </div>
                             </td>
 
@@ -523,7 +513,7 @@ if (!$this->session->userdata('user_id')){
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                <input class="form-control" type="number" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" style="width:90%;" placeholder="Total Budget LSWDO">
+                                <input class="form-control" type="text" name="total_budget_lswdo" value="<?php echo set_value('total_budget_lswdo') ?>" style="width:90%;" placeholder="Total Budget LSWDO">
                                </div>
                             </td>
 

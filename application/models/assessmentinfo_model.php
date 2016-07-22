@@ -21,27 +21,17 @@ class assessmentinfo_model extends CI_Model
         } else {
             $where =  'WHERE a.DELETED = 0 and a.region_code = '.$region;
         }
-        $sql = 'SELECT
-a.profile_id,
-b.lgu_type_name,
-d.region_name,
-e.prov_name,
-f.city_name,
-lib_visit_count.visit_count,
-tbl_lswdo_monitoring.visit_date,
-tbl_functionality.baseline_score,
-tbl_functionality.new_score,
-tbl_functionality.level_function_baseline
-FROM
-tbl_lswdo AS a
-Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
-Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
-Inner Join lib_regions AS d ON a.region_code = d.region_code
-Inner Join lib_provinces AS e ON a.prov_code = e.prov_code
-Left Join lib_cities AS f ON a.city_code = f.city_code
-Inner Join tbl_lswdo_monitoring ON tbl_lswdo_monitoring.profile_id = a.profile_id
-Inner Join tbl_functionality ON tbl_functionality.prof_id = a.profile_id
-Inner Join lib_visit_count ON tbl_lswdo_monitoring.visit_count = lib_visit_count.visit_id
+        $sql = 'SELECT a.profile_id,b.lgu_type_name,d.region_name,e.prov_name,f.city_name,i.visit_count,g.visit_date,h.baseline_score,h.new_score,h.level_function_baseline
+                FROM
+                tbl_lswdo AS a
+                Inner Join lib_lgu_type AS b ON a.lgu_type_id = b.lgu_type_id
+                Inner Join lib_application_type AS c ON a.application_type_id = c.application_type_id
+                Inner Join lib_regions AS d ON a.region_code = d.region_code
+                Inner Join lib_provinces AS e ON a.prov_code = e.prov_code
+                Left Join lib_cities AS f ON a.city_code = f.city_code
+                Inner Join tbl_lswdo_monitoring AS g ON g.profile_id = a.profile_id
+                Inner Join tbl_functionality AS h ON h.prof_id = a.profile_id
+                Inner Join lib_visit_count AS i ON g.visit_count = i.visit_id
                 '.$where.'
                 ORDER BY a.profile_id';
         $query = $this->db->query($sql);
@@ -60,8 +50,8 @@ Inner Join lib_visit_count ON tbl_lswdo_monitoring.visit_count = lib_visit_count
                 INNER JOIN lib_regions as d ON a.region_code = d.region_code
                 INNER JOIN lib_provinces as e ON a.prov_code = e.prov_code
                 LEFT JOIN lib_cities as f ON a.city_code = f.city_code
-                LEFT JOIN tbl_lswdo_budget as g ON a.profile_id = g.profile_id
-                LEFT JOIN lib_sector as h ON g.sector_id = h.sector_id
+                INNER JOIN tbl_lswdo_budget as g ON a.profile_id = g.profile_id
+                INNER JOIN lib_sector as h ON g.sector_id = h.sector_id
                 WHERE a.DELETED = 0 AND a.profile_id="' . $id . '"';
         $query = $this->db->query($sql);
         $result = $query->row();
