@@ -890,22 +890,22 @@ class reports_model extends CI_Model
     public function getPSBAnswer($regionlist,$psbrider_main_category_id,$psbrider_sub_category_id){
         if($regionlist == 0)
         {
-            $where = 'where psbrider_main_category_id = ".$psbrider_main_category_id."
-                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+            $where = 'where psbrider_main_category_id = "'.$psbrider_main_category_id.'"
+                and psbrider_sub_category_id = "'.$psbrider_sub_category_id.'"
                 and psbrider_answer = 1';
         }
         else
         {
             $where = 'where b.region_code = "'.$regionlist.'"
-                and psbrider_main_category_id = ".$psbrider_main_category_id."
-                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+                and psbrider_main_category_id = "'.$psbrider_main_category_id.'"
+                and psbrider_sub_category_id = "'.$psbrider_sub_category_id.'"
                 and psbrider_answer = 1';
         }
         $sql = "SELECT count(a.psbrider_answer_id) as psbrider_answer_id, b.region_code, a.psbrider_main_category_title, a.psbrider_sub_category_title,a.psbrider_answer
                 FROM `tbl_psbrider_answers` a
                 LEFT OUTER JOIN tbl_lswdo b
                 ON a.profile_id = b.profile_id
-                '.$where.'
+                ".$where."
                 ;";
         $query = $this->db->query($sql);
         return $query->result_array();
