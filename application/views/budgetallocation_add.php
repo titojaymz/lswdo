@@ -142,7 +142,7 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="utilization">Utilization:</label>
-                            <input class="form-control" type="text" name="utilization" id="utilization" maxlength="16" style="width:500px;" value="<?php echo set_value('utilization') ?>" placeholder="Utilization" required>
+                            <input class="form-control" type="text" name="utilization" id="utilization" maxlength="16" style="width:500px;" value="<?php echo set_value('utilization') ?>" placeholder="Utilization">
                         </div>
 
                         <div class="form-group">
