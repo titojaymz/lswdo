@@ -390,11 +390,8 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
-    <?php if (validation_errors() <> '') { ?>
-        <div class="alert alert-danger">
-            <strong><?php echo validation_errors() ?></strong>
-        </div>
-    <?php } ?>
+    <?php echo $form_message; ?>
+
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -454,7 +451,7 @@ if (!$this->session->userdata('user_id')){
                    <td width="50%">
                             <div class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="number" name="total_ira" id="total_ira" style="width:90%;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="text" name="total_ira" id="total_ira" maxlength="16" style="width:90%;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
                             </div>
                   </td>
             </tr>
@@ -492,7 +489,7 @@ if (!$this->session->userdata('user_id')){
                                 <td width="50%">
                                 <div class="form-group">
                                     <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                    <input class="form-control" type="number" name="total_budget_lswdo" id="total_budget_lswdo" style="width:90%;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
+                                    <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" maxlength="16" style="width:90%;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
                                 </div>
                      </td>
              </tr>

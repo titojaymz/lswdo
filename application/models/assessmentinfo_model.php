@@ -65,7 +65,7 @@ class assessmentinfo_model extends CI_Model
 
         $this->db->trans_begin();
 
-        $this->db->query('INSERT INTO tbl_lswdo(application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created)
+        $this->db->query('INSERT INTO tbl_lswdo (application_type_id,lgu_type_id,region_code,prov_code,city_code,office_address,swdo_name,designation,contact_no,email,website,total_ira,total_budget_lswdo,created_by,date_created)
                           VALUES
                           (
                           "' . $application_type_id . '",

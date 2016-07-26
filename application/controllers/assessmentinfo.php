@@ -102,8 +102,12 @@ class assessmentinfo extends CI_Controller {
             $contact_no = $this->input->post('contact_no');
             $email = $this->input->post('email');
             $website = $this->input->post('website');
-            $total_ira = $this->input->post('total_ira');
-            $total_budget_lswdo = $this->input->post('total_budget_lswdo');
+
+            $total_ira = preg_replace('/[^0-9.]*/', '', $this->input->post('total_ira'));
+            $total_budget_lswdo = preg_replace('/[^0-9.]*/', '', $this->input->post('total_budget_lswdo'));
+
+          //  $total_budget_lswdo = $this->input->post('total_budget_lswdo');
+
             $created_by = $this->session->userdata('user_id');
             $date_created = 'NOW()';
 
@@ -203,8 +207,12 @@ class assessmentinfo extends CI_Controller {
                 $contact_no = $this->input->post('contact_no');
                 $email = $this->input->post('email');
                 $website = $this->input->post('website');
-                $total_ira = $this->input->post('total_ira');
-                $total_budget_lswdo = $this->input->post('total_budget_lswdo');
+
+                $total_ira = preg_replace('/[^0-9.]*/', '', $this->input->post('total_ira'));
+                $total_budget_lswdo = preg_replace('/[^0-9.]*/', '', $this->input->post('total_budget_lswdo'));
+
+              //  $total_ira = $this->input->post('total_ira');
+             //   $total_budget_lswdo = $this->input->post('total_budget_lswdo');
                 $modified_by= $this->session->userdata('user_id');
                 $date_modified = 'NOW()';
 
@@ -345,7 +353,7 @@ class assessmentinfo extends CI_Controller {
                 $province_list[$tempprov->prov_code] = $tempprov->prov_name;
             }
 
-            $provlist_prop = 'id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();"';
+            $provlist_prop = 'id="provlist" name="provlist" tabindex="3" class="form-control" style="width:90%;" onChange="get_cities();"';
 
             echo form_dropdown('provlist', $province_list, '', $provlist_prop);
         }
@@ -362,7 +370,7 @@ class assessmentinfo extends CI_Controller {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_nameofCity();" style="width:90%;" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" tabindex="4" onchange="get_nameofCity();" style="width:90%;" class="form-control"';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
