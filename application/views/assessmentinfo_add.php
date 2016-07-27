@@ -625,7 +625,7 @@ if (!$this->session->userdata('user_id')){
                                <td width="50%">
                                    <div class="form-group">
                                    <label for="swdo_name">Name of SWDO Officer/Head:*</label>
-                                   <input class="form-control" type="text" name="swdo_name" pattern="[A-Za-z-0-9]+[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" title="Firstname Lastname" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
+                                   <input class="form-control" type="text" name="swdo_name" aria-describedby="name-format" aria-required=”true” pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" title="Firstname Lastname" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
                                      </div>
                                </td>
                                <!--2nd column-->
@@ -650,7 +650,7 @@ if (!$this->session->userdata('user_id')){
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="designation">Designation:*</label>
-                                <input class="form-control" type="text" name="designation" tabindex="6" pattern="[A-Za-z-'0-9]+" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
+                                <input class="form-control" type="text" name="designation" tabindex="6" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
                                  </div>
                             </td>
                             <!--2nd column-->
@@ -677,7 +677,7 @@ if (!$this->session->userdata('user_id')){
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="office_address">Office Address:*</label>
-                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
+                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+\s[A-Za-z-'0-9]+\s[A-Za-z-'0-9]+" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
                                   </div>
                              </td>
                              <!--2nd column-->
