@@ -14,6 +14,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('assets/bootstrap/css/root.css'); ?>" rel="stylesheet">
     <!--sir mike-->
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
         body{background: #F5F5F5;}
 

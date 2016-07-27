@@ -916,7 +916,6 @@ class indicator_model extends CI_Model
             } else {
                 $where2 = 'where  a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
-                    and b.region_code = "' . $regCode . '"
                     and a.compliance_indicator_id = 2';
             }
 
