@@ -403,13 +403,18 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
+    <?php if (validation_errors() <> '') { ?>
+        <div class="alert alert-danger">
+            <strong><?php echo validation_errors() ?></strong>
+        </div>
+    <?php } ?>
     <?php echo $form_message; ?>
 
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
-                    <form method="post" class="form-horizontal">
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-horizontal">
                         <div class="form-group">
                             <label for="geo_info" class="control-label">Geographic Information: Identifying Information</label>
                         </div>
@@ -616,14 +621,14 @@ if (!$this->session->userdata('user_id')){
                         </tr>
 
                            <tr>
-                               <!--2nd column-->
+
                                <td width="50%">
                                    <div class="form-group">
                                    <label for="swdo_name">Name of SWDO Officer/Head:*</label>
-                                   <input class="form-control" type="text" name="swdo_name" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
+                                   <input class="form-control" type="text" name="swdo_name" pattern="[A-Za-z-0-9]+[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" title="Firstname Lastname" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
                                      </div>
                                </td>
-
+                               <!--2nd column-->
                                <td width="50%">
                                    <div class="form-group">
                                    <label for="no_brgy">No. of Barangays:</label>
@@ -641,14 +646,14 @@ if (!$this->session->userdata('user_id')){
 
                         <tr>
 
-                            <!--2nd column-->
+
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="designation">Designation:*</label>
-                                <input class="form-control" type="text" name="designation" tabindex="6" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
+                                <input class="form-control" type="text" name="designation" tabindex="6" pattern="[A-Za-z-'0-9]+" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
                                  </div>
                             </td>
-
+                            <!--2nd column-->
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="income_class">Income Class:</label>
@@ -668,13 +673,14 @@ if (!$this->session->userdata('user_id')){
 
                          <tr>
 
-                             <!--2nd column-->
+
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="office_address">Office Address:*</label>
-                                 <input class="form-control" type="text" name="office_address" tabindex="7" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
+                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
                                   </div>
                              </td>
+                             <!--2nd column-->
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="total_pop">Total Population:</label>
@@ -692,15 +698,13 @@ if (!$this->session->userdata('user_id')){
                           </tr>
 
                         <tr>
-
-                            <!--2nd column-->
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="contact_no">Contact No:*</label>
-                                <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:90%;" placeholder="Contact Number" required>
+                                <input class="form-control" type="tel" minlength="7" maxlength="19" pattern="[0-9]+" tabindex="8" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:90%;" placeholder="Contact Number" required>
                                 </div>
                             </td>
-
+                            <!--2nd column-->
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="total_poor">Total No. of Poor Families:</label>
@@ -713,21 +717,18 @@ if (!$this->session->userdata('user_id')){
                                 </div>
                                 </div>
                             </td>
-
-
                          </tr>
+
                          <tr>
 
-                             <!--2nd column-->
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="email">Email Address:</label>
                                  <input class="form-control" type="email" name="email" tabindex="9" value="<?php echo set_value('email') ?>" placeholder="Email Address" style="width:90%;">
                                 </div>
                              </td>
-
-
                          </tr>
+
                          <tr>
 
                              <!--2nd column-->

@@ -127,7 +127,7 @@ if (!$this->session->userdata('user_id')){
 
                         <div class="form-group">
                             <label for="year_indicated">Year Indicated:</label>
-                            <input class="form-control" type="date" name="year_indicated" style="width:500px;" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
+                            <input class="form-control" type="month" name="year_indicated" style="width:500px;" value="<?php echo set_value('year_indicated') ?>" placeholder="Year Indicated">
                         </div>
 
                         <div class="form-group">

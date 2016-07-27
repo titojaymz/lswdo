@@ -756,6 +756,11 @@ class assessmentinfo extends CI_Controller {
                 'rules'   => 'required'
             ),
             array(
+                'field'   => 'lgu_type_id',
+                'label'   => 'Type of LSWDO',
+                'rules'   => 'required'
+            ),
+            array(
                 'field'   => 'swdo_name',
                 'label'   => 'SWDO Name Officer/Head',
                 'rules'   => 'required'
@@ -810,7 +815,6 @@ class assessmentinfo extends CI_Controller {
                 'label'   => 'Contact Number',
                 'rules'   => 'required'
             )
-
         );
 
         return $this->form_validation->set_rules($config);
