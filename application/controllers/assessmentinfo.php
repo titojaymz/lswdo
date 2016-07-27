@@ -761,16 +761,6 @@ class assessmentinfo extends CI_Controller {
                 'rules'   => 'required'
             ),
             array(
-                'field'   => 'region_code',
-                'label'   => 'Region',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'prov_code',
-                'label'   => 'Province',
-                'rules'   => 'required'
-            ),
-            array(
                 'field'   => 'swdo_name',
                 'label'   => 'SWDO Name Officer/Head',
                 'rules'   => 'required'
