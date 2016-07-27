@@ -139,7 +139,7 @@ if (!$this->session->userdata('user_id')){
 
                     <div class="form-group">
                         <label for="year_indicated">Year Indicated:</label>
-                        <input class="form-control" type="date" name="year_indicated" style="width:500px;" value="<?php echo $budgetallocation_details->year_indicated ?>" placeholder="Year Indicated">
+                        <input class="form-control" type="month" name="year_indicated" id="year_indicated" style="width:500px;" value="<?php echo $budgetallocation_details->year_indicated ?>" placeholder="Year Indicated">
                     </div>
                     <div class="form-group">
                         <label for="budget_present_year">Budget for the Previous Year:</label>
