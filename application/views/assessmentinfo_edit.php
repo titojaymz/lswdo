@@ -640,7 +640,7 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="office_address">Office Address:</label><font color="red">*</font>
-                            <input class="form-control" type="text" name="office_address" tabindex="7" id="office_address" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+\s[A-Za-z-'0-9]+\s[A-Za-z-'0-9]+" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
+                            <input class="form-control" type="text" name="office_address" tabindex="7" id="office_address" pattern="^[a-zA-Z0-9_.-]*$+^[a-zA-Z0-9_.-]*$+" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
                         </div>
                     </td>
 

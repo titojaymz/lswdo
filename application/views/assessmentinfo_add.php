@@ -662,7 +662,7 @@ if (!$this->session->userdata('user_id')){
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="office_address">Office Address:</label><font color="red">*</font>
-                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="/[1-9][0-9]{3} ?[a-zA-Z]{2}/" title="95 JayLee Street, Sofia Subdivision Del Pilar, San Fernando City 2000 Pampanga" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
+                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="^[a-zA-Z0-9_.-]*$+^[a-zA-Z0-9_.-]*$+" title="95 JayLee Street, Sofia Subdivision Del Pilar, San Fernando City 2000 Pampanga" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
                                   </div>
                              </td>
                              <!--2nd column-->
