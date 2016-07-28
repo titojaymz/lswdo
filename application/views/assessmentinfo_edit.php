@@ -431,7 +431,7 @@ if (!$this->session->userdata('user_id')){
               <tr>
                    <td width="50%">
                         <div class="form-group">
-                            <label class="control-label">Type of LSWDO: </label>
+                            <label class="control-label">Type of LSWDO: </label><font color="red">*</font>
 
                             <select name="lgu_type_id" id="lgu_type_id" class="form-control" style="width:90%;" onchange="askLGU();" tabindex="1" required autofocus>
                                 <option select value="0">-Please select-</option>
@@ -460,7 +460,7 @@ if (!$this->session->userdata('user_id')){
                  <td width="50%">
                             <div id="groupLGUregion">
                                 <div class="form-group form-group-sm">
-                                    <label for="regionlist" class="control-label">Region: </label>
+                                    <label for="regionlist" class="control-label">Region: </label><font color="red">*</font>
 
                                         <fieldset>
                                             <div class="control-group">
@@ -498,7 +498,7 @@ if (!$this->session->userdata('user_id')){
                    <td width="50%">
                             <div id="groupLGUProvince">
                                 <div class="form-group form-group-sm">
-                                    <label for="provlist" class="control-label">Province:</label>
+                                    <label for="provlist" class="control-label">Province:</label><font color="red">*</font>
                                     <div id="div_provlist">
                                         <select id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();" tabindex="3" required>
                                             <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
@@ -596,7 +596,7 @@ if (!$this->session->userdata('user_id')){
 
                     <td width="50%">
                         <div class="form-group">
-                            <label for="swdo_name">Name of SWDO Officer/Head:*</label>
+                            <label for="swdo_name">Name of SWDO Officer/Head:</label><font color="red">*</font>
                             <input class="form-control" type="text" name="swdo_name" id="swdo_name" tabindex="5" aria-describedby="name-format" aria-required=”true” pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" title="Firstname Lastname" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
                         </div>
                     </td>
@@ -618,7 +618,7 @@ if (!$this->session->userdata('user_id')){
 
                     <td width="50%">
                         <div class="form-group">
-                            <label for="designation">Designation:*</label>
+                            <label for="designation">Designation:</label><font color="red">*</font>
                             <input class="form-control" type="text" name="designation" id="designation" tabindex="6" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
                         </div>
                     </td>
@@ -639,7 +639,7 @@ if (!$this->session->userdata('user_id')){
                 <tr>
                     <td width="50%">
                         <div class="form-group">
-                            <label for="office_address">Office Address:*</label>
+                            <label for="office_address">Office Address:</label><font color="red">*</font>
                             <input class="form-control" type="text" name="office_address" tabindex="7" id="office_address" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+\s[A-Za-z-'0-9]+\s[A-Za-z-'0-9]+" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
                         </div>
                     </td>
@@ -660,7 +660,7 @@ if (!$this->session->userdata('user_id')){
                 <tr>
                     <td width="50%">
                         <div class="form-group">
-                            <label for="contact_no">Contact No:*</label>
+                            <label for="contact_no">Contact No:</label><font color="red">*</font>
                             <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" pattern="[0-9]+" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
                         </div>
                     </td>

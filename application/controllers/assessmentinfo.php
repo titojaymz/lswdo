@@ -348,12 +348,12 @@ class assessmentinfo extends CI_Controller {
             $region_code = $_POST['region_code'];
             $provlist = $this->assessmentinfo_model->get_provinces($region_code);
 
-            $province_list[] = "Choose Province";
+            $province_list[''] = "Choose Province";
             foreach($provlist as $tempprov) {
                 $province_list[$tempprov->prov_code] = $tempprov->prov_name;
             }
 
-            $provlist_prop = 'id="provlist" name="provlist" tabindex="3" class="form-control" style="width:90%;" onChange="get_cities();"';
+            $provlist_prop = 'id="provlist" name="provlist" tabindex="3" class="form-control" style="width:90%;" onChange="get_cities();" required';
 
             echo form_dropdown('provlist', $province_list, '', $provlist_prop);
         }
@@ -375,33 +375,34 @@ class assessmentinfo extends CI_Controller {
         }
     }
 
-
+// CSWDO
     public function populate_cities1() {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
             $prov_code = $_POST['prov_code'];
             $citylist = $this->assessmentinfo_model->get_cities1($prov_code);
 
-            $city_list[] = "Choose City";
+            $city_list[''] = "Choose City";
             foreach($citylist as $tempcity) {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control" required';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
 
+//MSWDO
     public function populate_cities2() {
         if($_POST['prov_code'] > 0 and isset($_POST) and isset($_POST['prov_code'])) {
             $prov_code = $_POST['prov_code'];
             $citylist = $this->assessmentinfo_model->get_cities2($prov_code);
 
-            $city_list[] = "Choose City";
+            $city_list[''] = "Choose City";
             foreach($citylist as $tempcity) {
                 $city_list[$tempcity->city_code] = $tempcity->city_name;
             }
 
-            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control"';
+            $citylist_prop = 'id="citylist" name="citylist" onchange="get_brgy();" style="width:90%;" class="form-control" required';
             echo form_dropdown('citylist', $city_list,'',$citylist_prop);
         }
     }
