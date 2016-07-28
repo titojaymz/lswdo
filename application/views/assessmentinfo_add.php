@@ -388,18 +388,6 @@ if (!$this->session->userdata('user_id')){
         }
     }
 
-    //This segment displays the validation rule for name text field.
-    function inputAlphabet(inputtext, alertMsg){
-        var alphaExp = /^[a-zA-Z]+$/;
-        if(inputtext.value.match(alphaExp)){
-            return true;
-        }else{
-            document.getElementById('swdo_name').innerText = alertMsg;
-            inputtext.focus();
-            return false;
-        }
-    }
-
 </script>
 
 <body>
@@ -489,7 +477,6 @@ if (!$this->session->userdata('user_id')){
                                 <input type="text" name="total_ira" tabindex="11" id="total_ira" maxlength="16" value="<?php echo set_value('total_ira') ?>" style="width:90%;" placeholder="Total Internal Revenue Allotment">
                                 </div>
                             </td>
-
                         </tr>
 
                         <tr>
@@ -499,8 +486,6 @@ if (!$this->session->userdata('user_id')){
                                 <div id="groupLGUregion">
                                     <div class="form-group form-group-sm">
                                         <label for="regionlist" class="control-label"> Region:</label><font color="red">*</font>
-
-
                                                 <div class="control-group">
                                                     <div class="controls">
                                                         <select name="regionlist" id="regionlist" class="form-control" style="width:90%;" onChange="get_provinces();" tabindex="2" required>
@@ -519,7 +504,6 @@ if (!$this->session->userdata('user_id')){
                                                         </select>
                                                     </div>
                                                 </div>
-
                                     </div>
                                 </div>
                            </td>
@@ -532,9 +516,10 @@ if (!$this->session->userdata('user_id')){
                             </td>
 
                         </tr>
+                        <!--END Region-->
                         <tr>
                             <td width="50%">
-                                <!--END Region-->
+
                                 <!--Province-->
                                 <div id="groupLGUProvince">
                                     <div class="form-group form-group-sm">
@@ -578,13 +563,10 @@ if (!$this->session->userdata('user_id')){
                                 </div>
                                     </div>
                             </td>
-
-
                         </tr>
-
+                        <!--End Province-->
                         <tr>
                             <td width="50%">
-                                <!--End Province-->
                                 <!--City-->
                                 <div id="groupLGUCity">
                                     <div class="form-group form-group-sm">
@@ -629,12 +611,10 @@ if (!$this->session->userdata('user_id')){
                                 </div>
                                 </div>
                             </td>
-
                         </tr>
 
                            <tr>
-
-                               <td width="50%"><!-- .[A-Za-za-za-za-z].-->
+                               <td width="50%">
                                    <div class="form-group">
                                    <label for="swdo_name">Name of SWDO Officer/Head:</label><font color="red">*</font>
                                    <input class="form-control" type="text" name="swdo_name" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" title="Firstname Middlename Lastname" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
@@ -653,12 +633,9 @@ if (!$this->session->userdata('user_id')){
                                    </div>
                                    </div>
                                </td>
-
                           </tr>
 
                         <tr>
-
-
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="designation">Designation:</label><font color="red">*</font>
@@ -701,8 +678,6 @@ if (!$this->session->userdata('user_id')){
                                  </div>
                                  </div>
                              </td>
-
-
                           </tr>
 
                         <tr>
@@ -728,7 +703,6 @@ if (!$this->session->userdata('user_id')){
                          </tr>
 
                          <tr>
-
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="email">Email Address:</label>
@@ -744,7 +718,6 @@ if (!$this->session->userdata('user_id')){
                          </tr>
 
                          <tr>
-
                              <!--2nd column-->
                              <td width="50%">
                                  <div class="form-group">

@@ -597,7 +597,7 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="swdo_name">Name of SWDO Officer/Head:</label><font color="red">*</font>
-                            <input class="form-control" type="text" name="swdo_name" id="swdo_name" tabindex="5" aria-describedby="name-format" aria-required=”true” pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" title="Firstname Lastname" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
+                            <input class="form-control" type="text" name="swdo_name" id="swdo_name" tabindex="5" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" title="Firstname Middlename Lastname" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
                         </div>
                     </td>
 
@@ -619,7 +619,7 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="designation">Designation:</label><font color="red">*</font>
-                            <input class="form-control" type="text" name="designation" id="designation" tabindex="6" pattern="[A-Za-z-0-9]+\s[A-Za-z-'0-9]+" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
+                            <input class="form-control" type="text" name="designation" id="designation" tabindex="6" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
                         </div>
                     </td>
 
@@ -684,6 +684,12 @@ if (!$this->session->userdata('user_id')){
                         <div class="form-group">
                             <label for="email">Email Address:</label>
                             <input class="form-control" type="email" name="email" id="email" tabindex="9" style="width:90%;" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
+                        </div>
+                    </td>
+                    <td width="50%">
+                        <div class="form-group">
+                            <label for="legend">Legend:<font color="red"><br/> *</font> - required field/s</label>
+
                         </div>
                     </td>
                 </tr>
