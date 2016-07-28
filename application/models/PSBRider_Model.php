@@ -12,6 +12,7 @@ class PSBRider_Model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result_array();
     }
+
     public function getPSBSubCategory($psbrider_main_category_id){
         /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
          $this->db->order_by('visit_date','ASC');
@@ -23,6 +24,21 @@ class PSBRider_Model extends CI_Model
                 psbrider_sub_category_title
                 FROM `lib_psbrider_sub_category`
                 WHERE psbrider_main_category_id = '.$psbrider_main_category_id.';';
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+    public function getPSBSubCategoryEdit($psbrider_sub_category_id){
+        /* $this->db->select('ref_id,profile_id,visit_count,visit_date,remarks');
+         $this->db->order_by('visit_date','ASC');
+         $query = $this->db->get_where('tbl_lswdo_monitoring', array('profile_id' => '9'));*/
+
+        $sql = 'SELECT
+                psbrider_sub_category_id,
+                psbrider_main_category_id,
+                psbrider_sub_category_title
+                FROM `lib_psbrider_sub_category`
+                WHERE psbrider_sub_category_id = '.$psbrider_sub_category_id.';';
         $query = $this->db->query($sql);
         return $query->result_array();
     }
