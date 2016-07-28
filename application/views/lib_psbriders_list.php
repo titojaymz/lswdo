@@ -34,7 +34,7 @@ PSB Riders
                                 <?php foreach($PSBSub as $row): ?>
                                     <?php $getPSBmainTitle = $psbRidersC->getPSBmainTitle($row->psbrider_main_category_id); ?>
                                     <tr>
-                                        <td></td>
+                                        <td><a href="<?php echo base_url('lib_psbrider/psbedit/'.$row->psbrider_sub_category_id.'') ?>" class = 'btn btn-sm btn-success'>Edit</a> </td>
                                         <td><?php echo $getPSBmainTitle->psbrider_main_category_title; ?></td>
                                         <td><?php echo $row->psbrider_sub_category_title; ?></td>
                                     </tr>
