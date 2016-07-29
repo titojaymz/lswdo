@@ -3483,6 +3483,40 @@ class reports extends CI_Controller {
 
     public function distributionLSWDObyregion(){
 
+        $max_visit = $this->reports_model->get_max_visit();
+        for($i = 0; $i < $max_visit->visit_count; $i++) {
+            $left_join = 'LEFT JOIN
+(select
+sum(if(a.visit_count = "'.$max_visit->visit_count.'",1,0)) as B_PSWDO,b.region_code
+from tbl_lswdo_monitoring a
+inner join tbl_lswdo b
+on a.profile_id = b.profile_id
+where b.lgu_type_id = 1
+GROUP BY b.region_code) as B_PSWDO
+on prov.region_code = b_pswdo.region_code
+LEFT JOIN
+(select
+sum(if(a.visit_count = "'.$max_visit->visit_count.'",1,0)) B_CSWDO ,b.region_code
+from tbl_lswdo_monitoring a
+inner join tbl_lswdo b
+on a.profile_id = b.profile_id
+where b.lgu_type_id = 2
+GROUP BY b.region_code) as B_CSWDO
+on prov.region_code = B_CSWDO.region_code
+LEFT JOIN
+(select
+sum(if(a.visit_count = "'.$max_visit->visit_count.'",1,0)) B_MSWDO ,b.region_code
+from tbl_lswdo_monitoring a
+inner join tbl_lswdo b
+on a.profile_id = b.profile_id
+where b.lgu_type_id = 3
+GROUP BY b.region_code) as B_MSWDO
+on prov.region_code = B_MSWDO.region_code';
+
+            $left_join
+
+        }
+
         $distributionLSWDObyregion = $this->reports_model->get_distributionLSWDObyregion();
 
 
@@ -3501,7 +3535,7 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
-        $objPHPExcel->getActiveSheet()->mergeCells('B1:F1');
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:M1');
 
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
@@ -3511,9 +3545,9 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution LSWDO by Region');
         $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-        $objPHPExcel->getActiveSheet()->mergeCells('B3:F3');
-        $objPHPExcel->getActiveSheet()->mergeCells('B2:F2');
-        $objPHPExcel->getActiveSheet()->mergeCells('B5:F5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:M3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:M2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:M5');
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -3525,70 +3559,113 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
         $objPHPExcel->getActiveSheet()->freezePane('B6');
         //Header
-        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'PSWDO');
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Total Province');
         $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'CSWDO');
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Total City');
         $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'MSWDO');
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Total Muni');
         $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Total');
+        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Total LGU');
         $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('e4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Percent');
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'PSWDO');
         $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('F4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'CSWDO');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('G4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('H4', 'MSWDO');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('I4', 'Total');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('I4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('J4', 'Baseline Pswdo');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('J4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('K4', 'Baseline Cswdo');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('K4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('L4', 'Baseline Mswdo');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('L4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
 //province list
+//        echo "<pre>";
+//        print_r($distributionLSWDObyregion);
+//        echo "</pre>";
         foreach ($distributionLSWDObyregion as $distributionLSWDObyregiondata):
             $region = $distributionLSWDObyregiondata->region_name;
+            $total_prov = $distributionLSWDObyregiondata->total_prov;
+            $total_city = $distributionLSWDObyregiondata->total_city;
+            $total_muni = $distributionLSWDObyregiondata->total_muni;
+            $total_lgu = $distributionLSWDObyregiondata->total_lgu;
             $PSWDO = $distributionLSWDObyregiondata->PSWDO;
             $CSWDO = $distributionLSWDObyregiondata->CSWDO;
             $MSWDO = $distributionLSWDObyregiondata->MSWDO;
             $TOTAL = $distributionLSWDObyregiondata->Total;
+            $B_PSWDO = $distributionLSWDObyregiondata->b_pswdo;
+            $B_CSWDO = $distributionLSWDObyregiondata->b_cswdo;
+            $B_MSWDO = $distributionLSWDObyregiondata->b_mswdo;
+
+
 
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_prov);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_city);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_muni);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_lgu);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PSWDO);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $CSWDO);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $MSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $TOTAL);
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $TOTAL);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $B_PSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $B_CSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $B_MSWDO);
 
 
-            if($col2 == 'E'){$col2 = 'A';}
+            if($col2 == 'L'){$col2 = 'A';}
             $row2++;
         endforeach;
-        $col3 = $col2;
-        $row3 = $row2 -1;
-        $counter = $row2 - 7;
-        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
-        $col3++;
-        $col3++;
-        $col3++;
-        $col3++;
-        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
-        $percrow = 7;
-        $perccol = 'F';
-        $totrow = 7;
-        $totcol = 'E';
-        for ($headcount = 0;$headcount < $counter;$headcount++)
-        {
-            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
-            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
-                ->getNumberFormat()->applyFromArray(
-                    array(
-                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                    )
-                );
-            $percrow++;
-            $totrow++;
-        }
+//        $col3 = $col2;
+//        $row3 = $row2 -1;
+//        $counter = $row2 - 7;
+//        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
+//        $col3++;
+//        $col3++;
+//        $col3++;
+//        $col3++;
+//        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
+//        $percrow = 7;
+//        $perccol = 'F';
+//        $totrow = 7;
+//        $totcol = 'E';
+//        for ($headcount = 0;$headcount < $counter;$headcount++)
+//        {
+//            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
+//            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
+//                ->getNumberFormat()->applyFromArray(
+//                    array(
+//                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
+//                    )
+//                );
+//            $percrow++;
+//            $totrow++;
+//        }
 
 
 //    //border
