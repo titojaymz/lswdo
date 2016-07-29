@@ -46,6 +46,7 @@ class lib_psbrider extends CI_Controller {
 
             $addResult = $psbriders->insertPSBRiders($mainCat,$subCategory);
             if($addResult){
+                $this->session->set_userdata('notification',1);
                 $this->redirectIndex();
 
             }
@@ -70,6 +71,7 @@ class lib_psbrider extends CI_Controller {
 
             $updateResult = $psbriders->updatePSBRiders($mainCat,$subCategory,$psbrider_sub_category_id);
             if($updateResult){
+                $this->session->set_userdata('notification',2);
                 $this->redirectIndex();
 
             }
