@@ -39,9 +39,10 @@ class assessmentinfo extends CI_Controller {
         if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
             $rpmb['citylist'] = $this->assessmentinfo_model->get_cities($_SESSION['province']);
         }
-//        $region = $this->session->userdata('lswdo_regioncode');
+
+//      $region = $this->session->userdata('lswdo_regioncode');
         $this->load->view('header');
-       $this->load->view('nav');
+        $this->load->view('nav');
         $this->load->view('sidebar');
         $this->load->view('assessmentinfo_list',array(
             'assessmentinfo_data'=>$assessmentinfo_model->getAssessmentinfo(),
@@ -102,12 +103,8 @@ class assessmentinfo extends CI_Controller {
             $contact_no = $this->input->post('contact_no');
             $email = $this->input->post('email');
             $website = $this->input->post('website');
-
             $total_ira = preg_replace('/[^0-9.]*/', '', $this->input->post('total_ira'));
             $total_budget_lswdo = preg_replace('/[^0-9.]*/', '', $this->input->post('total_budget_lswdo'));
-
-          //  $total_budget_lswdo = $this->input->post('total_budget_lswdo');
-
             $created_by = $this->session->userdata('user_id');
             $date_created = 'NOW()';
 
@@ -207,12 +204,8 @@ class assessmentinfo extends CI_Controller {
                 $contact_no = $this->input->post('contact_no');
                 $email = $this->input->post('email');
                 $website = $this->input->post('website');
-
                 $total_ira = preg_replace('/[^0-9.]*/', '', $this->input->post('total_ira'));
                 $total_budget_lswdo = preg_replace('/[^0-9.]*/', '', $this->input->post('total_budget_lswdo'));
-
-              //  $total_ira = $this->input->post('total_ira');
-             //   $total_budget_lswdo = $this->input->post('total_budget_lswdo');
                 $modified_by= $this->session->userdata('user_id');
                 $date_modified = 'NOW()';
 

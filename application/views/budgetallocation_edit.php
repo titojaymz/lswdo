@@ -21,8 +21,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "none";
             document.getElementById("groupLGUCity").style.visibility = "hidden";
-            //    document.getElementById("groupLGUBrgy").style.display = "none";
-            //     document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+
         }
         else
         {
@@ -32,8 +31,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "block";
             document.getElementById("groupLGUCity").style.visibility = "visible";
-            //    document.getElementById("groupLGUBrgy").style.display = "block";
-            //    document.getElementById("groupLGUBrgy").style.visibility = "visible";
+
         }
     }
 
@@ -99,7 +97,6 @@ if (!$this->session->userdata('user_id')){
 
     <!-- Start Page Header -->
     <div class="page-header">
-        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
             <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
@@ -108,7 +105,13 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
-<?php echo $form_message ?>
+    <?php if (validation_errors() <> '') { ?>
+        <div class="alert alert-danger">
+            <strong><?php echo validation_errors() ?></strong>
+        </div>
+    <?php } ?>
+    <?php echo $form_message ?>
+
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
