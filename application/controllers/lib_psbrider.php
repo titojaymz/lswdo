@@ -46,6 +46,32 @@ class lib_psbrider extends CI_Controller {
 
             $addResult = $psbriders->insertPSBRiders($mainCat,$subCategory);
             if($addResult){
+                $this->session->set_userdata('notification',1);
+                $this->redirectIndex();
+
+            }
+        }
+    }
+    public function psbedit($psbrider_sub_category_id)
+    {
+        $psbriders = new lib_psbriders_model();
+        $this->validatePSBRidersIndicator();
+        if (!$this->form_validation->run()) {
+            $this->load->view('header');
+            $this->load->view('nav');
+            $this->load->view('sidebar');
+            $this->load->view('lib_psbriders_edit', array(
+                'psbSub' => $psbriders->getPSBmainSubEdit($psbrider_sub_category_id),
+                'psbMain' => $psbriders->getPSBmain(),
+                ));
+            $this->load->view('footer');
+        } else {
+            $mainCat = $this->input->post('mainCat');
+            $subCategory = $this->input->post('subCategory');
+
+            $updateResult = $psbriders->updatePSBRiders($mainCat,$subCategory,$psbrider_sub_category_id);
+            if($updateResult){
+                $this->session->set_userdata('notification',2);
                 $this->redirectIndex();
 
             }

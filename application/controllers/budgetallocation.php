@@ -84,7 +84,7 @@ class budgetallocation extends CI_Controller {
         } else {
             $budgetallocation_model = new budgetallocation_model();
 
-          //  $profile_id = $this->input->post('profile_id');//mglv
+          //$profile_id = $this->input->post('profile_id');//mglv
             $sector_id = $this->input->post('sector_id');
             $year_indicated = $this->input->post('year_indicated');
             $budget_previous_year = preg_replace('/[^0-9.]*/', '', $this->input->post('budget_previous_year'));

@@ -23,10 +23,9 @@ $region = $this->session->userdata('lswdo_regioncode');
       <li><a href="#"><span class="icon color9"><i class="fa fa-book"></i></span>Libraries<span class="caret"></span></a> <!--removed link to index -->
            <!-- ibinalik ko na libraries  cxvxc  -->
             <ul>
-                <li><a href="<?php echo base_url('lib_regionc/index') ?>">Regions</a></li>
-                <li><a href="<?php echo base_url('lib_provc/index') ?>">Provinces</a></li>
-                <li><a href="<?php echo base_url('lib_cityc/index') ?>">Cities</a></li>
                 <li><a href="<?php echo base_url('lib_psbrider/psblist') ?>">PSB Rider</a></li>
+                <li><a href="<?php echo base_url('lib_visitCount/vclist') ?>">Visit Count</a></li>
+                <li><a href="<?php echo base_url('lib_visitStatus/statlist') ?>">Visit Status</a></li>
             </ul>
       </li>
     <?php } ?>

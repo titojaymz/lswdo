@@ -5,7 +5,7 @@
 <script type="text/javascript">$("#total_budget_lswdo").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
 <script type="text/javascript">$("#budget_previous_year").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
 <script type="text/javascript">$("#budget_present_year").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
-<script type="text/javascript">$("#utilization").maskMoney({prefix:'', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
+<script type="text/javascript">$("#utilization").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
 <!-- ================================================
 jQuery Library
 ================================================ -->
