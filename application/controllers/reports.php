@@ -3482,42 +3482,44 @@ class reports extends CI_Controller {
     }
 
     public function distributionLSWDObyregion(){
-
+        $primary = '';
+        $select = '';
         $max_visit = $this->reports_model->get_max_visit();
-        for($i = 0; $i < $max_visit->visit_count; $i++) {
-            $left_join = 'LEFT JOIN
+        for($i = 1; $i <= $max_visit->visit_count; $i++) {
+            $primary .= 'LEFT JOIN
 (select
-sum(if(a.visit_count = "'.$max_visit->visit_count.'",1,0)) as B_PSWDO,b.region_code
+sum(if(a.visit_count = '.$i.',1,0)) as B_PSWDO'.$i.',b.region_code
 from tbl_lswdo_monitoring a
 inner join tbl_lswdo b
 on a.profile_id = b.profile_id
 where b.lgu_type_id = 1
-GROUP BY b.region_code) as B_PSWDO
-on prov.region_code = b_pswdo.region_code
+GROUP BY b.region_code) as '.$i.'_PSWDO
+on prov.region_code = '.$i.'_pswdo.region_code
 LEFT JOIN
 (select
-sum(if(a.visit_count = "'.$max_visit->visit_count.'",1,0)) B_CSWDO ,b.region_code
+sum(if(a.visit_count = '.$i.',1,0)) B_CSWDO'.$i.' ,b.region_code
 from tbl_lswdo_monitoring a
 inner join tbl_lswdo b
 on a.profile_id = b.profile_id
 where b.lgu_type_id = 2
-GROUP BY b.region_code) as B_CSWDO
-on prov.region_code = B_CSWDO.region_code
+GROUP BY b.region_code) as '.$i.'_CSWDO
+on prov.region_code = '.$i.'_CSWDO.region_code
 LEFT JOIN
 (select
-sum(if(a.visit_count = "'.$max_visit->visit_count.'",1,0)) B_MSWDO ,b.region_code
+sum(if(a.visit_count = '.$i.',1,0)) B_MSWDO'.$i.' ,b.region_code
 from tbl_lswdo_monitoring a
 inner join tbl_lswdo b
 on a.profile_id = b.profile_id
 where b.lgu_type_id = 3
-GROUP BY b.region_code) as B_MSWDO
-on prov.region_code = B_MSWDO.region_code';
+GROUP BY b.region_code) as '.$i.'_MSWDO
+on prov.region_code = '.$i.'_MSWDO.region_code ';
 
-            $left_join
+            $select .= ','.$i.'_pswdo.b_pswdo'.$i.','.$i.'_Cswdo.b_cswdo'.$i.','.$i.'_mswdo.b_mswdo'.$i.'';
 
         }
-
-        $distributionLSWDObyregion = $this->reports_model->get_distributionLSWDObyregion();
+//        echo $primary;
+//        echo $select;
+        $distributionLSWDObyregion = $this->reports_model->get_distributionLSWDObyregion($primary,$select);
 
 
 // Create new PHPExcel object
@@ -3604,10 +3606,14 @@ on prov.region_code = B_MSWDO.region_code';
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
+//        $B_PSWDO ='pswdo';
+//        $B_CSWDO ='cswdo';
+//        $B_MSWDO ='mswdo';
 //province list
 //        echo "<pre>";
 //        print_r($distributionLSWDObyregion);
 //        echo "</pre>";
+//        $i = 2;
         foreach ($distributionLSWDObyregion as $distributionLSWDObyregiondata):
             $region = $distributionLSWDObyregiondata->region_name;
             $total_prov = $distributionLSWDObyregiondata->total_prov;
@@ -3618,11 +3624,16 @@ on prov.region_code = B_MSWDO.region_code';
             $CSWDO = $distributionLSWDObyregiondata->CSWDO;
             $MSWDO = $distributionLSWDObyregiondata->MSWDO;
             $TOTAL = $distributionLSWDObyregiondata->Total;
-            $B_PSWDO = $distributionLSWDObyregiondata->b_pswdo;
-            $B_CSWDO = $distributionLSWDObyregiondata->b_cswdo;
-            $B_MSWDO = $distributionLSWDObyregiondata->b_mswdo;
+            for($i = 1; $i <= $max_visit->visit_count; $i++) {
+                $pswdo = 'b_pswdo'.$i;
+                $cswdo = 'b_cswdo'.$i;
+                $mswdo = 'b_mswdo'.$i;
+                $B_PSWDO = $distributionLSWDObyregiondata->$pswdo;
+                $B_CSWDO = $distributionLSWDObyregiondata->$cswdo;
+                $B_MSWDO = $distributionLSWDObyregiondata->$mswdo;
 
-
+//echo $B_PSWDO.'asd';
+            }
 
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_prov);$col2++;
@@ -3633,10 +3644,14 @@ on prov.region_code = B_MSWDO.region_code';
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $CSWDO);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $MSWDO);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $TOTAL);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $B_PSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $B_CSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $B_MSWDO);
 
+//            for($i = 1; $i <= $max_visit->visit_count; $i++) {
+                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $B_PSWDO);
+                $col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $B_CSWDO);
+                $col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $B_MSWDO);
+//            }
 
             if($col2 == 'L'){$col2 = 'A';}
             $row2++;

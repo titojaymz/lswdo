@@ -846,36 +846,10 @@ class reports_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-    public function get_distributionLSWDObyregion()
+    public function get_distributionLSWDObyregion($primary,$select)
     {
-        $left_join = 'LEFT JOIN
-(select
-sum(if(a.visit_count = 1,1,0)) as B_PSWDO,b.region_code
-from tbl_lswdo_monitoring a
-inner join tbl_lswdo b
-on a.profile_id = b.profile_id
-where b.lgu_type_id = 1
-GROUP BY b.region_code) as B_PSWDO
-on prov.region_code = b_pswdo.region_code
-LEFT JOIN
-(select
-sum(if(a.visit_count = 1,1,0)) B_CSWDO ,b.region_code
-from tbl_lswdo_monitoring a
-inner join tbl_lswdo b
-on a.profile_id = b.profile_id
-where b.lgu_type_id = 2
-GROUP BY b.region_code) as B_CSWDO
-on prov.region_code = B_CSWDO.region_code
-LEFT JOIN
-(select
-sum(if(a.visit_count = 1,1,0)) B_MSWDO ,b.region_code
-from tbl_lswdo_monitoring a
-inner join tbl_lswdo b
-on a.profile_id = b.profile_id
-where b.lgu_type_id = 3
-GROUP BY b.region_code) as B_MSWDO
-on prov.region_code = B_MSWDO.region_code';
-        $sql = 'SELECT prov.region_name,prov.total_prov,city.total_city,muni.total_muni,(prov.total_prov+city.total_city+muni.total_muni) as total_lgu,lswdo.PSWDO,lswdo.CSWDO,lswdo.MSWDO,(lswdo.PSWDO+lswdo.CSWDO+lswdo.MSWDO) as Total,b_pswdo.b_pswdo,b_Cswdo.b_cswdo,b_mswdo.b_mswdo
+
+        $sql = 'SELECT prov.region_name,prov.total_prov,city.total_city,muni.total_muni,(prov.total_prov+city.total_city+muni.total_muni) as total_lgu,lswdo.PSWDO,lswdo.CSWDO,lswdo.MSWDO,(lswdo.PSWDO+lswdo.CSWDO+lswdo.MSWDO) as Total '.$select.'
 FROM (select b.region_code,
 sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
 sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
@@ -904,7 +878,7 @@ from lib_cities a
 inner join lib_provinces b
 on a.prov_code = b.prov_code  where city_class = "" GROUP BY b.region_code) as muni
 on prov.region_code = muni.reg_muni
-"'.$left_join.'"
+'.$primary.'
 ;
 ';
         $query = $this->db->query($sql);
