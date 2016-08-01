@@ -846,45 +846,7 @@ class reports_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-    public function get_distributionLSWDObyregion($primary,$select)
-    {
 
-        $sql = 'SELECT prov.region_name,prov.total_prov,city.total_city,muni.total_muni,(prov.total_prov+city.total_city+muni.total_muni) as total_lgu,lswdo.PSWDO,lswdo.CSWDO,lswdo.MSWDO,(lswdo.PSWDO+lswdo.CSWDO+lswdo.MSWDO) as Total '.$select.'
-FROM (select b.region_code,
-sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
-sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
-sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
-from tbl_lswdo a
-inner join lib_regions b
-on a.region_code = b.region_code
-where a.deleted = 0
-group by a.region_code) as lswdo
-right JOIN
-(select COUNT(a .prov_name) as total_prov ,a.region_code,b.region_name
-from lib_provinces  a
-inner join lib_regions b
-on a.region_code = b.region_code
-GROUP BY a.region_code) as prov
-on lswdo.region_code =  prov.region_code
-left JOIN
-(select COUNT(a.city_name)as total_city,b.region_code as reg_city
-from lib_cities a
-left join lib_provinces b
-on a.prov_code = b.prov_code where city_class <> "" GROUP BY b.region_code) as city
-on prov.region_code = city.reg_city
-left JOIN
-(select COUNT(a.city_name) as total_muni,region_code as reg_muni
-from lib_cities a
-inner join lib_provinces b
-on a.prov_code = b.prov_code  where city_class = "" GROUP BY b.region_code) as muni
-on prov.region_code = muni.reg_muni
-'.$primary.'
-;
-';
-        $query = $this->db->query($sql);
-        $result = $query->result();
-        return $result;
-    }
 
     //cmalvarez
 
@@ -934,8 +896,7 @@ on prov.region_code = muni.reg_muni
         $sql = "SELECT count(a.psbrider_answer_id) as psbrider_answer_id, b.region_code, a.psbrider_main_category_title, a.psbrider_sub_category_title,a.psbrider_answer
                 FROM `tbl_psbrider_answers` a
                 LEFT OUTER JOIN tbl_lswdo b
-                ON a.profile_id = b.profile_id
-                ".$where."
+                ON a.profile_id = b.profile_id ".$where."
                 ;";
         $query = $this->db->query($sql);
         return $query->result_array();
@@ -1250,6 +1211,79 @@ on prov.region_code = muni.reg_muni
         $sql = 'select city_code, city_name from lib_cities where city_class = "" and prov_code = "'.$provCode.'"';
         $query = $this->db->query($sql);
         $result = $query->result();
+        return $result;
+    }
+
+
+    public function getAllRegion()
+    {
+        $sql = 'select b.region_code,b.region_name from  lib_regions b where b.region_code <> 000000000';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+
+    public function getUniverse($regionCode)
+    {
+        $sql = 'select
+                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
+                sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
+                sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
+                from tbl_lswdo a
+                where a.deleted = 0 and a.region_code = '.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function countProv($regionCode)
+    {
+        $sql = 'select COUNT(a.prov_name) as total_prov
+                from lib_provinces  a where a.region_code ='.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getAllProv($regionCode)
+    {
+        $sql = 'select prov_code,prov_name from lib_provinces where region_code = '.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function getAllCity($provCode)
+    {
+        $sql = 'select COUNT(city_name)as total_city
+          from lib_cities where prov_code = '.$provCode.' AND city_class <> "";';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+
+    public function getAllMuni($provCode)
+    {
+        $sql = 'select COUNT(city_name)as total_city
+          from lib_cities where prov_code = '.$provCode.' AND city_class = "";';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getMaxVisit()
+    {
+        $sql = 'select visit_count from tbl_lswdo_monitoring ORDER BY visit_count desc limit 1;';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getVisitScore($regionCode,$visitCount,$lguType)
+    {
+        $sql = 'select
+                sum(if(a.visit_count = '.$visitCount.',1,0)) as scoreVisit ,b.region_code
+                from tbl_lswdo_monitoring a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                where b.lgu_type_id = '.$lguType.' and b.region_code='.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->row();
         return $result;
     }
 

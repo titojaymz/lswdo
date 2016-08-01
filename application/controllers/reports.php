@@ -3482,48 +3482,87 @@ class reports extends CI_Controller {
     }
 
     public function distributionLSWDObyregion(){
-        $primary = '';
-        $select = '';
-        $max_visit = $this->reports_model->get_max_visit();
-        for($i = 1; $i <= $max_visit->visit_count; $i++) {
-            $primary .= 'LEFT JOIN
-(select
-sum(if(a.visit_count = '.$i.',1,0)) as B_PSWDO'.$i.',b.region_code
-from tbl_lswdo_monitoring a
-inner join tbl_lswdo b
-on a.profile_id = b.profile_id
-where b.lgu_type_id = 1
-GROUP BY b.region_code) as '.$i.'_PSWDO
-on prov.region_code = '.$i.'_pswdo.region_code
-LEFT JOIN
-(select
-sum(if(a.visit_count = '.$i.',1,0)) B_CSWDO'.$i.' ,b.region_code
-from tbl_lswdo_monitoring a
-inner join tbl_lswdo b
-on a.profile_id = b.profile_id
-where b.lgu_type_id = 2
-GROUP BY b.region_code) as '.$i.'_CSWDO
-on prov.region_code = '.$i.'_CSWDO.region_code
-LEFT JOIN
-(select
-sum(if(a.visit_count = '.$i.',1,0)) B_MSWDO'.$i.' ,b.region_code
-from tbl_lswdo_monitoring a
-inner join tbl_lswdo b
-on a.profile_id = b.profile_id
-where b.lgu_type_id = 3
-GROUP BY b.region_code) as '.$i.'_MSWDO
-on prov.region_code = '.$i.'_MSWDO.region_code ';
+            $reports = new reports_model();
+//        $max_visit = $this->reports_model->get_max_visit();
+            $allRegion = $reports->getAllRegion();
+        $maxVisitHeader = $reports->getMaxVisit();
 
-            $select .= ','.$i.'_pswdo.b_pswdo'.$i.','.$i.'_Cswdo.b_cswdo'.$i.','.$i.'_mswdo.b_mswdo'.$i.'';
 
+        echo "<table border = 1>";
+        echo "<tr>";
+        echo "<td rowspan = 2>Region Code</td>";
+        echo "<td rowspan = 2>Region Name</td>";
+        echo "<td rowspan = 2>Total Province</td>";
+        echo "<td rowspan = 2>Total City</td>";
+        echo "<td rowspan = 2>Total Municipality</td>";
+        echo "<td rowspan = 2>Universe PSWDO</td>";
+        echo "<td rowspan = 2>Universe CSWDO</td>";
+        echo "<td rowspan = 2>Universe MSWDO</td>";
+        for($i = 1; $i <= $maxVisitHeader->visit_count; $i++){
+           switch(substr($i,-1)){
+               case 1:
+                   $title = '1st Visit';
+                   break;
+               case 2:
+                   $title = '2nd Visit';
+                   break;
+               case 3:
+                   $title = '3rd Visit';
+                   break;
+               default:
+                   $title = $i.'th Visit';
+           }
+            echo "<td colspan = 3>".$title."</td>";
         }
-//        echo $primary;
-//        echo $select;
-        $distributionLSWDObyregion = $this->reports_model->get_distributionLSWDObyregion($primary,$select);
+        echo "</tr>";
+        echo "<tr>";
+        for($i = 1; $i <= $maxVisitHeader->visit_count; $i++){
 
+            echo "<td>PSWDO</td>";
+            echo "<td>CSWDO</td>";
+            echo "<td>MSWDO</td>";
+        }
+        echo "</tr>";
+
+        foreach($allRegion as $region):
+            $totalCity = 0;
+            $totalMuni = 0;
+            $countProv = $reports->countProv($region->region_code);
+            $getUniverse = $reports->getUniverse($region->region_code);
+            $getAllProv = $reports->getAllProv($region->region_code);
+            $maxVisit = $reports->getMaxVisit();
+            echo "<pre>";
+            print_r($getAllProv);
+            echo "</pre>";
+            echo "<tr>";
+            echo "<td>".$region->region_code."</td>";
+            echo "<td>".$region->region_name."</td>";
+            echo "<td>".$countProv->total_prov."</td>";
+            foreach($getAllProv as $province):
+                $getAllCity = $reports->getAllCity($province->prov_code);
+                $getAllMuni = $reports->getAllMuni($province->prov_code);
+                $totalCity = $getAllCity->total_city + $totalCity;
+                $totalMuni = $getAllMuni->total_city + $totalMuni;
+            endforeach;
+            echo "<td>".$totalCity."</td>";
+            echo "<td>".$totalMuni."</td>";
+            echo "<td>".$getUniverse->PSWDO."</td>";
+            echo "<td>".$getUniverse->CSWDO."</td>";
+            echo "<td>".$getUniverse->MSWDO."</td>";
+            for($i = 1; $i <= $maxVisit->visit_count; $i++){
+                $pswdo_visitScore = $reports->getVisitScore($region->region_code,$i,1);
+                $cswdo_visitScore = $reports->getVisitScore($region->region_code,$i,2);
+                $mswdo_visitScore = $reports->getVisitScore($region->region_code,$i,3);
+                echo "<td>".$pswdo_visitScore->scoreVisit."</td>";
+                echo "<td>".$cswdo_visitScore->scoreVisit."</td>";
+                echo "<td>".$mswdo_visitScore->scoreVisit."</td>";
+            }
+            echo "</tr>";
+        endforeach;
+        echo "</table>";
 
 // Create new PHPExcel object
-        $objPHPExcel = new PHPExcel();
+//        $objPHPExcel = new PHPExcel();
 
 // Add some data
 
@@ -3606,81 +3645,8 @@ on prov.region_code = '.$i.'_MSWDO.region_code ';
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
-//        $B_PSWDO ='pswdo';
-//        $B_CSWDO ='cswdo';
-//        $B_MSWDO ='mswdo';
 //province list
-//        echo "<pre>";
-//        print_r($distributionLSWDObyregion);
-//        echo "</pre>";
-//        $i = 2;
-        foreach ($distributionLSWDObyregion as $distributionLSWDObyregiondata):
-            $region = $distributionLSWDObyregiondata->region_name;
-            $total_prov = $distributionLSWDObyregiondata->total_prov;
-            $total_city = $distributionLSWDObyregiondata->total_city;
-            $total_muni = $distributionLSWDObyregiondata->total_muni;
-            $total_lgu = $distributionLSWDObyregiondata->total_lgu;
-            $PSWDO = $distributionLSWDObyregiondata->PSWDO;
-            $CSWDO = $distributionLSWDObyregiondata->CSWDO;
-            $MSWDO = $distributionLSWDObyregiondata->MSWDO;
-            $TOTAL = $distributionLSWDObyregiondata->Total;
-            for($i = 1; $i <= $max_visit->visit_count; $i++) {
-                $pswdo = 'b_pswdo'.$i;
-                $cswdo = 'b_cswdo'.$i;
-                $mswdo = 'b_mswdo'.$i;
-                $B_PSWDO = $distributionLSWDObyregiondata->$pswdo;
-                $B_CSWDO = $distributionLSWDObyregiondata->$cswdo;
-                $B_MSWDO = $distributionLSWDObyregiondata->$mswdo;
 
-//echo $B_PSWDO.'asd';
-            }
-
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_prov);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_city);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_muni);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $total_lgu);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $CSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $MSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $TOTAL);$col2++;
-
-//            for($i = 1; $i <= $max_visit->visit_count; $i++) {
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $B_PSWDO);
-                $col2++;
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $B_CSWDO);
-                $col2++;
-                $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $B_MSWDO);
-//            }
-
-            if($col2 == 'L'){$col2 = 'A';}
-            $row2++;
-        endforeach;
-//        $col3 = $col2;
-//        $row3 = $row2 -1;
-//        $counter = $row2 - 7;
-//        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
-//        $col3++;
-//        $col3++;
-//        $col3++;
-//        $col3++;
-//        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
-//        $percrow = 7;
-//        $perccol = 'F';
-//        $totrow = 7;
-//        $totcol = 'E';
-//        for ($headcount = 0;$headcount < $counter;$headcount++)
-//        {
-//            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
-//            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
-//                ->getNumberFormat()->applyFromArray(
-//                    array(
-//                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-//                    )
-//                );
-//            $percrow++;
-//            $totrow++;
-//        }
 
 
 //    //border
