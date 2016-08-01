@@ -547,7 +547,7 @@ if (!$this->session->userdata('user_id')){
                                 <!--City-->
                                 <div id="groupLGUCity">
                                     <div class="form-group form-group-sm">
-                                        <label for="citylist" class="control-label">City/Municipalities:</label>
+                                        <label for="citylist" class="control-label">City/Municipality:</label>
                                         <div id="div_citylist">
                                             <select id="citylist" name="citylist" class="form-control" style="width:90%;" tabindex="4">
                                                 <?php if(isset($_SESSION['city']) or isset($_SESSION['province'])) {
@@ -664,12 +664,12 @@ if (!$this->session->userdata('user_id')){
                         <tr>
                             <td width="50%">
                                 <div class="form-group">
-                                <label for="contact_no">Contact No:</label><font color="red">*</font>
+                                <label for="contact_no">Contact No:*</label><font color="red">*</font>
                                 <input class="form-control" type="tel" minlength="7" maxlength="19" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$" tabindex="8" name="contact_no" value="<?php echo set_value('contact_no') ?>" style="width:90%;" placeholder="Contact Number" required>
                                 </div>
                             </td>
 
-                            <!--2nd column-->
+                            <!--2nd column -->
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="total_poor">Total No. of Poor Families:</label>

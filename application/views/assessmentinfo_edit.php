@@ -563,7 +563,7 @@ if (!$this->session->userdata('user_id')){
                                         <select id="citylist" name="citylist" class="form-control" style="width:90%;" onChange="get_brgy();" tabindex="4">
                                             <?php if(isset($assessmentinfo_details->city_code) or isset($assessmentinfo_details->prov_code)) {
                                                 ?>
-                                                <option value="0">Choose City</option>
+                                                <option value="0">Choose City/Municipality</option>
                                                 <?php
                                                 foreach($citylist as $cityselect) { ?>
                                                     <option value="<?php echo $cityselect->city_code; ?>"
@@ -676,11 +676,11 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="contact_no">Contact No:</label><font color="red">*</font>
-                            <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" pattern="/^\d+(-\d+)*$/" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
+                            <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
                         </div>
                     </td>
 
-                    <!--2nd column-->
+                    <!--2nd column -->
                     <td width="50%">
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
