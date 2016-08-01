@@ -349,11 +349,11 @@ class reports_model extends CI_Model
     {
         if($regionlist == 0)
         {
-            $where = 'where a.deleted = 0 and b.lgu_type_id = 1';
+            $where = 'where b.deleted = 0 and b.lgu_type_id = 1';
         }
         else
         {
-            $where = 'where a.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
+            $where = 'where b.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
         }
 
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,a.level_function_new
@@ -568,7 +568,7 @@ class reports_model extends CI_Model
                 on b.region_code = c.region_code
                 inner join lib_provinces d
                 on b.prov_code = d.prov_code
-                inner join lib_cities E
+                left join lib_cities E
                 on b.city_code = e.city_code
                 '.$where.'
                 order by a.new_score desc;' ;
@@ -1286,5 +1286,17 @@ class reports_model extends CI_Model
         $result = $query->row();
         return $result;
     }
+    public function getVisitStatusDate($regionCode,$visitCount,$lguType)
+{
+    $sql = 'select
+                sum(if(a.visit_count = '.$visitCount.',1,0)) as scoreVisit ,b.region_code
+                from tbl_lswdo_monitoring a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                where b.lgu_type_id = '.$lguType.' and b.region_code='.$regionCode;
+    $query = $this->db->query($sql);
+    $result = $query->row();
+    return $result;
+}
 
 }

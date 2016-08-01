@@ -3483,86 +3483,15 @@ class reports extends CI_Controller {
 
     public function distributionLSWDObyregion(){
             $reports = new reports_model();
-//        $max_visit = $this->reports_model->get_max_visit();
+//          $max_visit = $this->reports_model->get_max_visit();
             $allRegion = $reports->getAllRegion();
-        $maxVisitHeader = $reports->getMaxVisit();
+            $maxVisitHeader = $reports->getMaxVisit();
 
 
-        echo "<table border = 1>";
-        echo "<tr>";
-        echo "<td rowspan = 2>Region Code</td>";
-        echo "<td rowspan = 2>Region Name</td>";
-        echo "<td rowspan = 2>Total Province</td>";
-        echo "<td rowspan = 2>Total City</td>";
-        echo "<td rowspan = 2>Total Municipality</td>";
-        echo "<td rowspan = 2>Universe PSWDO</td>";
-        echo "<td rowspan = 2>Universe CSWDO</td>";
-        echo "<td rowspan = 2>Universe MSWDO</td>";
-        for($i = 1; $i <= $maxVisitHeader->visit_count; $i++){
-           switch(substr($i,-1)){
-               case 1:
-                   $title = '1st Visit';
-                   break;
-               case 2:
-                   $title = '2nd Visit';
-                   break;
-               case 3:
-                   $title = '3rd Visit';
-                   break;
-               default:
-                   $title = $i.'th Visit';
-           }
-            echo "<td colspan = 3>".$title."</td>";
-        }
-        echo "</tr>";
-        echo "<tr>";
-        for($i = 1; $i <= $maxVisitHeader->visit_count; $i++){
 
-            echo "<td>PSWDO</td>";
-            echo "<td>CSWDO</td>";
-            echo "<td>MSWDO</td>";
-        }
-        echo "</tr>";
-
-        foreach($allRegion as $region):
-            $totalCity = 0;
-            $totalMuni = 0;
-            $countProv = $reports->countProv($region->region_code);
-            $getUniverse = $reports->getUniverse($region->region_code);
-            $getAllProv = $reports->getAllProv($region->region_code);
-            $maxVisit = $reports->getMaxVisit();
-            echo "<pre>";
-            print_r($getAllProv);
-            echo "</pre>";
-            echo "<tr>";
-            echo "<td>".$region->region_code."</td>";
-            echo "<td>".$region->region_name."</td>";
-            echo "<td>".$countProv->total_prov."</td>";
-            foreach($getAllProv as $province):
-                $getAllCity = $reports->getAllCity($province->prov_code);
-                $getAllMuni = $reports->getAllMuni($province->prov_code);
-                $totalCity = $getAllCity->total_city + $totalCity;
-                $totalMuni = $getAllMuni->total_city + $totalMuni;
-            endforeach;
-            echo "<td>".$totalCity."</td>";
-            echo "<td>".$totalMuni."</td>";
-            echo "<td>".$getUniverse->PSWDO."</td>";
-            echo "<td>".$getUniverse->CSWDO."</td>";
-            echo "<td>".$getUniverse->MSWDO."</td>";
-            for($i = 1; $i <= $maxVisit->visit_count; $i++){
-                $pswdo_visitScore = $reports->getVisitScore($region->region_code,$i,1);
-                $cswdo_visitScore = $reports->getVisitScore($region->region_code,$i,2);
-                $mswdo_visitScore = $reports->getVisitScore($region->region_code,$i,3);
-                echo "<td>".$pswdo_visitScore->scoreVisit."</td>";
-                echo "<td>".$cswdo_visitScore->scoreVisit."</td>";
-                echo "<td>".$mswdo_visitScore->scoreVisit."</td>";
-            }
-            echo "</tr>";
-        endforeach;
-        echo "</table>";
 
 // Create new PHPExcel object
-//        $objPHPExcel = new PHPExcel();
+        $objPHPExcel = new PHPExcel();
 
 // Add some data
 
@@ -3588,7 +3517,7 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
         $objPHPExcel->getActiveSheet()->mergeCells('B3:M3');
         $objPHPExcel->getActiveSheet()->mergeCells('B2:M2');
-        $objPHPExcel->getActiveSheet()->mergeCells('B5:M5');
+//        $objPHPExcel->getActiveSheet()->mergeCells('B5:M5');
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -3631,20 +3560,105 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('I4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('J4', 'Baseline Pswdo');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('J4')->getAlignment()->applyFromArray(
-            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('K4', 'Baseline Cswdo');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('K4')->getAlignment()->applyFromArray(
-            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('L4', 'Baseline Mswdo');
-        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('L4')->getAlignment()->applyFromArray(
-            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row = 4;
+        $col = 'J';
+        $mergeCol = 'J';
+        for($i = 1; $i <= $maxVisitHeader->visit_count; $i++){
+            switch(substr($i,-1)){
+                case 1:
+                    $title = '1st Visit';
+                    break;
+                case 2:
+                    $title = '2nd Visit';
+                    break;
+                case 3:
+                    $title = '3rd Visit';
+                    break;
+                default:
+                    $title = $i.'th Visit';
+            }
+//            echo "<td colspan = 3>".$title."</td>";
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, $title);
+//            echo "<br>";
+//            echo $col.$row.','.$title;
+//            echo "<br>";
+
+            $objPHPExcel->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
+
+            $objPHPExcel->getActiveSheet()->getStyle($col.$row)->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+            $mergeCol++;
+            $mergeCol++;
+            $objPHPExcel->getActiveSheet()->mergeCells($col.$row.':'.$mergeCol.$row);
+            $row++;
+            $mergeCol++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, 'PSWDO');
+            $col++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, 'CSWDO');
+            $col++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, 'MSWDO');
+            $col++;
+            $row = 4;
+//            echo $col.$row.':'.$mergeCol.$row;
+
+        }
+
         $row2 = 7;
         $col2 = 'A';
+        foreach($allRegion as $region):
+            $totalCity = 0;
+            $totalMuni = 0;
+            $countProv = $reports->countProv($region->region_code);
+            $getUniverse = $reports->getUniverse($region->region_code);
+            $getAllProv = $reports->getAllProv($region->region_code);
+            $maxVisit = $reports->getMaxVisit();
+//            echo "<pre>";
+////            print_r($getAllProv);
+//            echo "</pre>";
+//            echo "<tr>";
+//            echo "<td>".$region->region_code."</td>";
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region->region_name);$col2++;
+//            echo "<td>".$region->region_name."</td>";
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $countProv->total_prov);$col2++;
+//            echo "<td>".$countProv->total_prov."</td>";
+//            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $countProv->total_prov);$col2++;
+            foreach($getAllProv as $province):
+                $getAllCity = $reports->getAllCity($province->prov_code);
+                $getAllMuni = $reports->getAllMuni($province->prov_code);
+                $totalCity = $getAllCity->total_city + $totalCity;
+                $totalMuni = $getAllMuni->total_city + $totalMuni;
+            endforeach;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $totalCity);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $totalMuni);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $totalMuni+$totalCity+$countProv->total_prov);$col2++;
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->PSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->CSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->MSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->MSWDO+$getUniverse->CSWDO+$getUniverse->PSWDO);$col2++;
+//            echo "<td>".$totalCity."</td>";
+//            echo "<td>".$totalMuni."</td>";
+//            echo "<td>".$getUniverse->PSWDO."</td>";
+//            echo "<td>".$getUniverse->CSWDO."</td>";
+//            echo "<td>".$getUniverse->MSWDO."</td>";
+            for($i = 1; $i <= $maxVisit->visit_count; $i++){
+                $pswdo_visitScore = $reports->getVisitScore($region->region_code,$i,1);
+                $cswdo_visitScore = $reports->getVisitScore($region->region_code,$i,2);
+                $mswdo_visitScore = $reports->getVisitScore($region->region_code,$i,3);
+                $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $pswdo_visitScore->scoreVisit);$col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $cswdo_visitScore->scoreVisit);$col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $mswdo_visitScore->scoreVisit);$col2++;
+//                echo "<td>".$pswdo_visitScore->scoreVisit."</td>";
+//                echo "<td>".$cswdo_visitScore->scoreVisit."</td>";
+//                echo "<td>".$mswdo_visitScore->scoreVisit."</td>";
+            }
+            if($col2 == 'Y'){$col2 = 'A';}
+//            echo "</tr>";
+            $row2++;
+        endforeach;
+//        $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+//        $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $CSWDO);
+
 //province list
 
 
