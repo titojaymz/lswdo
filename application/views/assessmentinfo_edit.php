@@ -680,7 +680,7 @@ if (!$this->session->userdata('user_id')){
                         </div>
                     </td>
 
-                    <!--2nd column-->
+                    <!--2nd column -->
                     <td width="50%">
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
