@@ -521,7 +521,7 @@ class reports_model extends CI_Model
             }
 
         }
-        $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
+        $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline,a.prof_id
         FROM tbl_functionality a
         INNER JOIN tbl_lswdo b
         on a.prof_id = b.profile_id
@@ -529,7 +529,7 @@ class reports_model extends CI_Model
         on b.region_code = c.region_code
         inner join lib_provinces d
         on b.prov_code = d.prov_code
-        inner join lib_cities E
+        left join lib_cities E
         on b.city_code = e.city_code
         '.$where.'
         order by a.baseline_score desc;' ;
@@ -560,7 +560,45 @@ class reports_model extends CI_Model
             }
 
         }
-        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
+        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new,a.prof_id
+                FROM tbl_functionality a
+                INNER JOIN tbl_lswdo b
+                on a.prof_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+                left join lib_cities E
+                on b.city_code = e.city_code
+                '.$where.'
+                order by a.new_score desc;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_lswdoffnewscore($regionlist,$provlist)
+    {
+
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 and a.level_function_new = "Fully Functional"';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'" and a.level_function_new = "Fully Functional"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'"
+        and b.prov_code = "'.$provlist.'" and a.level_function_new = "Fully Functional"';
+            }
+
+        }
+        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new,a.prof_id
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
                 on a.prof_id = b.profile_id
@@ -1298,5 +1336,28 @@ class reports_model extends CI_Model
     $result = $query->row();
     return $result;
 }
-
+    public function getLastVisitDate()
+    {
+        $sql = 'select a.profile_id,a.visit_date,a.visit_count,a.visit_status
+from tbl_lswdo_monitoring a
+group by a.profile_id
+order by a.profile_id desc';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function getVisitName($visit_status)
+    {
+        $sql = 'select status_name from lib_status where status_id = "'.$visit_status.'"';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getVisitCount($visit_count)
+    {
+        $sql = 'select visit_count from lib_visit_count where visit_id = "'.$visit_count.'"';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
 }
