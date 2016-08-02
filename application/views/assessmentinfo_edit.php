@@ -377,6 +377,39 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
+
+    function validtxt(){
+        var txt = document.getElementById("swdo_name").value ;
+        var len =txt.trim().length;
+
+        if (len < 1)
+        {
+            alert("Invalid Text!");
+        }
+
+    }
+
+    function validtxt2(){
+        var txt2 = document.getElementById("designation").value ;
+        var len =txt2.trim().length;
+
+        if (len < 1)
+        {
+            alert("Invalid Text!");
+        }
+
+    }
+
+    function validtxt3(){
+        var txt3 = document.getElementById("office_address").value ;
+        var len =txt3.trim().length;
+
+        if (len < 1)
+        {
+            alert("Invalid Text!");
+        }
+
+    }
 </script>
 <body>
 <div class="content">
@@ -605,9 +638,9 @@ if (!$this->session->userdata('user_id')){
 
                 <tr>
                     <td width="50%">
-                        <div class="form-group">
+                        <div class="form-group"> <!--^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$--> <!--[a-zA-Z][a-zA-Z0-9\s]*-->
                             <label for="swdo_name">Name of SWDO Officer/Head:</label><font color="red">*</font>
-                            <input class="form-control" type="text" name="swdo_name" id="swdo_name" tabindex="5" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" title="Firstname Middlename Lastname" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
+                            <input class="form-control" type="text" name="swdo_name" id="swdo_name" tabindex="5" pattern="^[a-zA-Z][a-zA-Z0-9\s\.]*$" title="Firstname Middlename Lastname" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
                         </div>
                     </td>
 
@@ -630,7 +663,7 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="designation">Designation:</label><font color="red">*</font>
-                            <input class="form-control" type="text" name="designation" id="designation" tabindex="6" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
+                            <input class="form-control" type="text" name="designation" id="designation" tabindex="6" pattern="^[a-zA-Z][a-zA-Z0-9\s\.]*$" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
                         </div>
                     </td>
 
@@ -653,7 +686,7 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="office_address">Office Address:</label><font color="red">*</font>
-                            <input class="form-control" type="text" name="office_address" tabindex="7" id="office_address" pattern="^[a-zA-Z0-9_.-]*$+^[a-zA-Z0-9_.-]*$+" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
+                            <input class="form-control" type="text" name="office_address" tabindex="7" id="office_address" pattern="^[a-zA-Z0-9\.][a-zA-Z0-9\s\.\,]*$" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
                         </div>
                     </td>
 

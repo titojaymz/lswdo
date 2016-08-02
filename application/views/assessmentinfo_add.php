@@ -595,7 +595,7 @@ if (!$this->session->userdata('user_id')){
                                <td width="50%">
                                    <div class="form-group">
                                    <label for="swdo_name">Name of SWDO Officer/Head:</label><font color="red">*</font>
-                                   <input class="form-control" type="text" name="swdo_name" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" title="Firstname Middlename Lastname" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
+                                   <input class="form-control" type="text" name="swdo_name" pattern="^[a-zA-Z][a-zA-Z0-9\s\.]*$" title="Firstname Middlename Lastname" tabindex="5" value="<?php echo set_value('swdo_name') ?>" style="width:90%;" placeholder="Name of SWDO Officer/Head" required>
                                      </div>
                                </td>
 
@@ -618,7 +618,7 @@ if (!$this->session->userdata('user_id')){
                             <td width="50%">
                                 <div class="form-group">
                                 <label for="designation">Designation:</label><font color="red">*</font>
-                                <input class="form-control" type="text" name="designation" tabindex="6" pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
+                                <input class="form-control" type="text" name="designation" tabindex="6" pattern="^[a-zA-Z][a-zA-Z0-9\s\.]*$" value="<?php echo set_value('designation') ?>" style="width:90%;" placeholder="Designation" required>
                                  </div>
                             </td>
 
@@ -642,7 +642,7 @@ if (!$this->session->userdata('user_id')){
                              <td width="50%">
                                  <div class="form-group">
                                  <label for="office_address">Office Address:</label><font color="red">*</font>
-                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="^[a-zA-Z0-9_.-]*$+^[a-zA-Z0-9_.-]*$+" title="95 JayLee Street, Sofia Subdivision Del Pilar, San Fernando City 2000 Pampanga" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
+                                 <input class="form-control" type="text" name="office_address" tabindex="7" pattern="^[a-zA-Z0-9\.][a-zA-Z0-9\s\.\,]*$" title="95 JayLee Street, Sofia Subdivision Del Pilar, San Fernando City 2000 Pampanga" value="<?php echo set_value('office_address') ?>" style="width:90%;" placeholder="Office Address" required>
                                   </div>
                              </td>
 
