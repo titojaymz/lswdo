@@ -152,6 +152,8 @@
                     $visitCount = $countVisits->countVisit;
                     $countSelect = "";
                     $countDisabled = "";
+                    $selected = "";
+                    $disabled = "";
                     ?>
                     <br/>
 <!--                    --><?php //echo $visitCount ?>
@@ -162,7 +164,30 @@
                                 <select id = 'visit_count' name = 'visit_count' class="form-control">
                                 <?php  foreach ($getVisitCount as $key=>$val)
                                 { ?>
-                                    <option value="<?php echo $val['visit_id']; ?>">
+                                    <option value="<?php echo $val['visit_id']; ?>"
+                                    <?php
+                                    if($visitCount == 0){
+                                        if($val['visit_id'] == 1){
+
+                                            $selected = 'selected';
+                                            $disabled = '';
+                                        } else {
+                                            $selected = '';
+                                            $disabled = 'disabled';
+                                        }
+                                    } else {
+                                        if($val['visit_id'] == 1){
+
+                                            $selected = 'disabled';
+                                            $disabled = '';
+                                        } else {
+                                            $selected = '';
+                                            $disabled = '';
+                                        }
+                                    }
+                                    echo $selected.' '.$disabled;
+                                    ?>
+                                    >
                                    <?php echo $val['visit_count']; ?>
                                     </option>
                                <?php } ?>

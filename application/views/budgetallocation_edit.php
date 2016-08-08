@@ -21,8 +21,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "none";
             document.getElementById("groupLGUCity").style.visibility = "hidden";
-            //    document.getElementById("groupLGUBrgy").style.display = "none";
-            //     document.getElementById("groupLGUBrgy").style.visibility = "hidden";
+
         }
         else
         {
@@ -32,8 +31,7 @@ if (!$this->session->userdata('user_id')){
             document.getElementById("groupLGUProvince").style.visibility = "visible";
             document.getElementById("groupLGUCity").style.display = "block";
             document.getElementById("groupLGUCity").style.visibility = "visible";
-            //    document.getElementById("groupLGUBrgy").style.display = "block";
-            //    document.getElementById("groupLGUBrgy").style.visibility = "visible";
+
         }
     }
 
@@ -99,7 +97,6 @@ if (!$this->session->userdata('user_id')){
 
     <!-- Start Page Header -->
     <div class="page-header">
-        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
             <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
@@ -108,7 +105,13 @@ if (!$this->session->userdata('user_id')){
         </ol>
     </div>
     <!-- End Page Header -->
-<?php echo $form_message ?>
+    <?php if (validation_errors() <> '') { ?>
+        <div class="alert alert-danger">
+            <strong><?php echo validation_errors() ?></strong>
+        </div>
+    <?php } ?>
+    <?php echo $form_message ?>
+
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -139,31 +142,31 @@ if (!$this->session->userdata('user_id')){
 
                     <div class="form-group">
                         <label for="year_indicated">Year Indicated:</label>
-                        <input class="form-control" type="date" name="year_indicated" style="width:500px;" value="<?php echo $budgetallocation_details->year_indicated ?>" placeholder="Year Indicated">
+                        <input class="form-control" type="month" name="year_indicated" id="year_indicated" style="width:500px;" value="<?php echo $budgetallocation_details->year_indicated ?>" placeholder="Year Indicated">
                     </div>
                     <div class="form-group">
                         <label for="budget_present_year">Budget for the Previous Year:</label>
-                        <input class="form-control" type="number" name="budget_previous_year" style="width:500px;" value="<?php echo $budgetallocation_details->budget_previous_year ?>" placeholder="Budget for the Previous Year">
+                        <input class="form-control" type="text" name="budget_previous_year" id="budget_previous_year" maxlength="16" style="width:500px;" value="<?php echo $budgetallocation_details->budget_previous_year ?>" placeholder="Budget for the Previous Year">
                     </div>
 
                     <div class="form-group">
                         <label for="budget_present_year">Budget for the Present Year:</label>
-                        <input class="form-control" type="number" name="budget_present_year" style="width:500px;" value="<?php echo $budgetallocation_details->budget_present_year ?>" placeholder="Budget for the Present Year">
+                        <input class="form-control" type="text" name="budget_present_year" id="budget_present_year" maxlength="16" style="width:500px;" value="<?php echo $budgetallocation_details->budget_present_year ?>" placeholder="Budget for the Present Year">
                     </div>
 
                     <div class="form-group">
                         <label for="utilization">Utilization:</label>
-                        <input class="form-control" type="number" name="utilization" style="width:500px;" value="<?php echo $budgetallocation_details->utilization ?>" placeholder="Utilization">
+                        <input class="form-control" type="text" name="utilization" id="utilization" maxlength="16" style="width:500px;" value="<?php echo $budgetallocation_details->utilization ?>" placeholder="Utilization">
                     </div>
 
                     <div class="form-group">
                         <label for="no_bene_served">Number of Beneficiaries Served:</label>
-                        <input class="form-control" type="number" name="no_bene_served" style="width:500px;" value="<?php echo $budgetallocation_details->no_bene_served ?>" placeholder="Number of Beneficiaries Served">
+                        <input class="form-control" type="number" name="no_bene_served" max="100000" style="width:500px;" value="<?php echo $budgetallocation_details->no_bene_served ?>" placeholder="Number of Beneficiaries Served">
                     </div>
 
                     <div class="form-group">
                         <label for="no_target_bene">Number of Target Beneficiaries:</label>
-                        <input class="form-control" type="number" name="no_target_bene" style="width:500px;" value="<?php echo $budgetallocation_details->no_target_bene ?>" placeholder="Number of Target Beneficiaries">
+                        <input class="form-control" type="number" name="no_target_bene" max="100000" style="width:500px;" value="<?php echo $budgetallocation_details->no_target_bene ?>" placeholder="Number of Target Beneficiaries">
                     </div>
 
                         <div class="form-group">

@@ -663,12 +663,22 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/lswdo_ffnewscore/'.$regionlist2.'/'.$provlist2.'') ?>"></i>Fully Functional LSWDO reports</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <a class="btn btn-light" href="<?php echo base_url('reports/LSWDObudgetpresentbyregionbysector/'.$sectorType2.'') ?>"></i>LSWDO budget allocation present year per sector by region</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <a class="btn btn-light" href="<?php echo base_url('reports/nonCompliantLSWDO/'.$regionlist2.'/'.$provlist2.'/'.$citylist2.'/'.$LGUtype2.'') ?>">LSWDO - Non-Compliant Indicator</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-light" href="<?php echo base_url('reports/summaryLSWDO/'.$regionlist2.'/'.$provlist2.'/'.$citylist2.'/'.$LGUtype2.'') ?>">Summary</a>
                                     </td>
                                 </tr>
                                 <tr>

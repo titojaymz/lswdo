@@ -6,14 +6,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script src="<?php echo base_url('assets/js/jquery-1.12.0.min.js'); ?>"></script>
-	<link href="<?php echo base_url('assets/bootstrap/css/root.css'); ?>" rel="stylesheet">
 
+    <!--sir mike-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url('assets/js/jquery.maskMoney.js'); ?>" type="text/javascript" >  </script>
+
+	<link href="<?php echo base_url('assets/bootstrap/css/root.css'); ?>" rel="stylesheet">
+    <!--sir mike-->
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
         body{background: #F5F5F5;}
 
     </style>
-    <title>MSFLSWDO</title>
+    <title>LSWDOFIRST</title>
     <script src="<?php echo base_url('assets/js/api.js'); ?>"></script>
 </head>
 <body>

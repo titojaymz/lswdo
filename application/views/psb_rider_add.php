@@ -88,9 +88,12 @@
                                     $counter = 1;
                                     foreach($getPSBSubCategory as $keySub => $valSub)
                                     {
-                                        $arrOfAnswer = array("No", "Yes");
                                         $psbrider_sub_category_id = $valSub['psbrider_sub_category_id'];
                                         $psbrider_sub_category_title = $valSub['psbrider_sub_category_title'];
+                                        if(!in_array($psbrider_sub_category_id, array('16','17','26','27','39','40','48','49','66','67','75','76'), true )){
+                                        $arrOfAnswer = array("No", "Yes");
+//                                        $psbrider_sub_category_id = $valSub['psbrider_sub_category_id'];
+//                                        $psbrider_sub_category_title = $valSub['psbrider_sub_category_title'];
 
                                         echo " </tr>";
 
@@ -107,13 +110,8 @@
 
                                        // print_r($arrOfAnswer);
                                         echo "<td>";
-                                        echo "<select id='arrOfAns-".$psbrider_sub_category_id."' name='arrOfAns-".$psbrider_sub_category_id."'>";
-                                        foreach($arrOfAnswer as $keyAns=>$valAns)
-                                        {
-                                            echo "<option id='".$valAns."' name='".$valAns."' value='".$keyAns."'>";
-                                            echo $valAns;
-                                            echo "</option>";
-                                        }
+                                        echo "<input type = 'radio' id='arrOfAns-".$psbrider_sub_category_id."' name='arrOfAns-".$psbrider_sub_category_id."' value = '0' checked='checked'> No<br>";
+                                        echo "<input type = 'radio' id='arrOfAns-".$psbrider_sub_category_id."' name='arrOfAns-".$psbrider_sub_category_id."' value = '1' > Yes";
                                         echo "</select>";
                                         echo "</td>";
 
@@ -122,54 +120,50 @@
                                        // echo "<textarea id='txtareaReason-".$psbrider_sub_category_id."' name='txtareaReason-".$psbrider_sub_category_id."' rows='4' cols='50' placeholder='Enter text here'>";
                                         echo "</textarea>";
                                         echo "</td>";
-
-                                        /*echo "<td>";
-                                        //echo "yes/no";
-                                        //echo $this->input->post('arrOfAns');
-                                        echo $this->input->post('arrOfAns-'.$psbrider_sub_category_id);
-                                        //echo $this->input->post('arrOfAns-'.$psbrider_sub_category_id);
-                                        echo "</td>";
-
-                                        echo "<td>";
-                                        //echo "reason";
-                                        echo $this->input->post('textAreaReason-'.$psbrider_sub_category_id);
-                                        //echo $this->input->post('txtareaReason');
-                                        echo "</td>";*/
-
-                                        $profile_id_val = $this->input->post('profile_id');
-                                        $ref_id_val = $this->input->post('ref_id');
-                                        $psbrider_main_category_id_val = $psbrider_main_category_id;
-                                        $psbrider_main_category_title_val = $psbrider_main_category_title;
-                                        $psbrider_sub_category_id_val = $psbrider_sub_category_id;
-                                        $psbrider_sub_category_title_val = $psbrider_sub_category_title;
-                                        $arrOfAns = $this->input->post('arrOfAns-' . $psbrider_sub_category_id);
-                                        $txtareaReason = $this->input->post('textAreaReason-' . $psbrider_sub_category_id);
-
-                                        $sql =('INSERT INTO tbl_psbrider_answers(ref_id,
-                                                profile_id,
-                                                psbrider_main_category_id,
-                                                psbrider_main_category_title,
-                                                psbrider_sub_category_id,
-                                                psbrider_sub_category_title,
-                                                psbrider_indicative_reason,
-                                                psbrider_answer
-                                                )
-                                                  VALUES(
-                                                  "'.$ref_id_val.'",
-                                                  "'.$profile_id_val.'",
-                                                  "'.$psbrider_main_category_id_val.'",
-                                                  "'.$psbrider_main_category_title_val.'",
-                                                  "'.$psbrider_sub_category_id_val.'",
-                                                  "'.$psbrider_sub_category_title_val.'",
-                                                  "'.$txtareaReason.'",
-                                                  "'.$arrOfAns.'"
-                                                  )');
-
                                         echo " </tr>";
                                         $counter++;
 
+                                        }
                                     }
+                                    foreach($getPSBSubCategory as $keySub => $valSub)
+                                    {
+                                        $psbrider_sub_category_id = $valSub['psbrider_sub_category_id'];
+                                        $psbrider_sub_category_title = $valSub['psbrider_sub_category_title'];
+                                        if(in_array($psbrider_sub_category_id, array('16','17','26','27','39','40','48','49','66','67','75','76'), true )){
+                                            $arrOfAnswer = array("No", "Yes");
+//                                        $psbrider_sub_category_id = $valSub['psbrider_sub_category_id'];
+//                                        $psbrider_sub_category_title = $valSub['psbrider_sub_category_title'];
 
+                                            echo " </tr>";
+
+                                            echo " <tr>";
+                                            echo "<td>";
+                                            echo $counter;
+                                            echo "</td>";
+
+                                            echo "<td>";
+                                            echo $psbrider_sub_category_title;
+                                            echo "</td>";
+
+
+
+                                            // print_r($arrOfAnswer);
+                                            echo "<td>";
+                                            echo "<input type = 'radio' id='arrOfAns-".$psbrider_sub_category_id."' name='arrOfAns-".$psbrider_sub_category_id."' value = '0' checked='checked'> No<br>";
+                                            echo "<input type = 'radio' id='arrOfAns-".$psbrider_sub_category_id."' name='arrOfAns-".$psbrider_sub_category_id."' value = '1' > Yes";
+                                            echo "</select>";
+                                            echo "</td>";
+
+                                            echo "<td>";
+                                            echo "<textarea id = 'textAreaReason-".$psbrider_sub_category_id."' name = 'textAreaReason-".$psbrider_sub_category_id."'>";
+                                            // echo "<textarea id='txtareaReason-".$psbrider_sub_category_id."' name='txtareaReason-".$psbrider_sub_category_id."' rows='4' cols='50' placeholder='Enter text here'>";
+                                            echo "</textarea>";
+                                            echo "</td>";
+                                            echo " </tr>";
+                                            $counter++;
+
+                                        }
+                                    }
                                 }
                             ?>
 

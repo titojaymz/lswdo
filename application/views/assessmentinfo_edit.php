@@ -267,7 +267,7 @@ if (!$this->session->userdata('user_id')){
                 }
 
             });
-//
+
         }
         else
         {
@@ -377,17 +377,51 @@ if (!$this->session->userdata('user_id')){
             $('#brgylist option:gt(0)').remove().end();
         }
     }
+
+    function validtxt(){
+        var txt = document.getElementById("swdo_name").value ;
+        var len =txt.trim().length;
+
+        if (len < 1)
+        {
+            alert("Invalid Text!");
+        }
+
+    }
+
+    function validtxt2(){
+        var txt2 = document.getElementById("designation").value ;
+        var len =txt2.trim().length;
+
+        if (len < 1)
+        {
+            alert("Invalid Text!");
+        }
+
+    }
+
+    function validtxt3(){
+        var txt3 = document.getElementById("office_address").value ;
+        var len =txt3.trim().length;
+
+        if (len < 1)
+        {
+            alert("Invalid Text!");
+        }
+
+    }
 </script>
 <body>
 <div class="content">
     <!-- Start Page Header -->
     <div class="page-header">
-        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
+
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard'); ?>">Home</a></li>
             <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
             <li class="active">Edit</li>
         </ol>
+
     </div>
     <!-- End Page Header -->
     <?php if (validation_errors() <> '') { ?>
@@ -395,6 +429,8 @@ if (!$this->session->userdata('user_id')){
             <strong><?php echo validation_errors() ?></strong>
         </div>
     <?php } ?>
+    <?php echo $form_message; ?>
+
     <div class = "row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -407,7 +443,7 @@ if (!$this->session->userdata('user_id')){
 
                             <input class="form-control" type="hidden" name="profile_id" value="<?php echo $assessmentinfo_details->profile_id ?>">
                         </div>
-      <table style="width:100%">
+          <table style="width:100%">
               <tr>
                     <td width="50%">
                         <div class="form-group">
@@ -423,20 +459,21 @@ if (!$this->session->userdata('user_id')){
                         </div>
                      </td>
 
+                  <!--2nd column-->
                      <td width="50%">
                          <div class="form-group">
-                                    <label for="budget" class="control-label">Budget Allocation and Utilization</label>
-                                    </br></br></br>
-                             </div>
+                             <label for="budget" class="control-label">Budget Allocation and Utilization</label>
+                             </br></br></br>
+                         </div>
                     </td>
              </tr>
 
               <tr>
                    <td width="50%">
                         <div class="form-group">
-                            <label class="control-label">Type of LSWDO: </label>
+                            <label class="control-label">Type of LSWDO: </label><font color="red">*</font>
 
-                            <select name="lgu_type_id" id="lgu_type_id" class="form-control" style="width:90%;" onchange="askLGU();">
+                            <select name="lgu_type_id" id="lgu_type_id" class="form-control" style="width:90%;" onchange="askLGU();" tabindex="1" required autofocus>
                                 <option select value="0">-Please select-</option>
                                 <?php foreach($lgu_type as $lgus): ?>
                                     <option value="<?php echo $lgus->lgu_type_id; ?>"
@@ -451,24 +488,26 @@ if (!$this->session->userdata('user_id')){
                                 <?php endforeach; ?>
                             </select>
                   </td>
-                   <td width="50%">
+
+                  <!--2nd column-->
+                     <td width="50%">
                             <div class="form-group">
                                 <label for="total_ira">Total Internal Revenue Allotment:</label>
-                                <input class="form-control" type="number" name="total_ira" id="total_ira" style="width:90%;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
+                                <input class="form-control" type="text" name="total_ira" id="total_ira" tabindex="11" maxlength="16" style="width:90%;" value="<?php echo $assessmentinfo_details->total_ira ?>" placeholder="Total Internal Revenue Allotment">
                             </div>
-                  </td>
-            </tr>
-             <tr>
+                     </td>
+              </tr>
 
+              <tr>
                  <td width="50%">
                             <div id="groupLGUregion">
                                 <div class="form-group form-group-sm">
-                                    <label for="regionlist" class="control-label">Region: </label>
+                                    <label for="regionlist" class="control-label">Region: </label><font color="red">*</font>
 
                                         <fieldset>
                                             <div class="control-group">
                                                 <div class="controls">
-                                                    <select name="regionlist" id="regionlist" class="form-control" style="width:90%;" onchange="get_prov();">
+                                                    <select name="regionlist" id="regionlist" class="form-control" style="width:90%;" onchange="get_prov();" tabindex="2" required>
 
                                                         <option value="0">Choose Region</option>
                                                         <?php foreach($regionlist as $regionselect): ?>
@@ -485,25 +524,26 @@ if (!$this->session->userdata('user_id')){
                                                     </select>
                                                 </div>
                                             </div>
-
-                                </div>
+                                    </div>
                             </div>
-                                </td>
-                                <td width="50%">
-                                <div class="form-group">
-                                    <label for="total_budget_lswdo">Total Budget LSWDO:</label>
-                                    <input class="form-control" type="number" name="total_budget_lswdo" id="total_budget_lswdo" style="width:90%;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
-                                </div>
                      </td>
-             </tr>
 
-               <tr>
-                   <td width="50%">
+                  <!--2nd column-->
+                       <td width="50%">
+                           <div class="form-group">
+                               <label for="total_budget_lswdo">Total Budget LSWDO:</label>
+                               <input class="form-control" type="text" name="total_budget_lswdo" id="total_budget_lswdo" maxlength="16" tabindex="12" style="width:90%;" value="<?php echo $assessmentinfo_details->total_budget_lswdo ?>" placeholder="Total Budget LSWDO">
+                            </div>
+                       </td>
+                  </tr>
+
+                     <tr>
+                         <td width="50%">
                             <div id="groupLGUProvince">
                                 <div class="form-group form-group-sm">
-                                    <label for="provlist" class="control-label">Province:</label>
+                                    <label for="provlist" class="control-label">Province:</label><font color="red">*</font>
                                     <div id="div_provlist">
-                                        <select id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();">
+                                        <select id="provlist" name="provlist" class="form-control" style="width:90%;" onChange="get_cities();" tabindex="3" required>
                                             <?php if(isset($assessmentinfo_details->prov_code) or isset($assessmentinfo_details->region_code)) {
                                                 ?>
                                                 <option value="0">Choose Province</option>
@@ -527,9 +567,10 @@ if (!$this->session->userdata('user_id')){
                                     </div>
                                 </div>
                             </div>
-                     </td>
+                          </td>
 
-                      <td width="50%">
+                   <!--2nd column-->
+                               <td width="50%">
                                     <div class="form-group">
                                         <label for="no_cities">No. of Cities:</label>
                                         <div id="groupCity">
@@ -540,23 +581,22 @@ if (!$this->session->userdata('user_id')){
                                             </div>
                                         </div>
                                     </div>
-                       </td>
-
-                 </tr>
+                              </td>
+                       </tr>
 
 
                             <input class="form-control" type="hidden" id = "prov_pass" name="prov_pass" style="width:90%;" value ="<?php echo $assessmentinfo_details->prov_code ?>" >
                             <input class="form-control" type="hidden" id = "city_pass" name="city_pass" style="width:90%;" value ="<?php echo $assessmentinfo_details->city_code ?>" >
-                  <tr>
+                    <tr>
                        <td width="50%">
                             <div id="groupLGUCity">
                                 <div class="form-group form-group-sm">
                                     <label for="citylist" class="control-label">City/Municipality:</label>
                                     <div id="div_citylist">
-                                        <select id="citylist" name="citylist" class="form-control" style="width:90%;" onChange="get_brgy();">
+                                        <select id="citylist" name="citylist" class="form-control" style="width:90%;" onChange="get_brgy();" tabindex="4">
                                             <?php if(isset($assessmentinfo_details->city_code) or isset($assessmentinfo_details->prov_code)) {
                                                 ?>
-                                                <option value="0">Choose City</option>
+                                                <option value="0">Choose City/Municipality</option>
                                                 <?php
                                                 foreach($citylist as $cityselect) { ?>
                                                     <option value="<?php echo $cityselect->city_code; ?>"
@@ -580,6 +620,8 @@ if (!$this->session->userdata('user_id')){
 
                         </div><!--end of lgu type-->
                 </td>
+
+                <!--2nd column-->
                 <td width="50%">
                     <div class="form-group">
                         <label for="no_municipalities">No. of Municipalities:</label>
@@ -591,19 +633,18 @@ if (!$this->session->userdata('user_id')){
                             </div>
                         </div>
                     </div>
-
                 </td>
-
                 </tr>
-                <tr>
 
+                <tr>
                     <td width="50%">
-                        <div class="form-group">
-                            <label for="swdo_name">Name of SWDO Officer/Head:*</label>
-                            <input class="form-control" type="text" name="swdo_name" id="swdo_name" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
+                        <div class="form-group"> <!--^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$--> <!--[a-zA-Z][a-zA-Z0-9\s]*-->
+                            <label for="swdo_name">Name of SWDO Officer/Head:</label><font color="red">*</font>
+                            <input class="form-control" type="text" name="swdo_name" id="swdo_name" tabindex="5" pattern="^[a-zA-Z][a-zA-Z0-9\s\.]*$" title="Firstname Middlename Lastname" style="width:90%;" value="<?php echo $assessmentinfo_details->swdo_name ?>" placeholder="Name of SWDO Officer/Head" required>
                         </div>
                     </td>
 
+                    <!--2nd column-->
                     <td width="50%">
                         <div class="form-group">
                             <label for="no_brgy">No. of Barangays:</label>
@@ -617,15 +658,16 @@ if (!$this->session->userdata('user_id')){
                         </div>
                     </td>
                 </tr>
-                <tr>
 
+                <tr>
                     <td width="50%">
                         <div class="form-group">
-                            <label for="designation">Designation:*</label>
-                            <input class="form-control" type="text" name="designation" id="designation" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
+                            <label for="designation">Designation:</label><font color="red">*</font>
+                            <input class="form-control" type="text" name="designation" id="designation" tabindex="6" pattern="^[a-zA-Z][a-zA-Z0-9\s\.]*$" style="width:90%;" value="<?php echo $assessmentinfo_details->designation ?>" placeholder="Designation" required>
                         </div>
                     </td>
 
+                    <!--2nd column-->
                     <td width="50%">
                         <div class="form-group">
                             <label for="income_class">Income Class:</label>
@@ -639,14 +681,16 @@ if (!$this->session->userdata('user_id')){
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td width="50%">
                         <div class="form-group">
-                            <label for="office_address">Office Address:*</label>
-                            <input class="form-control" type="text" name="office_address" id="office_address" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
+                            <label for="office_address">Office Address:</label><font color="red">*</font>
+                            <input class="form-control" type="text" name="office_address" tabindex="7" id="office_address" pattern="^[a-zA-Z0-9\.][a-zA-Z0-9\s\.\,]*$" style="width:90%;" value="<?php echo $assessmentinfo_details->office_address ?>" placeholder="Office Address" required>
                         </div>
                     </td>
 
+                    <!--2nd column-->
                     <td width="50%">
                         <div class="form-group">
                             <label for="total_pop">Total Population:</label>
@@ -660,14 +704,16 @@ if (!$this->session->userdata('user_id')){
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td width="50%">
                         <div class="form-group">
-                            <label for="contact_no">Contact No:*</label>
-                            <input class="form-control" type="tel" minlength="7" maxlength="19" name="contact_no" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
+                            <label for="contact_no">Contact No:</label><font color="red">*</font>
+                            <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
                         </div>
                     </td>
 
+                    <!--2nd column -->
                     <td width="50%">
                         <div class="form-group">
                             <label for="total_poor">Total No. of Poor Families:</label>
@@ -686,21 +732,27 @@ if (!$this->session->userdata('user_id')){
                     <!--grace -nilagay ko ung type nya is "tel" accepted na nya ung dash pero hindi siya automatic naglalgay ng dash, minlength nya 7 at maxlength 19 kasi merong dalawang contact number na nilalagay sila-->
                         <div class="form-group">
                             <label for="email">Email Address:</label>
-                            <input class="form-control" type="email" name="email" id="email" style="width:90%;" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
+                            <input class="form-control" type="email" name="email" id="email" tabindex="9" style="width:90%;" value="<?php echo $assessmentinfo_details->email ?>" placeholder="Email">
+                        </div>
+                    </td>
+
+                    <!--2nd column-->
+                    <td width="50%">
+                        <div class="form-group">
+                            <label for="legend">Legend:<font color="red"><br/> *</font> - required field/s</label>
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td width="50%">
                         <div class="form-group">
                             <label for="website">Website:</label>
-                            <input class="form-control" type="text" name="website" id="website" pattern="www.+.com" title="www.sample.com" style="width:90%;" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
+                            <input class="form-control" type="text" name="website" id="website" tabindex="10" pattern="www.+.com" title="www.sample.com" style="width:90%;" value="<?php echo $assessmentinfo_details->website ?>" placeholder="Website">
                         </div>
-
                     </td>
-                      </tr>
-
-                  </table>
+                </tr>
+     </table>
                 </div>
                 <div class="form-group">
                     <div class="btn-group">

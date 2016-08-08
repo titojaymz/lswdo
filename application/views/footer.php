@@ -1,7 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <!--load jQuery library-->
-
+<script type="text/javascript">$("#total_ira").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
+<script type="text/javascript">$("#total_budget_lswdo").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
+<script type="text/javascript">$("#budget_previous_year").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
+<script type="text/javascript">$("#budget_present_year").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
+<script type="text/javascript">$("#utilization").maskMoney({prefix:'₱ ', allowNegative: true, thousands:',', decimal:'.', affixesStay: true});</script>
 <!-- ================================================
 jQuery Library
 ================================================ -->
@@ -172,6 +176,8 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
 <!-- Today Activity -->
 <script>
 // set up our data series with 50 random data points
@@ -260,6 +266,7 @@ $(document).ready(function() {
 } );
 </script>
 <!-- carla-->
+<!---->
 
 <script type="text/javascript" src="js/date-range-picker/daterangepicker.js"></script>
 <!-- Basic Date Range Picker -->

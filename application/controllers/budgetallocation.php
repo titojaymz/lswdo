@@ -84,12 +84,12 @@ class budgetallocation extends CI_Controller {
         } else {
             $budgetallocation_model = new budgetallocation_model();
 
-          //  $profile_id = $this->input->post('profile_id');//mglv
+          //$profile_id = $this->input->post('profile_id');//mglv
             $sector_id = $this->input->post('sector_id');
             $year_indicated = $this->input->post('year_indicated');
-            $budget_previous_year = $this->input->post('budget_previous_year');
-            $budget_present_year = $this->input->post('budget_present_year');
-            $utilization = $this->input->post('utilization');
+            $budget_previous_year = preg_replace('/[^0-9.]*/', '', $this->input->post('budget_previous_year'));
+            $budget_present_year = preg_replace('/[^0-9.]*/', '', $this->input->post('budget_present_year'));
+            $utilization = preg_replace('/[^0-9.]*/', '', $this->input->post('utilization'));
             $no_bene_served = $this->input->post('no_bene_served');
             $no_target_bene = $this->input->post('no_target_bene');
             $created_by = $this->session->userdata('user_id');
@@ -108,7 +108,6 @@ class budgetallocation extends CI_Controller {
                         'sector_id' => $sector_id,
                         'budgetallocation_data' => $budgetallocation_model->getBudgetAllocation($id),
                         'profile_id' => $id,
-                        'list_fields' => $this->listFields(),
                         'form_message' => $form_message,
 
                     ));
@@ -157,9 +156,9 @@ class budgetallocation extends CI_Controller {
 //                $id = $this->input->post('profile_id');
                 $sectorID = $this->input->post('sector_id');
                 $year_indicated = $this->input->post('year_indicated');
-                $budget_previous_year = $this->input->post('budget_previous_year');
-                $budget_present_year = $this->input->post('budget_present_year');
-                $utilization = $this->input->post('utilization');
+                $budget_previous_year = preg_replace('/[^0-9.]*/', '', $this->input->post('budget_previous_year'));
+                $budget_present_year = preg_replace('/[^0-9.]*/', '', $this->input->post('budget_present_year'));
+                $utilization = preg_replace('/[^0-9.]*/', '', $this->input->post('utilization'));
                 $no_bene_served = $this->input->post('no_bene_served');
                 $no_target_bene = $this->input->post('no_target_bene');
                 $modified_by= $this->session->userdata('user_id');
@@ -179,7 +178,6 @@ class budgetallocation extends CI_Controller {
                         $this->load->view('sidebar');
                         $this->load->view('budgetallocation_list', array(
                             'budgetallocation_data' => $budgetallocation_model->getBudgetAllocationByID($id,$prevSectorID),
-                            'list_fields' => $this->listFields(),
                             'form_message' => $form_message,
 
                         ));
@@ -201,7 +199,6 @@ class budgetallocation extends CI_Controller {
                             $this->load->view('sidebar');
                             $this->load->view('budgetallocation_list', array(
                                 'budgetallocation_data' => $budgetallocation_model->getBudgetAllocationByID($id),
-                                'list_fields' => $this->listFields(),
                                 'form_message' => $form_message,
 
                             ));
@@ -257,7 +254,6 @@ class budgetallocation extends CI_Controller {
                 $this->load->view('nav');
                 $this->load->view('budgetallocation_list',array(
                     'budgetallocation_data'=>$budgetallocation_model->getBudgetAllocation(),
-                    'list_fields'=>$this->listFields(),
                     'form_message'=>$form_message,
                     $this->redirectIndex($id)
                 ));
@@ -272,7 +268,7 @@ class budgetallocation extends CI_Controller {
 
             array(
                 'field'   => 'sector_id',
-                'label'   => 'sector_id',
+                'label'   => 'Sector',
                 'rules'   => 'required'
             )
         );
@@ -286,23 +282,12 @@ class budgetallocation extends CI_Controller {
 
             array(
                 'field'   => 'sector_id',
-                'label'   => 'sector_id',
-                'rules'   => 'required'
-            ),
-            array(
-                'field'   => 'year_indicated',
-                'label'   => 'year_indicated',
+                'label'   => 'Sector',
                 'rules'   => 'required'
             )
         );
 
         return $this->form_validation->set_rules($config);
-    }
-
-    public function listFields()
-    {
-        $query = $this->db->query('SELECT profile_id,sector_id,year_indicated,budget_previous_year,budget_present_year,utilization,no_bene_served,no_target_bene FROM tbl_lswdo_budget');
-        return $query->list_fields();
     }
 
     public function redirectIndex($profID,$function)

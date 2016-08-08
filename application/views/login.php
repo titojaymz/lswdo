@@ -9,7 +9,7 @@ if (!$this->session->userdata('user_id')){
     <div class="login-form">
         <form class="form-signin" method="post" action="">
             <div class="top">
-                <h1>MSFLSWDO</h1>
+                <h1>LSWDOFIRST</h1>
                 <h4>Sign-In</h4>
             </div>
             <div class="form-area"><?php echo $form_message; ?>
@@ -21,7 +21,7 @@ if (!$this->session->userdata('user_id')){
                     <input type="password" maxlength="30" name="password" value="" class="form-control" placeholder="Password" required>
                     <i class="fa fa-key"></i>
                 </div>
-                <div class="g-recaptcha" data-sitekey="6LcMzRwTAAAAADzg5oggwcUaZGdPWZ4keM-bP7Fn"></div>
+              <!--  <div class="g-recaptcha" data-sitekey="6LcMzRwTAAAAADzg5oggwcUaZGdPWZ4keM-bP7Fn"></div>-->
                 <button type="submit" type="submit" class="btn btn-default btn-block">LOGIN</button>
             </div>
         </form>

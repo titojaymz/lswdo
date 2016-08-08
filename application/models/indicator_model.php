@@ -916,7 +916,6 @@ class indicator_model extends CI_Model
             } else {
                 $where2 = 'where  a.indicator_id LIKE "%-1%"
                     and b.deleted = 0
-                    and b.region_code = "' . $regCode . '"
                     and a.compliance_indicator_id = 2';
             }
 
@@ -934,7 +933,43 @@ class indicator_model extends CI_Model
         $query = $this->db->query($sql);
         return  $query->result();
     }
+    public function getsummaryLSWDO($regCode,$provCode,$cityCode){
 
+        if ($regCode != 0) {
+            if ($provCode != 0) {
+                $where2 = 'where  a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and b.prov_code = "' . $provCode . '"
+                    and b.city_code = "' . $cityCode . '"
+                    and a.compliance_indicator_id = 2';
+
+            } else {
+                $where2 = 'where  a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and b.region_code = "' . $regCode . '"
+                    and a.compliance_indicator_id = 2';
+            }
+        } else {
+            $where2 = 'where  a.indicator_id LIKE "%-1%"
+                    and b.deleted = 0
+                    and a.compliance_indicator_id = 2';
+        }
+
+
+        $sql = 'select
+        a.profile_id,a.indicator_id,c.indicator_name
+        from
+        tbl_lswdo_standard_indicators a
+        INNER JOIN tbl_lswdo b
+        ON a.profile_id = b.profile_id
+        INNER JOIN lib_indicator_codes c
+        ON a.indicator_id = c.indicator_id
+        '.$where2.'
+        group by a.indicator_id';
+        $query = $this->db->query($sql);
+        return  $query->result();
+    }
     public function getFirstMotherIndicator(){
         $this->db->select('indicator_id,mother_indicator_id,indicator_name');
         $this->db->order_by('indicator_name','ASC');

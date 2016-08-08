@@ -7,12 +7,10 @@
 $accessLevel = $this->session->userdata('accessLevel');
 ?>
 <body>
-
 <div class="content">
 
     <!-- Start Page Header -->
     <div class="page-header">
-        <!-- <h1 class="title">Tool for the Assessment of FUNCTIONALITY of LSWDOs</h1>-->
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url('dashboardc/dashboard/'); ?>">Home</a></li>
             <li><a href="<?php echo base_url('assessmentinfo/index/0'); ?>">Assessment Information</a></li>
@@ -33,9 +31,9 @@ $accessLevel = $this->session->userdata('accessLevel');
                     <div class="form-group">
                         <label for="list_info" class="control-label">Assessment Information List</label>
                     </div>
-<?php if($accessLevel == -1 || $accessLevel == 5){ ?>
+            <?php if($accessLevel == -1 || $accessLevel == 5){ ?>
                     <a class="btn btn-sm btn-success" href="<?php echo base_url('assessmentinfo/addAssessmentinfo') ?>"><i class="fa fa-plus-circle"></i> Add Baseline </a>
-<?php } ?>
+            <?php } ?>
                 </div>
                 <div class = "panel-body" style="display: block;">
 
@@ -63,7 +61,8 @@ $accessLevel = $this->session->userdata('accessLevel');
                             <th>City/Municipality</th>
                             <th>Visit Count</th>
                             <th>Date</th>
-                            <th>Score</th>
+                            <th>Baseline Score</th>
+                            <th>Updated Score</th>
                             <th>Level of Functionality</th>
 
 
@@ -92,7 +91,7 @@ $accessLevel = $this->session->userdata('accessLevel');
                                         </div>
                                     <?php } ?>
                                 </td>
-
+                                <!---->
                                 <!--<td><a class="btn btn-xs btn-success" href=sss"<?php /*echo base_url('indicator/indicatorView/' . $assessmentinfoData->profile_id) */?>"><i class="fa fa-list"></i> Indicators </a></td>-->
 
                                 <!-- <td> <a onclick="return confirm('are you sure?')" class="btn btn-sm btn-danger" href="<?php echo base_url('assessmentinfo/delete_assessmentinfo/' . $assessmentinfoData->profile_id . '.html') ?>"><i class="fa fa-trash"></i> </a></td>-->
@@ -105,6 +104,7 @@ $accessLevel = $this->session->userdata('accessLevel');
 
                                 <td><?php echo $assessmentinfoData->visit_date ?></td>
 
+                                <td><?php echo $assessmentinfoData->baseline_score ?></td>
                                 <td><?php echo $assessmentinfoData->new_score ?></td>
                                 <td><?php echo $assessmentinfoData->level_function_baseline ?></td>
 

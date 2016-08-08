@@ -4,6 +4,14 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class reports_model extends CI_Model
 {
+    public function get_max_visit()
+    {
+        $sql = 'SELECT visit_count FROM `tbl_lswdo_monitoring` ORDER BY visit_count desc limit 1;
+    ' ;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
     public function get_regions() {
         $get_regions = "
         SELECT
@@ -341,11 +349,11 @@ class reports_model extends CI_Model
     {
         if($regionlist == 0)
         {
-            $where = 'where a.deleted = 0 and b.lgu_type_id = 1';
+            $where = 'where b.deleted = 0 and b.lgu_type_id = 1';
         }
         else
         {
-            $where = 'where a.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
+            $where = 'where b.deleted = 0 and b.lgu_type_id = 1 and b.region_code = "'.$regionlist.'"';
         }
 
         $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,a.level_function_new
@@ -513,7 +521,7 @@ class reports_model extends CI_Model
             }
 
         }
-        $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline
+        $sql = 'SELECT  c.region_name,d.prov_name,a.baseline_score,e.city_name,a.level_function_baseline,a.prof_id
         FROM tbl_functionality a
         INNER JOIN tbl_lswdo b
         on a.prof_id = b.profile_id
@@ -521,7 +529,7 @@ class reports_model extends CI_Model
         on b.region_code = c.region_code
         inner join lib_provinces d
         on b.prov_code = d.prov_code
-        inner join lib_cities E
+        left join lib_cities E
         on b.city_code = e.city_code
         '.$where.'
         order by a.baseline_score desc;' ;
@@ -552,7 +560,7 @@ class reports_model extends CI_Model
             }
 
         }
-        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new
+        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new,a.prof_id
                 FROM tbl_functionality a
                 INNER JOIN tbl_lswdo b
                 on a.prof_id = b.profile_id
@@ -560,7 +568,45 @@ class reports_model extends CI_Model
                 on b.region_code = c.region_code
                 inner join lib_provinces d
                 on b.prov_code = d.prov_code
-                inner join lib_cities E
+                left join lib_cities E
+                on b.city_code = e.city_code
+                '.$where.'
+                order by a.new_score desc;' ;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function get_lswdoffnewscore($regionlist,$provlist)
+    {
+
+        if($regionlist == 0)
+        {
+            $where = 'where b.deleted = 0 and a.level_function_new = "Fully Functional"';
+        }
+        else
+        {
+            if($provlist == 0)
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'" and a.level_function_new = "Fully Functional"';
+            }
+            else
+            {
+                $where = 'where b.deleted = 0
+        and b.region_code = "'.$regionlist.'"
+        and b.prov_code = "'.$provlist.'" and a.level_function_new = "Fully Functional"';
+            }
+
+        }
+        $sql = 'SELECT  c.region_name,d.prov_name,a.new_score,e.city_name,a.level_function_new,a.prof_id
+                FROM tbl_functionality a
+                INNER JOIN tbl_lswdo b
+                on a.prof_id = b.profile_id
+                inner join lib_regions c
+                on b.region_code = c.region_code
+                inner join lib_provinces d
+                on b.prov_code = d.prov_code
+                left join lib_cities E
                 on b.city_code = e.city_code
                 '.$where.'
                 order by a.new_score desc;' ;
@@ -838,23 +884,7 @@ class reports_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-    public function get_distributionLSWDObyregion()
-    {
-        $sql = 'SELECT region_name,PSWDO,CSWDO,MSWDO,(PSWDO+CSWDO+MSWDO) as Total
-                FROM (select b.region_name,
-                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
-                sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
-                sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
-                from tbl_lswdo a
-                inner join lib_regions b
-                on a.region_code = b.region_code
-                where a.deleted = 0
-                group by a.region_code
-                ) as c;';
-        $query = $this->db->query($sql);
-        $result = $query->result();
-        return $result;
-    }
+
 
     //cmalvarez
 
@@ -890,22 +920,21 @@ class reports_model extends CI_Model
     public function getPSBAnswer($regionlist,$psbrider_main_category_id,$psbrider_sub_category_id){
         if($regionlist == 0)
         {
-            $where = 'where psbrider_main_category_id = ".$psbrider_main_category_id."
-                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+            $where = 'where psbrider_main_category_id = "'.$psbrider_main_category_id.'"
+                and psbrider_sub_category_id = "'.$psbrider_sub_category_id.'"
                 and psbrider_answer = 1';
         }
         else
         {
             $where = 'where b.region_code = "'.$regionlist.'"
-                and psbrider_main_category_id = ".$psbrider_main_category_id."
-                and psbrider_sub_category_id = ".$psbrider_sub_category_id."
+                and psbrider_main_category_id = "'.$psbrider_main_category_id.'"
+                and psbrider_sub_category_id = "'.$psbrider_sub_category_id.'"
                 and psbrider_answer = 1';
         }
         $sql = "SELECT count(a.psbrider_answer_id) as psbrider_answer_id, b.region_code, a.psbrider_main_category_title, a.psbrider_sub_category_title,a.psbrider_answer
                 FROM `tbl_psbrider_answers` a
                 LEFT OUTER JOIN tbl_lswdo b
-                ON a.profile_id = b.profile_id
-                '.$where.'
+                ON a.profile_id = b.profile_id ".$where."
                 ;";
         $query = $this->db->query($sql);
         return $query->result_array();
@@ -1223,4 +1252,112 @@ class reports_model extends CI_Model
         return $result;
     }
 
+
+    public function getAllRegion()
+    {
+        $sql = 'select b.region_code,b.region_name from  lib_regions b where b.region_code <> 000000000';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+
+    public function getUniverse($regionCode)
+    {
+        $sql = 'select
+                sum(if(a.lgu_type_id = 1,1,0)) as PSWDO,
+                sum(if(a.lgu_type_id = 2,1,0)) as CSWDO,
+                sum(if(a.lgu_type_id = 3,1,0)) as MSWDO
+                from tbl_lswdo a
+                where a.deleted = 0 and a.region_code = '.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function countProv($regionCode)
+    {
+        $sql = 'select COUNT(a.prov_name) as total_prov
+                from lib_provinces  a where a.region_code ='.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getAllProv($regionCode)
+    {
+        $sql = 'select prov_code,prov_name from lib_provinces where region_code = '.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function getAllCity($provCode)
+    {
+        $sql = 'select COUNT(city_name)as total_city
+          from lib_cities where prov_code = '.$provCode.' AND city_class <> "";';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+
+    public function getAllMuni($provCode)
+    {
+        $sql = 'select COUNT(city_name)as total_city
+          from lib_cities where prov_code = '.$provCode.' AND city_class = "";';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getMaxVisit()
+    {
+        $sql = 'select visit_count from tbl_lswdo_monitoring ORDER BY visit_count desc limit 1;';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getVisitScore($regionCode,$visitCount,$lguType)
+    {
+        $sql = 'select
+                sum(if(a.visit_count = '.$visitCount.',1,0)) as scoreVisit ,b.region_code
+                from tbl_lswdo_monitoring a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                where b.lgu_type_id = '.$lguType.' and b.region_code='.$regionCode;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getVisitStatusDate($regionCode,$visitCount,$lguType)
+{
+    $sql = 'select
+                sum(if(a.visit_count = '.$visitCount.',1,0)) as scoreVisit ,b.region_code
+                from tbl_lswdo_monitoring a
+                inner join tbl_lswdo b
+                on a.profile_id = b.profile_id
+                where b.lgu_type_id = '.$lguType.' and b.region_code='.$regionCode;
+    $query = $this->db->query($sql);
+    $result = $query->row();
+    return $result;
+}
+    public function getLastVisitDate()
+    {
+        $sql = 'select a.profile_id,a.visit_date,a.visit_count,a.visit_status
+from tbl_lswdo_monitoring a
+group by a.profile_id
+order by a.profile_id desc';
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
+    }
+    public function getVisitName($visit_status)
+    {
+        $sql = 'select status_name from lib_status where status_id = "'.$visit_status.'"';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
+    public function getVisitCount($visit_count)
+    {
+        $sql = 'select visit_count from lib_visit_count where visit_id = "'.$visit_count.'"';
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        return $result;
+    }
 }

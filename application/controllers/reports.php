@@ -593,7 +593,7 @@ class reports extends CI_Controller {
     public function lswdo_score($regionlist,$provlist){
 
         $lswdo_details = $this->reports_model->get_lswdoscore($regionlist,$provlist);
-
+        $LastVisit = $this->reports_model->getLastVisitDate();
 
 // Create new PHPExcel object
         $objPHPExcel = new PHPExcel();
@@ -653,15 +653,31 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('E4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 
-        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Rank');
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Visit Date');
         $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('F4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'Status of Visit');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('G4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('H4', 'Visit Count');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('I4', 'Rank');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('I4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
         $previousvalue = '';
         $rank = 0;
         foreach ($lswdo_details as $lswdodata):
+            $profile_id = $lswdodata->prof_id;
             $region = $lswdodata->region_name;
             $province = $lswdodata->prov_name;
             $city = $lswdodata->city_name;
@@ -678,10 +694,20 @@ class reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $city);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $baselinescore);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $leveloffunction);$col2++;
+            foreach($LastVisit as $lastvisitDetails):
+                if($profile_id == $lastvisitDetails->profile_id)
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $lastvisitDetails->visit_date);$col2++;
+                    $visitName = $this->reports_model->getVisitName($lastvisitDetails->visit_status);
+                    $visitStatus = $this->reports_model->getVisitCount($lastvisitDetails->visit_count);
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $visitName->status_name);$col2++;
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $visitStatus->visit_count);$col2++;
+                }
+            endforeach;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $rank);
             $previousvalue = $baselinescore ;
 
-            if($col2 == 'F'){$col2 = 'A';}
+            if($col2 == 'I'){$col2 = 'A';}
             $row2++;
         endforeach;
 //    //border
@@ -716,6 +742,8 @@ class reports extends CI_Controller {
     public function lswdo_newscore($regionlist,$provlist){
 
         $lswdo_details = $this->reports_model->get_lswdonewscore($regionlist,$provlist);
+        $LastVisit = $this->reports_model->getLastVisitDate();
+
 
 
 // Create new PHPExcel object
@@ -776,20 +804,45 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('E4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
 
-        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Rank');
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Last Visit Date');
         $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('F4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'Status of Visit');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('G4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('H4', 'Visit Count');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('I4', 'Rank');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('I4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
         $row2 = 7;
         $col2 = 'A';
         $previousvalue = '';
         $rank = 0;
         foreach ($lswdo_details as $lswdodata):
+
+
             $region = $lswdodata->region_name;
+            $profile_id = $lswdodata->prof_id;
             $province = $lswdodata->prov_name;
             $city = $lswdodata->city_name;
             $baselinescore = $lswdodata->new_score;
             $leveloffunction = $lswdodata->level_function_new;
+
+
+//
+//            $visitName = $this->reports_model->getVisitName($visit_status);
+//            $visitStatus = $this->reports_model->getVisitCount($visit_count);
+//
+
 
             if($previousvalue != $baselinescore)
             {
@@ -801,10 +854,21 @@ class reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $city);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $baselinescore);$col2++;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $leveloffunction);$col2++;
+
+            foreach($LastVisit as $lastvisitDetails):
+                if($profile_id == $lastvisitDetails->profile_id)
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $lastvisitDetails->visit_date);$col2++;
+                    $visitName = $this->reports_model->getVisitName($lastvisitDetails->visit_status);
+                    $visitStatus = $this->reports_model->getVisitCount($lastvisitDetails->visit_count);
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $visitName->status_name);$col2++;
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $visitStatus->visit_count);$col2++;
+                }
+            endforeach;
             $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $rank);
             $previousvalue = $baselinescore ;
 
-            if($col2 == 'F'){$col2 = 'A';}
+            if($col2 == 'I'){$col2 = 'A';}
             $row2++;
         endforeach;
 //    //border
@@ -828,6 +892,167 @@ class reports extends CI_Controller {
 //so, we use this header instead.
 //    $regionName = $this->reports_model->getRegionName($region);
         $filename = 'LSWDO-Updated.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+
+    public function lswdo_ffnewscore($regionlist,$provlist){
+
+        $lswdo_details = $this->reports_model->get_lswdoffnewscore($regionlist,$provlist);
+        $LastVisit = $this->reports_model->getLastVisitDate();
+
+
+
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+// Add some data
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'LSWDO');
+        //autosize column
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Region');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'New Score -Sample title');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:F6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Province');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'City/Municipality');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Score');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Level of Functionality');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('E4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Last Visit Date');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('F4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'Status of Visit');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('G4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('H4', 'Visit Count');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->setCellValue('I4', 'Rank');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('I4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row2 = 7;
+        $col2 = 'A';
+        $previousvalue = '';
+        $rank = 0;
+        foreach ($lswdo_details as $lswdodata):
+
+
+            $region = $lswdodata->region_name;
+            $profile_id = $lswdodata->prof_id;
+            $province = $lswdodata->prov_name;
+            $city = $lswdodata->city_name;
+            $baselinescore = $lswdodata->new_score;
+            $leveloffunction = $lswdodata->level_function_new;
+
+
+//
+//            $visitName = $this->reports_model->getVisitName($visit_status);
+//            $visitStatus = $this->reports_model->getVisitCount($visit_count);
+//
+
+
+            if($previousvalue != $baselinescore)
+            {
+                $rank++;
+            }
+
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $province);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $city);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $baselinescore);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $leveloffunction);$col2++;
+
+            foreach($LastVisit as $lastvisitDetails):
+                if($profile_id == $lastvisitDetails->profile_id)
+                {
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $lastvisitDetails->visit_date);$col2++;
+                    $visitName = $this->reports_model->getVisitName($lastvisitDetails->visit_status);
+                    $visitStatus = $this->reports_model->getVisitCount($lastvisitDetails->visit_count);
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $visitName->status_name);$col2++;
+                    $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $visitStatus->visit_count);$col2++;
+                }
+            endforeach;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $rank);
+            $previousvalue = $baselinescore ;
+
+            if($col2 == 'I'){$col2 = 'A';}
+            $row2++;
+        endforeach;
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->getActiveSheet()->setTitle('LSWDO-FullyFunctional');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'LSWDO-FullyFunctional.xlsx';
         header('Content-type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename='.$filename);
         header('Cache-Control: max-age=0');
@@ -3482,8 +3707,12 @@ class reports extends CI_Controller {
     }
 
     public function distributionLSWDObyregion(){
+            $reports = new reports_model();
+//          $max_visit = $this->reports_model->get_max_visit();
+            $allRegion = $reports->getAllRegion();
+            $maxVisitHeader = $reports->getMaxVisit();
 
-        $distributionLSWDObyregion = $this->reports_model->get_distributionLSWDObyregion();
+
 
 
 // Create new PHPExcel object
@@ -3501,7 +3730,7 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(15);
-        $objPHPExcel->getActiveSheet()->mergeCells('B1:F1');
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:M1');
 
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
@@ -3511,9 +3740,9 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution LSWDO by Region');
         $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
-        $objPHPExcel->getActiveSheet()->mergeCells('B3:F3');
-        $objPHPExcel->getActiveSheet()->mergeCells('B2:F2');
-        $objPHPExcel->getActiveSheet()->mergeCells('B5:F5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:M3');
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:M2');
+//        $objPHPExcel->getActiveSheet()->mergeCells('B5:M5');
         //Center text merge columns
         $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
@@ -3525,70 +3754,138 @@ class reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
         $objPHPExcel->getActiveSheet()->freezePane('B6');
         //Header
-        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'PSWDO');
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Total Province');
         $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'CSWDO');
+        $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Total City');
         $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('C4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'MSWDO');
+        $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Total Muni');
         $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('D4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Total');
+        $objPHPExcel->getActiveSheet()->setCellValue('E4', 'Total LGU');
         $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('e4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
-        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'Percent');
+        $objPHPExcel->getActiveSheet()->setCellValue('F4', 'PSWDO');
         $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getStyle('F4')->getAlignment()->applyFromArray(
             array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('G4', 'CSWDO');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('G4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('H4', 'MSWDO');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->setCellValue('I4', 'Total');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('I4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $row = 4;
+        $col = 'J';
+        $mergeCol = 'J';
+        for($i = 1; $i <= $maxVisitHeader->visit_count; $i++){
+            switch(substr($i,-1)){
+                case 1:
+                    $title = '1st Visit';
+                    break;
+                case 2:
+                    $title = '2nd Visit';
+                    break;
+                case 3:
+                    $title = '3rd Visit';
+                    break;
+                default:
+                    $title = $i.'th Visit';
+            }
+//            echo "<td colspan = 3>".$title."</td>";
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, $title);
+//            echo "<br>";
+//            echo $col.$row.','.$title;
+//            echo "<br>";
+
+            $objPHPExcel->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
+
+            $objPHPExcel->getActiveSheet()->getStyle($col.$row)->getAlignment()->applyFromArray(
+                array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+            $mergeCol++;
+            $mergeCol++;
+            $objPHPExcel->getActiveSheet()->mergeCells($col.$row.':'.$mergeCol.$row);
+            $row++;
+            $mergeCol++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, 'PSWDO');
+            $col++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, 'CSWDO');
+            $col++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col.$row, 'MSWDO');
+            $col++;
+            $row = 4;
+//            echo $col.$row.':'.$mergeCol.$row;
+
+        }
+
         $row2 = 7;
         $col2 = 'A';
-//province list
-        foreach ($distributionLSWDObyregion as $distributionLSWDObyregiondata):
-            $region = $distributionLSWDObyregiondata->region_name;
-            $PSWDO = $distributionLSWDObyregiondata->PSWDO;
-            $CSWDO = $distributionLSWDObyregiondata->CSWDO;
-            $MSWDO = $distributionLSWDObyregiondata->MSWDO;
-            $TOTAL = $distributionLSWDObyregiondata->Total;
+        foreach($allRegion as $region):
+            $totalCity = 0;
+            $totalMuni = 0;
+            $countProv = $reports->countProv($region->region_code);
+            $getUniverse = $reports->getUniverse($region->region_code);
+            $getAllProv = $reports->getAllProv($region->region_code);
+            $maxVisit = $reports->getMaxVisit();
+//            echo "<pre>";
+////            print_r($getAllProv);
+//            echo "</pre>";
+//            echo "<tr>";
+//            echo "<td>".$region->region_code."</td>";
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region->region_name);$col2++;
+//            echo "<td>".$region->region_name."</td>";
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $countProv->total_prov);$col2++;
+//            echo "<td>".$countProv->total_prov."</td>";
+//            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $countProv->total_prov);$col2++;
+            foreach($getAllProv as $province):
+                $getAllCity = $reports->getAllCity($province->prov_code);
+                $getAllMuni = $reports->getAllMuni($province->prov_code);
+                $totalCity = $getAllCity->total_city + $totalCity;
+                $totalMuni = $getAllMuni->total_city + $totalMuni;
+            endforeach;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $totalCity);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $totalMuni);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $totalMuni+$totalCity+$countProv->total_prov);$col2++;
 
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $PSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $CSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $MSWDO);$col2++;
-            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $TOTAL);
-
-
-            if($col2 == 'E'){$col2 = 'A';}
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->PSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->CSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->MSWDO);$col2++;
+            $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $getUniverse->MSWDO+$getUniverse->CSWDO+$getUniverse->PSWDO);$col2++;
+//            echo "<td>".$totalCity."</td>";
+//            echo "<td>".$totalMuni."</td>";
+//            echo "<td>".$getUniverse->PSWDO."</td>";
+//            echo "<td>".$getUniverse->CSWDO."</td>";
+//            echo "<td>".$getUniverse->MSWDO."</td>";
+            for($i = 1; $i <= $maxVisit->visit_count; $i++){
+                $pswdo_visitScore = $reports->getVisitScore($region->region_code,$i,1);
+                $cswdo_visitScore = $reports->getVisitScore($region->region_code,$i,2);
+                $mswdo_visitScore = $reports->getVisitScore($region->region_code,$i,3);
+                $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $pswdo_visitScore->scoreVisit);$col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $cswdo_visitScore->scoreVisit);$col2++;
+                $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $mswdo_visitScore->scoreVisit);$col2++;
+//                echo "<td>".$pswdo_visitScore->scoreVisit."</td>";
+//                echo "<td>".$cswdo_visitScore->scoreVisit."</td>";
+//                echo "<td>".$mswdo_visitScore->scoreVisit."</td>";
+            }
+            if($col2 == 'Y'){$col2 = 'A';}
+//            echo "</tr>";
             $row2++;
         endforeach;
-        $col3 = $col2;
-        $row3 = $row2 -1;
-        $counter = $row2 - 7;
-        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, 'Total');
-        $col3++;
-        $col3++;
-        $col3++;
-        $col3++;
-        $objPHPExcel->getActiveSheet()->setCellValue($col3.$row2, '=SUM('.$col3.'7:'.$col3.$row3.')');
-        $percrow = 7;
-        $perccol = 'F';
-        $totrow = 7;
-        $totcol = 'E';
-        for ($headcount = 0;$headcount < $counter;$headcount++)
-        {
-            $objPHPExcel->getActiveSheet()->setCellValue($perccol.$percrow,"=".$totcol.$totrow."/".$col3.$row2);
-            $objPHPExcel->getActiveSheet()->getStyle($perccol.$percrow)
-                ->getNumberFormat()->applyFromArray(
-                    array(
-                        'code' => PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00
-                    )
-                );
-            $percrow++;
-            $totrow++;
-        }
+//        $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $region);$col2++;
+//        $objPHPExcel->getActiveSheet()->setCellValue($col2.$row2, $CSWDO);
+
+//province list
+
 
 
 //    //border
@@ -6198,7 +6495,196 @@ class reports extends CI_Controller {
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output');
     }
+    public function summaryLSWDO($regCode,$provCode,$cityCode,$lguType){
 
+
+        $indicator_model = new indicator_model();
+        $reports_model = new reports_model();
+// Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+
+
+        $firstMotherIndicator = $indicator_model->getFirstMotherIndicator();
+        $secondMotherIndicator = $indicator_model->getSecondMotherIndicator();
+        $fourthMotherIndicator = $indicator_model->getFourthMotherIndicator();
+        $thirdMotherIndicator = $indicator_model->getThirdMotherIndicator();
+
+        $getScorePart1 = $indicator_model->getsummaryLSWDO($regCode, $provCode, $cityCode);
+        $getPart1 = $indicator_model->getPart1($lguType);
+        $getPart2 = $indicator_model->getPart2($lguType);
+        $getPart3 = $indicator_model->getPart3($lguType);
+        $getPart4 = $indicator_model->getPart4($lguType);
+        $get_totalAssess = $reports_model->get_totalAssess($regCode, $provCode, $lguType);
+
+
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Compliance/Non Compliance Per indicator');
+
+        //autosize column
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFill()->getStartColor()->setRGB('FF0000');
+//        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);a
+        $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(-1);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setSize(20);
+        $objPHPExcel->getActiveSheet()->mergeCells('B1:E2');
+
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B1')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+//    $col = 'A';
+//        $row = 5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'Areas');
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Distribution of functional by Province -Sample title');
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:A5');
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:E3');
+        //Center text merge columns
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:e6');
+        $objPHPExcel->getActiveSheet()->freezePane('B6');
+        //Header
+        $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Indicators');
+
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->getAlignment()->applyFromArray(
+            array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,));
+
+
+
+//Start Editing
+        //Part1
+        $row2 = 7;
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $firstMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart1 as $firstPartIndicator):
+            if ($firstPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $firstPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $firstPartIndicator->indicator_id) {
+                        $indicator_id = $firstPartIndicator->indicator_name;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+        //Part2
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $secondMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart2 as $secondPartIndicator):
+            if ($secondPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $secondPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $secondPartIndicator->indicator_id) {
+                        $indicator_id = $secondPartIndicator->indicator_name;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+        //Part3
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $thirdMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart3 as $thirdPartIndicator):
+            if ($thirdPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $thirdPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $thirdPartIndicator->indicator_id) {
+                        $indicator_id = $thirdPartIndicator->indicator_name;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+        //Part4
+        $col2 = 'A';
+        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $fourthMotherIndicator->indicator_name);
+        $col2++;
+        $row2++;
+        foreach ($getPart4 as $fourthPartIndicator):
+            if ($fourthPartIndicator->indicator_checklist_id == 1) {
+                $arr = explode("-", $fourthPartIndicator->indicator_id);
+                $indicatorID = $arr[0];
+                foreach ($getScorePart1 as $scorePart1):
+                    if ($scorePart1->indicator_id == $fourthPartIndicator->indicator_id) {
+                        $indicator_id = $fourthPartIndicator->indicator_name;
+
+                        $objPHPExcel->getActiveSheet()->setCellValue($col2 . $row2, $indicator_id);
+                        if ($col2 == 'B') {
+                            $col2 = 'B';
+                        }
+                        $row2++;
+                    }
+                endforeach;
+            }
+        endforeach;
+
+//End Editing
+
+//    //border
+        $objPHPExcel->getActiveSheet()->getStyle(
+            'A1:' .
+            $objPHPExcel->getActiveSheet()->getHighestColumn() .
+            $objPHPExcel->getActiveSheet()->getHighestRow()
+        )->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+// Rename worksheet (worksheet, not filename)
+        $objPHPExcel->setActiveSheetIndex(0)->setTitle('LSWDO-Summary');
+        // Add new sheet
+
+
+
+// Add some data
+
+// Set active sheet index to the first sheet, so Excel opens this as the first asheet
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Redirect output to a client’s web browser (Excel2007)
+//clean the output buffer
+        ob_end_clean();
+
+//this is the header given from PHPExcel examples. but the output seems somewhat corrupted in some cases.
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//so, we use this header instead.
+//    $regionName = $this->reports_model->getRegionName($region);
+        $filename = 'Summary.xlsx';
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename='.$filename);
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
     public function LCPC($regCode,$provCode,$lguType){
 
         $reports_model = new reports_model();
