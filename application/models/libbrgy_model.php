@@ -21,7 +21,7 @@ class libbrgy_model extends CI_Model
     }
 
 
-    public function getBrgyDetails($id)
+    public function getBrgyDetails($id=0)
     {
         $sql = 'select brgy_code,brgy_name,city_code,rural_urban,old_brgy_psgc,total_pop,Total_Poor_HHs,Total_Poor_Families from lib_brgy
                 WHERE DELETED = 0 AND brgy_code="' . $id . '"';
@@ -39,7 +39,6 @@ class libbrgy_model extends CI_Model
                           VALUES
                           (
                           "'.$brgy_code.'",
-                          "'.$brgy_name.'",
                           "'.$city_code.'",
                           "'.$rural_urban.'",
                           "'.$old_brgy_psgc.'",
@@ -63,7 +62,7 @@ class libbrgy_model extends CI_Model
         $this->db->close();
     }
 
-    public function updateCity($id, $brgy_name,$city_code,$rural_urban,$old_brgy_psgc,$total_pop,$Total_Poor_HHs,$Total_Poor_Families,$modified_by, $date_modified)
+    public function updateBrgy($id, $brgy_name,$city_code,$rural_urban,$old_brgy_psgc,$total_pop,$Total_Poor_HHs,$Total_Poor_Families,$modified_by, $date_modified)
     {
         $this->db->trans_begin();
 
@@ -91,7 +90,7 @@ class libbrgy_model extends CI_Model
         $this->db->close();
     }
 
-    public function deleteProv($id = 0)
+    public function deleteBrgy($id = 0)
     {
         $this->db->trans_begin();
         $this->db->query('UPDATE lib_brgy T1

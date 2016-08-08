@@ -37,9 +37,6 @@ if (!$this->session->userdata('user_id')){
             <th>Profile ID:</th><td><?php echo $profile_id ?></td>
         </tr>
         <tr>
-            <th>Status of Application:</th><td><?php echo $application_type_name ?></td>
-        </tr>
-        <tr>
             <th>LGU Type:</th><td><?php echo $lgu_type_name ?></td>
         </tr>
         <tr>
@@ -52,28 +49,19 @@ if (!$this->session->userdata('user_id')){
             <th>City/Municipality:</th><td><?php echo $city_name ?></td>
         </tr>
         <tr>
-            <th>Name of SWDO Officer/Head:</th><td><?php echo $swdo_name ?></td>
+            <th>Visit Count:</th><td><?php echo $visit_count ?></td>
         </tr>
         <tr>
-            <th>Designation:</th><td><?php echo $designation ?></td>
+            <th>Visit Date:</th><td><?php echo $visit_date ?></td>
         </tr>
         <tr>
-            <th>Office Address:</th><td><?php echo $office_address ?></td>
+            <th>Baseline Score:</th><td><?php echo $baseline_score ?></td>
         </tr>
         <tr>
-            <th>Contact Number:</th><td><?php echo $contact_no ?></td>
+            <th>Updated Score:</th><td><?php echo $new_score ?></td>
         </tr>
         <tr>
-            <th>Email Address:</th><td><?php echo $email ?></td>
-        </tr>
-        <tr>
-            <th>Website:</th><td><?php echo $website ?></td>
-        </tr>
-        <tr>
-            <th>Total Internal Revenue Allotment:</th><td><?php echo $total_ira ?></td>
-        </tr>
-        <tr>
-            <th>Total Budget LSWDO:</th><td><?php echo $total_budget_lswdo ?></td>
+            <th>Level of Functionality:</th><td><?php echo $level_function_baseline ?></td>
         </tr>
 
     </table>

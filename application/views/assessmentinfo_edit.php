@@ -709,7 +709,7 @@ if (!$this->session->userdata('user_id')){
                     <td width="50%">
                         <div class="form-group">
                             <label for="contact_no">Contact No:</label><font color="red">*</font>
-                            <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
+                            <input class="form-control" type="tel" minlength="7" maxlength="19" tabindex="8" name="contact_no" pattern="[a-zA-Z0-9]+[\\\-]" id="contact_no" style="width:90%;" value="<?php echo $assessmentinfo_details->contact_no ?>" placeholder="Contact Number" required>
                         </div>
                     </td>
 
